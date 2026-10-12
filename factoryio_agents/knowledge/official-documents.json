@@ -1,0 +1,1415 @@
+{
+  "schema_version": 1,
+  "software": "Factory I/O",
+  "source_kind": "installed_official_documentation",
+  "sources": [
+    {
+      "id": "parts:items",
+      "url": "https://docs.factoryio.com/manual/parts/items/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\items.html",
+      "sha256": "eae4a00c15a34c1f05c9c9afdb241f82d60108ea983c364f36ccd93d1a182287",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:heavy-load",
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\heavy-load.html",
+      "sha256": "3e1d898cf994580531f72948653dd3a08faaf15ef640113b740640dd47311167",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:light-load",
+      "url": "https://docs.factoryio.com/manual/parts/light-load/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\light-load.html",
+      "sha256": "780585ea317440c8b235c437df62e4d5a42bb97f42bfbb7994f945c76f89158f",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:sensors",
+      "url": "https://docs.factoryio.com/manual/parts/sensors/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\sensors.html",
+      "sha256": "315911af8eac746b50942eb7f03c0d95b03496c2360b7537f2b0677866e3d10a",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:operators",
+      "url": "https://docs.factoryio.com/manual/parts/operators/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\operators.html",
+      "sha256": "7ea3b7bc210c1ddb259b1467733892e5539c483ea06d07a1c730df93d1dc02af",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:stations",
+      "url": "https://docs.factoryio.com/manual/parts/stations/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\stations.html",
+      "sha256": "22743f687616f83f17bc5d35b8ba9b58b5695af42ae5e63afac6dd10336e4b66",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:warning-devices",
+      "url": "https://docs.factoryio.com/manual/parts/warning-devices/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\warning-devices.html",
+      "sha256": "1ddae74fbb4c8f06323577ef0d85bbea25625efd811524b0506affbeae273a28",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:walkways",
+      "url": "https://docs.factoryio.com/manual/parts/walkways/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\walkways.html",
+      "sha256": "e895d388e7c335d03fd554893a86980a885c095304d2b12e9be7ee2626e582fc",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:emitter",
+      "url": "https://docs.factoryio.com/manual/parts/emitter/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\emitter.html",
+      "sha256": "215efdddcab2fa873b7fba32134a5d3fb1f13892c8b9c5977bf8694360f33323",
+      "basis": "installed_official_documentation"
+    },
+    {
+      "id": "parts:remover",
+      "url": "https://docs.factoryio.com/manual/parts/remover/",
+      "source_path": "E:\\Program Files (x86)\\factory\\Documentation\\manual\\parts\\remover.html",
+      "sha256": "12e4a05b9d863c7ae3687aa7ec548ad727045cd8ec8baa245c7dd7f3cd423938",
+      "basis": "installed_official_documentation"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "parts:items#items",
+      "source_id": "parts:items",
+      "title": "Items",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/items/#items",
+      "body": "Items",
+      "text_sha256": "fb8e7a1a3cb7b25d262793159145759e97eb540a2b61dbbdf8f58841a81cf1a8",
+      "intro": "",
+      "images": [
+        {
+          "alt": "items overview",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-items.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#boxes",
+      "source_id": "parts:items",
+      "title": "Boxes",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/items/#boxes",
+      "body": "Boxes\nThere are four different types of boxes, each one with a different size and weight.\n| Small8 Kg\n| Medium10 Kg\n| Large15 Kg\n| Palletizing Box3 Kg\n|\n|\n|\n|",
+      "text_sha256": "92008b3031a5ecfb4165b0fd24e7a0349d4892f5a3e0bb2257f7c421064e5b5a",
+      "intro": "There are four different types of boxes, each one with a different size and weight.",
+      "images": [
+        {
+          "alt": "boxes",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-boxes.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/box-s.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/box-m.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/box-l.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/palletizing-box.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#pallets",
+      "source_id": "parts:items",
+      "title": "Pallets",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/items/#pallets",
+      "body": "Pallets\nWooden pallets are used for stacking and transporting all sorts of cargo.\n| Square Pallet20 Kg\n| Pallet20 Kg\n|\n|",
+      "text_sha256": "e58dcb14902bbbc07ea8a68922249b744ff708b03ce42ab3aa8ca815a1c76528",
+      "intro": "Wooden pallets are used for stacking and transporting all sorts of cargo.",
+      "images": [
+        {
+          "alt": "pallets",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-pallets.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/squared-pallet.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/pallet.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#stackable-box",
+      "source_id": "parts:items",
+      "title": "Stackable Box",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/items/#stackable-box",
+      "body": "Stackable Box\nStackable Boxes are used to transport items such as Raw Material, Product Base, and Product Lid.\n| Stackable Box15 Kg\n|",
+      "text_sha256": "9f35a37fa9ed4e8472f29a2a03e641df125cf37249fd968a719883d7d54708b1",
+      "intro": "Stackable Boxes are used to transport items such as Raw Material, Product Base, and Product Lid.",
+      "images": [
+        {
+          "alt": "stackable box",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-stackable-box.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/stackable-box.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#raw-material",
+      "source_id": "parts:items",
+      "title": "Raw Material",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/items/#raw-material",
+      "body": "Raw Material\nRaw material is used to produce Product Lids and Bases in the Machining Center.\nAvailable as three different types of material: blue or green colored plastic, and metal.\n| Blue Raw Material8 Kg\n| Green Raw Material8 Kg\n| Metal Raw Material10 Kg\n|\n|\n|",
+      "text_sha256": "7e70c0e0cb644e443a7b57211bcee23861dd896a442919f541989cf6ea864085",
+      "intro": "Raw material is used to produce Product Lids and Bases in the Machining Center. Available as three different types of material: blue or green colored plastic, and metal.",
+      "images": [
+        {
+          "alt": "raw materials",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-raw-materials.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/raw-material-blue.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/raw-material-green.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/raw-material-metal.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#product-lid",
+      "source_id": "parts:items",
+      "title": "Product Lid",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/items/#product-lid",
+      "body": "Product Lid\nPart that can be assembled into a Product Base to produce a Final Product.\n| Blue Product Lid5 Kg\n| Green Product Lid5 Kg\n| Metal Product Lid7 Kg\n|\n|\n|",
+      "text_sha256": "0505c032cb47a8eb2fcce2a65cfd4566405b2b0b397433c314b71d1cdd1f5817",
+      "intro": "Part that can be assembled into a Product Base to produce a Final Product.",
+      "images": [
+        {
+          "alt": "product lid",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-product-lid.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/product-lid-blue.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/product-lid-green.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/product-lid-metal.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#product-base",
+      "source_id": "parts:items",
+      "title": "Product Base",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/items/#product-base",
+      "body": "Product Base\nPart that can be assembled into a Product Lid to produce a Final Product.\n| Blue Product Base7 Kg\n| Green Product Base7 Kg\n| Metal Product Base9 Kg\n|\n|\n|",
+      "text_sha256": "95dd005b54f32417bb6fcb59d0a6862b1c2722ca2b2c37fddea3b411701b7098",
+      "intro": "Part that can be assembled into a Product Lid to produce a Final Product.",
+      "images": [
+        {
+          "alt": "product lid",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-product-base.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/product-base-blue.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/product-base-green.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/product-base-metal.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#final-product",
+      "source_id": "parts:items",
+      "title": "Final Product",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/items/#final-product",
+      "body": "Final Product\nCreated by assembling a Base and Lid.\nThis part is not available on the Palette, it must be created by assembling a Base and Lid.\n| Blue Lid - Blue Base12 Kg\n| Blue Lid - Green Base12 Kg\n| Blue Lid - Metal Base14 Kg\n|\n|\n|\n| Green Lid - Blue Base12 Kg\n| Green Lid - Green Base12 Kg\n| Green Lid - Metal Base14 Kg\n|\n|\n|\n| Metal Lid - Blue Base14 Kg\n| Metal Lid - Green Base14 Kg\n| Metal Lid - Metal Base16 Kg\n|\n|\n|",
+      "text_sha256": "ea6d565143e8222452287cda71ef063f887ddcb0826552ff917ab4ee9a8fd0a7",
+      "intro": "Created by assembling a Base and Lid.",
+      "images": [
+        {
+          "alt": "final product",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/fio-final-product.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-bb.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-gb.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-bm.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-bg.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-gg.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-gm.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-mb.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-mg.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/items/final-product-mm.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#heavy-load-parts",
+      "source_id": "parts:heavy-load",
+      "title": "Heavy Load Parts",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#heavy-load-parts",
+      "body": "Heavy Load Parts\nThis category includes all parts suitable for handling heavy cargo.\nThe equipment is robust, wide, low height and operates at low velocity.",
+      "text_sha256": "fddf40e0880bde17fc326e71d42816040c0297525f4b95feda401d347cd74b10",
+      "intro": "This category includes all parts suitable for handling heavy cargo. The equipment is robust, wide, low height and operates at low velocity.",
+      "images": [
+        {
+          "alt": "heavy load parts",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-heavy-load.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#roller-conveyor",
+      "source_id": "parts:heavy-load",
+      "title": "Roller Conveyor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#roller-conveyor",
+      "body": "Roller Conveyor\nHeavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.\nRoll Radius: 0.046 m\nAvailable lengths: 2, 4 and 6 m\nMaximum conveying speed: 0.45 m/s (digital); 0.8 m/s (analog)\nYou can enable an Incremental Encoder for this part through the Context Menu.\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Roller Conveyor (2m, 4m, 6m) #\n| Output\n| Bool\n| Roll (arrow direction).\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Roller Conveyor (2m, 4m, 6m) # (+)\n| Output\n| Bool\n| Roll (arrow direction).\n| Roller Conveyor (2m, 4m, 6m) # (-)\n| Output\n| Bool\n| Roll.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Roller Conveyor (2m, 4m, 6m) # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).",
+      "text_sha256": "479acbe1b1777c826579ca08ff485b995b4bd069f625ba33190aa1f042e1fb32",
+      "intro": "Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.",
+      "images": [
+        {
+          "alt": "roller conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-roller-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#curved-roller-conveyor",
+      "source_id": "parts:heavy-load",
+      "title": "Curved Roller Conveyor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#curved-roller-conveyor",
+      "body": "Curved Roller Conveyor\nHeavy-duty curved roller conveyor, can be controlled by digital and analog values according to the selected configuration.\nRoll Radius: 0.046 m\nExternal Perimeter (at roll edge): 2.94 m\nMaximum conveying speed: 0.45 m/s (digital); 0.8 m/s (analog)\nYou can enable an Incremental Encoder for this part through the Context Menu.\nConfigurations\nClockwise\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Roller Conveyor # CW\n| Output\n| Bool\n| Roll clockwise.\nCounterclockwise\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Roller Conveyor # CCW\n| Output\n| Bool\n| Roll counterclockwise.\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Roller Conveyor # (+)\n| Output\n| Bool\n| Roll (arrow direction).\n| Curved Roller Conveyor # (-)\n| Output\n| Bool\n| Roll.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Roller Conveyor # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).",
+      "text_sha256": "ced590167bc827bb7fcce301f3166e85c8b62a244c6377676a47921bd63a355d",
+      "intro": "Heavy-duty curved roller conveyor, can be controlled by digital and analog values according to the selected configuration.",
+      "images": [
+        {
+          "alt": "curved roller conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-curved-roller-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#loading-conveyor",
+      "source_id": "parts:heavy-load",
+      "title": "Loading conveyor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#loading-conveyor",
+      "body": "Loading conveyor\nHeavy-duty conveyor, mostly used to load/unload cargo onto a Stacker Crane.\nCan be controlled by digital or analog values.\nRoll radius: 0.046 m\nMaximum conveying speed: 0.45 m/s (digital); 0.8 m/s (analog)\nYou can enable an Incremental Encoder for this part through the Context Menu.\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Loading Conveyor #\n| Output\n| Bool\n| Roll (arrow direction).\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Loading Conveyor # (+)\n| Output\n| Bool\n| Roll (arrow direction).\n| Loading Conveyor # (-)\n| Output\n| Bool\n| Roll.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Roller Conveyor # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).",
+      "text_sha256": "b058c29c7bcb0e100b357f872f878a13118e9417c8e52805ff03d66e5d8782d1",
+      "intro": "Heavy-duty conveyor, mostly used to load/unload cargo onto a Stacker Crane. Can be controlled by digital or analog values.",
+      "images": [
+        {
+          "alt": "loading conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-loading-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#roller-stop",
+      "source_id": "parts:heavy-load",
+      "title": "Roller Stop",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#roller-stop",
+      "body": "Roller Stop\nThis pneumatically actuated device can be used to stop, accumulate or prevent material collisions on conveyors.\nNormally down\nStroke: 0.1 m\n| Tag\n| Controller I/O\n| Type\n| Description\n| Roller Stop #\n| Output\n| Bool\n| Raise.",
+      "text_sha256": "1bc1cf194fddb2832612dc14b63000f0d2cde7575a66de6d7afe82187ba66442",
+      "intro": "This pneumatically actuated device can be used to stop, accumulate or prevent material collisions on conveyors.",
+      "images": [
+        {
+          "alt": "roller stop",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-roller-stop.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#free-roller",
+      "source_id": "parts:heavy-load",
+      "title": "Free Roller",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#free-roller",
+      "body": "Free Roller\nUnmotorized roller used for conveyor fitting and adjustment.",
+      "text_sha256": "cfe4dd1b3da01f53a748e86fd907fcf36de5b076b581529753ea20ceddc6b316",
+      "intro": "Unmotorized roller used for conveyor fitting and adjustment.",
+      "images": [
+        {
+          "alt": "free roller",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-free-roller.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#chain-transfer",
+      "source_id": "parts:heavy-load",
+      "title": "Chain Transfer",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#chain-transfer",
+      "body": "Chain Transfer\nUsed to transfer cargo onto adjacent conveyors, works best with square pallets.\nIt is made of loading rolls and three chain tracks.\nChain track stroke: 0.04 m\nMaximum conveying speed: 0.45 m/s\nMaximum chain speed: 0.45 m/s\n| Tag\n| Controller I/O\n| Type\n| Description\n| Chain Transfer # (+)\n| Output\n| Bool\n| Roll (arrow direction).\n| Chain Transfer # (-)\n| Output\n| Bool\n| Roll.\n| Chain Transfer # (Left)\n| Output\n| Bool\n| Raise platform and rotate chain left.\n| Chain Transfer # (Right)\n| Output\n| Bool\n| Raise platform and rotate chain right.",
+      "text_sha256": "e9563dfad307474e9fcf3e53f1747dbf3252efcc7dc7f5532a688051466ed192",
+      "intro": "Used to transfer cargo onto adjacent conveyors, works best with square pallets. It is made of loading rolls and three chain tracks.",
+      "images": [
+        {
+          "alt": "chain transfer",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-chain-transfer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#turntable",
+      "source_id": "parts:heavy-load",
+      "title": "Turntable",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#turntable",
+      "body": "Turntable\nPowered heavy-duty turntable, typically used to sort pallets.\nIt's equipped with free spin periphery rolls and pre-installed sensors.\nRoll radius: 0.045 m\nMaximum conveying speed: 0.45 m/s\nTable turning speed: 0.7 rad/s\nCapacitive sensors range: 0 - 0.1 m\nConfigurations\nMonostable\n| Tag\n| Controller I/O\n| Type\n| Description\n| Turntable # Roll (+)\n| Output\n| Bool\n| Load.\n| Turntable # Roll (-)\n| Output\n| Bool\n| Unload.\n| Turntable # Turn\n| Output\n| Bool\n| Turn (arrow direction).\n| Turntable # (Front Limit)\n| Input\n| Bool\n| Front sensor.\n| Turntable # (Back Limit)\n| Input\n| Bool\n| Back sensor.\n| Turntable # (Limit 0)\n| Input\n| Bool\n| Table rotation at minimum.\n| Turntable # (Limit 90)\n| Input\n| Bool\n| Table rotation at maximum.\nBistable\n| Tag\n| Controller I/O\n| Type\n| Description\n| Turntable # Roll (+)\n| Output\n| Bool\n| Load.\n| Turntable # Roll (-)\n| Output\n| Bool\n| Unload.\n| Turntable # (+)\n| Output\n| Bool\n| Turn (counterclockwise).\n| Turntable # (-)\n| Output\n| Bool\n| Turn (clockwise).\n| Turntable # (Front Limit)\n| Input\n| Bool\n| Front sensor.\n| Turntable # (Back Limit)\n| Input\n| Bool\n| Back sensor.\n| Turntable # (Limit 0)\n| Input\n| Bool\n| Table rotation at minimum.\n| Turntable # (Limit 90)\n| Input\n| Bool\n| Table rotation at maximum.",
+      "text_sha256": "8495485b00207b6500580d7a69473fa9cc73926252851d150880392a10587802",
+      "intro": "Powered heavy-duty turntable, typically used to sort pallets. It's equipped with free spin periphery rolls and pre-installed sensors.",
+      "images": [
+        {
+          "alt": "curved roller conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-turntable.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:heavy-load#chute-conveyor-low",
+      "source_id": "parts:heavy-load",
+      "title": "Chute Conveyor Low",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/heavy-load/#chute-conveyor-low",
+      "body": "Chute Conveyor Low\nStraight chute conveyor, commonly used to dispatch pallets.",
+      "text_sha256": "cbc354f06b6245cada661e47e054002fb0df8a50849c149983895a2843849a7d",
+      "intro": "Straight chute conveyor, commonly used to dispatch pallets.",
+      "images": [
+        {
+          "alt": "chute conveyor low",
+          "url": "https://docs.factoryio.com/manual/parts/img/heavy-load/fio-chute-conveyor-low.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#light-load-parts",
+      "source_id": "parts:light-load",
+      "title": "Light Load Parts",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#light-load-parts",
+      "body": "Light Load Parts\nThe Light Load Parts category includes parts suitable for handling light load cargo.\nDesigned to execute a task quickly and keep up with high workflow, these parts are light and operate at high velocity.",
+      "text_sha256": "46f559e48fd10737999efb9c92a3c4dec5c0ee3b053d7624cd046547e638db10",
+      "intro": "The Light Load Parts category includes parts suitable for handling light load cargo. Designed to execute a task quickly and keep up with high workflow, these parts are light and operate at high velocity.",
+      "images": [
+        {
+          "alt": "light load parts",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-light-load.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#belt-conveyors",
+      "source_id": "parts:light-load",
+      "title": "Belt Conveyors",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#belt-conveyors",
+      "body": "Belt Conveyors\nBelt Conveyors are used to transport light load cargo.\nCan be controlled by digital or analog values.\nAvailable lengths: 2, 4 and 6 m\nMaximum conveying speed: 0.6 m/s (digital); 3 m/s (analog)\nYou can enable an Incremental Encoder for this part through the Context Menu.\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Belt Conveyor (2m, 4m, 6m) #\n| Output\n| Bool\n| Rotate belt (arrow direction).\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Belt Conveyor (2m, 4m, 6m) # (+)\n| Output\n| Bool\n| Rotate belt (arrow direction).\n| Belt Conveyor (2m, 4m, 6m) # (-)\n| Output\n| Bool\n| Rotate belt.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Belt Conveyor (2m, 4m, 6m) # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).",
+      "text_sha256": "c7272ed6b72d053246a583df562b80685b116153b73b2dce26a05e850802d71f",
+      "intro": "Belt Conveyors are used to transport light load cargo. Can be controlled by digital or analog values.",
+      "images": [
+        {
+          "alt": "belt conveyors",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-belt-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#curved-belt-conveyor",
+      "source_id": "parts:light-load",
+      "title": "Curved Belt Conveyor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#curved-belt-conveyor",
+      "body": "Curved Belt Conveyor\nBelt Conveyors are used to transport light load cargo.\nCan be controlled by digital or analog values.\nYou can enable an Incremental Encoder for this part through the Context Menu.\nConfigurations\nClockwise\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Belt Conveyor # CW\n| Output\n| Bool\n| Rotate belt clockwise.\nCounterclockwise\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Belt Conveyor # CCW\n| Output\n| Bool\n| Rotate belt counterclockwise.\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Belt Conveyor # (+)\n| Output\n| Bool\n| Rotate belt (arrow direction).\n| Curved Belt Conveyor # (-)\n| Output\n| Bool\n| Rotate belt.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Curved Belt Conveyor # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).",
+      "text_sha256": "b69f0c3c8f48534ebaa5904054d41ad99b68de19ea97da7cc9226b047a791add",
+      "intro": "Belt Conveyors are used to transport light load cargo. Can be controlled by digital or analog values.",
+      "images": [
+        {
+          "alt": "curved belt conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-curved-belt-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#belt-conveyor-gate",
+      "source_id": "parts:light-load",
+      "title": "Belt Conveyor Gate",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#belt-conveyor-gate",
+      "body": "Belt Conveyor Gate\nPowered slider bed belt conveyor gate designed to provide a passageway to personnel.\nIt's equipped with a closed sensor and can be controlled by digital or analog values.\nPossible opening angle: 100º\nMaximum conveying sped: 0.6 m/s (digital), 3 m/s (analog)\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Belt Conveyor Gate #\n| Output\n| Bool\n| Rotate belt (arrow direction).\n| Belt Conveyor Gate # (Opened)\n| Input\n| Bool\n| Gate is open.\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Belt Conveyor Gate # (+)\n| Output\n| Bool\n| Rotate belt (arrow direction).\n| Belt Conveyor Gate # (-)\n| Output\n| Bool\n| Rotate belt.\n| Belt Conveyor Gate # (Opened)\n| Input\n| Bool\n| Gate is open.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Belt Conveyor Gate # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).\n| Belt Conveyor Gate # (Opened)\n| Input\n| Bool\n| Gate is open.",
+      "text_sha256": "c89e368c9a0fe07cd863f2d7a889981b32386619faa43b3c7d11e9e9d9407f83",
+      "intro": "Powered slider bed belt conveyor gate designed to provide a passageway to personnel. It's equipped with a closed sensor and can be controlled by digital or analog values.",
+      "images": [
+        {
+          "alt": "belt conveyor gate",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-belt-conveyor-gate.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#inclined-belt-conveyor",
+      "source_id": "parts:light-load",
+      "title": "Inclined Belt Conveyor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#inclined-belt-conveyor",
+      "body": "Inclined Belt Conveyor\nInclined Belt Conveyors are used to transport light load cargo.\nCan be controlled by digital or analog values.\nYou can enable an Incremental Encoder for this part through the Context Menu.\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Inclined Belt Conveyor #\n| Output\n| Bool\n| Rotate belt (arrow direction).\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Inclined Belt Conveyor # (+)\n| Output\n| Bool\n| Rotate belt (arrow direction).\n| Inclined Belt Conveyor # (-)\n| Output\n| Bool\n| Rotate belt.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Inclined Belt Conveyor # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).",
+      "text_sha256": "e6cc03dd192895dcf851b13dfd9732f55ab44d9e07b2f851563f5a3a1c08e8d8",
+      "intro": "Inclined Belt Conveyors are used to transport light load cargo. Can be controlled by digital or analog values.",
+      "images": [
+        {
+          "alt": "curved belt conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-inclined-belt-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#conveyor-scale",
+      "source_id": "parts:light-load",
+      "title": "Conveyor Scale",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#conveyor-scale",
+      "body": "Conveyor Scale\nHigh-speed conveyor scale used for weight control. Measures different weight ranges according to the selected configuration.\nMaximum conveying speed: 0.6 m/s\nCapacities: 20 and 100 Kg\nConfigurations\n20 Kg Max. / 100 Kg Max.\n| Tag\n| Controller I/O\n| Type\n| Description\n| Conveyor Scale # (+)\n| Output\n| Bool\n| Rotate belt (arrow direction).\n| Conveyor Scale # (-)\n| Output\n| Bool\n| Rotate belt.\n| Conveyor Scale # Weight (V)\n| Input\n| Float\n| [0, 10] V: current weight.",
+      "text_sha256": "598a92833b3960854eadadcd377cb4b7c2e20f43edbc255dd73817b65f089abc",
+      "intro": "High-speed conveyor scale used for weight control. Measures different weight ranges according to the selected configuration.",
+      "images": [
+        {
+          "alt": "conveyor scale",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-conveyor-scale.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#straight-spur-conveyor",
+      "source_id": "parts:light-load",
+      "title": "Straight Spur Conveyor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#straight-spur-conveyor",
+      "body": "Straight Spur Conveyor\nInfeed/outfeed multi-belt conveyor, commonly used for accurate merging of loads into belt conveyors.\nDigital and analog values can control the conveyor.\nMaximum conveying speed: 0.8 m/s (digital); 3 m/s (analog)\nConfigurations\nDigital (+/-)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Straight Spur Conveyor # (+)\n| Output\n| Bool\n| Rotate belt (arrow direction).\n| Straight Spur Conveyor # (-)\n| Output\n| Bool\n| Rotate belt.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Straight Spur Conveyor # (V)\n| Output\n| Float\n| [-10, 10] V: sets the conveying speed (both directions).",
+      "text_sha256": "1066639a26c641acb6d0f4779218586520ba08414f9acb58ac9001db6e1ca6aa",
+      "intro": "Infeed/outfeed multi-belt conveyor, commonly used for accurate merging of loads into belt conveyors. Digital and analog values can control the conveyor.",
+      "images": [
+        {
+          "alt": "straight spur conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-straight-spur-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#pivot-arm-sorter",
+      "source_id": "parts:light-load",
+      "title": "Pivot Arm Sorter",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#pivot-arm-sorter",
+      "body": "Pivot Arm Sorter\nA 45º power face arm diverter, powered by a gearmotor.\nEquipped with a belt that helps to deviate the conveyed items onto the next part.\nThe arm can rotate left or right according to the selected configuration.\nBelt speed: 2 m/s\nArm angular speed: 5 rad/s\nConfigurations\nTurn Left\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pivot Arm Sorter # (Turn)\n| Output\n| Bool\n| Turn left.\n| Pivot Arm Sorter # (+)\n| Output\n| Bool\n| Rotate belt.\n| Pivot Arm Sorter # (-)\n| Output\n| Bool\n| Rotate belt.\nTurn Right\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pivot Arm Sorter # (Turn)\n| Output\n| Bool\n| Turn right.\n| Pivot Arm Sorter # (+)\n| Output\n| Bool\n| Rotate belt.\n| Pivot Arm Sorter # (-)\n| Output\n| Bool\n| Rotate belt.",
+      "text_sha256": "0933d94346c9a28318e127747134783ba01820401d47d55bca12bfd7d7277f13",
+      "intro": "A 45º power face arm diverter, powered by a gearmotor. Equipped with a belt that helps to deviate the conveyed items onto the next part. The arm can rotate left or right according to the selected configuration.",
+      "images": [
+        {
+          "alt": "pivot arm sorter",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-pivot-arm-sorter.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#pop-up-wheel-sorter",
+      "source_id": "parts:light-load",
+      "title": "Pop-Up Wheel Sorter",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#pop-up-wheel-sorter",
+      "body": "Pop-Up Wheel Sorter\nA 45º double-sided pop-up wheel sorter used to divert items to three different directions via pivoted rollers.\nWheel radius: 0.05 m\nConveying speed: 1.5 m/s\nNormally centered\nWheels stroke: 0.003 m\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pop Up Wheel Sorter # (+)\n| Output\n| Bool\n| Raise and rotate.\n| Pop Up Wheel Sorter # (Left)\n| Output\n| Bool\n| Turn left or return to center.\n| Pop Up Wheel Sorter # (Right)\n| Output\n| Bool\n| Turn right or return to center.",
+      "text_sha256": "da94b4763b0558e0f48908e4f3c26fe57875e6c35c373a84db955151adb41789",
+      "intro": "A 45º double-sided pop-up wheel sorter used to divert items to three different directions via pivoted rollers.",
+      "images": [
+        {
+          "alt": "pop-up wheel sorter",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-popup-wheel-sorter.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#aligners",
+      "source_id": "parts:light-load",
+      "title": "Aligners",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#aligners",
+      "body": "Aligners\nThin metal structures, attachable to a conveyor to prevent parts from falling when transported at high speeds.\nThere are four types of aligners available and in several colors (Context Menu > Configuration).\n| Aligner 1\n| Aligner 2\n| Aligner 3\n| Wheel Aligner\n|\n|\n|\n|\nPosition Adjustment\nAligners include a gizmo that allows finer control over its position.\nLeft-clicking and dragging the white arrows' gizmo moves the aligner by 2.5 cm increments.\nHolding Left Shift while dragging allows unconstrained movement.",
+      "text_sha256": "9c580b9f8fe0be975fbb49f83df348640419589cec506d0ae75b4b82cad2ff50",
+      "intro": "Thin metal structures, attachable to a conveyor to prevent parts from falling when transported at high speeds. There are four types of aligners available and in several colors (Context Menu > Configuration).",
+      "images": [
+        {
+          "alt": "aligners",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-aligners.jpg"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/aligner1.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/aligner2.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/aligner3.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/wheel-aligner.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#pusher",
+      "source_id": "parts:light-load",
+      "title": "Pusher",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#pusher",
+      "body": "Pusher\nPneumatic pusher sorter equipped with two reed sensors indicating the front and back limits.\nIt also includes a servo valve which can be used to set and measure the rod position.\nControl can be done by digital or analog values according to the selected configuration.\nDefault speed: 1 m/s\nFast speed: 4 m/s\nStroke: 0.9 m\nConfigurations\nMonostable\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pusher #\n| Output\n| Bool\n| Move forward.\n| Pusher # (Front Limit)\n| Input\n| Bool\n| At front limit.\n| Pusher # (Back Limit)\n| Input\n| Bool\n| At back limit.\nMonostable (Fast)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pusher #\n| Output\n| Bool\n| Move forward (fast).\n| Pusher # (Front Limit)\n| Input\n| Bool\n| At front limit.\n| Pusher # (Back Limit)\n| Input\n| Bool\n| At back limit.\nBistable\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pusher # (+)\n| Output\n| Bool\n| Move forward.\n| Pusher # (-)\n| Output\n| Bool\n| Move backward.\n| Pusher # (Front Limit)\n| Input\n| Bool\n| At front limit.\n| Pusher # (Back Limit)\n| Input\n| Bool\n| At back limit.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pusher # Set Point (V)\n| Output\n| Float\n| [-10, 10] V: sets the target speed.\n| Pusher # Position (V)\n| Input\n| Float\n| [0, 10] V: rod position.\nDigital & Analog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pusher # Set Point (V)\n| Output\n| Float\n| [-10, 10] V: sets the target speed.\n| Pusher # Position (V)\n| Input\n| Float\n| [0, 10] V: rod position.\n| Pusher # (Front Limit)\n| Input\n| Bool\n| At front limit.\n| Pusher # (Back Limit)\n| Input\n| Bool\n| At back limit.",
+      "text_sha256": "95fcee6c14deb74688053a27d5c8180f739f7cc1b62dca67480417badba413c6",
+      "intro": "Pneumatic pusher sorter equipped with two reed sensors indicating the front and back limits. It also includes a servo valve which can be used to set and measure the rod position. Control can be done by digital or analog values according to the selected configuration.",
+      "images": [
+        {
+          "alt": "pusher",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-pusher.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#chute-conveyor",
+      "source_id": "parts:light-load",
+      "title": "Chute Conveyor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#chute-conveyor",
+      "body": "Chute Conveyor\nStraight chute conveyor, mostly used to dispatch items from belt conveyors.",
+      "text_sha256": "141258086ff8c8b28f109f16a4355ab848abf13a1120706c1c791eeb4b9babd5",
+      "intro": "Straight chute conveyor, mostly used to dispatch items from belt conveyors.",
+      "images": [
+        {
+          "alt": "chute conveyor",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-chute-conveyor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#stop-blade",
+      "source_id": "parts:light-load",
+      "title": "Stop Blade",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#stop-blade",
+      "body": "Stop Blade\nThe stop blade is a pneumatically actuated device used to stop or accumulate material.\nNormally down\nStroke: 0.12 m\n| Tag\n| Controller I/O\n| Type\n| Description\n| Stop Blade #\n| Output\n| Bool\n| Raise.",
+      "text_sha256": "2478dfad0045aabba1b085565274cdc6bc59e470bab3490111c2eea5ade1b939",
+      "intro": "The stop blade is a pneumatically actuated device used to stop or accumulate material.",
+      "images": [
+        {
+          "alt": "stop blade",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-stop-blade.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#bracket-and-metal-corner",
+      "source_id": "parts:light-load",
+      "title": "Bracket and Metal Corner",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#bracket-and-metal-corner",
+      "body": "Bracket and Metal Corner\nThe bracket is a metal structure used as a height barrier and can be used to attach sensors.\nThe metal corner can be used for several purposes including sensor placement.\nBracket and Metal Corner are available in several colors (Context Menu > Configuration).\nMetal Corner Position Adjustment\nSimilarly to Aligners, Metal Corners include a gizmo that allows finer control over its position.\nLeft-clicking and dragging the white arrows' gizmo moves the aligner by 2.5 cm increments.\nHolding Left Shift while dragging allows unconstrained movement.",
+      "text_sha256": "ff5d5a02be2c0a60efba43cbf9b1723f64b583c66848aff3ec29dccbad84844e",
+      "intro": "The bracket is a metal structure used as a height barrier and can be used to attach sensors. The metal corner can be used for several purposes including sensor placement.",
+      "images": [
+        {
+          "alt": "bracket and metal corner",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-bracket-metal-corner.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#positioning-bars",
+      "source_id": "parts:light-load",
+      "title": "Positioning Bars",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/light-load/#positioning-bars",
+      "body": "Positioning Bars\nA device used to consecutively position items at the same place by clamping them.\nAvailable in two different configurations, left and right.\nIt is commonly used with Pick and Place Systems.\nVertical stroke: 0.373 m\nClamper stroke: 0.48 m\nLeft\n| Tag\n| Controller I/O\n| Type\n| Description\n| Positioning Left Bar # (Clamp)\n| Output\n| Bool\n| Clamp.\n| Positioning Left Bar # (Raise)\n| Output\n| Bool\n| Raise.\n| Positioning Left Bar # (Clamped)\n| Input\n| Bool\n| Item clamped or limit reached.\n| Positioning Left Bar # (Limit)\n| Input\n| Bool\n| Vertical limit reached.\nRight\n| Tag\n| Controller I/O\n| Type\n| Description\n| Positioning Right Bar # (Clamp)\n| Output\n| Bool\n| Clamp.\n| Positioning Right Bar # (Raise)\n| Output\n| Bool\n| Raise.\n| Positioning Right Bar # (Clamped)\n| Input\n| Bool\n| Item clamped or limit reached.\n| Positioning Right Bar # ( Limit)\n| Input\n| Bool\n| Vertical limit reached.",
+      "text_sha256": "f92769b96a48de19b5937b67573bb76df61a0b5e3710bc39a9602b2591da0ecd",
+      "intro": "A device used to consecutively position items at the same place by clamping them. Available in two different configurations, left and right.",
+      "images": [
+        {
+          "alt": "positioning bars",
+          "url": "https://docs.factoryio.com/manual/parts/img/light-load/fio-positioning-bars.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#sensors",
+      "source_id": "parts:sensors",
+      "title": "Sensors",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#sensors",
+      "body": "Sensors\nSensors are used to detect the presence of parts, measure distances and even determine the type of a part.\nFine Rotation\nAll sensors include a gizmo which can be used to rotate around the local up axis (Left-click and drag).\nAlternatively, you can rotate a sensor or reset the rotation through the Context Menu.\nRange\nSensor range can be manually set by Left-clicking and dragging the white circle gizmo (Capacitive, Inductive, Diffuse and Retroreflective sensors as well as RFID reader).",
+      "text_sha256": "5cbdee6706921c01a1ccab80bb332aab3314bba0731dd42c70705c13bf967cd8",
+      "intro": "Sensors are used to detect the presence of parts, measure distances and even determine the type of a part.",
+      "images": [
+        {
+          "alt": "sensors",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/fio-sensors.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#capacitive-sensor",
+      "source_id": "parts:sensors",
+      "title": "Capacitive Sensor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#capacitive-sensor",
+      "body": "Capacitive Sensor\nProximity sensor used for close detection of any material.\nIt is equipped with an LED, which indicates the presence of an object within its range.\nThe output value can be digital or analog according to the selected configuration.\nLED: green (detecting)\nDetectable materials: solids and liquids.\nSensing range: 0 - 0.2 m\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Capacitive Sensor #\n| Input\n| Bool\n| Detecting.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Capacitive Sensor # (V)\n| Input\n| Float\n| [0, 10] V: distance between sensor and detected object.",
+      "text_sha256": "58bb29fe0e83e62143e30bf5b3f72b74e8830f1a7581cb785099f84073249948",
+      "intro": "Proximity sensor used for close detection of any material. It is equipped with an LED, which indicates the presence of an object within its range. The output value can be digital or analog according to the selected configuration.",
+      "images": [
+        {
+          "alt": "capacitive sensor",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/fio-capacitive-sensor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#diffuse-sensor",
+      "source_id": "parts:sensors",
+      "title": "Diffuse sensor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#diffuse-sensor",
+      "body": "Diffuse sensor\nDiffuse photoelectric sensor which can detect any solid object.\nLED: red (detecting)\nDetectable materials: solids\nSensing range: 0 - 1.6 m\n| Tag\n| Controller I/O\n| Type\n| Description\n| Diffuse Sensor #\n| Input\n| Bool\n| Detecting.",
+      "text_sha256": "bdfb5f4bdf0cf92d96bc6a41a71455f648479ebb4b6b7488c0229805d83701a0",
+      "intro": "Diffuse photoelectric sensor which can detect any solid object.",
+      "images": [
+        {
+          "alt": "diffuse sensor",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/fio-diffuse-sensor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#inductive-sensor",
+      "source_id": "parts:sensors",
+      "title": "Inductive Sensor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#inductive-sensor",
+      "body": "Inductive Sensor\nProximity sensor used for close detection of conductive materials.\nIt is equipped with a LED, which indicates the presence of an object within its range.\nThe output value can be digital or analog, according to the selected configuration.\nLED: red (detecting)\nDetectable materials: conductive\nSensing range: 0 - 0.1 m\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Inductive Sensor #\n| Input\n| Bool\n| Detecting.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Inductive Sensor # (V)\n| Input\n| Float\n| [0, 10] V: distance between sensor and detected object.",
+      "text_sha256": "d63da6a8bbbdb96a46356e675afc3897e77f0c37f0dd9fa8485f20204bf1bcae",
+      "intro": "Proximity sensor used for close detection of conductive materials. It is equipped with a LED, which indicates the presence of an object within its range. The output value can be digital or analog, according to the selected configuration.",
+      "images": [
+        {
+          "alt": "inductive sensor",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/fio-inductive-sensor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#light-array-emitter-and-receiver",
+      "source_id": "parts:sensors",
+      "title": "Light Array (Emitter and Receiver)",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#light-array-emitter-and-receiver",
+      "body": "Light Array (Emitter and Receiver)\nA set of parallel light beams used to create a sensing field.\nTo ensure the synchronization of both devices (emitter and receiver), they must be properly aligned and facing each other.\nOnce this alignment is guaranteed (indicated by a green LED), all beams can be interrupted without breaking the synchronization.\nCan be configured to work in Numerical, Digital or Analog mode.\nNumber of beams: 8\nRange: 1.5 m\nDetectable materials: solids\nAnalog value = 10 * number of interrupted beams / 8\nConfigurations\nNumerical\n| Tag\n| Controller I/O\n| Type\n| Description\n| Light Array Emitter # (Value)\n| Input\n| Integer\n| Each integer bit represents a beam.\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Light Array Emitter # (Beam 1)\n| Input\n| Bool\n| Detecting.\n| Light Array Emitter # (Beam 2)\n| Input\n| Bool\n| Detecting.\n| Light Array Emitter # (Beam 3)\n| Input\n| Bool\n| Detecting.\n| Light Array Emitter # (Beam 4)\n| Input\n| Bool\n| Detecting.\n| Light Array Emitter # (Beam 5)\n| Input\n| Bool\n| Detecting.\n| Light Array Emitter # (Beam 6)\n| Input\n| Bool\n| Detecting.\n| Light Array Emitter # (Beam 7)\n| Input\n| Bool\n| Detecting.\n| Light Array Emitter # (Beam 8)\n| Input\n| Bool\n| Detecting.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Light Array Emitter # (V)\n| Input\n| Float\n| Light Array # (V)",
+      "text_sha256": "3365f1d14f3363831a6333dcc63f7eb4fcc57b55fdb9797e6dd82257def02098",
+      "intro": "A set of parallel light beams used to create a sensing field. To ensure the synchronization of both devices (emitter and receiver), they must be properly aligned and facing each other. Once this alignment is guaranteed (indicated by a green LED), all beams can be interrupted without breaking the synchronization. Can be configured to work in Numerical, Digital or Analog mode.",
+      "images": [
+        {
+          "alt": "light array",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/fio-light-array.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#retroreflective-sensor-and-reflector",
+      "source_id": "parts:sensors",
+      "title": "Retroreflective Sensor and Reflector",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#retroreflective-sensor-and-reflector",
+      "body": "Retroreflective Sensor and Reflector\nUnlike the other sensors, the retroreflective sensor requires a reflector.\nTo work properly, it must be aligned with the reflector.\nIt is equipped with two LEDs which indicate the correct alignment (green) and detection status (yellow).\nGreen LED: aligned with the reflector\nYellow LED: light beam not interrupted\nDetectable materials: solids\nSensing range: 0 - 6 m\n| Tag\n| Controller I/O\n| Type\n| Description\n| Retroreflective Sensor #\n| Input\n| Bool\n| Light beam interrupted.",
+      "text_sha256": "5e1f5a1ff546bb5c3002d9502a7e4aa1fad28a2d9b79d2d6ce66030c998935cc",
+      "intro": "Unlike the other sensors, the retroreflective sensor requires a reflector. To work properly, it must be aligned with the reflector. It is equipped with two LEDs which indicate the correct alignment (green) and detection status (yellow).",
+      "images": [
+        {
+          "alt": "retroreflective sensor",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/fio-retroreflective-sensor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#vision-sensor",
+      "source_id": "parts:sensors",
+      "title": "Vision Sensor",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#vision-sensor",
+      "body": "Vision Sensor\nThe Vision Sensor recognizes Raw Materials, Product Lids and Product Bases, and their respective colors.\nLED: red (detecting)\nDetectable materials: Raw Materials, Product Bases, Product Lids\nSensing range: 0.3 - 2 m\nThis sensor can be configured to detect more than one part type by selecting the proper configuration:\nAll Digital: return four digital inputs indicating which item was detected\nAll Numerical: return a value that encodes the detected item\nAll ID: returns a unique (random) value that identifies the detected item.\nCan be used similarly to barcode or RFID readers.\nItems Encoding Per Configuration\n| Item\n| All Digital\n| All Numerical\n| All ID\n|\n| Bit 0 1 2 3\n| Value\n| Value\n| None\n| 0 0 0 0\n| 0\n| 0\n| Blue Raw Material\n| 1 0 0 0\n| 1\n| ID\n| Blue Product Lid\n| 0 1 0 0\n| 2\n| ID\n| Blue Product Base\n| 1 1 0 0\n| 3\n| ID\n| Green Raw Material\n| 0 0 1 0\n| 4\n| ID\n| Green Product Lid\n| 1 0 1 0\n| 5\n| ID\n| Green Product Base\n| 0 1 1 0\n| 6\n| ID\n| Metal Raw Material\n| 1 1 1 0\n| 7\n| ID\n| Metal Product Lid\n| 0 0 0 1\n| 8\n| ID\n| Metal Product Base\n| 1 0 0 1\n| 9\n| ID\nConfigurations\nBlue/Green/Metal Base\n| Tag\n| Controller I/O\n| Type\n| Description\n| Vision Sensor #\n| Input\n| Bool\n| Detecting.\nBlue/Green/Metal Lid\n| Tag\n| Controller I/O\n| Type\n| Description\n| Vision Sensor #\n| Input\n| Bool\n| Detecting.\nBlue/Green/Metal Raw\n| Tag\n| Controller I/O\n| Type\n| Description\n| Vision Sensor #\n| Input\n| Bool\n| Detecting.\nAll Digital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Vision Sensor # (Bit0)\n| Input\n| Bool\n| Item encoding bit.\n| Vision Sensor # (Bit1)\n| Input\n| Bool\n| Item encoding bit.\n| Vision Sensor # (Bit2)\n| Input\n| Bool\n| Item encoding bit.\n| Vision Sensor # (Bit3)\n| Input\n| Bool\n| Item encoding bit.\nAll Numerical\n| Tag\n| Controller I/O\n| Type\n| Description\n| Vision Sensor # (Value)\n| Input\n| Int\n| Value representing the detected item.\nAll ID\n| Tag\n| Controller I/O\n| Type\n| Description\n| Vision Sensor # (Value)\n| Input\n| Int\n| Unique integer (ID) that identifies an item, always positive. Note that item IDs are not persistent between scene reset and load.",
+      "text_sha256": "e204a148366cf22bb614e11e0bc608ddc7de57605992d00a1f98482ccacf1df7",
+      "intro": "The Vision Sensor recognizes Raw Materials, Product Lids and Product Bases, and their respective colors.",
+      "images": [
+        {
+          "alt": "vision sensor",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/fio-vision-sensor.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#rfid-reader",
+      "source_id": "parts:sensors",
+      "title": "RFID Reader",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#rfid-reader",
+      "body": "RFID Reader\nRFID Tags\nNote that, RFID tags should not be confused with tags of parts.\nThe RFID reader can be used to read/write data of RFID tags. It implements a single trigger communication design where the controller sends a command to the reader and receives a response. Almost all items include an active tag, except for raw materials, product lids and bases. RFID tags are detected within a range of 0.5m when in front of the reader. The RFID reader can only detect one tag. If more than one tag is found, an error 2 is indicated in the RFID Reader # Status tag - see a list of all status values in the table below.\nOperation\nUse the RFID Reader # Command to set the command to execute. Next, use RFID Reader # Execute Command to execute the current command. Check the reader status with the tag RFID Reader # Status. A status of 0 indicates success when executing a command, a value greater than 0 indicates an error - see table below. Every time a command is executed, with or without errors, the RFID Reader # Command ID is increased by one. You may use this tag to detect when a command has finished executing.\nGreen LED: Idle\nOrange LED: Executing command\nRed LED: Error\nRFID Tags\nA RFID tag includes 128 DWORD of free memory and a unique serial number. Each DWORD can be accessed by setting the corresponding memory index (zero-based) in the reader (see table below).\n| Tag\n| Controller I/O\n| Type\n| Description\n| RFID Reader # Command\n| Output\n| Int\n| Sets the command to execute: 0 = Is tag available?1 = Read serial number2 = Read data3 = Write data4 = Clear all data\n| RFID Reader # Execute Command\n| Output\n| Bool\n| Executes the defined command.\n| RFID Reader # Memory Index\n| Output\n| Int\n| The tag memory index where to perform a read/write operation (zero-based index).\n| RFID Reader # Write Data\n| Output\n| Int\n| The data to write into the tag defined by RFID Reader # Memory Index.\n| RFID Reader # Command ID\n| Input\n| Int\n| The number of executed commands. Can be used to detect if the current command has been already executed.\n| RFID Reader # Status\n| Input\n| Int\n| Status of the reader after executing a command:0 = Success1 = ErrorNoTag2 = ErrorTooManyTags3 = ErrorInvalidIndex4 = InvalidCommand\n| RFID Reader # Read Data\n| Input\n| Int\n| Data read from a tag.",
+      "text_sha256": "502b99d3087b09c26fa4124f1070f052260d56484bf0655af34776e814b477b1",
+      "intro": "RFID Tags",
+      "images": [
+        {
+          "alt": "rfid reader",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/rfid-reader.png"
+        },
+        {
+          "alt": "transponder",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/rfid_items.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#incremental-encoder",
+      "source_id": "parts:sensors",
+      "title": "Incremental Encoder",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/sensors/#incremental-encoder",
+      "body": "Incremental Encoder\nSeveral parts include an incremental encoder which you can enable by right-clicking on the part and choosing Use Encoder on the Context Menu. This encoder uses two bits (A and B) to produce two wave forms which are 90 degrees out of phase (in quadrature). The encoder resolution is 0.0225 m, which is based on a velocity of 0.45 m/s at 20Hz (roller conveyor default velocity). The frequency of 20Hz has been chosen since it's easily supported by most I/O drivers.\nList of parts including an encoder:\nLoading Conveyor\nRoller Conveyor (2/4/6 m)\nCurved Roller Conveyor\nBelt Conveyor (2/4/6 m)\nCurved Belt Conveyor\nInclined Belt Conveyor\nExample of rotation pulses of a roller conveyor in digital configuration.\n| Phase\n| A\n| B\n| 1\n| 0\n| 0\n| 2\n| 0\n| 1\n| 3\n| 1\n| 1\n| 4\n| 1\n| 0",
+      "text_sha256": "f8494479225b820a732be82533ae08cb809ec3db9e6771751c6f0a74a9c67832",
+      "intro": "Several parts include an incremental encoder which you can enable by right-clicking on the part and choosing Use Encoder on the Context Menu. This encoder uses two bits (A and B) to produce two wave forms which are 90 degrees out of phase (in quadrature). The encoder resolution is 0.0225 m, which is based on a velocity of 0.45 m/s at 20Hz (roller conveyor default velocity). The frequency of 20Hz has been chosen since it's easily supported by most I/O drivers.",
+      "images": [
+        {
+          "alt": "encoder context menu",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/encoder-context-menu.png"
+        },
+        {
+          "alt": "encoder",
+          "url": "https://docs.factoryio.com/manual/parts/img/sensors/encoder.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#operators",
+      "source_id": "parts:operators",
+      "title": "Operators",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#operators",
+      "body": "Operators",
+      "text_sha256": "2cd413f0fb4733864b8877dc5ddb99147973fe2581c3d473f8366042fd47a562",
+      "intro": "",
+      "images": [
+        {
+          "alt": "operators",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/fio-operators.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#emergency-stop",
+      "source_id": "parts:operators",
+      "title": "Emergency Stop",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#emergency-stop",
+      "body": "Emergency Stop\nTwo-position red trigger action and non-illuminated push button (mushroom head).\nUsually used in emergency events.\nNormally closed contact type\n| Tag\n| Controller I/O\n| Type\n| Description\n| Emergency Stop #\n| Input\n| Bool\n| Emergency stop activated.",
+      "text_sha256": "e4395b828b72abc1e953748757ae99b8ae40425dda378e3ca30cd7595cee2c8a",
+      "intro": "Two-position red trigger action and non-illuminated push button (mushroom head). Usually used in emergency events.",
+      "images": [
+        {
+          "alt": "emergency stop",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/emergency-stop.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#push-buttons",
+      "source_id": "parts:operators",
+      "title": "Push Buttons",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#push-buttons",
+      "body": "Push Buttons\nIlluminated push buttons available in different colors compliant with the IEC 60204-1:2016 standard.\nCan be used as a momentary or alternate action, according to the selected configuration.\nThe push button color can be changed on the context menu.\nStart, Reset, and Stop (normally closed) push buttons\nTwo generic push buttons: Push Button NO (normally open) and Push Button NC (normally closed)\nColors compliant with IEC 60204-1:2016 standard\nRecommended colors by order of preference according to IEC 60204-1:2016\n| Actuator\n| Colors\n| Notes\n| Start/On\n| White, Grey, Black or Green\n|\n| Reset\n| Blue, White, Grey or Black\n|\n| Stop/Off\n| Black, Grey or White\n| Red is permitted when not used near and emergency button\n| Abnormal conditions\n| Yellow\n| e.g. interruption of an automatic cycle\nConfigurations\nMomentary Action\n| Tag\n| Controller I/O\n| Type\n| Description\n| Push Button #\n| Input\n| Bool\n| Pressed.\n| Push Button # (Light)\n| Output\n| Bool\n| Light on/off.\nAlternate Action\n| Tag\n| Controller I/O\n| Type\n| Description\n| Push Button #\n| Input\n| Bool\n| Toggle on/off.\n| Push Button # (Light)\n| Output\n| Bool\n| Light on/off.",
+      "text_sha256": "44c52de1a353c7a89855fef327712e8ab7f771f9ef607df399a225e7071312ed",
+      "intro": "Illuminated push buttons available in different colors compliant with the IEC 60204-1:2016 standard. Can be used as a momentary or alternate action, according to the selected configuration. The push button color can be changed on the context menu.",
+      "images": [
+        {
+          "alt": "push buttons",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/push-buttons.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#light-indicators",
+      "source_id": "parts:operators",
+      "title": "Light Indicators",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#light-indicators",
+      "body": "Light Indicators\nPanel mount light indicator. Commonly used on instrument panels for safety applications or status indication.\nAvailable in different colors compliant with the IEC 60204-1:2016 standard.\n| Tag\n| Controller I/O\n| Type\n| Description\n| Light Indicator #\n| Output\n| Bool\n| Light on/off.",
+      "text_sha256": "3c93d7ab780b123e75f7a89afadffc8f1a7b444a4c663f2e6c68952bca68c641",
+      "intro": "Panel mount light indicator. Commonly used on instrument panels for safety applications or status indication.",
+      "images": [
+        {
+          "alt": "light indicators",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/light-indicators.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#selector",
+      "source_id": "parts:operators",
+      "title": "Selector",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#selector",
+      "body": "Selector\nNon-illuminated selector switch mainly used to define the current state of a variable or task.\nLeft-click and drag to toggle between states. State 0 is selected by default.\nConfigurations\n2 Position\n| Tag\n| Controller I/O\n| Type\n| Description\n| Selector # (State 0)\n| Input\n| Bool\n| State 0 selected.\n| Selector # (State 1)\n| Input\n| Bool\n| State 1 selected.\n3 Position (A)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Selector # (State 1)\n| Input\n| Bool\n| State 1 selected.\n| Selector # (State 2)\n| Input\n| Bool\n| State 2 selected.\n3 Position (B)\n| Tag\n| Controller I/O\n| Type\n| Description\n| Selector # (State 1)\n| Input\n| Bool\n| State 1 selected.\n| Selector # (State 2)\n| Input\n| Bool\n| State 2 selected.",
+      "text_sha256": "1758df7964eadcc4cf580d2a895c6a1f6f956a84cca4187123aa21de85585c86",
+      "intro": "Non-illuminated selector switch mainly used to define the current state of a variable or task. Left-click and drag to toggle between states. State 0 is selected by default.",
+      "images": [
+        {
+          "alt": "selector",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/selector.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#potentiometer",
+      "source_id": "parts:operators",
+      "title": "Potentiometer",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#potentiometer",
+      "body": "Potentiometer\nUsed to generate an analog value proportional to the knob rotation.\nThe selected configuration can define the value range.\nConfigurations\n[0, 10] V\n| Tag\n| Controller I/O\n| Type\n| Description\n| Potentiometer # (V)\n| Input\n| Float\n| Current value.\n[-10, 10] V\n| Tag\n| Controller I/O\n| Type\n| Description\n| Potentiometer # (V)\n| Input\n| Float\n| Current value.\n[-5, 5] V\n| Tag\n| Controller I/O\n| Type\n| Description\n| Potentiometer # (V)\n| Input\n| Float\n| Current value.",
+      "text_sha256": "d04a237abe95591ff1629369ce4fa0b6790b688c41d46f1fd402b620162028fc",
+      "intro": "Used to generate an analog value proportional to the knob rotation. The selected configuration can define the value range.",
+      "images": [
+        {
+          "alt": "potentiometer",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/potentiometer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#digital-display",
+      "source_id": "parts:operators",
+      "title": "Digital Display",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#digital-display",
+      "body": "Digital Display\nAllows numerical values to be displayed during the simulation.\nThe selected configuration defines the value range and data type.\nConfigurations\n[0, 10] V\n| Tag\n| Controller I/O\n| Type\n| Description\n| Digital Display #\n| Output\n| Float\n| Displays value.\n[-10, 10] V\n| Tag\n| Controller I/O\n| Type\n| Description\n| Digital Display #\n| Output\n| Float\n| Displays value.\nInteger\n| Tag\n| Controller I/O\n| Type\n| Description\n| Digital Display #\n| Output\n| Integer\n| Displays value.\nBCD\n| Tag\n| Controller I/O\n| Type\n| Description\n| Digital Display #\n| Output\n| Unsigned packed BCD\n| Displays value.\nHexadecimal\n| Tag\n| Controller I/O\n| Type\n| Description\n| Digital Display #\n| Output\n| Hexadecimal\n| Displays value.",
+      "text_sha256": "c64c05ec530a03ffa00e958d4b7736601b28763358df5a8a3003c7fee25b247f",
+      "intro": "Allows numerical values to be displayed during the simulation. The selected configuration defines the value range and data type.",
+      "images": [
+        {
+          "alt": "digital display",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/digital-display.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#electric-switchboard",
+      "source_id": "parts:operators",
+      "title": "Electric Switchboard",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#electric-switchboard",
+      "body": "Electric Switchboard\nUsed to design an electric board with operators.",
+      "text_sha256": "048cbd9fc7f2022852a1e3d7baebed2d06601d99e330f1fb22f8ef521bef0b10",
+      "intro": "Used to design an electric board with operators.",
+      "images": [
+        {
+          "alt": "electric switchboard",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/electricswitchboard.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#column",
+      "source_id": "parts:operators",
+      "title": "Column",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/operators/#column",
+      "body": "Column\nMetal structure typically used to hold an electric switchboard.",
+      "text_sha256": "b59219eb9b2e88b2ba22353b1f5b2cd00f3e64a86568b71e4eefcb80ebfdbc97",
+      "intro": "Metal structure typically used to hold an electric switchboard.",
+      "images": [
+        {
+          "alt": "column",
+          "url": "https://docs.factoryio.com/manual/parts/img/operators/column.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:stations#stations",
+      "source_id": "parts:stations",
+      "title": "Stations",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#stations",
+      "body": "Stations",
+      "text_sha256": "9d3d204f2a3c132e2de2d73b37f8b585b032fb14863c9c59e162271fbe62490d",
+      "intro": "",
+      "images": []
+    },
+    {
+      "id": "parts:stations#machining-center",
+      "source_id": "parts:stations",
+      "title": "Machining Center",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#machining-center",
+      "body": "Machining Center\nThe Machining Center is a station used to manufacture lids and bases from raw materials.\nFirst, the articulated robot waits for raw material to be placed at the entry bay.\nWhen new material is detected it is loaded into the CNC machine, which will start manufacturing an item.\nEach item type takes a different interval of time to be produced (lids: 6 seconds; bases: 3 seconds).\nOnce the operation is complete, the robot places the item on the exit bay.\nThe production operation can be stopped at any time, restarted or reset.\nYou can interact with the Machining Center through the electric switchboard next to the safeguard door:\nEmergency: triggers an emergency stop, interrupting the articulated robot and the CNC.\nAfter an emergency stop the station can only be reset by disarming the emergency button and pressing the Reset button.\nStart: starts the station.\nStop: stops the articulated robot and the CNC.\nTo restart press the Start or Reset button.\nReset: resets the station.\nTwo stack lights placed on top of the safeguard provide information about the current status.\nGreen light: not busy.\nYellow light: busy.\nRed light: has an error (incorrect item detected at entry bay).\n| Tag\n| Controller I/O\n| Type\n| Description\n| Machining Center # (Produce Lids)\n| Output\n| Bool\n| Set True to produce lids; False to produce bases.\n| Machining Center # (Start)\n| Output\n| Bool\n| Start.\n| Machining Center # (Stop)\n| Output\n| Bool\n| Stop.\n| Machining Center # (Reset)\n| Output\n| Bool\n| Reset.\n| Machining Center # (Is Busy)\n| Input\n| Bool\n| Indicates whether an item is being processed.\n| Machining Center # (Has Error)\n| Input\n| Bool\n| Indicates whether an invalid item was detected on the entry bay.\n| Machining Center # (Opened)\n| Input\n| Bool\n| True when the door is open.\n| Machining Center # (Progress)\n| Input\n| Float\n| Machining progress (0-100).",
+      "text_sha256": "1b8ce03a4feba3f6859f82b087ee443cba6f834e739fb4e8dbfce2491f33a6f5",
+      "intro": "The Machining Center is a station used to manufacture lids and bases from raw materials. First, the articulated robot waits for raw material to be placed at the entry bay. When new material is detected it is loaded into the CNC machine, which will start manufacturing an item. Each item type takes a different interval of time to be produced (lids: 6 seconds; bases: 3 seconds). Once the operation is complete, the robot places the item on the exit bay.",
+      "images": [
+        {
+          "alt": "machining center",
+          "url": "https://docs.factoryio.com/manual/parts/img/stations/fio-machining-center.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:stations#elevator",
+      "source_id": "parts:stations",
+      "title": "Elevator",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#elevator",
+      "body": "Elevator\nHeavy-duty chain-driven elevator, used for transportation of all sorts of cargo between floors.\nThe elevator is equipped with two retroreflective sensors, placed at each end of the platform.\nThe elevator can be controlled by digital or analog values, according to the selected configuration.\nRoll radius: 45 mm\nPlatform stroke: 7 m\nPlatform speed: 0.68 m/s\nMaximum conveying speed: 0.45 m/s (digital); 0.8 m/s (analog)\nRetroreflective sensor LED: green (detecting reflector), yellow (beam not interrupted)\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Elevator # (Up)\n| Output\n| Bool\n| Move platform up.\n| Elevator # (Down)\n| Output\n| Bool\n| Move platform down.\n| Elevator # (Slow)\n| Output\n| Bool\n| Slow movement (20% of default speed).\n| Elevator # (+)\n| Output\n| Bool\n| Roll (arrow direction).\n| Elevator # (-)\n| Output\n| Bool\n| Roll.\n| Elevator # (Left Limit)\n| Input\n| Bool\n| Item detected.\n| Elevator # (Right Limit)\n| Input\n| Bool\n| Item detected.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Elevator # Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position.\n| Elevator # Position (V)\n| Input\n| Float\n| [0, 10] V: current position.\n| Elevator # (+)\n| Output\n| Bool\n| Roll (arrow direction).\n| Elevator # (-)\n| Output\n| Bool\n| Roll.\n| Elevator # (Left Limit)\n| Input\n| Bool\n| Item detected.\n| Elevator # (Right Limit)\n| Input\n| Bool\n| Item detected.",
+      "text_sha256": "41e86d91d8e1302bfe7949d70345b9a195903509e390acc3a543f60e17f66327",
+      "intro": "Heavy-duty chain-driven elevator, used for transportation of all sorts of cargo between floors. The elevator is equipped with two retroreflective sensors, placed at each end of the platform. The elevator can be controlled by digital or analog values, according to the selected configuration.",
+      "images": [
+        {
+          "alt": "elevator",
+          "url": "https://docs.factoryio.com/manual/parts/img/stations/fio-elevator.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:stations#pick-place",
+      "source_id": "parts:stations",
+      "title": "Pick & Place",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#pick-place",
+      "body": "Pick & Place\nGantry Pick and Place station with three axes controlled by servomotors.\nOften used to move light load cargo (e.g. cardboard boxes) into other conveyors or pallets.\nThe Pick and Place has four degrees of freedom, three correspond to the axes linear movement and another to gripper rotation.\nThe gripper is enabled by suction cups and includes a proximity sensor.\nCan be controlled by digital and analog values, according to the selected configuration.\nWhen controlled with digital I/O, axis movement is performed incrementally (step by step) on each rising edge of the controlling tag value.\nY-axis stroke: 1.25 m\nX-axis stroke: 2.125 m\nZ-axis stroke: 0.5m\nStep: 0.125 m\nBeam speed: 1.5 m/s\nGripper angular speed: 4.6 rad/s\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pick & Place # X(+)\n| Output\n| Bool\n| Take a positive step along X-axis.\n| Pick & Place # X(-)\n| Output\n| Bool\n| Take a negative step along X-axis.\n| Pick & Place # Y(+)\n| Output\n| Bool\n| Take a positive step along Y-axis.\n| Pick & Place # Y(-)\n| Output\n| Bool\n| Take a negative step along Y-axis.\n| Pick & Place # Z(+)\n| Output\n| Bool\n| Take a positive step along Z-axis.\n| Pick & Place # Z(-)\n| Output\n| Bool\n| Take a negative step along Z-axis.\n| Pick & Place # C(+)\n| Output\n| Bool\n| Rotate gripper.\n| Pick & Place # (Grab)\n| Output\n| Bool\n| Activate suction cups.\n| Pick & Place # (Moving-Z)\n| Input\n| Bool\n| Moving along Z-axis.\n| Pick & Place # (Moving-XY)\n| Input\n| Bool\n| Moving along XY-plane.\n| Pick & Place # (Box Detected)\n| Input\n| Bool\n| Detecting an item.\n| Pick & Place # (C Limit)\n| Input\n| Bool\n| Gripper at angular limit.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pick & Place # X Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along X-axis.\n| Pick & Place # Y Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Y-axis.\n| Pick & Place # Z Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Z-axis.\n| Pick & Place # C(+)\n| Output\n| Bool\n| Rotate gripper.\n| Pick & Place # (Grab)\n| Output\n| Bool\n| Activate suction cups.\n| Pick & Place # X Position (V)\n| Input\n| Float\n| [0, 10] V: current position along X-axis.\n| Pick & Place # Y Position (V)\n| Input\n| Float\n| [0, 10] V: cuurrent position along Y-axis.\n| Pick & Place # Z Position (V)\n| Input\n| Float\n| [0, 10] V: current position along Z-axis.\n| Pick & Place # (Box Detected)\n| Input\n| Bool\n| Detecting an item.\n| Pick & Place # (C Limit)\n| Input\n| Bool\n| Gripper at angular limit.\nDigital & Analog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Pick & Place # X Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along X-axis.\n| Pick & Place # Y Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Y-axis.\n| Pick & Place # Z Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Z-axis.\n| Pick & Place # C(+)\n| Output\n| Bool\n| Rotate gripper.\n| Pick & Place # (Grab)\n| Output\n| Bool\n| Activate suction cups.\n| Pick & Place # X Position (V)\n| Input\n| Float\n| [0, 10] V: current position along X-axis.\n| Pick & Place # Y Position (V)\n| Input\n| Float\n| [0, 10] V: current position along Y-axis.\n| Pick & Place # Z Position (V)\n| Input\n| Float\n| [0, 10] V: current position along Z-axis.\n| Pick & Place # (Moving-Z)\n| Input\n| Bool\n| Moving along Z-axis.\n| Pick & Place # (Moving-XY)\n| Input\n| Bool\n| Moving along XY-plane.\n| Pick & Place # (Box Detected)\n| Input\n| Bool\n| Detecting an item.\n| Pick & Place # (C Limit)\n| Input\n| Bool\n| Gripper at angular limit.",
+      "text_sha256": "24aabe5bb72e27559be277f242eddc0263ac3de71d6c63f9d48d4f6dbfdb3f9e",
+      "intro": "Gantry Pick and Place station with three axes controlled by servomotors. Often used to move light load cargo (e.g. cardboard boxes) into other conveyors or pallets.",
+      "images": [
+        {
+          "alt": "pick and place",
+          "url": "https://docs.factoryio.com/manual/parts/img/stations/fio-pick-n-place.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:stations#stacker-crane-and-rack",
+      "source_id": "parts:stations",
+      "title": "Stacker Crane and Rack",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#stacker-crane-and-rack",
+      "body": "Stacker Crane and Rack\nRail-mounted stacker crane used to stock heavy cargo.\nIncludes a cart, a vertical platform, and two forks which may slide to both sides.\nTwo laser rangefinders, placed on the cart and the platform, measure the horizontal and vertical position of the platform.\nRacks are upright steel frames connected by horizontal steel beams with the purpose to store loads.\nThe available rack is a single-deep rack type, also known as selective rack, which only allows loads to be stored one pallet deep.\nLoads can be stored from both sides of the rack.\nEach rack must be aligned with one of the rail ends, making the stacker crane stop at the correct position.\nThe stacker crane can be controlled by Digital, Numerical and Analog values, according to the selected configuration.\nForks stroke: 1.2 m\nCart stroke: 10.5 m\nPlatform stroke: 6.625 m\nCart speed: 1.4 m/s\nForks speed: 0.5 m/s\nPlatform speed: 1.7 m/s\nNumber of cells: 18\nNumerical: the target cell can be defined by an integer value between 1 and 54.\nIf this value is set to zero, the stacker crane stops at the current position.\nHowever, if it is higher than 54, it will move to the rest position (55).\nAnalog: the target/current position for each axis can be set/measured with analog values.\nDigital: each cell number is encoded by five digital values (see the following table)\n| Position\n| Actuators\n|\n| Bit 0 1 2 3 4 5\n| Locked\n| 000000\n| 1\n| 100000\n| 2\n| 010000\n| 3\n| 001000\n| ...\n| ...\n| 55 (rest)\n| 111011\nConfigurations\nNumerical\n| Tag\n| Controller I/O\n| Type\n| Description\n| Stacker Crane # Target Position\n| Output\n| Integer\n| Move to the desired cell.\n| Stacker Crane # (Left)\n| Output\n| Bool\n| Move forks left.\n| Stacker Crane # (Right)\n| Output\n| Bool\n| Move forks right.\n| Stacker Crane # Lift\n| Output\n| Bool\n| Slightly raises the platform for loading/unloading operations.\n| Stacker Crane # Moving-X\n| Input\n| Bool\n| Moving along X-axis.\n| Stacker Crane # Moving-Z\n| Input\n| Bool\n| Moving along Z-axis.\n| Stacker Crane # Left Limit\n| Input\n| Bool\n| Forks at left limit.\n| Stacker Crane # Middle Limit\n| Input\n| Bool\n| Forks at middle.\n| Stacker Crane # Right Limit\n| Input\n| Bool\n| Forks at right limit.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Stacker Crane # X Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along X-axis.\n| Stacker Crane # Z Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Z-axis.\n| Stacker Crane # (Left)\n| Output\n| Bool\n| Move forks left.\n| Stacker Crane # (Right)\n| Output\n| Bool\n| Move forks right.\n| Stacker Crane # X Position (V)\n| Input\n| Float\n| [0, 10] V: current position along X-axis.\n| Stacker Crane # Z Position (V)\n| Input\n| Float\n| [0, 10] V: current position along Z-axis.\n| Stacker Crane # Left Limit\n| Input\n| Bool\n| Forks at left limit.\n| Stacker Crane # Middle Limit\n| Input\n| Bool\n| Forks at middle.\n| Stacker Crane # Right Limit\n| Input\n| Bool\n| Forks at right limit.\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Stacker Crane # Target Position Bit0\n| Output\n| Bool\n| Target position encoding bit (least significant).\n| Stacker Crane # Target Position Bit1\n| Output\n| Bool\n| Target position encoding bit.\n| Stacker Crane # Target Position Bit2\n| Output\n| Bool\n| Target position encoding bit.\n| Stacker Crane # Target Position Bit3\n| Output\n| Bool\n| Target position encoding bit.\n| Stacker Crane # Target Position Bit4\n| Output\n| Bool\n| Target position encoding bit.\n| Stacker Crane # Target Position Bit5\n| Output\n| Bool\n| Target position encoding bit.\n| Stacker Crane # (Left)\n| Output\n| Bool\n| Move forks left.\n| Stacker Crane # (Right)\n| Output\n| Bool\n| Move forks right.\n| Stacker Crane # Lift\n| Output\n| Bool\n| Slightly raises the platform for loading/unloading operations.\n| Stacker Crane # Moving-X\n| Input\n| Bool\n| Moving along X-axis.\n| Stacker Crane # Moving-Z\n| Input\n| Bool\n| Moving along Z-axis.\n| Stacker Crane # Left Limit\n| Input\n| Bool\n| Forks at left limit.\n| Stacker Crane # Middle Limit\n| Input\n| Bool\n| Forks at middle.\n| Stacker Crane # Right Limit\n| Input\n| Bool\n| Forks at right limit.\nDigital & Analog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Stacker Crane # X Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along X-axis.\n| Stacker Crane # Z Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Z-axis.\n| Stacker Crane # (Left)\n| Output\n| Bool\n| Move forks left.\n| Stacker Crane # (Right)\n| Output\n| Bool\n| Move forks right.\n| Stacker Crane # X Position (V)\n| Input\n| Float\n| [0, 10] V: current position along X-axis.\n| Stacker Crane # Z Position (V)\n| Input\n| Float\n| [0, 10] V: current position along Z-axis.\n| Stacker Crane # Moving-X\n| Input\n| Bool\n| Moving along X-axis.\n| Stacker Crane # Moving-Z\n| Input\n| Bool\n| Moving along Z-axis.\n| Stacker Crane # Left Limit\n| Input\n| Bool\n| Forks at left limit.\n| Stacker Crane # Middle Limit\n| Input\n| Bool\n| Forks at middle.\n| Stacker Crane # Right Limit\n| Input\n| Bool\n| Forks at right limit.",
+      "text_sha256": "3511a6d49496f8dce4cce5e46a6b4cb3f8220019bc73d1e4b86a424cb6fa2849",
+      "intro": "Rail-mounted stacker crane used to stock heavy cargo. Includes a cart, a vertical platform, and two forks which may slide to both sides.",
+      "images": [
+        {
+          "alt": "stacker crane and rack",
+          "url": "https://docs.factoryio.com/manual/parts/img/stations/fio-stacker-crane-and-rack.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:stations#palletizer",
+      "source_id": "parts:stations",
+      "title": "Palletizer",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#palletizer",
+      "body": "Palletizer\nHigh-level palletizer used to stack cardboard boxes (Palletizing Box) on pallets.\nPusher stroke: 0.88 m\nElevator stroke: 1.75 m\nElevator speed: 2 m/s\n| Tag\n| Controller I/O\n| Type\n| Description\n| Palletizer # (Push)\n| Output\n| Bool\n| Move pusher.\n| Palletizer # (Turn)\n| Output\n| Bool\n| Turn flipper (used to rotate boxes by 90º).\n| Palletizer # (Clamp)\n| Output\n| Bool\n| Move clamper.\n| Palletizer # Belt (+)\n| Output\n| Bool\n| Rotate (input direction).\n| Palletizer # Belt (-)\n| Output\n| Bool\n| Rotate (output direction).\n| Palletizer # Chain (+)\n| Output\n| Bool\n| Rotate (input direction).\n| Palletizer # Chain (-)\n| Output\n| Bool\n| Rotate (output direction).\n| Palletizer # (Open Plate)\n| Output\n| Bool\n| Opens the plate.\n| Palletizer # Elevator +\n| Output\n| Bool\n| Moves the elevator up.\n| Palletizer # Elevator -\n| Output\n| Bool\n| Moves the elevator down.\n| Palletizer # Elevator (Move to Limit)\n| Output\n| Bool\n| Indicates that the elevator should move to the limit (up/down) and not by steps.\n| Palletizer # (Clamped)\n| Input\n| Bool\n| Clamper reached the front limit.\n| Palletizer # (Plate Limit)\n| Input\n| Bool\n| Plate is closed.\n| Palletizer # (Pusher Limit)\n| Input\n| Bool\n| Pusher is at front/back limit.\n| Palletizer # (Elevator Moving)\n| Input\n| Bool\n| Indicates the elevator is moving.\n| Palletizer # Elevator (Back Limit)\n| Input\n| Bool\n| Elevator back sensor.\n| Palletizer # Elevator (Front Limit)\n| Input\n| Bool\n| Elevator front sensor.",
+      "text_sha256": "049e0eda227a187d7f7ebc93204a089b895c9d408258b23f9590462a1e30f50f",
+      "intro": "High-level palletizer used to stack cardboard boxes (Palletizing Box) on pallets.",
+      "images": [
+        {
+          "alt": "palletizer",
+          "url": "https://docs.factoryio.com/manual/parts/img/stations/fio-palletizer.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:stations#two-axis-pick-place",
+      "source_id": "parts:stations",
+      "title": "Two-Axis Pick & Place",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#two-axis-pick-place",
+      "body": "Two-Axis Pick & Place\nThis part can be used to assemble Lids on Bases or pick and place items from one place to another.\nTo guarantee a correct fit, bases and lids should be properly aligned by Positioning Bars.\nX-axis stroke: 1.125 m\nZ-axis stroke: 0.625 m\nArm and picker speed: 2 m/s\nZ-axis rotation in 90° increments (arm and gripper)\nConfigurations\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Two-Axis Pick & Place # Z\n| Output\n| Bool\n| Move along Z-axis.\n| Two-Axis Pick & Place # X\n| Output\n| Bool\n| Move along X-axis.\n| Two-Axis Pick & Place # Rotate CW\n| Output\n| Bool\n| Rotate clockwise.\n| Two-Axis Pick & Place # Rotate CCW\n| Output\n| Bool\n| Rotate counterclockwise.\n| Two-Axis Pick & Place # Gripper CW\n| Output\n| Bool\n| Rotate gripper clockwise.\n| Two-Axis Pick & Place # Gripper CCW\n| Output\n| Bool\n| Rotate gripper counterclockwise.\n| Two-Axis Pick & Place # (Grab)\n| Output\n| Bool\n| Activate suction cup.\n| Two-Axis Pick & Place # (Moving X)\n| Input\n| Bool\n| Moving along X-axis.\n| Two-Axis Pick & Place # (Moving Z)\n| Input\n| Bool\n| Moving along Z-axis.\n| Two-Axis Pick & Place # (Rotating)\n| Input\n| Bool\n| Rotating.\n| Two-Axis Pick & Place # (Gripper rotating)\n| Input\n| Bool\n| Gripper rotating.\n| Two-Axis Pick & Place # (Detected)\n| Input\n| Bool\n| Detecting an item.\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Two-Axis Pick & Place # X Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along X-axis.\n| Two-Axis Pick & Place # Z Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Z-axis.\n| Two-Axis Pick & Place # Rotate CW\n| Output\n| Bool\n| Rotate clockwise.\n| Two-Axis Pick & Place # Rotate CCW\n| Output\n| Bool\n| Rotate counterclockwise.\n| Two-Axis Pick & Place # Gripper CW\n| Output\n| Bool\n| Rotate gripper clockwise.\n| Two-Axis Pick & Place # Gripper CCW\n| Output\n| Bool\n| Rotate gripper counterclockwise.\n| Two-Axis Pick & Place # (Grab)\n| Output\n| Bool\n| Activate suction cup.\n| Two-Axis Pick & Place # X Position (V)\n| Input\n| Float\n| [0, 10] V: current position along X-axis.\n| Two-Axis Pick & Place # Z Position (V)\n| Input\n| Float\n| [0, 10] V: current position along Z-axis.\n| Two-Axis Pick & Place # (Rotating)\n| Input\n| Bool\n| Rotating.\n| Two-Axis Pick & Place # (Gripper rotating)\n| Input\n| Bool\n| Gripper rotating.\n| Two-Axis Pick & Place # (Detected)\n| Input\n| Bool\n| Detecting an item.\nDigital & Analog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Two-Axis Pick & Place # X Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along X-axis.\n| Two-Axis Pick & Place # Z Set Point (V)\n| Output\n| Float\n| [0, 10] V: set target position along Z-axis.\n| Two-Axis Pick & Place # Rotate CW\n| Output\n| Bool\n| Rotate clockwise.\n| Two-Axis Pick & Place # Rotate CCW\n| Output\n| Bool\n| Rotate counterclockwise.\n| Two-Axis Pick & Place # Gripper CW\n| Output\n| Bool\n| Rotate gripper clockwise.\n| Two-Axis Pick & Place # Gripper CCW\n| Output\n| Bool\n| Rotate gripper counterclockwise.\n| Two-Axis Pick & Place # (Grab)\n| Output\n| Bool\n| Activate suction cup.\n| Two-Axis Pick & Place # X Position (V)\n| Input\n| Float\n| [0, 10] V: current position along X-axis.\n| Two-Axis Pick & Place # Z Position (V)\n| Input\n| Float\n| [0, 10] V: current position along Z-axis.\n| Two-Axis Pick & Place # (Moving X)\n| Input\n| Bool\n| Moving along X-axis.\n| Two-Axis Pick & Place # (Moving Z)\n| Input\n| Bool\n| Moving along Z-axis.\n| Two-Axis Pick & Place # (Rotating)\n| Input\n| Bool\n| Rotating.\n| Two-Axis Pick & Place # (Gripper rotating)\n| Input\n| Bool\n| Gripper rotating.\n| Two-Axis Pick & Place # (Detected)\n| Input\n| Bool\n| Detecting an item.",
+      "text_sha256": "2ead14425f6f72eaaf7eef4cfc27af41653ac36d98cd5537a35f972be060a326",
+      "intro": "This part can be used to assemble Lids on Bases or pick and place items from one place to another. To guarantee a correct fit, bases and lids should be properly aligned by Positioning Bars.",
+      "images": [
+        {
+          "alt": "two-axis pick and place",
+          "url": "https://docs.factoryio.com/manual/parts/img/stations/fio-two-axis-pick-n-place.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:stations#tank",
+      "source_id": "parts:stations",
+      "title": "Tank",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/stations/#tank",
+      "body": "Tank\nLiquid tank including two control valves and a capacitive level sensor which can be used to control the flow of liquid in and out of the tank.\nControl valves are controlled by pneumatic actuators that can be positioned with signals between 0 and 10 V.\nNote that capacitive sensors can also be used to detect liquid levels.\nThe liquid tank is primarily intended to be used for level and flow control using a PID.\nHeight: 3 m\nDiameter: 2 m\nDischarge pipe radius: 0.125 m\nMax. input flow: 0.25 m³/s\nMax. output flow: 0.3543 m³/s\nCapacitive sensors can detect liquid\nConfigurations\nAnalog\n| Tag\n| Controller I/O\n| Type\n| Description\n| Tank # (Fill Valve)\n| Output\n| Float\n| [0, 10] V: fill valve positioning.\n| Tank # (Discharge Valve)\n| Output\n| Float\n| [0, 10] V: discharge valve positioning.\n| Tank # (Level Meter)\n| Input\n| Float\n| [0, 10] V: level meter value.\n| Tank # (Flow Meter)\n| Input\n| Float\n| [0, 10] V: flow meter value (10 V = 0.3543 m³/s).\nDigital\n| Tag\n| Controller I/O\n| Type\n| Description\n| Tank (Fill Valve)\n| Output\n| Bool\n| Open fill valve.\n| Tank (Discharge Valve)\n| Output\n| Bool\n| Open discharge valve.",
+      "text_sha256": "7508516126bd3ff30e910fb02e8df5111033dde4d1768bf1460f9f63ed94f73c",
+      "intro": "Liquid tank including two control valves and a capacitive level sensor which can be used to control the flow of liquid in and out of the tank. Control valves are controlled by pneumatic actuators that can be positioned with signals between 0 and 10 V. Note that capacitive sensors can also be used to detect liquid levels. The liquid tank is primarily intended to be used for level and flow control using a PID.",
+      "images": [
+        {
+          "alt": "tank",
+          "url": "https://docs.factoryio.com/manual/parts/img/stations/fio-tank.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:warning-devices#warning-devices",
+      "source_id": "parts:warning-devices",
+      "title": "Warning Devices",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/warning-devices/#warning-devices",
+      "body": "Warning Devices\nParts used to draw attention to certain tasks and events through visual or aural alerts.",
+      "text_sha256": "0ecd79b9e4162282d22f5784e377bffdfa6f67d86c3f08f28d8335b9117dda87",
+      "intro": "Parts used to draw attention to certain tasks and events through visual or aural alerts.",
+      "images": [
+        {
+          "alt": "warning devices",
+          "url": "https://docs.factoryio.com/manual/parts/img/warning-devices/fio-warning-devices.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:warning-devices#alarm-siren",
+      "source_id": "parts:warning-devices",
+      "title": "Alarm Siren",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/warning-devices/#alarm-siren",
+      "body": "Alarm Siren\nThe alarm siren is audible in noisy surroundings due to the high volume and penetrating wail of the siren.\n| Tag\n| Controller I/O\n| Type\n| Description\n| Alarm Siren #\n| Output\n| Bool\n| Switch on/off.",
+      "text_sha256": "93ebba3ab20ba084d79aafe23ec8bbb2fd51dde50cfd3d73f0bf5008f840c8f9",
+      "intro": "The alarm siren is audible in noisy surroundings due to the high volume and penetrating wail of the siren.",
+      "images": [
+        {
+          "alt": "alarm siren",
+          "url": "https://docs.factoryio.com/manual/parts/img/warning-devices/siren.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:warning-devices#stack-light",
+      "source_id": "parts:warning-devices",
+      "title": "Stack Light",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/warning-devices/#stack-light",
+      "body": "Stack Light\nStack lights are commonly used as visual indicators of a machine's states and processes.\nMade of three different colors, red, yellow and green.\n| Tag\n| Controller I/O\n| Type\n| Description\n| Stack Light # (Red)\n| Output\n| Bool\n| Switch on/off.\n| Stack Light # (Yellow)\n| Output\n| Bool\n| Switch on/off.\n| Stack Light # (Green)\n| Output\n| Bool\n| Switch on/off.",
+      "text_sha256": "39b977563c6c6b57032069c364fc6d56d342ff32b24fc8ef754ff32fcd3678f1",
+      "intro": "Stack lights are commonly used as visual indicators of a machine's states and processes. Made of three different colors, red, yellow and green.",
+      "images": [
+        {
+          "alt": "stack light",
+          "url": "https://docs.factoryio.com/manual/parts/img/warning-devices/stack-light.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:warning-devices#warning-light",
+      "source_id": "parts:warning-devices",
+      "title": "Warning Light",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/warning-devices/#warning-light",
+      "body": "Warning Light\nRotating lamp, useful when a powerful visual warning signal is required.\n| Tag\n| Controller I/O\n| Type\n| Description\n| Warning Light #\n| Output\n| Bool\n| Switch on/off.",
+      "text_sha256": "a07501271d55bf15bcea26e811ecbc198089e1d8398c33543b70ff3e84d65b3d",
+      "intro": "Rotating lamp, useful when a powerful visual warning signal is required.",
+      "images": [
+        {
+          "alt": "warning light",
+          "url": "https://docs.factoryio.com/manual/parts/img/warning-devices/warning-light.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:walkways#walkways",
+      "source_id": "parts:walkways",
+      "title": "Walkways",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/walkways/#walkways",
+      "body": "Walkways\nThis category includes parts used to build passageways for workers or to isolate perimeters.\nThe First Person camera gives a realistic perspective when using these walkways.\nWalkways are available in several colors (Context Menu > Configuration).",
+      "text_sha256": "d4b4db4d731294d77413a76f013ff94ef2ccc4eaaf8c02b70d6111405263661a",
+      "intro": "This category includes parts used to build passageways for workers or to isolate perimeters. The First Person camera gives a realistic perspective when using these walkways.",
+      "images": [
+        {
+          "alt": "walkways",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/fio-walkways.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:walkways#handrails",
+      "source_id": "parts:walkways",
+      "title": "Handrails",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/walkways/#handrails",
+      "body": "Handrails\nMetal tube structures used to provide safety to operators on a shop floor.\n| Handrail (S)Small\n| Handrail (M)Medium\n| Handrail (L)Large\n| Handrail (XL)Extra Large\n| Corner Handrail\n|\n|\n|\n|\n|",
+      "text_sha256": "981a50ad02f539099a707ba644f6a75288e7113af93e98916e71e7cebecdc96a",
+      "intro": "Metal tube structures used to provide safety to operators on a shop floor.",
+      "images": [
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/handrail-s.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/handrail-m.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/handrail-l.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/handrail-xl.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/corner-handrail.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:walkways#platforms",
+      "source_id": "parts:walkways",
+      "title": "Platforms",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/walkways/#platforms",
+      "body": "Platforms\nMetal structures used to create floors at the desired height.\n| Platform (S)Small\n| Platform (M)Medium\n| Platform (L)Large\n| Platform (XL)Extra Large\n| Platform Pillar\n|\n|\n|\n|\n|",
+      "text_sha256": "90990fb5ab88630dcb71602b3ce37a8520b32cf9a9bbf55970f416624b0059aa",
+      "intro": "Metal structures used to create floors at the desired height.",
+      "images": [
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/platform-s.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/platform-m.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/platform-l.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/platform-xl.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/platform-pillar.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:walkways#safeguard",
+      "source_id": "parts:walkways",
+      "title": "Safeguard",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/walkways/#safeguard",
+      "body": "Safeguard\nGrid metal structures commonly used to define safe perimeters around machines or working areas.\n| Safeguard (S)\n| Safeguard (L)\n| Safeguard (I)\n|\n|\n|",
+      "text_sha256": "15ec77ee00c3e44e768529da597d2cb28d09744b010422eb61f8decb2a1e8475",
+      "intro": "Grid metal structures commonly used to define safe perimeters around machines or working areas.",
+      "images": [
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/safeguard-s.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/safeguard-l.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/safeguard-i.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:walkways#stairs",
+      "source_id": "parts:walkways",
+      "title": "Stairs",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/walkways/#stairs",
+      "body": "Stairs\nMetal structures to provide access to higher levels.\n| Stairs\n| Stairs Handrail\n| Stairs + Stairs Handrail\n|\n|\n|",
+      "text_sha256": "4d9c87068b743916055bf490f7264be3dcc9b1f162fd937464fe3ef33c6e4b7c",
+      "intro": "Metal structures to provide access to higher levels.",
+      "images": [
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/stairs.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/stairs-handrail.png"
+        },
+        {
+          "alt": "",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/stairs-with-handrail.png"
+        }
+      ]
+    },
+    {
+      "id": "parts:walkways#safety-door",
+      "source_id": "parts:walkways",
+      "title": "Safety Door",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/walkways/#safety-door",
+      "body": "Safety Door\nSafety door with a built-in hinge interlock switch.\n| Tag\n| Controller I/O\n| Type\n| Description\n| Safety Door #\n| Input\n| Bool\n| Door closed.",
+      "text_sha256": "500fe1aac080ac9bf8eff2c178cf215aebfbdde9c13704a002aa3e95a47d711c",
+      "intro": "Safety door with a built-in hinge interlock switch.",
+      "images": [
+        {
+          "alt": "elevator",
+          "url": "https://docs.factoryio.com/manual/parts/img/walkways/safety-door.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:emitter#emitter",
+      "source_id": "parts:emitter",
+      "title": "Emitter",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/emitter/#emitter",
+      "body": "Emitter\nEmits an Item to be used in a scene (e.g. cardboard box, pallet, etc.).\nWhile an item is still within the emitter volume, no more items are emitted.\nYou can choose which part or base to emit, the time between emissions, the number of items to emit and whether random position and/or orientation should be taken into account.\nAn emitter can be enabled or disabled by switching its tag On or Off.",
+      "text_sha256": "a395b3fad0448987a6db7ac9363f13b4ddff944ee7088e41811f6ec604aa1ff4",
+      "intro": "Emits an Item to be used in a scene (e.g. cardboard box, pallet, etc.). While an item is still within the emitter volume, no more items are emitted. You can choose which part or base to emit, the time between emissions, the number of items to emit and whether random position and/or orientation should be taken into account. An emitter can be enabled or disabled by switching its tag On or Off.",
+      "images": [
+        {
+          "alt": "emitter",
+          "url": "https://docs.factoryio.com/manual/parts/img/fio-emitter.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:emitter#options",
+      "source_id": "parts:emitter",
+      "title": "Options",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/emitter/#options",
+      "body": "Options\nBase to Emit\nThe base to emit (Pallet, Square Pallet, Stackable box or None).\nIf more than one option is selected, the emitter will emit randomly.\nIf at least one base is selected, None allows emitting a part randomly without a base.\nWhich bases to emit can also be set by a controller.\nFor this purpose use the controller-defined configuration, where the value of each bit in the Emitter # (Base) tag either enables or disables usage of the corresponding base:\n| Bit\n| Emitter # (Base)\n| Base\n| 1\n| 0000 0000 0000 0001\n| Pallet\n| 2\n| 0000 0000 0000 0010\n| Square pallet\n| 3\n| 0000 0000 0000 0100\n| Stackable box\nPart to Emit\nThe part to emit (Box (S), Box (M), Box (L), Palletizing Box, etc.).\nIf more than one option is selected, the emitter will emit randomly.\nIf at least one part is selected, None allows emitting a base randomly without a part.\nWhich parts to emit can also be set by a controller.\nFor this purpose use the controller-defined configuration, where the value of each bit in the Emitter # (Part) tag either enables or disables usage of the corresponding part:\n| Bit\n| Emitter # (Part)\n| Part\n| 1\n| 0000 0000 0000 0001\n| Small box\n| 2\n| 0000 0000 0000 0010\n| Medium box\n| 3\n| 0000 0000 0000 0100\n| Large box\n| 4\n| 0000 0000 0000 1000\n| Palletizing box\n| 5\n| 0000 0000 0001 0000\n| Blue raw material\n| 6\n| 0000 0000 0010 0000\n| Green raw material\n| 7\n| 0000 0000 0100 0000\n| Metal raw material\n| 8\n| 0000 0000 1000 0000\n| Blue product base\n| 9\n| 0000 0001 0000 0000\n| Green product base\n| 10\n| 0000 0010 0000 0000\n| Metal product base\n| 11\n| 0000 0100 0000 0000\n| Blue product lid\n| 12\n| 0000 1000 0000 0000\n| Green product lid\n| 13\n| 0001 0000 0000 0000\n| Metal product lid\n| 14\n| 0010 0000 0000 0000\n| Stackable box\nMax/Min Time\nThe emission time interval.\nThe emitter will randomly emit between Min and Max time limits.\nIf Max and Min limits are set to zero, the emitter will emit as soon as no item is within its volume.\nFor constant emission time intervals, set Min and Max equal.\nUp to\nThe number of items to emit.\nIf set to zero, it will emit up to the maximum number of items allowed in a scene (500).\nRandom Part Position/Orientation\nEach emitted part will appear at a random position and/or orientation within the volume.",
+      "text_sha256": "6eebed6e58a65ea2d9f1c83a38ae650951d8e771586d179d729da04f4e817e8f",
+      "intro": "The base to emit (Pallet, Square Pallet, Stackable box or None). If more than one option is selected, the emitter will emit randomly. If at least one base is selected, None allows emitting a part randomly without a base.",
+      "images": [
+        {
+          "alt": "emitter options",
+          "url": "https://docs.factoryio.com/manual/parts/img/fio-emitter-options.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:emitter#configurations",
+      "source_id": "parts:emitter",
+      "title": "Configurations",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/emitter/#configurations",
+      "body": "Configurations\nUser-Defined\n| Tag\n| Controller I/O\n| Type\n| Description\n| Emitter # (Emit)\n| Output\n| Bool\n| Start emitting.\nController-Defined\n| Tag\n| Controller I/O\n| Type\n| Description\n| Emitter # (Emit)\n| Output\n| Bool\n| Start emitting.\n| Emitter # (Part)\n| Output\n| Integer\n| Bit field defining which parts to emit.\n| Emitter # (Base)\n| Output\n| Integer\n| Bit field defining which bases to emit.",
+      "text_sha256": "b626ccbf4d9f603ae3c405206decb582e80bedd8b111de0142ea799aa9f57387",
+      "intro": "",
+      "images": []
+    },
+    {
+      "id": "parts:remover#remover",
+      "source_id": "parts:remover",
+      "title": "Remover",
+      "heading_level": 1,
+      "url": "https://docs.factoryio.com/manual/parts/remover/#remover",
+      "body": "Remover\nRemoves one or more Items from the scene (e.g. cardboard box, pallet, product lid) when they intersect the remover's volume.\nYou can enable or disable a remover by switching its tag on/off.",
+      "text_sha256": "a56c7cfb6665eca8dbfaf8994db58b58beb4f64c90ce5677f296e4477786bd60",
+      "intro": "Removes one or more Items from the scene (e.g. cardboard box, pallet, product lid) when they intersect the remover's volume. You can enable or disable a remover by switching its tag on/off.",
+      "images": [
+        {
+          "alt": "remover",
+          "url": "https://docs.factoryio.com/manual/parts/img/fio-remover.jpg"
+        }
+      ]
+    },
+    {
+      "id": "parts:remover#options",
+      "source_id": "parts:remover",
+      "title": "Options",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/remover/#options",
+      "body": "Options\nBases To Remove\nWhich bases to remove (Pallet, Square Pallet or Stackable box).\nCan also be set by a controller by using the controller-defined configuration, where the value of each bit in the Remover # (Bases to Remove) tag either enables or disables removal of the corresponding base:\n| Bit\n| Emitter # (Base)\n| Base\n| 1\n| 0000 0000 0000 0001\n| Pallet\n| 2\n| 0000 0000 0000 0010\n| Square pallet\n| 3\n| 0000 0000 0000 0100\n| Stackable box\nParts To Remove\nWhich parts to remove (Box (S), Box (M), Box (L), Palletizing Box, etc.).\nCan also be set by a controller by using the controller-defined configuration, where the value of each bit in the Remover # (Parts to Remove) tag either enables or disables removal of the corresponding part:\n| Bit\n| Emitter # (Part)\n| Part\n| 1\n| 0000 0000 0000 0001\n| Small box\n| 2\n| 0000 0000 0000 0010\n| Medium box\n| 3\n| 0000 0000 0000 0100\n| Large box\n| 4\n| 0000 0000 0000 1000\n| Palletizing box\n| 5\n| 0000 0000 0001 0000\n| Blue raw material\n| 6\n| 0000 0000 0010 0000\n| Green raw material\n| 7\n| 0000 0000 0100 0000\n| Metal raw material\n| 8\n| 0000 0000 1000 0000\n| Blue product base\n| 9\n| 0000 0001 0000 0000\n| Green product base\n| 10\n| 0000 0010 0000 0000\n| Metal product base\n| 11\n| 0000 0100 0000 0000\n| Blue product lid\n| 12\n| 0000 1000 0000 0000\n| Green product lid\n| 13\n| 0001 0000 0000 0000\n| Metal product lid\n| 14\n| 0010 0000 0000 0000\n| Stackable box",
+      "text_sha256": "7165d77c906d0ad9fff8c3d2e94758e55c1708a61bd09de3286240f5d98c329d",
+      "intro": "Which bases to remove (Pallet, Square Pallet or Stackable box).",
+      "images": []
+    },
+    {
+      "id": "parts:remover#configurations",
+      "source_id": "parts:remover",
+      "title": "Configurations",
+      "heading_level": 2,
+      "url": "https://docs.factoryio.com/manual/parts/remover/#configurations",
+      "body": "Configurations\nUser-Defined\n| Tag\n| Controller I/O\n| Type\n| Description\n| Remover # (Remove)\n| Output\n| Bool\n| Start removing.\nController-Defined\n| Tag\n| Controller I/O\n| Type\n| Description\n| Remover # (Parts to Remove)\n| Output\n| Integer\n| Bit field describing which parts to remove.\n| Remover # (Bases to Remove)\n| Output\n| Integer\n| Bit field describing which bases to remove.\n| Remover # (Detected Parts)\n| Output\n| Integer\n| Bit field describing which parts are in the remover.\n| Remover # (Detected Bases)\n| Output\n| Integer\n| Bit field describing which bases are in the remover.",
+      "text_sha256": "5c94e2747206296b52445bd7b512140c40d8320c4ebaefc1faab7f4b61aaa182",
+      "intro": "",
+      "images": []
+    }
+  ]
+}

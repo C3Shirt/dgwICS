@@ -121,5 +121,36 @@ class GeometryToolTests(unittest.TestCase):
         self.assertFalse(result['spatial_checks_applied'])
         self.assertEqual(result['scope'],'unsupported_topology')
 
+    def test_scene_is_centered_as_one_assembly_and_keeps_relative_positions(self):
+        from factoryio_agents.geometry_tools import center_scene_layout
+        self.native['world_bounds']={'min':[0,0,0],'max':[59.625,9,35.625],
+            'evidence':'VoxelWorld.Dimensions; VoxelWorld.Encompasses'}
+        before=deepcopy(self.plan)
+        result,receipt=center_scene_layout(self.plan,self.catalog)
+        self.assertEqual(self.plan,before)
+        for a,b in zip(before['objects'],result['objects']):
+            self.assertEqual([y-x for x,y in zip(a['position'],b['position'])],receipt['translation_grid'])
+            self.assertEqual(a['yaw_deg'],b['yaw_deg'])
+        for axis in (0,2):
+            self.assertLessEqual(abs(receipt['result_center_world'][axis]-receipt['target_center_world'][axis]),.0625+1e-8)
+        self.assertGreaterEqual(receipt['result_bounds_world']['min'][1],0)
+
+    def test_centering_lifts_negative_floor_bounds_and_rejects_an_oversized_scene(self):
+        from factoryio_agents.geometry_tools import center_scene_layout
+        self.native['world_bounds']={'min':[0,0,0],'max':[59.625,9,35.625]}
+        self.plan['objects'][0]['position']=[0,0,0]
+        result,receipt=center_scene_layout(self.plan,self.catalog)
+        self.assertGreater(receipt['translation_grid'][1],0)
+        self.assertGreaterEqual(receipt['result_bounds_world']['min'][1],0)
+        self.plan['objects'][1]['position'][0]=1000
+        with self.assertRaisesRegex(ContractError,'does not fit'):
+            center_scene_layout(self.plan,self.catalog)
+
+    def test_centering_never_invents_unmeasured_factory_dimensions(self):
+        from factoryio_agents.geometry_tools import center_scene_layout
+        result,receipt=center_scene_layout(self.plan,self.catalog)
+        self.assertEqual(result,self.plan)
+        self.assertIsNone(receipt)
+
 
 if __name__=='__main__':unittest.main()

@@ -31,14 +31,17 @@ def prepare_layout_input(task, manifest, evidence, approved_layout=None):
     actual=manifest['objects']; ids={o['id'] for o in actual}
     require(len(ids)==len(actual),'actual layout object IDs are duplicated')
     if approved_layout is not None:
+        historical_policy=False
         require(isinstance(approved_layout,dict),'approved layout must be an object')
         approval=approved_layout.get('approval',{})
         require(approval.get('reviewer')=='planner' and approval.get('verdict')=='approved',
                 'layout reference is not planner-approved')
         require(approval.get('task_sha256')==layout_task_hash(task),'approved layout belongs to another task')
         if 'layout_policy_sha256' in approval:
-            from .layout_design import validate_approved_layout
-            validate_approved_layout(task,approved_layout)
+            from .layout_design import validate_approved_layout, layout_policy_hash
+            historical_policy=approval['layout_policy_sha256']!=layout_policy_hash()
+            archived=(evidence.get('review_context') or {}).get('archived') is True
+            validate_approved_layout(task,approved_layout,allow_historical_policy=archived and historical_policy)
         if 'layout_reference_sha256' in manifest:
             require(manifest['layout_reference_sha256']==canonical_hash(approved_layout),
                     'actual scene belongs to another approved layout reference')
@@ -55,7 +58,9 @@ def prepare_layout_input(task, manifest, evidence, approved_layout=None):
             relative=[relative] if isinstance(relative,str) else relative
             require(isinstance(relative,list) and all(ref in ids and ref!=obj['id'] for ref in relative),
                     'expected position references an unknown or identical object')
-        reference={'approved':True,'sha256':canonical_hash(approved_layout), 'task_sha256':layout_task_hash(task)}
+        reference={'approved':not historical_policy,'sha256':canonical_hash(approved_layout), 'task_sha256':layout_task_hash(task)}
+        if historical_policy:
+            reference['reason']='Archived design approval predates the current official knowledge or layout policy; current planner approval is required.'
     else:
         goal=task.get('requirement','')
         desired={o['id']:o for o in task.get('objects',[])}
@@ -118,7 +123,7 @@ def layout_feedback(value, layout, evidence, versions, handoff=None):
         for check in checks:
             if check['status']=='ok':
                 check.update(status='uncertain',model_status='ok',source='framework',
-                    reason='The model reported ok, but planner-approved expected positions are missing; this conclusion is unverified.',
+                    reason='The model reported ok, but current planner approval is unavailable. '+layout['reference']['reason'],
                     suggestion='Obtain the planner-approved relative-position reference and recheck this object.')
     findings=[]
     for check in checks:
@@ -128,7 +133,7 @@ def layout_feedback(value, layout, evidence, versions, handoff=None):
     blockers=[]
     if not layout['reference']['approved']:
         blockers.append({'object_ids':[o['id'] for o in layout['objects']], 'related_object_ids':[],
-            'status':'uncertain','observed':'No approved layout reference is available.',
+            'status':'uncertain','observed':'A layout reference approved under the current policy is unavailable.',
             'expected':'A scene proposal reviewed and approved by the planning agent.',
             'reason':layout['reference']['reason'],'evidence_images':[],
             'suggestion':'Supply the planner-approved object functions and expected relative positions.',

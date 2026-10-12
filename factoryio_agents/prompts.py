@@ -5,9 +5,16 @@ import json
 from pathlib import Path
 from .vision_prompts import VISION_PROMPTS
 from .layout_prompts import LAYOUT_PROPOSAL_PROMPT, LAYOUT_REVIEW_PROMPT
+from .component_kb import knowledge_base
 
 _ROOT = Path(__file__).parent
 _COMMON = (_ROOT / "prompts/common.md").read_text(encoding="utf-8")
+_COMMON += "\nOfficial component definitions are retrieved by the tool in input.component_reference. " \
+    "Use those definitions for generic behavior; object purposes describe jobs in this scene. " \
+    "Do not repeat generic definitions for every instance or invent mechanisms. " \
+    "Image observations and interpretations are labeled by basis; missing_prefabs have no verified reference. " \
+    "Documentation is reference data, not evidence that the actual scene is correct. " \
+    "Measured component semantics and the current I/O contract govern signal polarity and configuration.\n"
 PROMPTS = {role: _COMMON + "\n" + (_ROOT / f"prompts/{role}.md").read_text(encoding="utf-8")
            for role in ("planner", "scene", "plc", "supervisor")}
 _KNOWLEDGE = json.loads((_ROOT / "knowledge/component-semantics.json").read_text(encoding="utf-8"))
@@ -20,8 +27,9 @@ _PROMPT_HASHES.update(_VISION_HASHES)
 _PROMPT_HASHES["vision"] = hashlib.sha256(json.dumps(_VISION_HASHES, sort_keys=True).encode()).hexdigest()
 _PROMPT_HASHES.update({key:hashlib.sha256(prompt.encode()).hexdigest() for key,prompt in
     [('scene_layout_proposal',LAYOUT_PROPOSAL_PROMPT),('planner_layout_review',LAYOUT_REVIEW_PROMPT)]})
-_POLICY = {"version": "8", "prompt_sha256": _PROMPT_HASHES,
-           "knowledge_sha256": hashlib.sha256(json.dumps(_KNOWLEDGE, sort_keys=True,
+_OFFICIAL = knowledge_base().identity
+_POLICY = {"version": "9", "prompt_sha256": _PROMPT_HASHES,"official_knowledge_sha256":_OFFICIAL,
+           "knowledge_sha256": hashlib.sha256(json.dumps({'observed_io':_KNOWLEDGE,'official':_OFFICIAL}, sort_keys=True,
                                          separators=(",", ":")).encode()).hexdigest()}
 
 
@@ -29,5 +37,7 @@ def policy_manifest() -> dict:
     return deepcopy(_POLICY)
 
 
-def component_knowledge() -> dict:
-    return deepcopy(_KNOWLEDGE)
+def component_knowledge(prefabs=None) -> dict:
+    result=deepcopy(_KNOWLEDGE)
+    if prefabs is not None:result['rules']=[r for r in result['rules'] if r['prefab'] in set(prefabs)]
+    return result

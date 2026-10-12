@@ -6,10 +6,11 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import mimetypes
 import os
+import re
 from pathlib import Path
 import secrets
 from threading import RLock, Thread
-from urllib.parse import unquote, urlsplit
+from urllib.parse import unquote, urlsplit, parse_qs
 import uuid
 
 from .contracts import ContractError, canonical_hash, file_hash, read_json, require, write_json
@@ -60,9 +61,16 @@ class Dashboard:
     def bootstrap(self):
         with self.lock:
             history=self.scan_history()
-            return {'project':str(self.project),'models':self.models,
+            from .component_kb import knowledge_base
+            return {'project':str(self.project),'models':self.models,'knowledge':knowledge_base().stats(),
                 'sessions':[self.summary(s) for s in self.sessions.values() if not s.get('historical')],
                 'history':history,'manual_control':True}
+
+    def knowledge(self,query='',prefab=None):
+        from .component_kb import knowledge_base
+        kb=knowledge_base();kb.unchanged()
+        return {'stats':kb.stats(),'results':kb.search(query,8) if query else [],
+                'reference':kb.references([prefab],'vision') if prefab else None}
 
     def historical(self, identifier):
         require(identifier in self.history,'unknown historical run')
@@ -98,8 +106,35 @@ class Dashboard:
 
     def get(self, identifier):
         with self.lock:
-            if identifier not in self.sessions: return self.historical(identifier)
+            if identifier not in self.sessions:
+                if re.fullmatch(r'[0-9a-f]{32}',identifier):
+                    return self.restore_finished_session(identifier)
+                return self.historical(identifier)
             return self.sessions[identifier]
+
+    def restore_finished_session(self, identifier):
+        """Reopen an ended web session after a dashboard upgrade, without executing it."""
+        matches=list((self.project/'runs').glob('web-*-'+identifier[:8]))
+        require(len(matches)==1,'saved web session not found')
+        root=matches[0].resolve();require(root.is_relative_to(self.project/'runs'),'invalid saved session path')
+        saved=read_json(root/'web-session.json')
+        require(saved.get('id')==identifier and Path(saved['output']).resolve()==root,'saved session identity differs')
+        require(saved.get('status') in ('finished','failed','cancelled') and not (root/'.writer.lock').exists(),
+                'this session is still active in another dashboard; continue there')
+        control=ManualControl(root,self.secrets)
+        record=read_json(root/'manual/steps.json') if (root/'manual/steps.json').is_file() else {}
+        control.steps=self.redactor.clean(record.get('steps',[]));control.revision=record.get('revision',0)
+        for step in control.steps:
+            for asset in step.get('request',{}).get('images',[]):
+                path=(root/'manual/assets'/asset['asset_id']).resolve()
+                require(path.is_relative_to(root/'manual/assets') and path.is_file() and file_hash(path)==asset['sha256'],
+                        'saved manual image changed or unavailable')
+                control.assets[asset['asset_id']]=path
+        if (root/'trace.jsonl').is_file():
+            control.events=self.redactor.clean([json.loads(line) for line in (root/'trace.jsonl').read_text(encoding='utf-8').splitlines()[-70:] if line.strip()])
+        session={**self.redactor.clean(saved),'historical':False,'control':control,'restored':True}
+        self.sessions[identifier]=session
+        return session
 
     def summary(self, session):
         snapshot=session['control'].snapshot()
@@ -174,6 +209,7 @@ class Dashboard:
         versions=read_json(scene/'versions.json'); evidence=read_json(evidence_path)
         versions.update(agent_policy=canonical_hash(policy_manifest()),config=canonical_hash(workflow.config))
         evidence['versions']=versions
+        evidence['review_context']={'archived':True,'source_run':str(source),'fresh_capture':False}
         reference=source/'approved-layout.json'
         if not reference.is_file(): reference=scene/'layout-reference.json'
         approved=read_json(reference) if reference.is_file() else None
@@ -220,6 +256,9 @@ def create_server(dashboard, port=8766):
                     return self.send(data,content_type=mimetypes.guess_type(name)[0]+'; charset=utf-8')
                 parts=[unquote(p) for p in path.strip('/').split('/')]
                 if parts==['api','bootstrap']: return self.send(dashboard.bootstrap())
+                if parts==['api','knowledge']:
+                    query=parse_qs(urlsplit(self.path).query)
+                    return self.send(dashboard.knowledge(query.get('q',[''])[0],query.get('prefab',[None])[0]))
                 if len(parts)>=3 and parts[:2]==['api','sessions']:
                     session=dashboard.get(parts[2])
                     if len(parts)==3: return self.send(dashboard.summary(session))

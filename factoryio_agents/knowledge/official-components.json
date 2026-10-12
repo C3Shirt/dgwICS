@@ -1,0 +1,848 @@
+{
+  "schema_version": 1,
+  "corpus_sha256": "54757be9b6f88266ab0d90a2bc87311afc416d5ca9ca950d3c71fbdc6d10c2f2",
+  "components": [
+    {
+      "id": "parts:items#stackable-box",
+      "official_name": "Stackable Box",
+      "prefabs": [
+        "StackableBox"
+      ],
+      "aliases": [
+        "可堆叠箱"
+      ],
+      "function": "Stackable Boxes are used to transport items such as Raw Material, Product Base, and Product Lid.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:items#stackable-box"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#roller-conveyor",
+      "official_name": "Roller Conveyor",
+      "prefabs": [
+        "RollerConveyor2M",
+        "RollerConveyor4M",
+        "RollerConveyor6M"
+      ],
+      "aliases": [
+        "辊筒输送带"
+      ],
+      "function": "Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#roller-conveyor"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#turntable",
+      "official_name": "Turntable",
+      "prefabs": [
+        "Turntable"
+      ],
+      "aliases": [
+        "转台"
+      ],
+      "function": "Powered heavy-duty turntable, typically used to sort pallets. It's equipped with free spin periphery rolls and pre-installed sensors.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#turntable"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#chute-conveyor-low",
+      "official_name": "Chute Conveyor Low",
+      "prefabs": [
+        "ChuteConveyorLow"
+      ],
+      "aliases": [
+        "低位滑槽"
+      ],
+      "function": "Straight chute conveyor, commonly used to dispatch pallets.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#chute-conveyor-low"
+      ]
+    },
+    {
+      "id": "parts:light-load#belt-conveyors",
+      "official_name": "Belt Conveyors",
+      "prefabs": [
+        "BeltConveyor2M",
+        "BeltConveyor4M"
+      ],
+      "aliases": [
+        "皮带输送带",
+        "传送带"
+      ],
+      "function": "Transport light-load cargo using a belt conveyor.",
+      "function_basis": "curated_summary_of_official_text",
+      "chapter_ids": [
+        "parts:light-load#belt-conveyors"
+      ],
+      "markers": [
+        {
+          "text": "The white arrow indicates the conveying flow direction.",
+          "basis": "official_text",
+          "source_url": "https://docs.factoryio.com/getting-started/creating-a-scene/"
+        }
+      ]
+    },
+    {
+      "id": "parts:light-load#conveyor-scale",
+      "official_name": "Conveyor Scale",
+      "prefabs": [
+        "ConveyorScale"
+      ],
+      "aliases": [
+        "输送带称重秤"
+      ],
+      "function": "High-speed conveyor scale used for weight control. Measures different weight ranges according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#conveyor-scale"
+      ]
+    },
+    {
+      "id": "parts:light-load#pop-up-wheel-sorter",
+      "official_name": "Pop-Up Wheel Sorter",
+      "prefabs": [
+        "PopUpWheelSorter"
+      ],
+      "aliases": [
+        "顶升轮式分拣器"
+      ],
+      "function": "A 45º double-sided pop-up wheel sorter used to divert items to three different directions via pivoted rollers.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#pop-up-wheel-sorter"
+      ]
+    },
+    {
+      "id": "parts:light-load#aligners",
+      "official_name": "Aligners",
+      "prefabs": [
+        "Aligner3"
+      ],
+      "aliases": [
+        "对齐器"
+      ],
+      "function": "Thin metal structures, attachable to a conveyor to prevent parts from falling when transported at high speeds. There are four types of aligners available and in several colors (Context Menu > Configuration).",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#aligners"
+      ]
+    },
+    {
+      "id": "parts:light-load#bracket-and-metal-corner",
+      "official_name": "Bracket and Metal Corner",
+      "prefabs": [
+        "MetalCorner"
+      ],
+      "aliases": [
+        "金属角件"
+      ],
+      "function": "The bracket is a metal structure used as a height barrier and can be used to attach sensors. The metal corner can be used for several purposes including sensor placement.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#bracket-and-metal-corner"
+      ]
+    },
+    {
+      "id": "parts:sensors#diffuse-sensor",
+      "official_name": "Diffuse sensor",
+      "prefabs": [
+        "DiffusePhotoelectricSensor"
+      ],
+      "aliases": [
+        "漫反射光电传感器",
+        "光电传感器",
+        "蓝色光电传感器"
+      ],
+      "function": "Detect solid objects with a diffuse photoelectric sensor.",
+      "function_basis": "curated_summary_of_official_text",
+      "chapter_ids": [
+        "parts:sensors#diffuse-sensor"
+      ],
+      "appearance": {
+        "text": "Official reference images show a blue rectangular housing, a dark front sensing face and a metal mounting base.",
+        "basis": "official_image_observation"
+      },
+      "markers": [
+        {
+          "text": "The red LED indicates detection of a solid object; the range line is a separate visualization.",
+          "basis": "official_text"
+        },
+        {
+          "text": "A dashed line extends from the sensor face along its sensing direction; official illustrations show red and white examples.",
+          "basis": "official_image_observation"
+        },
+        {
+          "text": "Range-line color alone is not a verified detection-state rule; the red-versus-white line transition has not been established.",
+          "basis": "text_and_image_interpretation"
+        }
+      ]
+    },
+    {
+      "id": "parts:sensors#retroreflective-sensor-and-reflector",
+      "official_name": "Retroreflective Sensor and Reflector",
+      "prefabs": [
+        "RetroreflectivePhotoelectricSensor",
+        "RetroreflectiveMirror"
+      ],
+      "aliases": [
+        "反射式光电传感器",
+        "反射板"
+      ],
+      "function": "Unlike the other sensors, the retroreflective sensor requires a reflector. To work properly, it must be aligned with the reflector. It is equipped with two LEDs which indicate the correct alignment (green) and detection status (yellow).",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:sensors#retroreflective-sensor-and-reflector"
+      ]
+    },
+    {
+      "id": "parts:sensors#light-array-emitter-and-receiver",
+      "official_name": "Light Array (Emitter and Receiver)",
+      "prefabs": [
+        "LightCurtainEmitter",
+        "LightCurtainReceiver"
+      ],
+      "aliases": [
+        "光幕",
+        "光幕发射器",
+        "光幕接收器"
+      ],
+      "function": "A set of parallel light beams used to create a sensing field. To ensure the synchronization of both devices (emitter and receiver), they must be properly aligned and facing each other. Once this alignment is guaranteed (indicated by a green LED), all beams can be interrupted without breaking the synchronization. Can be configured to work in Numerical, Digital or Analog mode.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:sensors#light-array-emitter-and-receiver"
+      ]
+    },
+    {
+      "id": "parts:operators#emergency-stop",
+      "official_name": "Emergency Stop",
+      "prefabs": [
+        "EmergencyStopButton"
+      ],
+      "aliases": [
+        "急停按钮"
+      ],
+      "function": "Two-position red trigger action and non-illuminated push button (mushroom head). Usually used in emergency events.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:operators#emergency-stop"
+      ]
+    },
+    {
+      "id": "parts:operators#push-buttons",
+      "official_name": "Push Buttons",
+      "prefabs": [
+        "StartPushButton",
+        "StopPushButton",
+        "ResetPushButton"
+      ],
+      "aliases": [
+        "按钮",
+        "启动按钮",
+        "停止按钮",
+        "复位按钮"
+      ],
+      "function": "An illuminated operator push button. Momentary or alternate action depends on the selected configuration.",
+      "function_basis": "curated_summary_of_official_text",
+      "chapter_ids": [
+        "parts:operators#push-buttons"
+      ],
+      "markers": [
+        {
+          "text": "Push-button colors are configurable. Identify the role from labels and the supplied object definition; color is a supporting cue.",
+          "basis": "official_text_and_usage_guidance"
+        }
+      ]
+    },
+    {
+      "id": "parts:operators#digital-display",
+      "official_name": "Digital Display",
+      "prefabs": [
+        "DigitalDisplay"
+      ],
+      "aliases": [
+        "数字显示器"
+      ],
+      "function": "Allows numerical values to be displayed during the simulation. The selected configuration defines the value range and data type.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:operators#digital-display"
+      ]
+    },
+    {
+      "id": "parts:operators#selector",
+      "official_name": "Selector",
+      "prefabs": [
+        "Selector"
+      ],
+      "aliases": [
+        "选择开关"
+      ],
+      "function": "Non-illuminated selector switch mainly used to define the current state of a variable or task. Left-click and drag to toggle between states. State 0 is selected by default.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:operators#selector"
+      ]
+    },
+    {
+      "id": "parts:operators#electric-switchboard",
+      "official_name": "Electric Switchboard",
+      "prefabs": [
+        "ElectricSwitchboard"
+      ],
+      "aliases": [
+        "控制面板"
+      ],
+      "function": "Used to design an electric board with operators.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:operators#electric-switchboard"
+      ]
+    },
+    {
+      "id": "parts:operators#column",
+      "official_name": "Column",
+      "prefabs": [
+        "Column"
+      ],
+      "aliases": [
+        "立柱"
+      ],
+      "function": "Metal structure typically used to hold an electric switchboard.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:operators#column"
+      ]
+    },
+    {
+      "id": "parts:warning-devices#stack-light",
+      "official_name": "Stack Light",
+      "prefabs": [
+        "VisualStatusIndicator"
+      ],
+      "aliases": [
+        "状态指示灯",
+        "三色灯"
+      ],
+      "function": "Stack lights are commonly used as visual indicators of a machine's states and processes. Made of three different colors, red, yellow and green.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:warning-devices#stack-light"
+      ]
+    },
+    {
+      "id": "parts:walkways#safeguard",
+      "official_name": "Safeguard",
+      "prefabs": [
+        "Safeguard",
+        "SafeguardI",
+        "SafeguardL"
+      ],
+      "aliases": [
+        "防护栏"
+      ],
+      "function": "Grid metal structures commonly used to define safe perimeters around machines or working areas.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:walkways#safeguard"
+      ]
+    },
+    {
+      "id": "parts:emitter#emitter",
+      "official_name": "Emitter",
+      "prefabs": [
+        "Emitter"
+      ],
+      "aliases": [
+        "供料器",
+        "发射器"
+      ],
+      "function": "Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted.",
+      "function_basis": "curated_summary_of_official_text",
+      "chapter_ids": [
+        "parts:emitter#emitter"
+      ],
+      "appearance": {
+        "text": "Official illustration shows a white dashed volume and a downward arrow.",
+        "basis": "official_image_observation"
+      },
+      "markers": [
+        {
+          "text": "The dashed volume depicts the region associated with emission; compare it with the intended receiving support surface.",
+          "basis": "text_and_image_interpretation"
+        }
+      ]
+    },
+    {
+      "id": "parts:remover#remover",
+      "official_name": "Remover",
+      "prefabs": [
+        "Remover"
+      ],
+      "aliases": [
+        "移除器"
+      ],
+      "function": "Remove configured items from the scene when they intersect the remover volume and removal is enabled.",
+      "function_basis": "curated_summary_of_official_text",
+      "chapter_ids": [
+        "parts:remover#remover"
+      ],
+      "appearance": {
+        "text": "Official illustration shows a white dashed volume and an upward arrow.",
+        "basis": "official_image_observation"
+      },
+      "markers": [
+        {
+          "text": "The dashed volume depicts the removal region; compare its overlap with the intended item arrival path.",
+          "basis": "text_and_image_interpretation"
+        }
+      ]
+    },
+    {
+      "id": "parts:items#boxes",
+      "official_name": "Boxes",
+      "prefabs": [],
+      "aliases": [],
+      "function": "There are four different types of boxes, each one with a different size and weight.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:items#boxes"
+      ]
+    },
+    {
+      "id": "parts:items#pallets",
+      "official_name": "Pallets",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Wooden pallets are used for stacking and transporting all sorts of cargo.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:items#pallets"
+      ]
+    },
+    {
+      "id": "parts:items#raw-material",
+      "official_name": "Raw Material",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Raw material is used to produce Product Lids and Bases in the Machining Center. Available as three different types of material: blue or green colored plastic, and metal.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:items#raw-material"
+      ]
+    },
+    {
+      "id": "parts:items#product-lid",
+      "official_name": "Product Lid",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Part that can be assembled into a Product Base to produce a Final Product.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:items#product-lid"
+      ]
+    },
+    {
+      "id": "parts:items#product-base",
+      "official_name": "Product Base",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Part that can be assembled into a Product Lid to produce a Final Product.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:items#product-base"
+      ]
+    },
+    {
+      "id": "parts:items#final-product",
+      "official_name": "Final Product",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Created by assembling a Base and Lid.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:items#final-product"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#curved-roller-conveyor",
+      "official_name": "Curved Roller Conveyor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Heavy-duty curved roller conveyor, can be controlled by digital and analog values according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#curved-roller-conveyor"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#loading-conveyor",
+      "official_name": "Loading conveyor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Heavy-duty conveyor, mostly used to load/unload cargo onto a Stacker Crane. Can be controlled by digital or analog values.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#loading-conveyor"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#roller-stop",
+      "official_name": "Roller Stop",
+      "prefabs": [],
+      "aliases": [],
+      "function": "This pneumatically actuated device can be used to stop, accumulate or prevent material collisions on conveyors.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#roller-stop"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#free-roller",
+      "official_name": "Free Roller",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Unmotorized roller used for conveyor fitting and adjustment.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#free-roller"
+      ]
+    },
+    {
+      "id": "parts:heavy-load#chain-transfer",
+      "official_name": "Chain Transfer",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Used to transfer cargo onto adjacent conveyors, works best with square pallets. It is made of loading rolls and three chain tracks.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:heavy-load#chain-transfer"
+      ]
+    },
+    {
+      "id": "parts:light-load#curved-belt-conveyor",
+      "official_name": "Curved Belt Conveyor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Belt Conveyors are used to transport light load cargo. Can be controlled by digital or analog values.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#curved-belt-conveyor"
+      ]
+    },
+    {
+      "id": "parts:light-load#belt-conveyor-gate",
+      "official_name": "Belt Conveyor Gate",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Powered slider bed belt conveyor gate designed to provide a passageway to personnel. It's equipped with a closed sensor and can be controlled by digital or analog values.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#belt-conveyor-gate"
+      ]
+    },
+    {
+      "id": "parts:light-load#inclined-belt-conveyor",
+      "official_name": "Inclined Belt Conveyor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Inclined Belt Conveyors are used to transport light load cargo. Can be controlled by digital or analog values.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#inclined-belt-conveyor"
+      ]
+    },
+    {
+      "id": "parts:light-load#straight-spur-conveyor",
+      "official_name": "Straight Spur Conveyor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Infeed/outfeed multi-belt conveyor, commonly used for accurate merging of loads into belt conveyors. Digital and analog values can control the conveyor.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#straight-spur-conveyor"
+      ]
+    },
+    {
+      "id": "parts:light-load#pivot-arm-sorter",
+      "official_name": "Pivot Arm Sorter",
+      "prefabs": [],
+      "aliases": [],
+      "function": "A 45º power face arm diverter, powered by a gearmotor. Equipped with a belt that helps to deviate the conveyed items onto the next part. The arm can rotate left or right according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#pivot-arm-sorter"
+      ]
+    },
+    {
+      "id": "parts:light-load#pusher",
+      "official_name": "Pusher",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Pneumatic pusher sorter equipped with two reed sensors indicating the front and back limits. It also includes a servo valve which can be used to set and measure the rod position. Control can be done by digital or analog values according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#pusher"
+      ]
+    },
+    {
+      "id": "parts:light-load#chute-conveyor",
+      "official_name": "Chute Conveyor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Straight chute conveyor, mostly used to dispatch items from belt conveyors.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#chute-conveyor"
+      ]
+    },
+    {
+      "id": "parts:light-load#stop-blade",
+      "official_name": "Stop Blade",
+      "prefabs": [],
+      "aliases": [],
+      "function": "The stop blade is a pneumatically actuated device used to stop or accumulate material.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#stop-blade"
+      ]
+    },
+    {
+      "id": "parts:light-load#positioning-bars",
+      "official_name": "Positioning Bars",
+      "prefabs": [],
+      "aliases": [],
+      "function": "A device used to consecutively position items at the same place by clamping them. Available in two different configurations, left and right.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:light-load#positioning-bars"
+      ]
+    },
+    {
+      "id": "parts:sensors#capacitive-sensor",
+      "official_name": "Capacitive Sensor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Proximity sensor used for close detection of any material. It is equipped with an LED, which indicates the presence of an object within its range. The output value can be digital or analog according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:sensors#capacitive-sensor"
+      ]
+    },
+    {
+      "id": "parts:sensors#inductive-sensor",
+      "official_name": "Inductive Sensor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Proximity sensor used for close detection of conductive materials. It is equipped with a LED, which indicates the presence of an object within its range. The output value can be digital or analog, according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:sensors#inductive-sensor"
+      ]
+    },
+    {
+      "id": "parts:sensors#vision-sensor",
+      "official_name": "Vision Sensor",
+      "prefabs": [],
+      "aliases": [],
+      "function": "The Vision Sensor recognizes Raw Materials, Product Lids and Product Bases, and their respective colors.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:sensors#vision-sensor"
+      ]
+    },
+    {
+      "id": "parts:sensors#rfid-reader",
+      "official_name": "RFID Reader",
+      "prefabs": [],
+      "aliases": [],
+      "function": "RFID Tags",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:sensors#rfid-reader"
+      ]
+    },
+    {
+      "id": "parts:sensors#incremental-encoder",
+      "official_name": "Incremental Encoder",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Several parts include an incremental encoder which you can enable by right-clicking on the part and choosing Use Encoder on the Context Menu. This encoder uses two bits (A and B) to produce two wave forms which are 90 degrees out of phase (in quadrature). The encoder resolution is 0.0225 m, which is based on a velocity of 0.45 m/s at 20Hz (roller conveyor default velocity). The frequency of 20Hz has been chosen since it's easily supported by most I/O drivers.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:sensors#incremental-encoder"
+      ]
+    },
+    {
+      "id": "parts:operators#light-indicators",
+      "official_name": "Light Indicators",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Panel mount light indicator. Commonly used on instrument panels for safety applications or status indication.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:operators#light-indicators"
+      ]
+    },
+    {
+      "id": "parts:operators#potentiometer",
+      "official_name": "Potentiometer",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Used to generate an analog value proportional to the knob rotation. The selected configuration can define the value range.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:operators#potentiometer"
+      ]
+    },
+    {
+      "id": "parts:stations#machining-center",
+      "official_name": "Machining Center",
+      "prefabs": [],
+      "aliases": [],
+      "function": "The Machining Center is a station used to manufacture lids and bases from raw materials. First, the articulated robot waits for raw material to be placed at the entry bay. When new material is detected it is loaded into the CNC machine, which will start manufacturing an item. Each item type takes a different interval of time to be produced (lids: 6 seconds; bases: 3 seconds). Once the operation is complete, the robot places the item on the exit bay.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:stations#machining-center"
+      ]
+    },
+    {
+      "id": "parts:stations#elevator",
+      "official_name": "Elevator",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Heavy-duty chain-driven elevator, used for transportation of all sorts of cargo between floors. The elevator is equipped with two retroreflective sensors, placed at each end of the platform. The elevator can be controlled by digital or analog values, according to the selected configuration.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:stations#elevator"
+      ]
+    },
+    {
+      "id": "parts:stations#pick-place",
+      "official_name": "Pick & Place",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Gantry Pick and Place station with three axes controlled by servomotors. Often used to move light load cargo (e.g. cardboard boxes) into other conveyors or pallets.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:stations#pick-place"
+      ]
+    },
+    {
+      "id": "parts:stations#stacker-crane-and-rack",
+      "official_name": "Stacker Crane and Rack",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Rail-mounted stacker crane used to stock heavy cargo. Includes a cart, a vertical platform, and two forks which may slide to both sides.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:stations#stacker-crane-and-rack"
+      ]
+    },
+    {
+      "id": "parts:stations#palletizer",
+      "official_name": "Palletizer",
+      "prefabs": [],
+      "aliases": [],
+      "function": "High-level palletizer used to stack cardboard boxes (Palletizing Box) on pallets.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:stations#palletizer"
+      ]
+    },
+    {
+      "id": "parts:stations#two-axis-pick-place",
+      "official_name": "Two-Axis Pick & Place",
+      "prefabs": [],
+      "aliases": [],
+      "function": "This part can be used to assemble Lids on Bases or pick and place items from one place to another. To guarantee a correct fit, bases and lids should be properly aligned by Positioning Bars.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:stations#two-axis-pick-place"
+      ]
+    },
+    {
+      "id": "parts:stations#tank",
+      "official_name": "Tank",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Liquid tank including two control valves and a capacitive level sensor which can be used to control the flow of liquid in and out of the tank. Control valves are controlled by pneumatic actuators that can be positioned with signals between 0 and 10 V. Note that capacitive sensors can also be used to detect liquid levels. The liquid tank is primarily intended to be used for level and flow control using a PID.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:stations#tank"
+      ]
+    },
+    {
+      "id": "parts:warning-devices#alarm-siren",
+      "official_name": "Alarm Siren",
+      "prefabs": [],
+      "aliases": [],
+      "function": "The alarm siren is audible in noisy surroundings due to the high volume and penetrating wail of the siren.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:warning-devices#alarm-siren"
+      ]
+    },
+    {
+      "id": "parts:warning-devices#warning-light",
+      "official_name": "Warning Light",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Rotating lamp, useful when a powerful visual warning signal is required.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:warning-devices#warning-light"
+      ]
+    },
+    {
+      "id": "parts:walkways#handrails",
+      "official_name": "Handrails",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Metal tube structures used to provide safety to operators on a shop floor.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:walkways#handrails"
+      ]
+    },
+    {
+      "id": "parts:walkways#platforms",
+      "official_name": "Platforms",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Metal structures used to create floors at the desired height.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:walkways#platforms"
+      ]
+    },
+    {
+      "id": "parts:walkways#stairs",
+      "official_name": "Stairs",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Metal structures to provide access to higher levels.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:walkways#stairs"
+      ]
+    },
+    {
+      "id": "parts:walkways#safety-door",
+      "official_name": "Safety Door",
+      "prefabs": [],
+      "aliases": [],
+      "function": "Safety door with a built-in hinge interlock switch.",
+      "function_basis": "official_text",
+      "chapter_ids": [
+        "parts:walkways#safety-door"
+      ]
+    }
+  ],
+  "retrieval_policy": "Exact prefab lookup, deduplicated component families, role-specific compact views."
+}

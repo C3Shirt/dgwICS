@@ -16,7 +16,8 @@ def proposal_hash(proposal):
 def layout_policy_hash():
     from .prompts import policy_manifest
     hashes=policy_manifest()['prompt_sha256']
-    return canonical_hash({k:hashes[k] for k in ('scene_layout_proposal','planner_layout_review')})
+    return canonical_hash({**{k:hashes[k] for k in ('scene_layout_proposal','planner_layout_review')},
+                           'official_knowledge_sha256':policy_manifest()['official_knowledge_sha256']})
 
 
 def validate_layout_proposal(value, task):
@@ -73,14 +74,14 @@ def compose_approved_layout(task, proposal, review, *, policy_sha256=None):
         'layout_policy_sha256':policy_sha256 or layout_policy_hash()}}
 
 
-def validate_approved_layout(task, approved, proposal=None, review=None):
+def validate_approved_layout(task, approved, proposal=None, review=None, *, allow_historical_policy=False):
     require(isinstance(approved,dict) and set(approved)=={'scene_goal','objects','approval'},'invalid approved layout artifact')
     validate_layout_proposal({k:approved[k] for k in ('scene_goal','objects')},task)
     approval=approved['approval']
     require(isinstance(approval,dict) and approval.get('reviewer')=='planner' and approval.get('verdict')=='approved',
             'layout reference is not planner-approved')
     require(approval.get('task_sha256')==layout_task_hash(task),'approved layout belongs to another task')
-    require(approval.get('layout_policy_sha256')==layout_policy_hash(),'layout approval policy changed')
+    require(allow_historical_policy or approval.get('layout_policy_sha256')==layout_policy_hash(),'layout approval policy changed')
     require(approval.get('proposal_sha256')==proposal_hash({k:approved[k] for k in ('scene_goal','objects')}),
             'approved layout proposal changed')
     require(isinstance(approval.get('review_sha256'),str) and len(approval['review_sha256'])==64,'layout review hash missing')

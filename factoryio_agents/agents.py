@@ -106,7 +106,8 @@ def complete_role(client, role, prompt, payload, handoff=None, images=None, meta
     from .review_context import project_review_payload
     payload = project_review_payload(payload, role)
     payload = {**payload, "handoff": handoff, "policy": policy_manifest()}
-    if not metadata_from_request: payload['component_knowledge'] = component_knowledge()
+    from .component_kb import selected_prefabs, references_for_payload
+    if not metadata_from_request: payload['component_knowledge'] = component_knowledge(selected_prefabs(payload))
     from contextlib import nullcontext
     from .training import TrainingRecorder
     recorder=getattr(client,'recorder',None)
@@ -118,6 +119,17 @@ def complete_role(client, role, prompt, payload, handoff=None, images=None, meta
         if isinstance(recorder,TrainingRecorder):
             capture=recorder.capture_context({'handoff':handoff,'versions':payload['versions'],
                 'policy':payload['policy'],'task_id':request_task_id})
+    # Always retrieve from the pinned shared KB; model-supplied reference text cannot override it.
+    model_payload=deepcopy(model_payload)
+    model_payload.pop('component_reference',None)
+    reference=references_for_payload(model_payload,role)
+    if reference['requested_prefabs']:
+        model_payload['component_reference']=reference
+        if isinstance(recorder,TrainingRecorder):
+            recorder.event('component_knowledge_retrieved',{'role':role,
+                'requested_prefabs':reference['requested_prefabs'],
+                'component_ids':[c['component_id'] for c in reference['components']],
+                'missing_prefabs':reference['missing_prefabs'],'knowledge_sha256':reference['knowledge_sha256']})
     with capture:
         value = client.complete(role, prompt, model_payload, images) if images else client.complete(role, prompt, model_payload)
     require(isinstance(value, dict), "role response must be object")
@@ -356,6 +368,19 @@ class SceneAgent:
         require(isinstance(value.get("objects"), list) and bool(value["objects"]), "empty scene plan")
         return value
 
+    def _center_layout(self, value, catalog, candidate_id):
+        from .geometry_tools import center_scene_layout
+        resolved,receipt=center_scene_layout(value,catalog)
+        recorder=getattr(self.client,'recorder',None)
+        if receipt is not None and recorder is not None:
+            from .contracts import write_json
+            receipt.update(model_layout_sha256=canonical_hash(value),resolved_layout_sha256=canonical_hash(resolved),
+                model_candidate_id=candidate_id,native_geometry_sha256=canonical_hash(catalog['native_geometry']))
+            if getattr(recorder,'directory',None):
+                write_json(recorder.directory/'derived'/('centering-'+canonical_hash(resolved)+'.json'),receipt)
+            recorder.event('scene_layout_centered',receipt)
+        return resolved
+
     def _stage(self, payload, handoff, task, required_templates, layout, catalog=None):
         from .memory import planner_stage_cache
         recorder = getattr(self.client, 'recorder', None)
@@ -384,8 +409,10 @@ class SceneAgent:
                     yaw = obj.get('yaw_deg')
                     require(type(yaw) in (int, float) and yaw % 90 == 0, 'layout yaw must be a multiple of 90')
                 if payload['scene_stage']=='layout_constraints':
-                    from .geometry_tools import resolve_relative_layout
-                    resolved=resolve_relative_layout(value,catalog)
+                    from .geometry_tools import resolve_relative_layout, validate_layout_geometry
+                    resolved=resolve_relative_layout(value,catalog,verify=False)
+                    resolved=self._center_layout(resolved,catalog,candidate_id)
+                    validate_layout_geometry(resolved,catalog)
                     recorder=getattr(self.client,'recorder',None)
                     if recorder is not None:
                         receipt={'authority':'native_prefab_geometry','model_constraints_sha256':canonical_hash(value),
@@ -402,8 +429,9 @@ class SceneAgent:
                             'layout stage only selects templates and geometry; settings and mappings belong in configuration_io')
                     from .geometry_tools import validate_layout_geometry, resolve_transport_clearance
                     resolved, changes=resolve_transport_clearance(value,catalog or {})
+                    resolved=self._center_layout(resolved,catalog or {},candidate_id)
                     validate_layout_geometry(resolved,catalog or {})
-                    if changes:
+                    if changes or resolved!=value:
                         if recorder is not None:
                             from .contracts import write_json
                             receipt={'authority':'conservative_native_voxel_clearance','model_layout_sha256':canonical_hash(value),

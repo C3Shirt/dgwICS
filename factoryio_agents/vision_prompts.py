@@ -7,6 +7,9 @@ Object descriptions state the intended design; they do not prove what is shown i
 Inspect the images carefully and compare them with the goal and expected relative positions.
 Use the supplied object IDs and functions to identify objects. If identification or placement
 cannot be confirmed visually, explain the uncertainty and request a clearer view.
+Use component_reference for generic official functions, appearance and visual marker meanings.
+It is reference knowledge, not evidence of actual placement. Compare scene-specific functions
+with these definitions; report conflicting claims or uncertain identification for affected objects.
 
 2. Current industrial scene goal
 Read layout_review.scene_goal in the user message for the current scene's purpose.

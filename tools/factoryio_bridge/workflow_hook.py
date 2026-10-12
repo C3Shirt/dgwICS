@@ -68,7 +68,8 @@ def load(ipc: Path, request_path: Path, confirmation: Path, save_before_load: bo
                "object_reconciliation": reconciliation}
     if all(isinstance(o.get('bounds_world'), dict) for o in data['objects']):
         receipt['native_geometry'] = {'coordinate_units':'native_world', 'objects':data['objects'],
-                                      'coordinate_system':data.get('coordinate_system')}
+                                      'coordinate_system':data.get('coordinate_system'),
+                                      'world_bounds':data.get('world_bounds'),'bridge':data.get('bridge')}
     if data.get('acknowledged_load_failure') is not None:
         receipt['acknowledged_load_failure'] = data['acknowledged_load_failure']
     snapshot = data.get("saved_snapshot")

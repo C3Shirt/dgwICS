@@ -132,7 +132,8 @@ namespace FactoryIOAgentBridge
             if (action == "prefab_geometry")
             {
                 JObject data = new JObject { {"app_version", _app.Version}, {"assembly_sha256", _assemblySha},
-                    {"coordinate_system", Coordinates()}, {"prefabs", PrefabGeometry()} };
+                    {"coordinate_system", Coordinates()}, {"world_bounds", WorldBounds()},
+                    {"bridge", BridgeIdentity()}, {"prefabs", PrefabGeometry()} };
                 Complete(true, null, data); return;
             }
             if (_scene.IsLoading) throw new InvalidOperationException("Scene is loading; retry after completion");
@@ -344,6 +345,7 @@ namespace FactoryIOAgentBridge
                     {"socket_connected",modbus.MasterConnected}, {"has_error",modbus.HasError}, {"host", modbus.IPAddress},
                     {"port", modbus.Port}, {"unit_id", modbus.SlaveID}, {"auto_connect", modbus.AutoConnect} }},
                 {"frame", Time.frameCount}, {"scene_loading", _scene.IsLoading},
+                {"world_bounds", WorldBounds()}, {"bridge", BridgeIdentity()},
                 {"scene_path", _scene.CurrentSceneInfo.HasValue ? _scene.CurrentSceneInfo.Value.Path : null},
                 {"camera_index", _camera.CameraPositionIndex}, {"saved_camera_count", _camera.CameraPositions.Count},
                 {"objects", objects}, {"item_count", _scene.CurrentItemCount},
@@ -351,6 +353,21 @@ namespace FactoryIOAgentBridge
         }
 
         private static JArray Vector(Vector3 v) { return new JArray(v.x, v.y, v.z); }
+
+        private static JObject BridgeIdentity()
+        {
+            return new JObject { {"protocol", Bootstrap.Protocol()}, {"geometry_version", 2},
+                {"bridge_sha256", Hash(typeof(AgentBridge).Assembly.Location)} };
+        }
+
+        private JObject WorldBounds()
+        {
+            Vector3Int dims = _edit.World.Dimensions;
+            return new JObject { {"min", new JArray(0, 0, 0)},
+                {"max", new JArray(dims.x * 0.125f, dims.y * 0.125f, dims.z * 0.125f)},
+                {"grid_dimensions", new JArray(dims.x, dims.y, dims.z)},
+                {"evidence", "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"} };
+        }
 
         private static JObject Coordinates()
         {

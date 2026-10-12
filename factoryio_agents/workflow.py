@@ -400,7 +400,13 @@ class Workflow:
                 self.transition("planning", phase="planning", active_role="planner")
                 reuse = set((resume_seed or {}).get('reusable', []))
                 if 'task' in reuse:
-                    catalog, task = read_json(self.output / 'catalog.json'), read_json(self.output / 'task.json')
+                    task = read_json(self.output / 'task.json')
+                    # Bridge capabilities belong to the current process. A restored catalog can
+                    # contain an older geometry extractor even when the task remains reusable.
+                    catalog = self.catalog()
+                    self.state.update(phase='planning',active_role='planner')
+                    self.trace('catalog_refreshed',source_run=resume_seed['source_run'],
+                               reason='measure current bridge capabilities before reusing design')
                     write_json(self.output / 'requirement.json', {'requirement':requirement, 'protocol':self.config['protocol']})
                     write_json(self.output / 'agent-policy.json', policy_manifest())
                     self.trace('artifact_reused', artifact='task', source_run=resume_seed['source_run'])

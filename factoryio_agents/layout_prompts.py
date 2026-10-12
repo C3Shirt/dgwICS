@@ -5,9 +5,13 @@ LAYOUT_PROPOSAL_PROMPT = """You are the scene design agent proposing an industri
 1. Your task
 Describe the intended physical arrangement before generating coordinates. The planning agent will
 review this proposal. Use the supplied task and available component capabilities.
+Use component_reference for official component behavior. Object function describes its job in
+this scene; generic component definitions are supplied once per type by the tool.
 
 2. Scene goal
-Summarize the required industrial process in scene_goal. Preserve its material flow and scope.
+Describe the required process and intended material path in scene_goal as a connected paragraph.
+Explain supply, transport, sensing and destination relationships needed to understand the scene.
+Preserve scope and required single-item behavior; use the detailed task.process and control_rules.
 
 3. Objects and expected positions
 Include every task.objects entry exactly once, preserving its id and prefab as type.
@@ -38,6 +42,8 @@ LAYOUT_REVIEW_PROMPT = """You are the planning agent reviewing a proposed indust
 1. Your task
 Review the exact layout_proposal against the original task and available component capabilities.
 This is a design review before scene generation; there are no current screenshots or runtime evidence.
+Check object functions against component_reference. Correct claims that conflict with the official
+component behavior, including invented mechanical actions for source or removal volumes.
 
 2. Scene goal
 Check that scene_goal preserves the requested process and that all requested objects keep their

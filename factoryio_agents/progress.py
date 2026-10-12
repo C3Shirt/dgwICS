@@ -232,7 +232,12 @@ class ModelObserver:
 
     def training_event(self, item):
         event=item['event']; details=item['details']
-        if event.endswith(('_contract_rejected','_substage_rejected')):
+        if event=='component_knowledge_retrieved':
+            self.emit(event,{**self.last_context,'active_role':details['role']},
+                text='官方知识检索：'+str(len(details['requested_prefabs']))+' 种组件，'+
+                    str(len(details['component_ids']))+' 份参考资料；缺失映射 '+str(len(details['missing_prefabs']))+' 种。',
+                knowledge_sha256=details['knowledge_sha256'])
+        elif event.endswith(('_contract_rejected','_substage_rejected')):
             error=details.get('error') or (details.get('feedback') or {}).get('error') or '合同未通过'
             self.emit('model_validation_rejected',self.last_context,error=safe_text(error),
                       stage=details.get('stage'),candidate_id=item.get('candidate_id'))

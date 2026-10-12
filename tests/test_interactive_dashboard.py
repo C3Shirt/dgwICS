@@ -168,5 +168,35 @@ class DashboardHTTPTests(unittest.TestCase):
         self.assertNotIn('__TOKEN__',page)
         self.assertIn('async function loadStep',self.get('/app.js').decode('utf-8'))
 
+    def test_official_knowledge_search_and_prefab_retrieval_are_read_only(self):
+        data=json.loads(self.get('/api/knowledge?q=Remover'))
+        self.assertGreaterEqual(data['stats']['chapter_count'],60)
+        self.assertIn('remover',data['results'][0]['chapter_id'])
+        view=json.loads(self.get('/api/knowledge?prefab=DiffusePhotoelectricSensor'))['reference']
+        self.assertIn('blue',view['components'][0]['appearance']['text'].lower())
+        self.assertEqual(self.dashboard.sessions,{})
+
+    def test_ended_web_session_is_reopened_after_upgrade_without_execution_or_copy(self):
+        from factoryio_agents.contracts import write_json
+        identifier='abc12345'+'0'*24;source=self.root/'runs'/('web-20261012-120000-'+identifier[:8])
+        write_json(source/'web-session.json',{'id':identifier,'name':'Original requirement','output':str(source),
+            'mode':'run','status':'finished','result':{'status':'needs_attention','phase':'scene_geometry','error':'missing geometry'}})
+        write_json(source/'manual/steps.json',{'revision':2,'steps':[{'id':'tool','kind':'tool','role':'tools',
+            'number':1,'phase':'scene_load','status':'released','request':{'tool':'factoryio_bridge','images':[]}}]})
+        session=json.loads(self.get('/api/sessions/'+identifier))
+        self.assertEqual(session['result']['phase'],'scene_geometry')
+        self.assertIsNone(session['pending_id'])
+        self.assertEqual(session['steps'][0]['id'],'tool')
+        self.assertFalse((source/'framework-source').exists())
+        self.assertNotIn('thread',self.dashboard.get(identifier))
+
+    def test_another_dashboards_active_session_is_not_reopened_or_released(self):
+        from factoryio_agents.contracts import write_json
+        identifier='def12345'+'0'*24;source=self.root/'runs'/('web-20261012-120000-'+identifier[:8])
+        write_json(source/'web-session.json',{'id':identifier,'name':'Active','output':str(source),
+            'mode':'run','status':'running','result':None})
+        with self.assertRaises(ContractError):self.dashboard.get(identifier)
+        self.assertNotIn(identifier,self.dashboard.sessions)
+
 
 if __name__=='__main__': unittest.main()

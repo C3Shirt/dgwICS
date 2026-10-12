@@ -28,6 +28,40 @@ def relative_layout_capability(task, catalog):
             'missing_conveyor_semantics':'bounds alone never prove flow direction or conveying surface'}
 
 
+def center_scene_layout(value, catalog):
+    """Translate the whole assembly using measured factory bounds; preserve relative positions."""
+    plan=deepcopy(value);native=catalog.get('native_geometry') or {}
+    world=native.get('world_bounds')
+    if not world:return plan,None
+    scale=native['coordinate_system']['grid_metres']
+    require(type(scale) in (int,float) and scale>0,'invalid measured grid scale')
+    require(all(isinstance(world.get(k),list) and len(world[k])==3 and
+                all(type(v) in (int,float) and math.isfinite(v) for v in world[k]) for k in ('min','max')),
+            'invalid measured factory bounds')
+    require(all(a<b for a,b in zip(world['min'],world['max'])),'invalid measured factory extent')
+    templates={t['template_id']:t for t in catalog['templates']}
+    def bounds():
+        rows=[]
+        for obj in plan['objects']:
+            prefab=templates[obj['template_id']]['prefab']
+            require(prefab in native['prefabs'],'centering needs measured bounds for '+prefab)
+            rows.append(project_object(obj,prefab,native['prefabs'][prefab],scale)['bounds_world'])
+        require(bool(rows),'centering needs at least one object')
+        return {k:[fn(r[k][axis] for r in rows) for axis in range(3)] for k,fn in (('min',min),('max',max))}
+    original=bounds();target=[(a+b)/2 for a,b in zip(world['min'],world['max'])]
+    center=[(a+b)/2 for a,b in zip(original['min'],original['max'])]
+    delta=[round((target[a]-center[a])/scale) if a in (0,2) else
+           max(0,math.ceil((world['min'][1]-original['min'][1])/scale-1e-7)) for a in range(3)]
+    for obj in plan['objects']:obj['position']=[v+d for v,d in zip(obj['position'],delta)]
+    result=bounds()
+    require(all(result['min'][a]>=world['min'][a]-1e-7 and result['max'][a]<=world['max'][a]+1e-7
+                for a in range(3)),'scene does not fit inside measured factory bounds after centering')
+    return plan,{'authority':'measured_factory_bounds','translation_grid':delta,'world_bounds':world,
+        'original_bounds_world':original,'result_bounds_world':result,'target_center_world':target,
+        'result_center_world':[(a+b)/2 for a,b in zip(result['min'],result['max'])],
+        'relative_positions_preserved':True,'physical_acceptance_passed':False}
+
+
 def resolve_transport_clearance(value, catalog):
     """Resolve conservative single-conveyor mounting clearance from a model's absolute layout.
 
@@ -89,7 +123,7 @@ def project_object(obj, prefab, metric, scale):
             'component_geometry':context}
 
 
-def resolve_relative_layout(value,catalog):
+def resolve_relative_layout(value,catalog, *, verify=True):
     """Model selects topology/relative positions; solve only native coordinate arithmetic."""
     native=catalog.get('native_geometry')
     require(native is not None,'relative placement requires native prefab measurements')
@@ -172,7 +206,9 @@ def resolve_relative_layout(value,catalog):
         else:require(False,'unsupported relative placement kind: '+str(kind))
         resolved[obj['id']]={'id':obj['id'],'template_id':obj['template_id'],'position':pos,'yaw_deg':yaw}
     plan={**{k:deepcopy(v) for k,v in value.items() if k!='objects'},'objects':[resolved[o['id']] for o in objects]}
-    validate_layout_geometry(plan,catalog)
+    if verify:
+        plan,_=center_scene_layout(plan,catalog)
+        validate_layout_geometry(plan,catalog)
     return plan
 
 

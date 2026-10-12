@@ -217,6 +217,18 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(restored.budget.state['calls'],[])
         self.assertEqual(state['status'],'needs_configuration')
 
+    def test_resume_refreshes_catalog_without_repeating_the_accepted_planner(self):
+        plan=inspect_resume(self.source,self.workflow.config,'scene')
+        restored=Workflow(self.workflow.config,self.root/'refreshed-catalog',Mock())
+        restored.planner=Mock();restored.author=Mock()
+        restored.author.plan.side_effect=ContractError('fixture stopped after refreshed catalog')
+        with patch.object(restored,'catalog',wraps=restored.catalog) as refresh:
+            state=restored.resume(plan)
+        refresh.assert_called_once()
+        restored.planner.plan.assert_not_called()
+        self.assertTrue((restored.output/'catalog.json').is_file())
+        self.assertIn('fixture stopped',state['error'])
+
     def test_passed_source_requires_explicit_revalidation_and_preserves_live_gates(self):
         report = summarize_run(self.source,self.state)
         report.update(live_pipeline_passed=True,failure=None)
