@@ -26,7 +26,7 @@
       </section>
       <section id="session-view" hidden>
         <div class="session-header"><div><div class="eyebrow" id="session-mode"></div><h1 id="session-title"></h1><div id="output-path" class="output-path"></div></div><div class="session-actions"><span id="session-status" class="badge"></span><button id="cancel" class="danger" hidden>取消后续步骤</button></div></div>
-        <div id="pending-banner" class="pending-banner" hidden><div><strong>下一步正在等待你</strong><span id="pending-label"></span></div><button id="view-pending" class="secondary">查看待执行请求</button></div>
+        <div id="pending-banner" class="pending-banner" hidden aria-label="流程控制"><div class="continuation-description"><strong id="continuation-title">下一步正在等待你</strong><span id="pending-label"></span><p id="continuation-hint"></p></div><div class="continuation-actions"><button id="view-pending" class="secondary">查看下一步请求</button><button id="continue-next" class="primary" disabled>继续下一步</button><button id="new-full-workflow" class="primary" hidden>新建完整流程任务</button></div></div>
         <div id="history-actions" class="history-actions" hidden><span>历史记录 · 只读查看</span><button id="replay-vision" class="secondary">用这些图片重新进行视觉检查</button><button id="resume" class="secondary">恢复此任务，手动继续</button></div>
         <div class="execution-grid">
           <section class="timeline-panel"><div class="panel-heading">执行步骤 <span id="step-count"></span></div><div id="timeline"></div></section>

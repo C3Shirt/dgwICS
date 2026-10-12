@@ -19,15 +19,42 @@ function renderLists(){
 }
 async function selectSession(id){currentSession=id;currentStep=null;lastRevision=-1;lastDetailKey='';$('welcome').hidden=true;$('session-view').hidden=false;renderLists();await poll();history.replaceState(null,'','?session='+encodeURIComponent(id));}
 async function poll(){if(!currentSession)return;try{const session=await api('/api/sessions/'+currentSession);if(session.id!==currentSession)return;window.sessionState=session;
-  $('session-mode').textContent=session.historical?'历史运行 · 只读':session.mode==='vision'?'历史截图复查 · 手动控制':'现有 Agent 框架 · 手动控制';$('session-title').textContent=session.name;$('output-path').textContent=session.output;badge('session-status',session.status==='finished'?(session.result?.status||session.status):session.status);
+  $('session-mode').textContent=session.historical?'历史运行 · 只读':({vision:'历史截图复查 · 手动控制',prepare:'仅生成任务与场景文件 · 手动控制',run:'完整联机流程 · 手动控制',resume:'恢复已有任务 · 手动控制'}[session.mode]||'现有 Agent 框架 · 手动控制');$('session-title').textContent=session.name;$('output-path').textContent=session.output;badge('session-status',session.status==='finished'?(session.result?.status||session.status):session.status);
   $('cancel').hidden=session.historical||['finished','failed','cancelled','history'].includes(session.status);$('cancel').disabled=session.status==='cancelling';$('history-actions').hidden=!session.historical;
-  $('pending-banner').hidden=!session.pending_id;const next=session.steps.find(s=>s.id===session.pending_id);if(next)$('pending-label').textContent=(roles[next.role]||next.role)+' / '+(phases[next.phase]||next.phase);
+  renderContinuation(session);
   $('step-count').textContent=session.steps.length+' 步';renderTimeline(session);$('result-panel').hidden=!session.result;$('result').textContent=fmt(session.result);
   $('events').textContent=session.events.map(e=>clock(e.timestamp)+' '+(roles[e.active_role]||'')+' '+(e.event||'')+'\n'+(e.text||e.summary?.join('\n')||e.error||'')).join('\n\n');
   if(!currentStep&&session.steps.length)currentStep=session.pending_id||session.steps.at(-1).id;
   if(currentStep){const item=session.steps.find(s=>s.id===currentStep);const key=currentStep+'-'+session.revision;if(item&&key!==lastDetailKey){lastDetailKey=key;await loadStep(currentStep);}}
   lastRevision=session.revision;
 }catch(error){toast(error.message);}}
+function renderContinuation(session){
+  $('pending-banner').hidden=!!session.historical;
+  const next=session.steps.find(s=>s.id===session.pending_id&&s.status==='waiting');
+  const ended=['finished','failed','cancelled'].includes(session.status);
+  $('view-pending').hidden=!next;
+  $('continue-next').disabled=busy||!next;
+  $('continue-next').dataset.stepId=next?.id||'';
+  $('new-full-workflow').hidden=!ended;
+  if(next){
+    $('continuation-title').textContent='下一步正在等待你';
+    $('pending-label').textContent='第 '+next.number+' 步 · '+(roles[next.role]||next.role)+' / '+(phases[next.phase]||next.phase);
+    $('continuation-hint').textContent='先查看下一步的请求和图片。点击“继续下一步”只放行这一项，后续步骤仍需手动继续。';
+    $('continue-next').textContent='继续下一步';
+  }else if(ended){
+    const visionDone=session.mode==='vision'&&session.status==='finished';
+    $('continuation-title').textContent=visionDone?'本次视觉复查已结束':'本轮流程已结束';
+    $('pending-label').textContent=statuses[session.result?.status||session.status]||session.result?.status||session.status;
+    $('continuation-hint').textContent=visionDone?'此任务只进行视觉检查，没有场景生成、修改或 PLC 后续步骤。要逐步运行全部 Agent，请新建完整流程任务。':'本轮没有待执行的请求。可以查看流程结果，或新建完整流程任务。';
+    $('continue-next').textContent='没有待执行步骤';
+  }else{
+    const running=session.steps.findLast(s=>s.status==='running');
+    $('continuation-title').textContent=session.status==='cancelling'?'正在取消后续步骤':running?'当前步骤执行中':'正在准备下一步';
+    $('pending-label').textContent=running?'第 '+running.number+' 步 · '+(roles[running.role]||running.role)+' / '+(phases[running.phase]||running.phase):'流程正在整理上下文或执行已放行的操作';
+    $('continuation-hint').textContent='下一项请求准备完成后，“继续下一步”按钮会启用。';
+    $('continue-next').textContent='等待本步返回';
+  }
+}
 function renderTimeline(session){$('timeline').replaceChildren();for(const step of session.steps){const item=button('','timeline-step '+step.status+(step.id===currentStep?' selected':''),async()=>{currentStep=step.id;lastDetailKey='';renderTimeline(session);await loadStep(step.id);});const dot=document.createElement('span');dot.className='step-dot';dot.textContent=step.status==='completed'?'✓':String(step.number);const box=document.createElement('div');const title=document.createElement('strong');title.textContent=phases[step.phase]||step.phase;const desc=document.createElement('small');desc.textContent=(roles[step.role]||step.role)+' · '+(statuses[step.status]||step.status)+(step.image_count?' · '+step.image_count+' 张图片':'');box.append(title,desc);item.append(dot,box);$('timeline').append(item);}}
 function readable(step){const value=step.response;if(!value)return step.raw_response||'';if(value.checks){return value.checks.map(c=>'对象：'+(c.object_ids||[]).join('、')+'\n结论：'+({ok:'正常',issue:'存在问题',uncertain:'不确定'}[c.status]||c.status)+'\n观察：'+c.observed+'\n预期：'+c.expected+'\n理由：'+c.reason+'\n建议：'+c.suggestion).join('\n\n');}if(value.findings){return (value.summary||value.verdict||'')+'\n\n'+value.findings.map(f=>'对象：'+(f.object_ids||[]).join('、')+'\n理由：'+(f.reason||f.observed||'')+'\n建议：'+(f.suggestion||'')).join('\n\n');}if(value.objects){return (value.scene_goal||value.requirement||'')+'\n\n'+value.objects.map(o=>[o.id+' · '+(o.type||o.prefab||o.template_id||''),o.function||o.purpose||'',o.expected_position?fmt(o.expected_position):o.position?'位置：'+fmt(o.position):''].filter(Boolean).join('\n')).join('\n\n');}return fmt(value);}
 async function loadStep(id){const sessionId=currentSession;const step=await api('/api/sessions/'+sessionId+'/steps/'+id);if(sessionId!==currentSession||id!==currentStep)return;$('empty-step').hidden=true;$('step-view').hidden=false;$('step-role').textContent=roles[step.role]||step.role;$('step-title').textContent='第 '+step.number+' 步 · '+(phases[step.phase]||step.phase);$('step-time').textContent=clock(step.created_at)+(step.finished_at?' → '+clock(step.finished_at):'');badge('step-status',step.status);
@@ -44,7 +71,18 @@ document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',
 document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async event=>{event.preventDefault();event.stopPropagation();await navigator.clipboard.writeText($(b.dataset.copy).textContent);toast('已复制');}));
 for(const id of ['new-task','welcome-new'])$(id).onclick=()=>$('new-dialog').showModal();$('close-dialog').onclick=()=>$('new-dialog').close();$('close-image').onclick=()=>$('image-dialog').close();$('refresh').onclick=refresh;$('history-search').oninput=()=>bootstrap&&renderLists();
 $('new-form').onsubmit=async event=>{event.preventDefault();if(busy)return;busy=true;try{await createTask({mode:$('mode').value,prompt:$('prompt').value});$('new-dialog').close();}catch(error){toast(error.message);}finally{busy=false;}};
-$('approve').onclick=async()=>{if(busy)return;busy=true;$('approve').disabled=true;try{await api('/api/sessions/'+currentSession+'/approve',{step_id:currentStep});await poll();}catch(error){toast(error.message);}finally{busy=false;$('approve').disabled=false;}};
+async function releaseStep(id){
+  const session=window.sessionState,sessionId=currentSession;
+  if(busy||!id||!session||session.historical||session.pending_id!==id)return;
+  busy=true;$('approve').disabled=true;renderContinuation(session);
+  currentStep=id;currentTab='response';lastDetailKey='';
+  try{await api('/api/sessions/'+sessionId+'/approve',{step_id:id});if(currentSession===sessionId)await poll();}
+  catch(error){toast(error.message);}
+  finally{busy=false;$('approve').disabled=false;if(window.sessionState)renderContinuation(window.sessionState);}
+}
+$('approve').onclick=()=>releaseStep(currentStep);
+$('continue-next').onclick=()=>{if(!$('continue-next').disabled)return releaseStep($('continue-next').dataset.stepId);};
+$('new-full-workflow').onclick=()=>{$('mode').value='run';$('new-dialog').showModal();};
 $('view-pending').onclick=async()=>{currentStep=window.sessionState.pending_id;currentTab='request';lastDetailKey='';await poll();};
 $('cancel').onclick=async()=>{try{await api('/api/sessions/'+currentSession+'/cancel',{});await poll();}catch(error){toast(error.message);}};
 $('replay-vision').onclick=async()=>{try{await createTask({mode:'vision',source_id:currentSession});}catch(error){toast(error.message);}};

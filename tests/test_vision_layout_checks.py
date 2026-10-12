@@ -52,17 +52,45 @@ class LayoutChecksTests(unittest.TestCase):
     def test_vision_instructions_are_defined_in_python(self):
         self.assertIsNotNone(importlib.util.find_spec('factoryio_agents.vision_prompts'))
 
-    def test_dynamic_goal_functions_and_relative_positions_are_in_prompt(self):
+    def test_dynamic_goal_functions_and_relative_positions_are_only_in_user_payload(self):
         result=self.review()
         prompt=self.client.complete.call_args.args[1]
-        self.assertIn(self.task['requirement'],prompt)
-        self.assertIn('Release material',prompt)
-        self.assertIn('above infeed',prompt)
+        self.assertTrue(prompt.isascii())
+        for text in (self.task['requirement'],'Release material','above infeed'):
+            self.assertNotIn(text,prompt)
         self.assertNotIn('signal_contract',prompt)
         payload=self.client.complete.call_args.args[2]
         self.assertIn('layout_review',payload)
+        user_text=json.dumps(payload,ensure_ascii=False)
+        for text in (self.task['requirement'],'Release material','above infeed'):
+            self.assertEqual(user_text.count(text),1)
         self.assertNotIn('io_contract',payload)
         self.assertEqual(result['verdict'],'pass')
+
+    def test_scene_changes_only_update_user_data_and_keep_the_system_policy_fixed(self):
+        self.review()
+        first_prompt=self.client.complete.call_args.args[1]
+        self.task['requirement']='Inspect a different industrial process.'
+        self.approved['scene_goal']=self.task['requirement']
+        self.approved['objects'][1]['function']='Supply parts for the second process'
+        self.approved['approval']['task_sha256']=canonical_hash(self.task)
+        self.review()
+        second_prompt=self.client.complete.call_args.args[1]
+        user=self.client.complete.call_args.args[2]
+        self.assertEqual(first_prompt,second_prompt)
+        self.assertEqual(user['layout_review']['scene_goal'],self.task['requirement'])
+        self.assertEqual(user['layout_review']['objects'][1]['function'],'Supply parts for the second process')
+
+    def test_recorded_messages_do_not_duplicate_dynamic_layout_information(self):
+        recorder=TrainingRecorder(self.root/'training-data')
+        VisionAgent(RecordingClient(self.client,recorder)).review(self.task,self.manifest,{'tags':[]},
+            self.evidence,{},'scene',approved_layout=self.approved)
+        record=read_json(recorder.directory/'candidates'/(recorder.last_candidate_id+'.json'))
+        system,user=[message['content'] for message in record['messages']]
+        user_text=user[0]['text']
+        for text in (self.task['requirement'],'Release material','above infeed'):
+            self.assertNotIn(text,system)
+            self.assertEqual(user_text.count(text),1)
 
     def test_issue_has_objects_reason_and_routes_to_scene(self):
         self.reply['checks'][1]=self.check('feed','issue')

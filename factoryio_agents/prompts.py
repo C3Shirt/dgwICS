@@ -20,7 +20,7 @@ _PROMPT_HASHES.update(_VISION_HASHES)
 _PROMPT_HASHES["vision"] = hashlib.sha256(json.dumps(_VISION_HASHES, sort_keys=True).encode()).hexdigest()
 _PROMPT_HASHES.update({key:hashlib.sha256(prompt.encode()).hexdigest() for key,prompt in
     [('scene_layout_proposal',LAYOUT_PROPOSAL_PROMPT),('planner_layout_review',LAYOUT_REVIEW_PROMPT)]})
-_POLICY = {"version": "7", "prompt_sha256": _PROMPT_HASHES,
+_POLICY = {"version": "8", "prompt_sha256": _PROMPT_HASHES,
            "knowledge_sha256": hashlib.sha256(json.dumps(_KNOWLEDGE, sort_keys=True,
                                          separators=(",", ":")).encode()).hexdigest()}
 

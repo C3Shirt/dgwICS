@@ -12,7 +12,6 @@ from factoryio_agents.coordination import (artifact_digest, attach_component_sem
     make_handoff, select_review_evidence, model_review_evidence, validate_diagnoses, validate_execution_contract)
 from factoryio_agents.demo import demo_program
 from factoryio_agents.prompts import PROMPTS, VISION_PROMPTS, policy_manifest
-from factoryio_agents.vision_prompts import build_layout_prompt
 from factoryio_agents.vision_layout import layout_task_hash
 from factoryio_agents.scene import build_catalog, build_scene
 from factoryio_agents.runtime import FactoryIOClient
@@ -248,8 +247,7 @@ class CoordinationTests(unittest.TestCase):
             calls.append((role, payload))
             from factoryio_agents.layout_prompts import LAYOUT_PROPOSAL_PROMPT, LAYOUT_REVIEW_PROMPT
             from test_layout_design import proposal_fixture
-            expected=build_layout_prompt(payload['layout_review']) if role=='vision' and payload['phase']=='scene' else (
-                VISION_PROMPTS[payload['phase']] if role=='vision' else LAYOUT_PROPOSAL_PROMPT
+            expected=(VISION_PROMPTS[payload['phase']] if role=='vision' else LAYOUT_PROPOSAL_PROMPT
                 if payload.get('scene_stage')=='layout_proposal' else LAYOUT_REVIEW_PROMPT
                 if payload.get('planning_stage')=='layout_review' else PROMPTS[role])
             self.assertEqual(prompt,expected)

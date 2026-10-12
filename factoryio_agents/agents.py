@@ -467,10 +467,8 @@ class VisionAgent:
             'review_process_ids':['scene_setup']+[p['id'] for p in task['process']]}
         if phase=='scene':
             from .vision_layout import prepare_layout_input, layout_feedback, record_layout_feedback
-            from .vision_prompts import build_layout_prompt
             layout,layout_evidence=prepare_layout_input(task,manifest,evidence,approved_layout)
             payload.update(layout_review=layout,evidence=layout_evidence)
-            prompt=build_layout_prompt(layout)
         for attempt in range(3):
             value = None
             try:
