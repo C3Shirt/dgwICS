@@ -1,5 +1,7 @@
 # 工业自动化仿真 Agent
 
+按 [Issue #1](https://github.com/C3Shirt/dgwICS/issues/1) 新增简化场景框架：`run_simple_agents.py "场景需求"`。一次场景设计 → 原生生成/真实加载/三视角截图 → 一次视觉检查 → 必要的局部修复。使用、恢复和运行记录见 [简化框架说明](docs/simple-framework.md)。当前实现阶段 A，结束状态为 `scene_verified`；PLC 阶段尚未接入简化路径，原流程保留用于对照。
+
 日常使用先看 [中文使用说明书](docs/agent-user-guide.zh-CN.md)：100 项设计材料的位置、单指令运行、实时日志、结果判定、失败续跑及两端同步操作。
 
 终端现在默认显示模型子任务、公开业务输出、等待提示和修复原因，代码/XML 仅保存到产物文件；查看方法见 [模型进展日志说明](docs/model-progress-logging.md)。

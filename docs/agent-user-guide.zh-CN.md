@@ -1,5 +1,7 @@
 # 工业自动化仿真 Agent 框架使用说明书
 
+2026-10-12 新增：[简化场景框架](simple-framework.md) 使用 `run_simple_agents.py`，网页新任务默认可选简化流程；当前覆盖场景阶段，原 `run_agents.py` 的 PLC 联机路径保留。下面原流程的参数不能直接传给简化入口。
+
 核对日期：2026-10-11。适用于本机 Windows、Factory I/O、CODESYS 和项目内的 `run_agents.py`。所有 PowerShell 命令默认在 `F:\phd\project\digital-twin-factoryi-o` 执行。
 
 ## 1. 先找到材料和运行结果

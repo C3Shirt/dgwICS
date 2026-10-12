@@ -99,8 +99,10 @@ class Dashboard:
                     'provider':record.get('model_metadata',{})},
                 'response':record.get('structured_output'),'raw_response':record.get('response_text'),
                 'metadata':record.get('model_metadata',{}),'error':record.get('error')}))
+        result=read_json(root/'run.json') if (root/'run.json').is_file() else None
         session={'id':identifier,'name':str(root.relative_to(self.project)),'output':str(root),'mode':'history',
-            'historical':True,'status':'history','created_at':None,'control':control,'result':None}
+            'framework':(result or {}).get('framework'),'historical':True,'status':'history',
+            'created_at':None,'control':control,'result':result}
         self.sessions[identifier]=session
         return session
 
@@ -138,7 +140,7 @@ class Dashboard:
 
     def summary(self, session):
         snapshot=session['control'].snapshot()
-        return {k:session.get(k) for k in ('id','name','output','mode','historical','created_at','result')} | {
+        return {k:session.get(k) for k in ('id','name','output','mode','framework','historical','created_at','result')} | {
             'status':'waiting' if snapshot['pending_id'] else session['status'],
             'pending_id':snapshot['pending_id'],'revision':snapshot['revision'],
             'steps':snapshot['steps'],'events':snapshot['events']}
@@ -149,13 +151,14 @@ class Dashboard:
 
     def create(self, body):
         mode=body.get('mode','prepare')
-        require(mode in ('prepare','run','vision','resume'),'unknown workflow mode')
+        require(mode in ('simple_scene','simple_resume','prepare','run','vision','resume'),'unknown workflow mode')
         prompt=body.get('prompt','').strip()
-        require(mode in ('vision','resume') or bool(prompt),'enter a scene requirement')
+        require(mode in ('vision','resume','simple_resume') or bool(prompt),'enter a scene requirement')
         with self.lock:
             require(not any(s['status'] in ('running','cancelling') for s in self.sessions.values() if not s.get('historical')),
                     '已有手动任务正在运行，请先结束当前任务。')
-            source=self.resolve_source(body['source_id']) if mode in ('vision','resume') else None
+            source=self.resolve_source(body['source_id']) if mode in ('vision','resume','simple_resume') else None
+            if mode=='simple_resume':prompt=read_json(source/'requirement.json')['requirement']
             if mode=='vision':
                 require((source/'task.json').is_file(),'source has no task.json')
                 prompt=read_json(source/'task.json')['requirement']
@@ -175,7 +178,10 @@ class Dashboard:
         output=Path(session['output']); config=deepcopy(self.config); control=session['control']
         try:
             if session['mode'] in ('run','resume'): protected_credentials(config)
-            workflow=Workflow(config,output,progress=control.observe,interaction=control)
+            if session['mode'] in ('simple_scene','simple_resume'):
+                from .simple import SimpleWorkflow
+                workflow=SimpleWorkflow(config,output,progress=control.observe,interaction=control)
+            else:workflow=Workflow(config,output,progress=control.observe,interaction=control)
             control.redactor=workflow.redactor
             write_json(output/'config.snapshot.json',workflow.redactor.clean(config))
             # Hash identity avoids copying the entire source tree into every web run.
@@ -183,7 +189,9 @@ class Dashboard:
                 (self.project/'factoryio_agents').rglob('*.py')}
             write_json(output/'execution.json',{'interface':'manual_web','source_hashes':source_hashes,
                 'framework_source_storage':'hashes_only','started_at':now()})
-            if session['mode']=='vision': result=self.replay_vision(workflow,source)
+            if session['mode']=='simple_scene':result=workflow.run(prompt)
+            elif session['mode']=='simple_resume':result=workflow.resume(source)
+            elif session['mode']=='vision': result=self.replay_vision(workflow,source)
             elif session['mode']=='resume':
                 from .memory import inspect_resume
                 result=workflow.resume(inspect_resume(source,config))

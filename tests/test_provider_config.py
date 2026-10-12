@@ -95,5 +95,22 @@ class ProviderTests(unittest.TestCase):
         with self.assertRaises(ContractError) as caught: load_providers(self.path)
         self.assertNotIn('secret', str(caught.exception))
 
+    def test_custom_role_schema_matches_wire_request_and_dashboard_preview(self):
+        from factoryio_agents.interactive import model_info
+        class Response:
+            def __enter__(self): return self
+            def __exit__(self,*args): pass
+            def read(self): return b'{"choices":[{"message":{"content":"{}"}}]}'
+        schema={'type':'object','properties':{'verdict':{'type':'string'}},'required':['verdict'],'additionalProperties':False}
+        client=ModelClient({'provider_config':str(self.path),'role_providers':{'vision':'Vision'},
+            'response_schemas':{'vision':schema},'schema_roles':['vision']})
+        with patch.object(client.opener,'open',return_value=Response()) as opened:
+            client.complete('vision','Return JSON',{})
+            wire=json.loads(opened.call_args.args[0].data)['response_format']
+        self.assertEqual(wire['type'],'json_schema')
+        self.assertEqual(wire['json_schema']['schema'],schema)
+        self.assertEqual(model_info(client,'vision',{})['response_format'],wire)
+        self.assertIs(wire['json_schema']['strict'],True)
+
 
 if __name__ == '__main__': unittest.main()

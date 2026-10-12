@@ -28,6 +28,18 @@ def reject_nonfinite(value):
     raise ValueError("nonfinite JSON number")
 
 
+def response_format(config, role, payload):
+    schema=config.get('response_schemas',{}).get(role)
+    if schema is not None:
+        require(isinstance(schema,dict) and schema.get('type')=='object','role response schema must describe an object')
+        return {'type':'json_schema','json_schema':{'name':'FactoryIO_'+role,'strict':True,'schema':schema}}
+    if role in config.get('schema_roles',[]):
+        require(role=='vision','only visual review has an implemented response schema')
+        from .response_schema import review_schema
+        return {'type':'json_schema','json_schema':{'name':'FactoryIOReview','strict':True,'schema':review_schema(payload)}}
+    return {'type':'json_object'} if config.get('json_mode',True) else None
+
+
 class ModelClient:
     def __init__(self, config: dict):
         self.config = config
@@ -138,13 +150,8 @@ class ModelClient:
         require(type(streaming) is bool, 'llm.stream must be boolean')
         if streaming:
             request_body.update(stream=True,stream_options={'include_usage':True})
-        if self.config.get("json_mode", True):
-            request_body["response_format"] = {"type": "json_object"}
-        if role in self.config.get('schema_roles', []):
-            require(role == 'vision', 'only visual review has an implemented response schema')
-            from .response_schema import review_schema
-            request_body['response_format'] = {'type':'json_schema', 'json_schema':{
-                'name':'FactoryIOReview','strict':True,'schema':review_schema(payload)}}
+        fmt=response_format(self.config,role,payload)
+        if fmt is not None: request_body['response_format']=fmt
         headers = {"Content-Type": "application/json"}
         key = provider.get("api_key") if provider else os.getenv(self.config.get("api_key_env", "OPENAI_API_KEY"))
         if key:

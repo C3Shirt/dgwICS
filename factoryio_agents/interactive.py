@@ -115,15 +115,12 @@ class ManualControl:
 
 
 def model_info(raw, role, payload):
-    from .llm import ModelClient
+    from .llm import ModelClient,response_format
     if not isinstance(raw,ModelClient): return {}
     config=raw.config; name=config.get('role_providers',{}).get(role)
     provider=raw.providers.get(name,{})
     options={**config.get('provider_options',{}).get(name,{}),**config.get('request_options',{}).get(role,{})}
-    fmt={'type':'json_object'} if config.get('json_mode',True) else None
-    if role in config.get('schema_roles',[]):
-        from .response_schema import review_schema
-        fmt={'type':'json_schema','json_schema':{'name':'FactoryIOReview','strict':True,'schema':review_schema(payload)}}
+    fmt=response_format(config,role,payload)
     return {'provider':name,'model':provider.get('model_name') or config.get('models',{}).get(role),
             'request_options':options,'response_format':fmt}
 

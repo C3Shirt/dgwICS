@@ -4,7 +4,7 @@ from threading import Thread
 import json
 import tempfile
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock,patch
 from http.server import ThreadingHTTPServer
 import urllib.request
 import urllib.error
@@ -197,6 +197,28 @@ class DashboardHTTPTests(unittest.TestCase):
             'mode':'run','status':'running','result':None})
         with self.assertRaises(ContractError):self.dashboard.get(identifier)
         self.assertNotIn(identifier,self.dashboard.sessions)
+
+    def test_simple_web_task_does_not_construct_the_legacy_workflow(self):
+        from factoryio_agents.training import Redactor
+        fake=Mock();fake.redactor=Redactor();fake.run.return_value={'status':'scene_verified','plc_executed':False}
+        with patch('factoryio_agents.web_dashboard.Workflow',side_effect=AssertionError('legacy workflow constructed')),\
+             patch('factoryio_agents.simple.SimpleWorkflow',return_value=fake):
+            summary=self.dashboard.create({'mode':'simple_scene','prompt':'A single conveyor'})
+            self.dashboard.get(summary['id'])['thread'].join(3)
+        fake.run.assert_called_once_with('A single conveyor')
+        self.assertEqual(self.dashboard.get(summary['id'])['result']['status'],'scene_verified')
+
+    def test_simple_cli_history_keeps_its_framework_and_result_without_execution(self):
+        from factoryio_agents.contracts import write_json
+        source=self.root/'runs/simple-history'
+        (source/'training-data/candidates').mkdir(parents=True)
+        write_json(source/'run.json',{'framework':'simple','status':'scene_verified','plc_executed':False})
+        history=self.dashboard.scan_history()
+        identifier=next(s['id'] for s in history if Path(s['output'])==source.resolve())
+        with patch('factoryio_agents.simple.SimpleWorkflow',side_effect=AssertionError('must not execute')):
+            summary=self.dashboard.summary(self.dashboard.get(identifier))
+        self.assertEqual(summary['framework'],'simple')
+        self.assertEqual(summary['result']['status'],'scene_verified')
 
 
 if __name__=='__main__': unittest.main()

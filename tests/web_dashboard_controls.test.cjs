@@ -138,3 +138,25 @@ test('resume logs accept text and structured summaries without interrupting the 
     assert.equal(ui.get('toast').textContent,'');
   }
 });
+
+test('simple scene recovery selects the simple path instead of the legacy planner pipeline',async()=>{
+  const session=serviceFailure();session.mode='simple_scene';session.result={status:'needs_attention',phase:'scene',error:'missing view'};
+  const ui=await dashboard(session);
+  await ui.get('recover-workflow').onclick();
+  const request=ui.requests.find(r=>r.url==='/api/sessions'&&r.method==='POST');
+  assert.deepEqual(JSON.parse(request.body),{mode:'simple_resume',source_id:'fixture'});
+});
+
+test('a successful simple scene explicitly ends at layout without claiming PLC execution',async()=>{
+  const ui=await dashboard(state({mode:'simple_scene',status:'finished',pending_id:null,result:{status:'scene_verified'}}));
+  assert.match(ui.get('session-mode').textContent,/简化场景闭环/);
+  assert.match(ui.get('continuation-hint').textContent,/PLC 尚未执行/);
+});
+
+test('resuming a simple CLI history stays in the simple framework',async()=>{
+  const ui=await dashboard(state({mode:'history',historical:true,framework:'simple'}));
+  assert.equal(ui.get('replay-vision').hidden,true);
+  await ui.get('resume').onclick();
+  const request=ui.requests.find(r=>r.url==='/api/sessions'&&r.method==='POST');
+  assert.deepEqual(JSON.parse(request.body),{mode:'simple_resume',source_id:'fixture'});
+});
