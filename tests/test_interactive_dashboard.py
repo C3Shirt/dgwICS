@@ -220,5 +220,17 @@ class DashboardHTTPTests(unittest.TestCase):
         self.assertEqual(summary['framework'],'simple')
         self.assertEqual(summary['result']['status'],'scene_verified')
 
+    def test_pre_model_tool_failure_is_visible_in_simple_history(self):
+        from factoryio_agents.contracts import write_json
+        source=self.root/'runs/simple-tool-failure';source.mkdir(parents=True)
+        write_json(source/'run.json',{'framework':'simple','status':'needs_attention','error':'Runtime Stopped'})
+        event={'event':'tool_requested','timestamp':'2026-10-12T00:00:00Z','phase':'deployment_preflight',
+            'tool':'codesys_services','action':'preflight'}
+        (source/'trace.jsonl').write_text(json.dumps(event)+'\n',encoding='utf-8')
+        identifier=next(s['id'] for s in self.dashboard.scan_history() if Path(s['output'])==source.resolve())
+        session=self.dashboard.summary(self.dashboard.get(identifier))
+        self.assertEqual(session['steps'][0]['kind'],'tool');self.assertEqual(session['steps'][0]['status'],'failed')
+        self.assertEqual(session['result']['error'],'Runtime Stopped')
+
 
 if __name__=='__main__': unittest.main()

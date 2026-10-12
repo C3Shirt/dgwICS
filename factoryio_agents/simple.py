@@ -113,7 +113,7 @@ def validate_review(value,object_ids,image_ids):
 
 
 class NativeSceneTools:
-    def __init__(self,config,trace):self.config,self.trace=config,trace
+    def __init__(self,config,trace,controller_owned=False):self.config,self.trace,self.controller_owned=config,trace,controller_owned
 
     def catalog(self,output):
         catalog=build_catalog([Path(p) for p in self.config['scene_sources']]);path=output/'native-prefab-geometry.json'
@@ -127,7 +127,16 @@ class NativeSceneTools:
 
     def render(self,plan,catalog,directory):
         directory.mkdir(parents=True,exist_ok=True);scene=directory/'scene.factoryio'
-        built=build_scene(plan,catalog,scene,self.config['protocol'],auto_bool_mappings=True)
+        execution=None
+        if self.controller_owned:
+            templates={t['template_id']:t['prefab'] for t in catalog['templates']}
+            emitters=[o for o in plan['objects'] if templates[o['template_id']]=='Emitter']
+            require(len(emitters)==1,'PLC continuation currently needs one single-item emitter')
+            execution={'tracking_mode':'single_item','max_in_flight':1,
+                'feed':{'control':'plc','items_per_enable':1,'object_id':emitters[0]['id']}}
+        built=build_scene(plan,catalog,scene,self.config['protocol'],auto_bool_mappings=True,execution_contract=execution)
+        if built['manifest'].get('process_constraint_application'):
+            write_json(directory/'controller-ownership.json',built['manifest']['process_constraint_application'])
         for name in ('manifest','io_contract'):
             write_json(directory/(name.replace('_','-')+'.json'),built[name])
         request={'schema_version':1,'request_id':uuid.uuid4().hex,'scene_path':str(scene.resolve()),'scene_sha256':file_hash(scene),
@@ -164,17 +173,29 @@ class NativeSceneTools:
 
 
 class SimpleWorkflow:
-    def __init__(self,config,output,client=None,tools=None,progress=None,interaction=None,max_repairs=2,inject_fault=None):
+    def __init__(self,config,output,client=None,tools=None,progress=None,interaction=None,max_repairs=2,inject_fault=None,
+                 with_plc=False,keep_running=False,max_plc_repairs=2,runtime_seconds=30,reset_mode='warm',plc_tools=None,start_from='scene',start_local_services=False,plc_mode='run'):
         from .llm import ModelClient
         from .training import TrainingRecorder,RecordingClient,Redactor,configured_secret_values
         from .progress import ModelObserver,ObservedClient
         self.config,self.output=deepcopy(config),Path(output).resolve();self.progress,self.interaction=progress,interaction
+        require(type(with_plc) is bool and type(keep_running) is bool and (with_plc or not keep_running),'keep_running needs with_plc')
+        require(type(max_plc_repairs) is int and 0<=max_plc_repairs<=5,'max_plc_repairs must be 0..5')
+        require(reset_mode in ('warm','cold'),'reset_mode must be warm or cold')
+        self.with_plc,self.keep_running,self.max_plc_repairs=with_plc,keep_running,max_plc_repairs
+        self.runtime_seconds,self.reset_mode,self.plc_tools=runtime_seconds,reset_mode,plc_tools
+        require(start_from in ('scene','plc') and (with_plc or start_from=='scene'),'start_from plc needs with_plc')
+        self.start_from=start_from
+        self.start_local_services=start_local_services
+        require(plc_mode in ('compile','run'),'plc_mode must be compile or run')
+        self.plc_mode=plc_mode
         require(type(max_repairs) is int and 0<=max_repairs<=5,'max_repairs must be 0..5');self.max_repairs=max_repairs
         require(inject_fault in (None,'emitter_gap','sensor_parallel'),'unknown experiment fault');self.inject_fault=inject_fault
         from .simple_prompts import LAYOUT_SCHEMA
         llm=deepcopy(config.get('llm',{}));llm['schema_roles']=[]
         llm.setdefault('response_schemas',{})['vision']=LAYOUT_SCHEMA
         raw=client if client is not None else ModelClient(llm)
+        self.raw_model=raw
         secrets=configured_secret_values(config)+(raw.secret_values() if isinstance(raw,ModelClient) else [])
         self.redactor=Redactor(secrets)
         self.training=TrainingRecorder(self.output/'training-data',source_kind='injected_client' if client is not None else 'live_model',
@@ -185,9 +206,13 @@ class SimpleWorkflow:
         if interaction is not None:
             from .interactive import ManualClient,model_info
             self.client=ManualClient(self.client,interaction,info=lambda role,payload:model_info(raw,role,payload))
-        self.tools=tools or NativeSceneTools(config,self.trace)
+        self.tools=tools or NativeSceneTools(config,self.trace,controller_owned=with_plc)
         self.state={'schema_version':1,'framework':'simple','status':'created','phase':'scene_design','model_calls':0,
             'scene_revision':0,'plc_executed':False,'live_pipeline_passed':False,'started_at':utc_now()}
+        self.state['execution_scope']='scene_and_plc' if with_plc else 'scene_only'
+        self.state['started_from']=start_from
+        self.state['execution_options']={'with_plc':with_plc,'keep_running':keep_running,'max_plc_repairs':max_plc_repairs,
+            'runtime_seconds':runtime_seconds,'reset_mode':reset_mode,'start_local_services':start_local_services,'plc_mode':plc_mode}
 
     def trace(self,event,**details):
         self.output.mkdir(parents=True,exist_ok=True)
@@ -202,6 +227,7 @@ class SimpleWorkflow:
         usages=[r.get('model_metadata',{}).get('usage') or {} for r in candidates]
         self.state.update(model_calls=len(candidates),tokens={key:sum(u.get(key,0) or 0 for u in usages)
             for key in ('prompt_tokens','completion_tokens','total_tokens')})
+        self.state['usage_missing_calls']=sum(type(u.get('total_tokens')) is not int for u in usages)
         self.state.update(status=status,**self.redactor.clean(details),elapsed_seconds=round(time.monotonic()-self.started,3))
         write_json(self.output/'run.json',self.state);self.trace('workflow_transition',**self.state)
         return self.state
@@ -217,6 +243,7 @@ class SimpleWorkflow:
         require(not (self.output/'requirement.json').exists(),'choose a fresh run directory')
         write_json(self.output/'requirement.json',{'requirement':requirement})
         try:
+            require(self.start_from!='plc' or resume_source is not None,'PLC continuation needs a saved scene run')
             catalog=self.tools.catalog(self.output)
             self.state['template_sources']={s['id']:s['sha256'] for s in catalog['sources']}
             self.state['protocol_sha256']=canonical_hash(self.config['protocol'])
@@ -229,6 +256,14 @@ class SimpleWorkflow:
                 design=read_json(source/'design.json');plan=read_json(source/'scene-plan.json')
                 require(canonical_hash(design)==old['design_sha256'] and canonical_hash(plan)==old['plan_sha256'],'resume artifact changed')
                 self.state['source_run']=str(source)
+                self.resume_source=source
+                if self.start_from=='plc':
+                    require(old.get('visual_verdict')=='pass' and old.get('native_geometry_verified') is True,'source layout was not verified')
+                    previous_scene=Path(old['scene_dir']).resolve();require(previous_scene.is_relative_to(source),'source scene outside saved run')
+                    require(read_json(previous_scene/'scene-feedback.json')['verdict']=='pass' and
+                        read_json(previous_scene/'geometry-validation.json')['passed'] is True and
+                        canonical_hash(read_json(previous_scene/'scene-plan.json'))==old['plan_sha256'],'saved layout evidence no longer matches')
+                    self.trace('artifact_reused',artifact='layout_review',source_run=str(source),scope='archived layout only; current native and runtime evidence required')
                 if old.get('experiment_fault'): self.state['experiment_fault']=old['experiment_fault']
                 self.trace('artifact_reused',artifact='scene_design',source_run=str(source))
             else:
@@ -270,6 +305,16 @@ class SimpleWorkflow:
                 write_json(self.output/'scene-plan.json',plan);write_json(self.output/'run.json',self.state)
                 directory=self.output/f'scene-{attempt:03d}';write_json(directory/'scene-plan.json',plan)
                 rendered=self.tools.render(plan,catalog,directory)
+                if self.start_from=='plc':
+                    require(rendered['geometry'].get('passed') is True and rendered['geometry'].get('spatial_checks_applied') is True,
+                            'current native geometry failed; PLC continuation cannot change an approved layout')
+                    self.state.update(scene_dir=str(directory),visual_verdict='pass',layout_visual_source='archived',
+                        native_geometry_verified=True,phase='plc_generation')
+                    # Keep the archived visual result explicitly separate from the current runtime review.
+                    archived=read_json(previous_scene/'scene-feedback.json')
+                    write_json(directory/'scene-feedback.json',{**archived,'source_run':str(source),'evidence_scope':'archived unchanged layout'})
+                    from .simple_plc import SimplePLCStage
+                    return SimplePLCStage(self,self.plc_tools).run(requirement,design,rendered,directory)
                 images=rendered['images'];records=[r for r in rendered['evidence']['records'] if r['kind']=='image']
                 image_ids={r['id'] for r in records};ids={o['id'] for o in design['objects']}
                 payload={'phase':'scene','requirement':requirement,
@@ -279,6 +324,11 @@ class SimpleWorkflow:
                 review=validate_review(self.call('vision',LAYOUT_PROMPT,payload,images),ids,image_ids)
                 write_json(directory/'scene-feedback.json',review);geometry=rendered['geometry']
                 if review['verdict']=='pass' and geometry.get('passed') is True and geometry.get('spatial_checks_applied') is True:
+                    if self.with_plc:
+                        self.state.update(scene_dir=str(directory),visual_verdict='pass',native_geometry_verified=True,phase='plc_generation')
+                        self.trace('workflow_transition',status='scene_verified',scene_dir=str(directory))
+                        from .simple_plc import SimplePLCStage
+                        return SimplePLCStage(self,self.plc_tools).run(requirement,design,rendered,directory)
                     return self.finish('scene_verified',scene_dir=str(directory),visual_verdict='pass',native_geometry_verified=True)
                 if not geometry.get('spatial_checks_applied'):
                     return self.finish('needs_attention',target='tools',error='Native geometry measurement is missing; image review is diagnostic only.',scene_dir=str(directory))

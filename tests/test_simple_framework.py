@@ -155,3 +155,25 @@ class SimpleFrameworkTests(unittest.TestCase):
         plan=self.module().design_to_plan(design,self.catalog)
         self.assertEqual(len(plan['objects']),2)
         self.assertEqual(plan['objects'][1]['yaw_deg'],0)
+
+    def test_plc_continuation_reuses_verified_layout_and_never_calls_scene_models(self):
+        from unittest.mock import patch
+        client=Mock();client.complete.side_effect=[deepcopy(DESIGN),{'verdict':'pass','summary':'Visible','findings':[]}]
+        first=self.module().SimpleWorkflow(self.config,self.root/'original',client=client,tools=self.tools());first.run('Make a conveyor')
+        new_client=Mock()
+        resumed=self.module().SimpleWorkflow(self.config,self.root/'continued',client=new_client,tools=self.tools(),with_plc=True,start_from='plc')
+        with patch('factoryio_agents.simple_plc.SimplePLCStage') as stage:
+            stage.return_value.run.return_value={'status':'passed','plc_executed':True}
+            result=resumed.resume(first.output)
+        self.assertEqual(result['status'],'passed');new_client.complete.assert_not_called()
+        stage.return_value.run.assert_called_once()
+        self.assertEqual(read_json(resumed.output/'scene-000/scene-feedback.json')['evidence_scope'],'archived unchanged layout')
+
+    def test_plc_continuation_rechecks_current_native_geometry_before_model_generation(self):
+        from unittest.mock import patch
+        client=Mock();client.complete.side_effect=[deepcopy(DESIGN),{'verdict':'pass','summary':'Visible','findings':[]}]
+        first=self.module().SimpleWorkflow(self.config,self.root/'original',client=client,tools=self.tools());first.run('Make a conveyor')
+        new_client=Mock();tools=self.tools([{'passed':False,'spatial_checks_applied':True,'issues':[{'object_id':'emitter'}]}])
+        resumed=self.module().SimpleWorkflow(self.config,self.root/'continued',client=new_client,tools=tools,with_plc=True,start_from='plc')
+        with patch('factoryio_agents.simple_plc.SimplePLCStage') as stage:result=resumed.resume(first.output)
+        self.assertEqual(result['status'],'needs_attention');stage.assert_not_called();new_client.complete.assert_not_called()

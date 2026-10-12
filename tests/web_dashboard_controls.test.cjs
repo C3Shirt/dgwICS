@@ -160,3 +160,13 @@ test('resuming a simple CLI history stays in the simple framework',async()=>{
   const request=ui.requests.find(r=>r.url==='/api/sessions'&&r.method==='POST');
   assert.deepEqual(JSON.parse(request.body),{mode:'simple_resume',source_id:'fixture'});
 });
+
+test('a verified simple scene exposes an explicit PLC continuation instead of a new scene task',async()=>{
+  for(const status of ['scene_verified','plc_compiled']){
+    const ui=await dashboard(state({mode:'history',historical:true,framework:'simple',result:{status}}));
+    assert.equal(ui.get('continue-plc').hidden,false);
+    await ui.get('continue-plc').onclick();
+    const request=ui.requests.find(r=>r.url==='/api/sessions'&&r.method==='POST');
+    assert.deepEqual(JSON.parse(request.body),{mode:'simple_plc',source_id:'fixture'});
+  }
+});

@@ -6,7 +6,9 @@ const phases={spec:'需求拆解与物品选择',execution:'供料与控制流�
 const statuses={waiting:'等待手动执行',running:'执行中',completed:'已返回',released:'已放行',failed:'失败',cancelled:'已取消',cancelling:'取消后续，等待当前调用返回',finished:'流程已结束',history:'历史记录',passed:'验收通过',awaiting_scene_review:'场景文件生成，待验证',needs_attention:'需要处理',needs_configuration:'配置问题',repair_limit_reached:'达到修改上限',archived_review_completed:'历史图片复查已返回'};
 Object.assign(phases,{scene_load:'加载生成场景',scene_geometry:'检查物体放置与输送连接',scene_geometry_capability:'检查几何工具能力',device_binding:'匹配 PLC 通道'});
 Object.assign(phases,{scene_design:'场景设计',design:'场景设计',scene_repair:'局部布局修复',local_repair:'局部布局修复',scene_capture:'截取当前场景'});
+Object.assign(phases,{runtime_control:'同步操作两端',runtime:'检查实际运行'});
 statuses.scene_verified='场景布局已验证';
+statuses.plc_compiled='PLC 已编译，尚未运行';
 let bootstrap=null,currentSession=null,currentStep=null,currentTab='request',lastRevision=-1,lastDetailKey='',busy=false;
 const fmt=v=>JSON.stringify(v,null,2);
 function logText(value){return value==null?'':Array.isArray(value)?value.map(v=>typeof v==='string'?v:fmt(v)).join('\n'):typeof value==='string'?value:fmt(value);}
@@ -23,9 +25,12 @@ function renderLists(){
 }
 async function selectSession(id){currentSession=id;currentStep=null;lastRevision=-1;lastDetailKey='';$('welcome').hidden=true;$('session-view').hidden=false;renderLists();await poll();history.replaceState(null,'','?session='+encodeURIComponent(id));}
 async function poll(){if(!currentSession)return;try{const session=await api('/api/sessions/'+currentSession);if(session.id!==currentSession)return;window.sessionState=session;
-  $('session-mode').textContent=session.historical?'历史运行 · 只读':({simple_scene:'简化场景闭环 · 手动控制',simple_resume:'恢复简化场景闭环 · 手动控制',vision:'历史截图复查 · 手动控制',prepare:'仅生成任务与场景文件 · 手动控制',run:'完整联机流程 · 手动控制',resume:'恢复已有任务 · 手动控制'}[session.mode]||'现有 Agent 框架 · 手动控制');$('session-title').textContent=session.name;$('output-path').textContent=session.output;badge('session-status',session.status==='finished'?(session.result?.status||session.status):session.status);
+  $('session-mode').textContent=session.historical?'历史运行 · 只读':({simple_scene:'简化场景闭环 · 手动控制',simple_run:'简化场景与 PLC 闭环 · 手动控制',simple_plc:'简化流程 · 从 PLC 继续',simple_resume:'恢复简化流程 · 手动控制',vision:'历史截图复查 · 手动控制',prepare:'仅生成任务与场景文件 · 手动控制',run:'完整联机流程 · 手动控制',resume:'恢复已有任务 · 手动控制'}[session.mode]||'现有 Agent 框架 · 手动控制');$('session-title').textContent=session.name;$('output-path').textContent=session.output;badge('session-status',session.status==='finished'||session.historical?(session.result?.status||session.status):session.status);
   $('cancel').hidden=session.historical||['finished','failed','cancelled','history'].includes(session.status);$('cancel').disabled=session.status==='cancelling';$('history-actions').hidden=!session.historical;
   $('replay-vision').hidden=session.framework==='simple';
+  $('continue-plc').hidden=!(['scene_verified','plc_compiled'].includes(session.result?.status)&&(session.framework==='simple'||session.mode.startsWith('simple_')));
+  $('continue-plc').textContent=session.result?.status==='plc_compiled'?'部署并运行已编译 PLC，手动执行':'继续 PLC 流程，手动执行';
+  $('continue-plc').disabled=busy;
   renderContinuation(session);
   $('step-count').textContent=session.steps.length+' 步';renderTimeline(session);$('result-panel').hidden=!session.result;$('result').textContent=fmt(session.result);
   $('events').textContent=session.events.map(e=>clock(e.timestamp)+' '+(roles[e.active_role]||'')+' '+(e.event||'')+'\n'+logText(e.text||e.summary||e.error)).join('\n\n');
@@ -37,7 +42,7 @@ function renderContinuation(session){
   $('pending-banner').hidden=!!session.historical;
   const next=session.steps.find(s=>s.id===session.pending_id&&s.status==='waiting');
   const ended=['finished','failed','cancelled'].includes(session.status);
-  const recoverable=ended&&!session.historical&&['run','resume','simple_scene','simple_resume'].includes(session.mode)&&
+  const recoverable=ended&&!session.historical&&['run','resume','simple_scene','simple_resume','simple_run','simple_plc'].includes(session.mode)&&
     ['needs_configuration','needs_attention','failed','repair_limit_reached','cancelled'].includes(session.result?.status)&&
     !!(session.result?.phase||session.result?.status==='cancelled');
   $('recover-workflow').hidden=!recoverable;
@@ -145,6 +150,7 @@ $('view-pending').onclick=async()=>{currentStep=window.sessionState.pending_id;c
 $('cancel').onclick=async()=>{try{await api('/api/sessions/'+currentSession+'/cancel',{});await poll();}catch(error){toast(error.message);}};
 $('replay-vision').onclick=async()=>{try{await createTask({mode:'vision',source_id:currentSession});}catch(error){toast(error.message);}};
 $('resume').onclick=async()=>{try{await createTask({mode:window.sessionState.framework==='simple'?'simple_resume':'resume',source_id:currentSession});}catch(error){toast(error.message);}};
+$('continue-plc').onclick=async()=>{if(busy)return;busy=true;try{await createTask({mode:'simple_plc',source_id:currentSession});}catch(error){toast(error.message);}finally{busy=false;}};
 $('open-knowledge').onclick=async()=>{$('knowledge-dialog').showModal();await searchKnowledge();};
 $('close-knowledge').onclick=()=>$('knowledge-dialog').close();
 $('knowledge-form').onsubmit=async event=>{event.preventDefault();await searchKnowledge();};

@@ -101,3 +101,54 @@ end use 0.90, never 1. Bounds and clearance are handled by the native geometry t
 Use native measurements for coordinate arithmetic. Do not claim the repair worked;
 the tool reloads and captures new images for another independent visual inspection.
 """
+
+PLC_PROMPT="""Write CODESYS Structured Text for the confirmed Factory I/O scene.
+This request explicitly continues to PLC execution, even if the original scene-only
+request excluded PLC in that earlier round. Follow the process and control intent.
+Tools own the I/O globals, device mapping and input polarity. Use only the provided
+st_reference for each signal; normalized inputs mean TRUE = pressed/occupied/running.
+Return one JSON object with exactly declaration, implementation, unresolved and notes.
+The declaration begins PROGRAM followed by io_scaffold.program_name and contains local VAR...END_VAR only.
+Do not include globals, bindings, handoff IDs, addresses or XML. Use every bound
+signal: read inputs, assign outputs, and never assign physical inputs or normalized inputs.
+Generate the complete control logic; tools add only declarations and normalization.
+Use ordinary non-retained local state, timers and edge memories; no RETAIN or PERSISTENT.
+For a single-item transfer: start only after Start; Stop halts belt and feed; Reset
+clears local sequence. Simulation Running must gate all outputs and clear stale state.
+While processing, keep the belt moving. Feed until entry confirms a box, then disable
+feed until that box has passed exit and been removed. UpTo=1 limits the emission zone,
+not the entire conveyor. Allow removal clearance after the exit falling edge before
+starting another box. The remover may stay enabled throughout operation; a new
+remover enable edge per box is not required. Drive operator lamps from actual state.
+Use the signal roles and the current physical observations when repairing; do not
+change the scene, mapping, input polarity or control requirements to make a test pass.
+unresolved and notes are arrays of strings. Do not claim physical verification from code.
+"""
+
+RUNTIME_PROMPT="""You inspect actual execution of a Factory I/O + CODESYS process.
+This round explicitly requests PLC execution; a layout-only clause in the original
+request applied to the earlier round, not this continuation.
+This is a RUNTIME review, separate from the layout review. Compare the requested
+process with the current timestamped images, normalized signal transitions, native
+item counts, compiler/deployment receipts and deterministic runtime checks.
+Describe observations and the evidence for them. PLC Run or a static screenshot
+alone does not prove transport. Check single-item feeding, entry-before-exit,
+actual removal, repeated cycles, continuous belt operation, Stop and synchronized
+Reset/restart. A continuously enabled remover is allowed. Do not invent per-item
+remover rising-edge requirements or reinterpret already confirmed input polarity.
+If evidence is missing or contradictory, say uncertain. Do not override a failed
+deterministic check with a visual pass. Identify PLC, scene, tools or unknown as the
+repair target based on actual evidence, rather than guessing from a stalled image.
+Return a JSON object with verdict (pass/repair/uncertain), summary, findings.
+Each finding has target (plc/scene/tools/unknown), object_ids, status (issue/uncertain),
+observed, reason, suggestion, evidence_ids from the supplied current records.
+Use pass with empty findings only when all current checks support the requested flow.
+"""
+
+from copy import deepcopy
+RUNTIME_SCHEMA=deepcopy(LAYOUT_SCHEMA)
+_finding=RUNTIME_SCHEMA['properties']['findings']['items']
+_finding['required'].remove('image_ids');_finding['properties'].pop('image_ids')
+_finding['required']+=['target','evidence_ids']
+_finding['properties'].update(target={'type':'string','enum':['plc','scene','tools','unknown']},
+    evidence_ids={'type':'array','items':{'type':'string'}})
