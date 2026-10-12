@@ -1,0 +1,172 @@
+"""Manual step boundaries and local dashboard use injected services only."""
+from pathlib import Path
+from threading import Thread
+import json
+import tempfile
+import unittest
+from unittest.mock import Mock
+from http.server import ThreadingHTTPServer
+import urllib.request
+import urllib.error
+
+from factoryio_agents.contracts import ContractError, file_hash
+
+
+class InteractiveTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name)
+
+    def module(self):
+        import factoryio_agents
+        self.assertTrue((Path(factoryio_agents.__file__).parent/'interactive.py').is_file(),
+                        'missing manual interaction boundary for the existing framework')
+        from factoryio_agents import interactive
+        return interactive
+
+    def test_model_request_and_images_are_previewed_before_any_call(self):
+        module=self.module(); control=module.ManualControl(self.root)
+        raw=Mock(); raw.complete.return_value={'checks':[]}
+        image=self.root/'original.png'; image.write_bytes(b'original image bytes')
+        client=module.ManualClient(raw,control)
+        result=[]
+        thread=Thread(target=lambda:result.append(client.complete('vision','Look at images',
+            {'phase':'scene','layout_review':{'scene_goal':'Inspect a conveyor'}},[image])))
+        thread.start(); self.addCleanup(lambda:control.cancel())
+        pending=control.wait_pending(timeout=2)
+        self.assertIsNotNone(pending)
+        raw.complete.assert_not_called()
+        step=control.step(pending)
+        self.assertEqual(step['request']['system'],'Look at images')
+        self.assertEqual(len(step['request']['images']),1)
+        asset=control.asset(step['request']['images'][0]['asset_id'])
+        self.assertEqual(asset.read_bytes(),b'original image bytes')
+        image.write_bytes(b'changed source after preview')
+        control.approve(pending); thread.join(2)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(result,[{'checks':[]}])
+        sent=raw.complete.call_args.args[3][0]
+        self.assertEqual(sent.read_bytes(),asset.read_bytes())
+        self.assertEqual(control.step(pending)['status'],'completed')
+
+    def test_one_approval_cannot_release_the_next_agent(self):
+        module=self.module(); control=module.ManualControl(self.root)
+        raw=Mock(); raw.complete.return_value={'answer':'done'}
+        client=module.ManualClient(raw,control)
+        thread=Thread(target=lambda:[client.complete(role,'prompt',{}) for role in ('planner','scene')])
+        thread.start(); self.addCleanup(lambda:control.cancel())
+        first=control.wait_pending(timeout=2); control.approve(first)
+        second=control.wait_pending(after=first,timeout=2)
+        self.assertIsNotNone(second); self.assertNotEqual(first,second)
+        self.assertEqual(raw.complete.call_count,1)
+        with self.assertRaises(ContractError): control.approve(first)
+        self.assertEqual(raw.complete.call_count,1)
+        control.approve(second); thread.join(2)
+        self.assertEqual(raw.complete.call_count,2)
+
+    def test_cancel_waiting_step_makes_no_model_call(self):
+        module=self.module(); control=module.ManualControl(self.root)
+        raw=Mock(); client=module.ManualClient(raw,control); errors=[]
+        def work():
+            try: client.complete('planner','prompt',{})
+            except BaseException as error: errors.append(error)
+        thread=Thread(target=work); thread.start()
+        self.assertIsNotNone(control.wait_pending(timeout=2))
+        control.cancel(); thread.join(2)
+        raw.complete.assert_not_called()
+        self.assertTrue(errors and isinstance(errors[0],KeyboardInterrupt))
+
+    def test_tool_boundary_also_waits_and_secret_values_are_redacted(self):
+        module=self.module(); control=module.ManualControl(self.root,secrets=['fixture-key'])
+        thread=Thread(target=lambda:control.before_tool({'event':'tool_requested','tool':'codesys',
+            'action':'compile_and_deploy','password':'fixture-key'}))
+        thread.start(); self.addCleanup(lambda:control.cancel())
+        pending=control.wait_pending(timeout=2)
+        self.assertEqual(control.step(pending)['kind'],'tool')
+        self.assertNotIn('fixture-key',json.dumps(control.step(pending)))
+        control.approve(pending); thread.join(2)
+        self.assertFalse(thread.is_alive())
+
+    def test_invalid_asset_id_cannot_read_arbitrary_files(self):
+        module=self.module(); control=module.ManualControl(self.root)
+        with self.assertRaises(ContractError): control.asset('../../config.agent.json')
+
+    def test_waiting_for_human_does_not_exhaust_execution_budget(self):
+        module=self.module()
+        from factoryio_agents.execution import ExecutionBudget
+        budget=ExecutionBudget(self.root,{'execution_limits':{'max_elapsed_seconds':1}})
+        budget.state['started_at']-=10
+        budget.exclude_human_wait(10)
+        budget.check()
+        self.assertEqual(budget.state['human_wait_seconds'],10)
+
+
+class DashboardHTTPTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name)
+        import factoryio_agents
+        self.assertTrue((Path(factoryio_agents.__file__).parent/'web_dashboard.py').is_file(),
+                        'missing local dashboard HTTP API')
+        from factoryio_agents.web_dashboard import Dashboard, create_server
+        from factoryio_agents.contracts import write_json
+        config={'schema_version':1,'scene_sources':[],'protocol':{'host':'127.0.0.1','port':502},'codesys':{},'factoryio':{},
+                'llm':{'base_url':'http://fixture.invalid/v1','models':{'vision':'fixture-model'}}}
+        write_json(self.root/'config.agent.json',config)
+        source=self.root/'runs/history'
+        image=source/'training-data/assets/frame.png'; image.parent.mkdir(parents=True); image.write_bytes(b'frozen fixture')
+        write_json(source/'training-data/candidates/reply.json',{'candidate_id':'reply','role':'vision','status':'response_received',
+            'started_at':'2026-10-12T00:00:00Z','payload':{'phase':'scene','review_task':{'prompt_id':'vision_layout'},
+                'evidence':{'records':[{'id':'top','kind':'image'}]}},
+            'messages':[{'role':'system','content':'Inspect the images.'}],
+            'images':[{'path':'assets/frame.png','sha256':file_hash(image)}],
+            'response_text':'{"checks":[]}','structured_output':{'checks':[]}})
+        self.dashboard=Dashboard(self.root)
+        self.server=create_server(self.dashboard,0)
+        self.thread=Thread(target=self.server.serve_forever,daemon=True); self.thread.start()
+        self.addCleanup(self.server.server_close); self.addCleanup(self.server.shutdown)
+        self.url='http://127.0.0.1:'+str(self.server.server_port)
+        self.opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
+    def get(self,path):
+        try:
+            with self.opener.open(self.url+path) as response: return response.read()
+        except urllib.error.HTTPError as error:
+            error.close(); raise
+
+    def test_history_exposes_the_saved_prompt_reply_and_exact_image_bytes(self):
+        bootstrap=json.loads(self.get('/api/bootstrap')); identifier=bootstrap['history'][0]['id']
+        session=json.loads(self.get('/api/sessions/'+identifier))
+        self.assertTrue(session['historical'])
+        step=json.loads(self.get('/api/sessions/'+identifier+'/steps/reply'))
+        self.assertEqual(step['request']['system'],'Inspect the images.')
+        self.assertEqual(step['raw_response'],'{"checks":[]}')
+        self.assertEqual(step['request']['images'][0]['image_id'],'top')
+        self.assertEqual(self.get('/api/sessions/'+identifier+'/images/reply-0'),b'frozen fixture')
+
+    def test_history_cannot_be_released_and_missing_token_blocks_mutations(self):
+        identifier=json.loads(self.get('/api/bootstrap'))['history'][0]['id']
+        for token in (None,self.server.dashboard_token):
+            headers={'Content-Type':'application/json'}
+            if token: headers['X-Dashboard-Token']=token
+            request=urllib.request.Request(self.url+'/api/sessions/'+identifier+'/approve',
+                data=b'{"step_id":"reply"}',headers=headers)
+            with self.assertRaises(urllib.error.HTTPError) as caught: self.opener.open(request)
+            self.assertEqual(caught.exception.code,400)
+            caught.exception.close()
+
+    def test_image_route_and_static_route_do_not_allow_path_traversal(self):
+        identifier=json.loads(self.get('/api/bootstrap'))['history'][0]['id']
+        with self.assertRaises(urllib.error.HTTPError):
+            self.get('/api/sessions/'+identifier+'/images/..%2F..%2Fconfig.agent.json')
+        with self.assertRaises(urllib.error.HTTPError): self.get('/..%2Fconfig.agent.json')
+
+    def test_page_boots_with_step_controls_and_image_viewer(self):
+        page=self.get('/').decode('utf-8')
+        self.assertIn('发送图片',page); self.assertIn('执行当前步骤',page)
+        self.assertIn(self.server.dashboard_token,page)
+        self.assertNotIn('__TOKEN__',page)
+        self.assertIn('async function loadStep',self.get('/app.js').decode('utf-8'))
+
+
+if __name__=='__main__': unittest.main()

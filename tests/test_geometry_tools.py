@@ -1,0 +1,125 @@
+from copy import deepcopy
+import unittest
+
+from factoryio_agents.contracts import ContractError
+from factoryio_agents.geometry_tools import project_object, ray_crosses_footprint, validate_layout_geometry, loaded_geometry, attach_button_semantics, resolve_relative_layout
+
+
+class GeometryToolTests(unittest.TestCase):
+    def setUp(self):
+        self.native={'coordinate_system':{'axis_order':['X','Y','Z'],'vertical_axis':'Y','grid_metres':0.125},'prefabs':{
+            'RollerConveyor6M':{'bounds_local_metres':{'min':[-.5,-.3,-3],'max':[.5,.3,3]},
+                'component_geometry_local':{'conveyor':{'direction':[0,0,1]}}},
+            'Emitter':{'bounds_local_metres':{'min':[-.4,-.2,-.5],'max':[.4,.3,.5]},
+                'component_geometry_local':{'emitter':{'origin':[0,-.125,0]}}},
+            'Sensor':{'bounds_local_metres':{'min':[-.0625]*3,'max':[.0625]*3},
+                'component_geometry_local':{'sensor':{'origin':[0,0,0],'direction':[-1,0,0],'range_metres':.8}}}}}
+        self.catalog={'native_geometry':self.native,'templates':[{'template_id':k,'prefab':k} for k in self.native['prefabs']]}
+        self.plan={'objects':[{'id':'belt','template_id':'RollerConveyor6M','position':[100,2,100],'yaw_deg':0},
+            {'id':'feed','template_id':'Emitter','position':[100,6,80],'yaw_deg':0},
+            {'id':'eye','template_id':'Sensor','position':[106,5,100],'yaw_deg':0}]}
+
+    def test_positive_yaw_rotates_native_long_axis_from_z_to_x(self):
+        obj=self.plan['objects'][0];obj['yaw_deg']=90
+        value=project_object(obj,'RollerConveyor6M',self.native['prefabs']['RollerConveyor6M'],.125)
+        self.assertEqual(value['component_geometry']['conveyor']['direction'],[1,0,0])
+        b=value['bounds_world'];self.assertAlmostEqual(b['max'][0]-b['min'][0],6)
+        self.assertAlmostEqual(b['max'][2]-b['min'][2],1)
+        self.assertAlmostEqual((b['min'][1]+b['max'][1])/2,(2+.5)*.125)
+
+    def test_feasible_connections_pass_without_modifying_model_layout(self):
+        before=deepcopy(self.plan);validate_layout_geometry(self.plan,self.catalog)
+        self.assertEqual(self.plan,before)
+
+    def test_template_source_offset_outside_belt_is_rejected(self):
+        self.plan['objects'][1]['position'][0]+=20
+        with self.assertRaisesRegex(ContractError,'emission origin is outside'):validate_layout_geometry(self.plan,self.catalog)
+
+    def test_sensor_facing_away_or_too_far_is_rejected(self):
+        self.plan['objects'][2]['yaw_deg']=180
+        with self.assertRaisesRegex(ContractError,'sensor ray cannot reach'):validate_layout_geometry(self.plan,self.catalog)
+
+    def test_native_loaded_ray_has_priority_over_prefab_projection(self):
+        belt=project_object(self.plan['objects'][0],'RollerConveyor6M',self.native['prefabs']['RollerConveyor6M'],.125)
+        feed=project_object(self.plan['objects'][1],'Emitter',self.native['prefabs']['Emitter'],.125)
+        eye=project_object(self.plan['objects'][2],'Sensor',self.native['prefabs']['Sensor'],.125)
+        eye['component_geometry']['sensor']['range_metres']=.05
+        rows=[{**o,'key':o['id']} for o in (belt,feed,eye)]
+        result=loaded_geometry({'native_geometry':{'objects':rows}},{'objects':[{'key':o['id'],'id':o['id']} for o in rows]})
+        self.assertFalse(result['passed']);self.assertEqual(result['issues'][0]['object_id'],'eye')
+
+    def test_normally_closed_button_is_recorded_from_native_receipt(self):
+        contract={'component_semantics':[]};manifest={'objects':[{'key':'stop','id':'operator_stop','prefab':'StopPushButton',
+            'tags':[{'key':'input','kind':'input','data_type':'bool'}]}]}
+        receipt={'native_geometry':{'objects':[{'key':'stop','component_geometry':{'button':{'normally_closed':True,'alternate_mode':False}}}]},
+            'app_version':'2.5.8','bridge_response_path':'receipt.json','bridge_response_sha256':'hash'}
+        attach_button_semantics(contract,manifest,receipt)
+        self.assertEqual(contract['component_semantics'][0]['semantics'],{'function':'operator_button','pressed_value':False,'released_value':True})
+
+    def test_relative_constraints_resolve_both_sides_for_each_conveying_direction(self):
+        for yaw in (0,90,180,270):
+            for side in ('left','right'):
+                with self.subTest(yaw=yaw,side=side):
+                    constraints={'objects':[{'id':'belt','template_id':'RollerConveyor6M','placement':{'kind':'anchor','position':[100,2,100],'yaw_deg':yaw}},
+                        {'id':'feed','template_id':'Emitter','placement':{'kind':'emitter_over_conveyor','relative_to':'belt','along_fraction':.1}},
+                        {'id':'eye','template_id':'Sensor','placement':{'kind':'sensor_beside_conveyor','relative_to':'belt','along_fraction':.8,
+                            'side':side,'height_above_surface_grid':1,'clearance_grid':1}}]}
+                    original=deepcopy(constraints);resolved=resolve_relative_layout(constraints,self.catalog)
+                    validate_layout_geometry(resolved,self.catalog)
+                    self.assertEqual(constraints,original)
+                    self.assertTrue(all(all(type(x) is int for x in o['position']) for o in resolved['objects']))
+                    feed=next(o for o in resolved['objects'] if o['id']=='feed')
+                    self.assertGreater(feed['position'][1],2)
+
+    def test_offsets_cannot_bypass_measured_sensor_placement(self):
+        constraints={'objects':[{'id':'belt','template_id':'RollerConveyor6M','placement':{'kind':'anchor','position':[100,2,100],'yaw_deg':0}},
+            {'id':'eye','template_id':'Sensor','placement':{'kind':'grid_offset','relative_to':'belt','offset_grid':[0,3,0],'yaw_deg':0}}]}
+        with self.assertRaisesRegex(ContractError,'not feed or detection'):resolve_relative_layout(constraints,self.catalog)
+
+    def test_remover_volume_begins_after_conveyor_for_all_cardinal_flows(self):
+        self.native['prefabs']['Remover']={'bounds_local_metres':{'min':[-.4,-.2,-.5],'max':[.4,.3,.5]},'component_geometry_local':{}}
+        self.catalog['templates'].append({'template_id':'Remover','prefab':'Remover'})
+        for yaw in (0,90,180,270):
+            constraints={'objects':[{'id':'belt','template_id':'RollerConveyor6M','placement':{'kind':'anchor','position':[100,2,100],'yaw_deg':yaw}},
+                {'id':'remove','template_id':'Remover','placement':{'kind':'remover_after_conveyor','relative_to':'belt','clearance_grid':0}}]}
+            resolved=resolve_relative_layout(constraints,self.catalog)
+            belt,remover=[project_object(o,o['template_id'],self.native['prefabs'][o['template_id']],.125) for o in resolved['objects']]
+            direction=belt['component_geometry']['conveyor']['direction'];axis=0 if yaw%180 else 2
+            if direction[axis]>0:self.assertGreaterEqual(remover['bounds_world']['min'][axis],belt['bounds_world']['max'][axis])
+            else:self.assertLessEqual(remover['bounds_world']['max'][axis],belt['bounds_world']['min'][axis])
+            self.assertGreaterEqual(remover['bounds_world']['min'][1],belt['bounds_world']['max'][1])
+
+    def test_native_registration_failure_is_not_a_visual_pass(self):
+        receipt={'native_geometry':{'objects':[{'key':'r','prefab':'Remover','bounds_world':{'min':[0]*3,'max':[1]*3},
+            'component_geometry':{},'native_registered':False}]}}
+        result=loaded_geometry(receipt,{'objects':[{'key':'r','id':'remover'}]})
+        self.assertFalse(result['passed']);self.assertIn('native voxel registration failed',result['issues'][0]['error'])
+
+    def test_missing_native_geometry_is_not_a_success(self):
+        result = loaded_geometry({}, {'objects':[]})
+        self.assertFalse(result['passed'])
+        self.assertFalse(result['spatial_checks_applied'])
+        self.assertEqual(result['scope'],'geometry_not_available')
+
+    def test_unmeasured_belt_cannot_silently_skip_connection_checks(self):
+        belt = project_object(self.plan['objects'][0],'RollerConveyor6M',self.native['prefabs']['RollerConveyor6M'],.125)
+        belt.update(prefab='BeltConveyor4M',component_geometry={})
+        feed = project_object(self.plan['objects'][1],'Emitter',self.native['prefabs']['Emitter'],.125)
+        rows = [{**o,'key':o['id']} for o in (belt,feed)]
+        result = loaded_geometry({'native_geometry':{'objects':rows}},
+            {'objects':[{'key':o['id'],'id':o['id']} for o in rows]})
+        self.assertFalse(result['passed'])
+        self.assertFalse(result['spatial_checks_applied'])
+        self.assertEqual(result['issues'][0]['target'],'tools')
+        self.assertEqual(result['issues'][0]['object_id'],'belt')
+
+    def test_unsupported_topology_does_not_become_pass_when_registration_is_healthy(self):
+        rows = [{'key':'one','prefab':'OtherMachine','native_registered':True,'component_geometry':{},
+                 'bounds_world':{'min':[0]*3,'max':[1]*3}}]
+        result = loaded_geometry({'native_geometry':{'objects':rows}},{'objects':[{'key':'one','id':'machine'}]})
+        self.assertFalse(result['passed'])
+        self.assertFalse(result['spatial_checks_applied'])
+        self.assertEqual(result['scope'],'unsupported_topology')
+
+
+if __name__=='__main__':unittest.main()

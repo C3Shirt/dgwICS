@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "software": "Factory I/O",
+  "verified_app_version": "2.5.8",
+  "evidence": ["docs/agent-workflow-lessons.md", "artifacts/weight-live-start-002/runtime-trace.json"],
+  "rules": [
+    {"prefab": "RetroreflectivePhotoelectricSensor", "operating_mode": "$C_DefaultSensor_OM_Binary_NAME", "current_mode": "0", "tag_index": 0, "kind": "input", "data_type": "bool", "semantics": {"occupied_value": false, "clear_value": true}},
+    {"prefab": "DiffusePhotoelectricSensor", "operating_mode": "$C_DefaultSensor_OM_Binary_NAME", "current_mode": "0", "tag_index": 0, "kind": "input", "data_type": "bool", "semantics": {"occupied_value": true, "clear_value": false}},
+    {"prefab": "PopUpWheelSorter", "operating_mode": "$C_PopUpWheelSorter_OM_SingleBinary_NAME", "current_mode": "0", "tag_index": 0, "group": "Left", "kind": "output", "data_type": "bool", "semantics": {"function": "steer_left", "requires_enabled_tag_index": 2}},
+    {"prefab": "PopUpWheelSorter", "operating_mode": "$C_PopUpWheelSorter_OM_SingleBinary_NAME", "current_mode": "0", "tag_index": 1, "group": "Right", "kind": "output", "data_type": "bool", "semantics": {"function": "steer_right", "requires_enabled_tag_index": 2}},
+    {"prefab": "PopUpWheelSorter", "operating_mode": "$C_PopUpWheelSorter_OM_SingleBinary_NAME", "current_mode": "0", "tag_index": 2, "group": "Forward", "kind": "output", "data_type": "bool", "semantics": {"function": "lift_and_motor_enable", "required_for_routes": ["left", "front", "right"]}},
+    {"prefab": "Emitter", "operating_mode": "$C_Emitter_OM_Default_NAME", "current_mode": "0", "tag_index": 0, "kind": "output", "data_type": "bool", "semantics": {"function": "emit_enable", "false_resets_emitted_count": true, "single_item_requires_up_to": 1}}
+  ]
+}

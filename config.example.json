@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "scene_sources": [
+    "E:/Program Files (x86)/factory/Scenes/Sorting by Weight.factoryio",
+    "scenes/Sorting by Height (Learn).factoryio"
+  ],
+  "llm": {
+    "base_url": null,
+    "api_key_env": "OPENAI_API_KEY",
+    "models": {
+      "planner": null,
+      "scene": null,
+      "vision": null,
+      "plc": null
+    },
+    "timeout_seconds": 90,
+    "json_mode": true,
+    "bypass_proxy": false
+  },
+  "protocol": {
+    "name": "modbus_tcp",
+    "factoryio_role": "client",
+    "plc_role": "server",
+    "host": "127.0.0.1",
+    "port": 502,
+    "unit_id": 1
+  },
+  "factoryio": {
+    "web_api_url": "http://127.0.0.1:7410",
+    "timeout_seconds": 5,
+    "load_command": null,
+    "connect_command": null,
+    "capture_command": null,
+    "sample_interval_seconds": 0.2,
+    "runtime_seconds": 30,
+    "runtime_control": false,
+    "executable": "E:\\Program Files (x86)\\factory\\Factory IO.exe"
+  },
+  "codesys": {
+    "executable": "G:/codeesys/CODESYS/Common/CODESYS.exe",
+    "profile": "CODESYS V3.5 SP22 Patch 3",
+    "template_project": "C:\\Users\\tongqingwang\\Documents\\example1.project",
+    "program_name": "PLC_PRG",
+    "application_name": "Application",
+    "timeout_seconds": 120,
+    "deploy": false,
+    "bindings": [],
+    "wire_encodings": [],
+    "device_patch": null,
+    "transport_confirmed": false,
+    "verified_device_bindings": [],
+    "verified_template_sha256": null,
+    "verified_transport_sha256": null
+  },
+  "max_scene_repairs": 3,
+  "max_plc_repairs": 3,
+  "training": {
+    "enabled": true,
+    "scenario_id": null,
+    "lineage_group": null
+  }
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="dashboard-token" content="__TOKEN__">
+  <title>工业仿真 Agent 调试台</title><link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar"><div class="brand"><span class="brand-icon">◈</span><div><strong>工业仿真 Agent 调试台</strong><small>Factory I/O · CODESYS</small></div></div><span class="manual-tag">手动逐步执行</span><span id="connection" class="connection">连接中…</span></header>
+  <div class="workspace">
+    <aside class="sidebar">
+      <div class="side-heading">任务工作区 <button id="new-task" class="icon-button" title="新建任务">＋</button></div>
+      <div id="sessions" class="session-list"></div>
+      <div class="side-heading history-heading">历史运行 <button id="refresh" class="icon-button" title="刷新历史">↻</button></div>
+      <input id="history-search" class="search" placeholder="搜索运行目录…" aria-label="搜索历史运行">
+      <div id="history" class="history-list"></div>
+      <div id="models" class="model-list"></div>
+    </aside>
+    <main>
+      <section id="welcome" class="welcome">
+        <span class="eyebrow">看清每一次交接</span><h1>先看请求，再决定下一步。</h1>
+        <p>逐步查看 Agent 的提示词、上下文、图片和原始回复。每次模型调用与主要工具操作，都由你点击放行。</p>
+        <button id="welcome-new" class="primary">新建手动任务</button>
+        <div class="flow-preview"><span>规划</span><i>→</i><span>布局提案</span><i>→</i><span>规划审核</span><i>→</i><span>场景生成</span><i>→</i><span>视觉检查</span><i>→</i><span>PLC 与运行</span></div>
+        <div class="welcome-note">也可以在左侧选择历史运行，查看当时真正发送的请求和图片，或重新进行视觉检查。</div>
+      </section>
+      <section id="session-view" hidden>
+        <div class="session-header"><div><div class="eyebrow" id="session-mode"></div><h1 id="session-title"></h1><div id="output-path" class="output-path"></div></div><div class="session-actions"><span id="session-status" class="badge"></span><button id="cancel" class="danger" hidden>取消后续步骤</button></div></div>
+        <div id="pending-banner" class="pending-banner" hidden><div><strong>下一步正在等待你</strong><span id="pending-label"></span></div><button id="view-pending" class="secondary">查看待执行请求</button></div>
+        <div id="history-actions" class="history-actions" hidden><span>历史记录 · 只读查看</span><button id="replay-vision" class="secondary">用这些图片重新进行视觉检查</button><button id="resume" class="secondary">恢复此任务，手动继续</button></div>
+        <div class="execution-grid">
+          <section class="timeline-panel"><div class="panel-heading">执行步骤 <span id="step-count"></span></div><div id="timeline"></div></section>
+          <section class="detail-panel">
+            <div id="empty-step" class="empty-step">等待流程准备步骤…</div>
+            <div id="step-view" hidden>
+              <div class="step-header"><div><span id="step-role" class="role-tag"></span><h2 id="step-title"></h2><span id="step-time" class="muted"></span></div><div><span id="step-status" class="badge"></span><button id="approve" class="primary" hidden>执行当前步骤</button></div></div>
+              <div id="provider" class="provider"></div>
+              <nav class="tabs" aria-label="步骤信息"><button data-tab="request" class="active">发送请求</button><button data-tab="response">模型回复</button><button data-tab="images">发送图片 <span id="image-count"></span></button><button data-tab="events">运行日志</button></nav>
+              <div id="tab-request" class="tab-content"><div class="block-title">System Prompt <button class="copy" data-copy="system-prompt">复制</button></div><pre id="system-prompt"></pre><div class="block-title">User 上下文 · 实际发送的数据 <button class="copy" data-copy="user-payload">复制</button></div><pre id="user-payload"></pre><details><summary>消息结构与输出格式（图片显示为资产引用）</summary><pre id="wire-messages"></pre></details></div>
+              <div id="tab-response" class="tab-content" hidden><div id="response-empty" class="empty-response"></div><div id="response-content" hidden><div class="block-title">可读回复</div><pre id="readable-response" class="readable-response"></pre><details open><summary>模型原始回复 <button class="copy" data-copy="raw-response">复制</button></summary><pre id="raw-response"></pre></details><details><summary>结构化返回数据</summary><pre id="structured-response"></pre></details><div id="step-error" class="error-box" hidden></div></div></div>
+              <div id="tab-images" class="tab-content" hidden><p class="image-explanation">图片与模型发送内容一致。点击图片查看原始尺寸；下方 SHA-256 可用于核对。</p><div id="image-grid" class="image-grid"></div></div>
+              <div id="tab-events" class="tab-content" hidden><pre id="events"></pre></div>
+            </div>
+          </section>
+        </div>
+        <details id="result-panel" class="result-panel" hidden><summary>本轮流程结果</summary><pre id="result"></pre></details>
+      </section>
+    </main>
+  </div>
+  <dialog id="new-dialog"><form id="new-form"><div class="dialog-header"><h2>新建手动任务</h2><button type="button" id="close-dialog" class="icon-button">×</button></div><label for="mode">执行范围</label><select id="mode"><option value="prepare">生成任务与场景文件</option><option value="run">完整联机流程：场景、PLC 与运行验证</option></select><label for="prompt">场景需求</label><textarea id="prompt" rows="7" required placeholder="描述场景的物品、工艺流程和控制要求…">构建简单直线输送场景：一条输送带、单件供料器、入口和出口光电传感器、末端移除器。一次只允许一箱在线，入口确认后停止供料，完成输送和移除后再供下一箱；运行时输送带保持运行，停止和复位需同步操作 Factory I/O 与 PLC。</textarea><p class="muted">创建后先预览请求。点击“执行当前步骤”才会调用模型或放行工具操作。</p><button type="submit" class="primary">创建任务，等待手动执行</button></form></dialog>
+  <dialog id="image-dialog"><div class="image-dialog-header"><strong id="large-image-title"></strong><button id="close-image" class="icon-button">×</button></div><img id="large-image" alt="发送给视觉模型的原始图片"></dialog>
+  <div id="toast" class="toast" hidden></div>
+  <script src="/app.js"></script>
+</body></html>
