@@ -67,13 +67,14 @@ class PLCScaffoldTests(unittest.TestCase):
         self.config['verified_device_bindings'][0]['variable'] = 'Application.Other.Signal'
         with self.assertRaisesRegex(ContractError,'not a verified'): io_scaffold(self.config,self.contract)
 
-    def test_comments_and_disconnected_aliases_cannot_satisfy_linkage(self):
+    def test_optional_inputs_can_be_unused(self):
         self.fragment['implementation'] = '(* SceneIO.I_entry *)\nSceneIO.Q_belt := enabled;'
-        with self.assertRaisesRegex(ContractError,'does not reference'): assemble_program(self.fragment,io_scaffold(self.config,self.contract),self.contract)
+        program=assemble_program(self.fragment,io_scaffold(self.config,self.contract),self.contract)
+        self.assertEqual(program['implementation'],self.fragment['implementation'])
 
-    def test_reading_an_output_does_not_satisfy_assignment(self):
+    def test_output_usage_is_not_restricted_to_direct_assignment(self):
         self.fragment['implementation'] = 'enabled := SceneIO.I_entry AND SceneIO.Q_belt;'
-        with self.assertRaisesRegex(ContractError,'does not assign'): assemble_program(self.fragment,io_scaffold(self.config,self.contract),self.contract)
+        self.assertEqual(assemble_program(self.fragment,io_scaffold(self.config,self.contract),self.contract)['implementation'],self.fragment['implementation'])
 
     def test_model_cannot_replace_tool_io_or_write_physical_input(self):
         value = {**self.fragment,'globals':[]}
@@ -81,13 +82,21 @@ class PLCScaffoldTests(unittest.TestCase):
         self.fragment['implementation'] += '\nSceneIO.I_entry := FALSE;'
         with self.assertRaisesRegex(ContractError,'writes a physical input'): assemble_program(self.fragment,io_scaffold(self.config,self.contract),self.contract)
 
+    def test_function_block_outputs_cannot_write_physical_inputs(self):
+        self.fragment['declaration']='PROGRAM PLC_PRG\nVAR\n delay : TON;\nEND_VAR'
+        self.fragment['implementation']='delay(IN := TRUE, PT := T#1S, Q => SceneIO.I_entry);'
+        with self.assertRaisesRegex(ContractError,'writes a physical input'):
+            assemble_program(self.fragment,io_scaffold(self.config,self.contract),self.contract)
+        self.fragment['implementation']='delay(IN := SceneIO.I_entry, PT := T#1S, Q => SceneIO.Q_belt);'
+        self.assertEqual(assemble_program(self.fragment,io_scaffold(self.config,self.contract),self.contract)['implementation'],self.fragment['implementation'])
+
     def test_invalid_logic_is_retried_with_exact_error_and_original_scaffold(self):
-        invalid = deepcopy(self.fragment);invalid['implementation'] = 'SceneIO.Q_belt := TRUE;'
+        invalid = deepcopy(self.fragment);invalid['implementation'] = 'SceneIO.I_entry := TRUE;'
         client = Mock();client.complete.side_effect = [invalid,self.fragment]
         result = PLCAgent(client,tool_io=True).program({},self.contract,binding_config=self.config)
         self.assertEqual(result['implementation'],self.fragment['implementation'])
         retry = client.complete.call_args.args[2]
-        self.assertIn('does not reference',retry['stage_rejection']['error'])
+        self.assertIn('writes a physical input',retry['stage_rejection']['error'])
         self.assertEqual(retry['io_scaffold']['bindings'],self.config['bindings'])
 
     def test_assembled_program_replays_candidate_and_detects_manual_logic_edit(self):
@@ -125,9 +134,12 @@ class PLCScaffoldTests(unittest.TestCase):
         self.assertEqual(scaffold['signals'][0]['normalized_meaning'],'pressed')
         self.assertEqual(program['bindings'],self.config['bindings'])
 
-    def test_input_normalization_cannot_invent_missing_polarity(self):
+    def test_unknown_polarity_remains_raw_without_an_invented_alias(self):
         self.config['normalize_bool_inputs']=True
-        with self.assertRaisesRegex(ContractError,'evidence-confirmed polarity'):io_scaffold(self.config,self.contract)
+        scaffold=io_scaffold(self.config,self.contract)
+        self.assertEqual(scaffold['normalization'],[])
+        self.assertEqual(scaffold['signals'][0]['st_reference'],'SceneIO.I_entry')
+        self.assertEqual(scaffold['signals'][0]['polarity'],'unconfirmed_raw_value')
 
     def test_normalized_logic_cannot_access_raw_input_or_write_normalized_copy(self):
         self.config['normalize_bool_inputs']=True

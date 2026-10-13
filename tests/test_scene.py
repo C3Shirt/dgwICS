@@ -55,6 +55,24 @@ FIXTURE = """<FactoryIO Type="MySavedScene" Version="2.5.8" GUID="00000000-0000-
 
 
 class SceneTests(unittest.TestCase):
+    def test_generic_mapping_accepts_numeric_signals_without_assuming_a_transport_process(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);source=root/'numeric.factoryio'
+            xml=ET.fromstring(FIXTURE);sensor=xml.find('.//BinaryInput');sensor.tag='AnalogueInput';sensor.set('ForcedValue','0')
+            for driver in xml.find('Drivers'):
+                driver.find('BitInput0').tag='NumericInput0'
+                driver.find('PointIOCount').set('NumericInputCount','1')
+                driver.find('PointIOOffset').set('NumericInputOffset','0')
+            source.write_text(ET.tostring(xml,encoding='unicode'),encoding='utf-8');catalog=build_catalog([source])
+            plan={'scene_id':'numeric','base_source_id':catalog['sources'][0]['id'],
+                  'objects':[{'id':'process_sensor','template_id':catalog['templates'][0]['template_id'],'position':[10,5,20]}]}
+            result=build_scene(plan,catalog,root/'generated.factoryio',auto_io_mappings=True)
+            mappings=result['io_contract']['mappings']
+            self.assertTrue(result['validation']['passed'])
+            self.assertEqual({m['channel_family'] for m in mappings},{'Bit','Numeric'})
+            sensor_key=next(t['key'] for t in result['io_contract']['tags'] if t.get('object_id')=='process_sensor')
+            self.assertEqual(next(m['channel'] for m in mappings if m['tag_key']==sensor_key),'NumericInput0')
+
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)

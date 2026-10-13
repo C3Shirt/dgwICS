@@ -18,14 +18,41 @@ from .simple_prompts import DESIGN_PROMPT, LAYOUT_PROMPT, PATCH_PROMPT
 from .coordination import component_context
 
 
-def design_to_plan(design,catalog,on_center=None):
+def route_scene_design(design,previous_deferred=()):
+    """Only physical scene blockers stop design; preserve downstream work."""
+    require(isinstance(design,dict),'scene design must be an object')
+    result=deepcopy(design);blockers=[]
+    deferred=deepcopy(list(previous_deferred))+list(result.get('deferred_tasks',[]))
+    unresolved=result.get('unresolved',[])
+    require(isinstance(unresolved,list),'scene unresolved must be an array')
+    for issue in unresolved:
+        if isinstance(issue,str):
+            blockers.append(issue)  # Older replies have no owner; do not silently discard them.
+            continue
+        require(isinstance(issue,dict) and issue.get('owner') in ('scene','plc','runtime'),
+                'unresolved needs owner scene, plc or runtime')
+        require(isinstance(issue.get('reason'),str) and issue['reason'].strip(),'unresolved needs a reason')
+        if issue['owner']=='scene':blockers.append(issue['reason'])
+        else:deferred.append({'owner':issue['owner'],'reason':issue['reason']})
+    require(all(isinstance(t,dict) and t.get('owner') in ('plc','runtime') and
+                isinstance(t.get('reason'),str) and t['reason'].strip() for t in deferred),'invalid deferred task')
+    unique=[]
+    for task in deferred:
+        normalized={'owner':task['owner'],'reason':task['reason']}
+        if normalized not in unique:unique.append(normalized)
+    result.update(unresolved=blockers,deferred_tasks=unique)
+    return result
+
+
+def design_to_plan(design,catalog,on_center=None, *, center=True):
     require(isinstance(design,dict) and re.fullmatch(r'[A-Za-z0-9_-]{1,80}',str(design.get('scene_id',''))),'invalid scene_id')
-    objects=design.get('objects');require(isinstance(objects,list) and 1<=len(objects)<=100,'objects must contain 1..100 components')
+    objects=design.get('objects');require(isinstance(objects,list) and objects,'objects must contain components')
     ids=[o.get('id') for o in objects];require(len(set(ids))==len(ids) and all(isinstance(i,str) and re.fullmatch(r'[A-Za-z0-9_-]{1,60}',i) for i in ids),'invalid or duplicate object ID')
     templates={}
     for obj in objects:
         require(isinstance(obj.get('function'),str) and bool(obj['function'].strip()),'each object needs its function')
-        choices=[t for t in catalog['templates'] if t['prefab']==obj.get('prefab')]
+        choices=[t for t in catalog['templates'] if t['prefab']==obj.get('prefab') and
+                 ('template_id' not in obj or t['template_id']==obj['template_id'])]
         require(bool(choices),'prefab not in current catalog: '+str(obj.get('prefab')))
         templates[obj['id']]=choices[0]
     plan={'scene_id':design['scene_id'],'base_source_id':templates[ids[0]]['source_id'],'objects':[]}
@@ -36,14 +63,11 @@ def design_to_plan(design,catalog,on_center=None):
     if all(o['placement'].get('kind')=='absolute' for o in constraints):
         rows=[{'id':o['id'],'template_id':o['template_id'],'position':o['placement']['position'],'yaw_deg':o['placement']['yaw_deg']} for o in constraints]
     else:
-        relative=[o for o in constraints if o['placement'].get('kind')!='absolute']
-        solved={o['id']:o for o in resolve_relative_layout({**plan,'objects':relative},catalog,verify=False)['objects']}
-        rows=[solved[o['id']] if o['id'] in solved else {'id':o['id'],'template_id':o['template_id'],
-            'position':o['placement']['position'],'yaw_deg':o['placement']['yaw_deg']} for o in constraints]
+        rows=resolve_relative_layout({**plan,'objects':constraints},catalog,verify=False)['objects']
     for obj,row in zip(objects,rows):
         row=deepcopy(row);settings=deepcopy(obj.get('settings',[]));template=templates[obj['id']]
-        if obj['prefab']=='Emitter':
-            material=obj.get('material','BoxS');available=False
+        if obj['prefab']=='Emitter' and 'material' in obj:
+            material=obj['material'];available=False
             for node in component_context(template.get('configuration',{})).get('settings',[]):
                 path=node['path'];attrs=node['attributes']
                 if path.startswith(('Emitter/Parts[','Emitter/Bases[')):
@@ -51,38 +75,74 @@ def design_to_plan(design,catalog,on_center=None):
                         if key==material:available=True
                         settings.append({'path':path,'attribute':key,'value':'True' if key==material else 'False'})
             require(available,'selected emitter template cannot supply material '+material)
-            settings.extend({'path':'Emitter','attribute':k,'value':v} for k,v in
-                [('UpTo','1'),('RandomPartPosition','False'),('RandomPartOrientation','False')])
-        # Tool defaults win for single-item emission; explicit other settings retain their order.
+        # Component configuration belongs to the scene agent; retain template defaults
+        # when it did not request a change. Do not impose a particular feeding policy.
         for setting in settings:
             if type(setting.get('value')) is bool:setting['value']='True' if setting['value'] else 'False'
             elif type(setting.get('value')) in (int,float):setting['value']=str(setting['value'])
         merged={(s['path'],s['attribute']):s for s in settings}
         row['settings']=list(merged.values());row['tag_names']={str(t['index']):obj['id']+' '+str(t['index']) for t in template['tags']}
         plan['objects'].append(row)
-    plan,centering=center_scene_layout(plan,catalog)
+    plan,centering=center_scene_layout(plan,catalog) if center else (plan,None)
     validate_component_settings(plan['objects'],catalog)
     if centering and on_center:on_center(centering)
     return plan
 
 
-def apply_local_patch(plan,patch,allowed,catalog):
-    require(isinstance(patch,dict) and isinstance(patch.get('changes'),list) and patch['changes'],'repair needs nonempty changes')
+def apply_local_patch(plan,patch,allowed,catalog, *, design=None):
+    require(isinstance(patch,dict) and isinstance(patch.get('changes',[]),list),'repair changes must be an array')
+    changes=patch.get('changes',[])
+    structural=bool(patch.get('add_objects') or patch.get('remove_object_ids') or any('replace_with' in c for c in changes))
+    require(changes or structural,'repair needs changes')
+    if structural:
+        require(isinstance(design,dict),'component changes need the current scene design')
+        normal=[c for c in changes if 'replace_with' not in c]
+        positioned=apply_local_patch(plan,{'changes':normal},allowed,catalog) if normal else deepcopy(plan)
+        current={o['id']:o for o in positioned['objects']};updated=deepcopy(design)
+        rows={o['id']:deepcopy(o) for o in updated['objects']}
+        touched=[c.get('object_id') for c in changes]
+        require(len(set(touched))==len(touched),'repair changed an object twice')
+        for identity,row in rows.items():
+            row.update(template_id=current[identity]['template_id'],settings=deepcopy(current[identity].get('settings',[])),
+                       placement={'kind':'absolute','position':deepcopy(current[identity]['position']),'yaw_deg':current[identity]['yaw_deg']})
+        removed=patch.get('remove_object_ids',[])
+        require(isinstance(removed,list) and len(set(removed))==len(removed),'removed object IDs must be unique')
+        for identity in removed:
+            require(identity in allowed and identity in rows and identity not in touched,'removal needs an affected existing object ID')
+            del rows[identity]
+        for change in changes:
+            if 'replace_with' not in change:continue
+            identity=change.get('object_id');replacement=deepcopy(change['replace_with'])
+            require(identity in allowed and identity in rows and isinstance(replacement,dict),'replacement needs an affected existing object')
+            require(set(change)=={'object_id','replace_with'} and replacement.get('id',identity)==identity,'replacement must retain its object identity')
+            replacement['id']=identity;rows[identity]=replacement
+        additions=patch.get('add_objects',[]);require(isinstance(additions,list),'add_objects must be an array')
+        for row in additions:
+            require(isinstance(row,dict) and row.get('id') not in current and row.get('id') not in rows,'new object ID already exists')
+            rows[row['id']]=deepcopy(row)
+        updated['objects']=list(rows.values())
+        result=design_to_plan(updated,catalog,center=False)
+        design.clear();design.update(updated)
+        return result
     result=deepcopy(plan);by_id={o['id']:o for o in result['objects']};changed=set()
     template={t['template_id']:t for t in catalog['templates']}
-    for change in patch['changes']:
+    for change in changes:
         identity=change.get('object_id')
         require(identity in allowed and identity in by_id and identity not in changed,'repair touched an unaffected, unknown or duplicate object')
         require(not set(change)-{'object_id','position','yaw_deg','placement','settings'},'unsupported repair field')
         obj=by_id[identity];changed.add(identity)
         if 'placement' in change:
-            anchors=[o for o in result['objects'] if 'conveyor' in catalog['native_geometry']['prefabs'][template[o['template_id']]['prefab']]['component_geometry_local']]
-            require(len(anchors)==1 and anchors[0]['id']!=identity,'relative patch needs one unaffected conveyor anchor')
-            anchor=anchors[0]
-            constraints=[{'id':anchor['id'],'template_id':anchor['template_id'],'placement':{'kind':'anchor','position':anchor['position'],'yaw_deg':anchor['yaw_deg']}},
-                {'id':identity,'template_id':obj['template_id'],'placement':change['placement']}]
-            resolved=resolve_relative_layout({'objects':constraints},catalog,verify=False)['objects'][1]
-            obj.update(position=resolved['position'],yaw_deg=resolved['yaw_deg'])
+            if change['placement'].get('kind')=='absolute':
+                obj.update(position=deepcopy(change['placement']['position']),yaw_deg=change['placement']['yaw_deg'])
+            else:
+                reference=change['placement'].get('relative_to');anchor=by_id.get(reference)
+                require(anchor is not None and reference!=identity and 'conveyor' in
+                        catalog['native_geometry']['prefabs'][template[anchor['template_id']]['prefab']]['component_geometry_local'],
+                        'relative patch needs a different measured conveyor reference')
+                constraints=[{'id':anchor['id'],'template_id':anchor['template_id'],'placement':{'kind':'anchor','position':anchor['position'],'yaw_deg':anchor['yaw_deg']}},
+                    {'id':identity,'template_id':obj['template_id'],'placement':change['placement']}]
+                resolved=resolve_relative_layout({'objects':constraints},catalog,verify=False)['objects'][1]
+                obj.update(position=resolved['position'],yaw_deg=resolved['yaw_deg'])
         for key in ('position','yaw_deg'):
             if key in change:obj[key]=deepcopy(change[key])
         if 'settings' in change:
@@ -127,14 +187,8 @@ class NativeSceneTools:
 
     def render(self,plan,catalog,directory):
         directory.mkdir(parents=True,exist_ok=True);scene=directory/'scene.factoryio'
-        execution=None
-        if self.controller_owned:
-            templates={t['template_id']:t['prefab'] for t in catalog['templates']}
-            emitters=[o for o in plan['objects'] if templates[o['template_id']]=='Emitter']
-            require(len(emitters)==1,'PLC continuation currently needs one single-item emitter')
-            execution={'tracking_mode':'single_item','max_in_flight':1,
-                'feed':{'control':'plc','items_per_enable':1,'object_id':emitters[0]['id']}}
-        built=build_scene(plan,catalog,scene,self.config['protocol'],auto_bool_mappings=True,execution_contract=execution)
+        execution={'control_owner':'plc'} if self.controller_owned else None
+        built=build_scene(plan,catalog,scene,self.config['protocol'],auto_io_mappings=True,execution_contract=execution)
         if built['manifest'].get('process_constraint_application'):
             write_json(directory/'controller-ownership.json',built['manifest']['process_constraint_application'])
         for name in ('manifest','io_contract'):
@@ -150,17 +204,8 @@ class NativeSceneTools:
             receipt.get('scene_sha256')==request['scene_sha256']==file_hash(scene) and
             Path(receipt.get('scene_path','')).resolve()==scene.resolve(),'loader did not confirm this scene')
         self.trace('tool_completed',phase='scene_load',tool='factoryio_bridge',action='load',receipt=str(receipt_path))
-        geometry=loaded_geometry(receipt,built['manifest']);write_json(directory/'geometry-validation.json',geometry)
-        rows=geometry.get('measurements',[])
-        conveyors=[o for o in rows if 'conveyor' in o.get('component_geometry',{})]
-        if len(conveyors)==1:
-            direction=conveyors[0]['component_geometry']['conveyor']['direction']
-            for obj in rows:
-                ray=obj.get('component_geometry',{}).get('sensor')
-                if ray and obj.get('prefab') in ('DiffusePhotoelectricSensor','RetroreflectivePhotoelectricSensor') and abs(sum(a*b for a,b in zip(direction,ray['direction'])))>.5:
-                    geometry['passed']=False;geometry['issues'].append({'object_id':obj['id'],
-                        'error':'presence sensor beam is parallel to conveyor flow; a crossing beam is required'})
-            write_json(directory/'geometry-validation.json',geometry)
+        geometry=loaded_geometry(receipt,built['manifest'],check_connections=False)
+        write_json(directory/'geometry-validation.json',geometry)
         self.trace('tool_requested',phase='scene_capture',tool='factoryio_bridge',action='capture_views')
         evidence=collect_evidence(self.config['factoryio'],directory/'visual',request['versions'],built['io_contract'],seconds=0)
         require(evidence.get('reconciliation',{}).get('passed') is True,'loaded tags differ from generated I/O')
@@ -180,7 +225,7 @@ class SimpleWorkflow:
         from .progress import ModelObserver,ObservedClient
         self.config,self.output=deepcopy(config),Path(output).resolve();self.progress,self.interaction=progress,interaction
         require(type(with_plc) is bool and type(keep_running) is bool and (with_plc or not keep_running),'keep_running needs with_plc')
-        require(type(max_plc_repairs) is int and 0<=max_plc_repairs<=5,'max_plc_repairs must be 0..5')
+        require(type(max_plc_repairs) is int and max_plc_repairs>=0,'max_plc_repairs must be a nonnegative integer')
         require(reset_mode in ('warm','cold'),'reset_mode must be warm or cold')
         self.with_plc,self.keep_running,self.max_plc_repairs=with_plc,keep_running,max_plc_repairs
         self.runtime_seconds,self.reset_mode,self.plc_tools=runtime_seconds,reset_mode,plc_tools
@@ -189,7 +234,7 @@ class SimpleWorkflow:
         self.start_local_services=start_local_services
         require(plc_mode in ('compile','run'),'plc_mode must be compile or run')
         self.plc_mode=plc_mode
-        require(type(max_repairs) is int and 0<=max_repairs<=5,'max_repairs must be 0..5');self.max_repairs=max_repairs
+        require(type(max_repairs) is int and max_repairs>=0,'max_repairs must be a nonnegative integer');self.max_repairs=max_repairs
         require(inject_fault in (None,'emitter_gap','sensor_parallel'),'unknown experiment fault');self.inject_fault=inject_fault
         from .simple_prompts import LAYOUT_SCHEMA
         llm=deepcopy(config.get('llm',{}));llm['schema_roles']=[]
@@ -270,22 +315,36 @@ class SimpleWorkflow:
                 candidates=[]
                 for prefab in sorted({t['prefab'] for t in catalog['templates']}):
                     metric=catalog.get('native_geometry',{}).get('prefabs',{}).get(prefab,{})
-                    candidate={'prefab':prefab,'relative_conveyor_supported':'conveyor' in metric.get('component_geometry_local',{})}
-                    if prefab in ('DiffusePhotoelectricSensor','Remover'):
-                        t=next(t for t in catalog['templates'] if t['prefab']==prefab)
-                        candidate['settings']=[{'path':s['path'],'attributes':list(s['attributes'])} for s in component_context(t['configuration'])['settings']]
+                    candidate={'prefab':prefab,'relative_conveyor_supported':'conveyor' in metric.get('component_geometry_local',{}),
+                               'native_local_geometry':metric}
+                    templates=[t for t in catalog['templates'] if t['prefab']==prefab]
+                    candidate['templates']=[{'template_id':t['template_id'],
+                        'operating_mode':component_context(t['configuration'])['operating_mode'],
+                        'current_mode':component_context(t['configuration'])['current_mode'],
+                        'tag_types':[r['type'] for r in t['tags']]} for t in templates]
+                    candidate['settings']=[{'path':s['path'],'attributes':list(s['attributes'])}
+                        for t in templates for s in component_context(t['configuration'])['settings']]
                     candidates.append(candidate)
                 request={'phase':'scene_design','scene_stage':'design','requirement':requirement,
+                    'role_scope':{'responsibility':'Select physical objects, modes and layout only.',
+                        'requirement_usage':'The full requirement is project context, not an instruction to execute every stage.',
+                        'blocking_owner':'scene','defer_to':{'plc':'Control logic and interlocks.',
+                            'runtime':'Execution, test setup and behavior verification.'}},
                     'available_components':candidates,'component_reference':knowledge_base().references([c['prefab'] for c in candidates],'planner')}
-                design=self.call('scene',DESIGN_PROMPT,request)
-                require(not design.get('unresolved'),'unsupported requirement: '+str(design.get('unresolved')))
+                design=route_scene_design(self.call('scene',DESIGN_PROMPT,request))
+                require(not design.get('unresolved'),'unsupported scene requirement: '+str(design.get('unresolved')))
                 write_json(self.output/'design.json',design)
                 try:plan=design_to_plan(design,catalog,on_center=lambda receipt:write_json(self.output/'centering.json',receipt))
                 except (ContractError,ValueError) as error:
                     self.trace('design_rejected',error=str(error))
-                    design=self.call('scene',DESIGN_PROMPT,{**request,'previous_design':design,'format_error':str(error)})
-                    require(not design.get('unresolved'),'unsupported requirement: '+str(design.get('unresolved')))
+                    design=route_scene_design(self.call('scene',DESIGN_PROMPT,{**request,'previous_design':design,'format_error':str(error)}),
+                                              previous_deferred=design.get('deferred_tasks',[]))
+                    require(not design.get('unresolved'),'unsupported scene requirement: '+str(design.get('unresolved')))
                     plan=design_to_plan(design,catalog,on_center=lambda receipt:write_json(self.output/'centering.json',receipt))
+            self.state['deferred_tasks']=design.get('deferred_tasks',[])
+            if self.state['deferred_tasks']:
+                write_json(self.output/'deferred-tasks.json',{'status':'pending','tasks':self.state['deferred_tasks']})
+                self.trace('requirements_deferred',active_role='scene',tasks=self.state['deferred_tasks'])
             if self.inject_fault:
                 templates={t['template_id']:t['prefab'] for t in catalog['templates']}
                 target=next((o for o in plan['objects'] if templates[o['template_id']]==('Emitter' if self.inject_fault=='emitter_gap' else 'DiffusePhotoelectricSensor')),None)
@@ -301,12 +360,14 @@ class SimpleWorkflow:
             write_json(self.output/'design.json',design)
             self.state['design_sha256']=canonical_hash(design)
             for attempt in range(self.max_repairs+1):
+                self.state['design_sha256']=canonical_hash(design);write_json(self.output/'design.json',design)
                 self.state.update(scene_revision=attempt,plan_sha256=canonical_hash(plan),phase='scene_load')
                 write_json(self.output/'scene-plan.json',plan);write_json(self.output/'run.json',self.state)
                 directory=self.output/f'scene-{attempt:03d}';write_json(directory/'scene-plan.json',plan)
                 rendered=self.tools.render(plan,catalog,directory)
                 if self.start_from=='plc':
-                    require(rendered['geometry'].get('passed') is True and rendered['geometry'].get('spatial_checks_applied') is True,
+                    require(rendered['geometry'].get('passed') is True and
+                            (rendered['geometry'].get('registration_checks_applied') is True or rendered['geometry'].get('spatial_checks_applied') is True),
                             'current native geometry failed; PLC continuation cannot change an approved layout')
                     self.state.update(scene_dir=str(directory),visual_verdict='pass',layout_visual_source='archived',
                         native_geometry_verified=True,phase='plc_generation')
@@ -318,36 +379,43 @@ class SimpleWorkflow:
                 images=rendered['images'];records=[r for r in rendered['evidence']['records'] if r['kind']=='image']
                 image_ids={r['id'] for r in records};ids={o['id'] for o in design['objects']}
                 payload={'phase':'scene','requirement':requirement,
-                    'objects':[{k:o[k] for k in ('id','prefab','function')} for o in design['objects']],
+                    'scene_goal':design.get('scene_goal'),
+                    'objects':[{**{k:o[k] for k in ('id','prefab','function')},
+                        **({'expected_position':o['expected_position']} if o.get('expected_position') else {})} for o in design['objects']],
                     'component_reference':knowledge_base().references([o['prefab'] for o in design['objects']],'vision'),
                     'evidence':{'records':[{'id':r['id'],'kind':'image'} for r in records]}}
                 review=validate_review(self.call('vision',LAYOUT_PROMPT,payload,images),ids,image_ids)
                 write_json(directory/'scene-feedback.json',review);geometry=rendered['geometry']
-                if review['verdict']=='pass' and geometry.get('passed') is True and geometry.get('spatial_checks_applied') is True:
+                native_checked=geometry.get('registration_checks_applied') is True or geometry.get('spatial_checks_applied') is True
+                if review['verdict']=='pass' and geometry.get('passed') is True and native_checked:
                     if self.with_plc:
-                        self.state.update(scene_dir=str(directory),visual_verdict='pass',native_geometry_verified=True,phase='plc_generation')
+                        self.state.update(scene_dir=str(directory),visual_verdict='pass',native_geometry_verified=True,
+                                          native_verification_scope=geometry.get('scope'),phase='plc_generation')
                         self.trace('workflow_transition',status='scene_verified',scene_dir=str(directory))
                         from .simple_plc import SimplePLCStage
                         return SimplePLCStage(self,self.plc_tools).run(requirement,design,rendered,directory)
-                    return self.finish('scene_verified',scene_dir=str(directory),visual_verdict='pass',native_geometry_verified=True)
-                if not geometry.get('spatial_checks_applied'):
+                    return self.finish('scene_verified',scene_dir=str(directory),visual_verdict='pass',native_geometry_verified=True,
+                                       native_verification_scope=geometry.get('scope'))
+                if not native_checked:
                     return self.finish('needs_attention',target='tools',error='Native geometry measurement is missing; image review is diagnostic only.',scene_dir=str(directory))
                 if review['verdict']=='uncertain':return self.finish('needs_attention',target='vision',feedback=review,scene_dir=str(directory))
                 allowed={i for f in review['findings'] for i in f['object_ids']}|{i['object_id'] for i in geometry.get('issues',[]) if i.get('object_id') in ids}
                 if attempt==self.max_repairs or not allowed:return self.finish('needs_attention',target='scene',feedback=review,diagnostics=geometry,scene_dir=str(directory))
                 patch_request={'phase':'scene_repair','scene_stage':'local_repair','requirement':requirement,
+                    'current_design':design,'available_components':[{'prefab':t['prefab'],'template_id':t['template_id'],
+                        'settings':component_context(t['configuration'])['settings']} for t in catalog['templates']],
                     'current_layout':plan,'allowed_object_ids':sorted(allowed),'visual_feedback':review,'native_issues':geometry.get('issues',[]),
                     'native_geometry':{**{k:catalog['native_geometry'][k] for k in ('coordinate_system','world_bounds')},
                         'prefabs':{o['prefab']:catalog['native_geometry']['prefabs'][o['prefab']] for o in design['objects']
                                    if o['id'] in allowed or 'conveyor' in o['prefab'].lower()}},'objects':payload['objects']}
                 patch=self.call('scene',PATCH_PROMPT,patch_request)
                 write_json(directory/'local-patch.json',patch)
-                try: repaired=apply_local_patch(plan,patch,allowed,catalog)
+                try: repaired=apply_local_patch(plan,patch,allowed,catalog,design=design)
                 except (ContractError,ValueError) as error:
                     self.trace('patch_rejected',error=str(error),active_role='scene')
                     patch=self.call('scene',PATCH_PROMPT,{**patch_request,'rejected_patch':patch,'format_error':str(error)})
                     write_json(directory/'corrected-patch.json',patch)
-                    repaired=apply_local_patch(plan,patch,allowed,catalog)
+                    repaired=apply_local_patch(plan,patch,allowed,catalog,design=design)
                 plan=repaired
         except KeyboardInterrupt:return self.finish('cancelled',error='Interrupted; use --resume to retain the design.')
         except Exception as error:return self.finish('needs_attention',error=str(error),error_type=type(error).__name__)

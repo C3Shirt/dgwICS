@@ -660,21 +660,24 @@ def _contract(root: ET.Element, objects: list[dict], digest: str) -> dict:
             "address_interpretation": "channel_index and configured offset; tag Address is separate"}
 
 
-def allocate_bool_mappings(objects: list[dict], system_tags: list[dict]) -> list[dict]:
+def allocate_bool_mappings(objects: list[dict], system_tags: list[dict], *, include_numeric: bool = False) -> list[dict]:
     """Allocate native low contiguous slots; IEC addresses still need verified device binding."""
-    counters = {'Input': 0, 'Output': 0}
+    counters = {(family,direction):0 for family in ('Bit','Numeric') for direction in ('Input','Output')}
     mappings = []
     if not any(t['system_field'] == 'RunInputKey' for t in system_tags):
         raise SceneError('automatic BOOL mappings require the native Running input')
     mappings.append({'channel': 'BitInput0', 'system_tag': 'RunInputKey'})
-    counters['Input'] = 1
+    counters['Bit','Input'] = 1
     for obj in sorted(objects, key=lambda o:o['id']):
         for tag in sorted(obj['tags'], key=lambda t:t['index']):
-            if tag['data_type'] != 'bool':
+            if tag['data_type'] != 'bool' and not include_numeric:
                 raise SceneError('automatic mapping supports only BOOL tags; a verified numeric binding tool is required')
+            if tag['data_type'] not in ('bool','int','float'):
+                raise SceneError('unsupported tag data type: '+str(tag['data_type']))
             direction = tag['direction']
-            mappings.append({'channel':f'Bit{direction}{counters[direction]}', 'object_id':obj['id'], 'tag_index':tag['index']})
-            counters[direction] += 1
+            family='Bit' if tag['data_type']=='bool' else 'Numeric'
+            mappings.append({'channel':f'{family}{direction}{counters[family,direction]}', 'object_id':obj['id'], 'tag_index':tag['index']})
+            counters[family,direction] += 1
     return mappings
 
 
@@ -683,11 +686,12 @@ def apply_process_constraints(root, objects, execution):
     if not execution:
         return None
     feed = execution.get('feed', {})
-    if execution.get('tracking_mode') != 'single_item' or execution.get('max_in_flight') != 1 or \
-            feed.get('control') != 'plc' or type(feed.get('items_per_enable')) is not int or feed['items_per_enable'] != 1:
-        raise SceneError('process constraint tool currently supports PLC single-item feeding only')
+    ownership_only = execution == {'control_owner':'plc'}
+    if not ownership_only and (execution.get('tracking_mode') != 'single_item' or execution.get('max_in_flight') != 1 or \
+            feed.get('control') != 'plc' or type(feed.get('items_per_enable')) is not int or feed['items_per_enable'] != 1):
+        raise SceneError('unsupported explicit process constraint')
     changes = []
-    found = False
+    found = ownership_only
     for obj, metadata in zip(root.findall('Object'), objects):
         if metadata['id'] == feed.get('object_id'):
             emitter = obj.find('Emitter')
@@ -730,7 +734,7 @@ def validate_component_settings(objects, catalog):
 
 
 def build_scene(plan: dict, catalog: dict, output: Path, protocol: dict | None = None,
-                *, auto_bool_mappings: bool = False, execution_contract: dict | None = None) -> dict:
+                *, auto_bool_mappings: bool = False, auto_io_mappings: bool = False, execution_contract: dict | None = None) -> dict:
     """Write a checked scene, returning manifest/IO contract/structural validation.
 
     yaw_deg is an absolute yaw about +Y, with zero pitch/roll. An explicit mappings
@@ -864,10 +868,11 @@ def build_scene(plan: dict, catalog: dict, output: Path, protocol: dict | None =
         metadata['tags'] = [{**_tag(node, index), 'id': f"{metadata['id']}/tag/{index}"}
                             for index,node in enumerate(_tag_nodes(obj))]
     drivers = root.find("Drivers")
-    allocated_mappings = allocate_bool_mappings(manifest_objects, _system_tags(drivers)) if auto_bool_mappings else None
-    if auto_bool_mappings and 'mappings' in plan:
+    automatic_mappings=auto_bool_mappings or auto_io_mappings
+    allocated_mappings = allocate_bool_mappings(manifest_objects, _system_tags(drivers),include_numeric=auto_io_mappings) if automatic_mappings else None
+    if automatic_mappings and 'mappings' in plan:
         raise SceneError('automatic BOOL mapping is enabled; omit model-authored mappings')
-    requested_mappings = allocated_mappings if auto_bool_mappings else plan.get('mappings')
+    requested_mappings = allocated_mappings if automatic_mappings else plan.get('mappings')
     system_keys = {tag["key"] for tag in _system_tags(drivers)}
     removed, ambiguous = [], []
     if drivers is not None:
@@ -925,7 +930,7 @@ def build_scene(plan: dict, catalog: dict, output: Path, protocol: dict | None =
         for node in list(modbus):
             if "PointIOKey" not in node.attrib:
                 continue
-            if not auto_bool_mappings and node.get("PointIOKey") in system_keys and node.tag not in channels and node.get('PointIOKey') not in keys:
+            if not automatic_mappings and node.get("PointIOKey") in system_keys and node.tag not in channels and node.get('PointIOKey') not in keys:
                 selected.append(deepcopy(node))
             elif node.get("PointIOKey") in system_keys:
                 replaced_systems.append({"channel": node.tag, "tag_key": node.get("PointIOKey")})
@@ -975,8 +980,8 @@ def build_scene(plan: dict, catalog: dict, output: Path, protocol: dict | None =
     return {"manifest": {"schema_version": 1, "scene_id": scene_id, "scene_path": str(output),
                          "scene_sha256": digest, "base_source_id": base_id,
                          "objects": manifest_objects, 'native_address_reallocation': native_address_changes,
-                         'mapping_allocation': {'policy':'automatic_bool_contiguous', 'mappings':allocated_mappings,
-                                                'device_binding_verified':False} if auto_bool_mappings else None,
+                         'mapping_allocation': {'policy':'automatic_native_contiguous' if auto_io_mappings else 'automatic_bool_contiguous', 'mappings':allocated_mappings,
+                                                'device_binding_verified':False} if automatic_mappings else None,
                          'process_constraint_application':process_constraints,
                          "source_hashes": {key: source["sha256"] for key, source in sources.items()},
                          "screenshot_removed": False, "source_thumbnail_removed": bool(screenshots),

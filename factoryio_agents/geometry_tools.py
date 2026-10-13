@@ -22,7 +22,7 @@ def relative_layout_capability(task, catalog):
     measured=[o['id'] for o in task['objects'] if 'conveyor' in
               native.get(o['prefab'],{}).get('component_geometry_local',{})]
     unmeasured=[o['id'] for o in task['objects'] if 'conveyor' in o['prefab'].lower() and o['id'] not in measured]
-    supported=len(measured)==1 and not unmeasured
+    supported=bool(measured) and not unmeasured
     return {'supported':supported,'measured_conveyor_ids':measured,'unmeasured_conveyor_ids':unmeasured,
             'fallback':'absolute integer XYZ/cardinal yaw model layout plus fresh visual and physical acceptance',
             'missing_conveyor_semantics':'bounds alone never prove flow direction or conveying surface'}
@@ -135,32 +135,65 @@ def resolve_relative_layout(value,catalog, *, verify=True):
             'constraint objects need only id, template_id and an object placement')
     conveyors=[o for o in objects if 'conveyor' in
         native['prefabs'][templates[o['template_id']]['prefab']]['component_geometry_local']]
-    require(len(conveyors)==1,'relative placement tool requires exactly one conveyor with measured flow/surface geometry')
-    belt=conveyors[0];p=belt.get('placement',{})
-    require(set(p)=={'kind','position','yaw_deg'} and p['kind']=='anchor','conveyor placement requires anchor, position and yaw_deg')
-    require(isinstance(p['position'],list) and len(p['position'])==3 and all(type(v) is int for v in p['position']),
-            'anchor position must be integer XYZ')
-    require(type(p['yaw_deg']) in (int,float) and p['yaw_deg']%90==0,'anchor yaw must be cardinal')
-    resolved={belt['id']:{'id':belt['id'],'template_id':belt['template_id'],'position':p['position'],'yaw_deg':p['yaw_deg']}}
-    prefab=templates[belt['template_id']]['prefab'];metric=native['prefabs'][prefab]
-    measured=project_object(resolved[belt['id']],prefab,metric,scale)
-    conveyor=measured['component_geometry']['conveyor'];bounds=measured['bounds_world']
-    direction=conveyor['direction'];axis=max((0,2),key=lambda i:abs(direction[i]))
-    require(abs(direction[axis])>.999 and abs(direction[1])<1e-5,'relative placement needs a horizontal cardinal flow')
-    surface=conveyor.get('surface_bounds',bounds)['max'][1]
+    require(bool(conveyors),'relative placement requires measured conveyor flow/surface geometry')
+    by_id={o['id']:o for o in objects};belts={o['id']:o for o in conveyors}
+    require(len(by_id)==len(objects),'relative layout has duplicate object IDs')
+    resolved={};visiting=set()
     def grid(point):return [int(round(v/scale-.5)) for v in point]
-    def fraction_point(f):
-        require(type(f) in (int,float) and math.isfinite(f) and 0<f<1,'along_fraction must lie strictly between 0 and 1')
-        point=[(a+b)/2 for a,b in zip(bounds['min'],bounds['max'])]
-        point[axis]=(bounds['min'][axis]+f*(bounds['max'][axis]-bounds['min'][axis]) if direction[axis]>0 else
-                     bounds['max'][axis]-f*(bounds['max'][axis]-bounds['min'][axis]))
-        return point
+    def absolute(obj):
+        p=obj['placement']
+        require(set(p)=={'kind','position','yaw_deg'},'absolute/anchor placement needs position and yaw_deg')
+        require(isinstance(p['position'],list) and len(p['position'])==3 and all(type(v) is int for v in p['position']),
+                'anchor position must be integer XYZ')
+        require(type(p['yaw_deg']) in (int,float) and p['yaw_deg']%90==0,'anchor yaw must be cardinal')
+        return {'id':obj['id'],'template_id':obj['template_id'],'position':deepcopy(p['position']),'yaw_deg':p['yaw_deg']}
+    def project(row):
+        prefab=templates[row['template_id']]['prefab']
+        return project_object(row,prefab,native['prefabs'][prefab],scale)
+    def flow(measured):
+        component=measured['component_geometry']['conveyor'];d=component['direction']
+        axis=max((0,2),key=lambda i:abs(d[i]))
+        require(abs(d[axis])>.999 and all(abs(d[i])<1e-5 for i in range(3) if i!=axis),
+                'relative placement needs a horizontal cardinal flow')
+        return d,axis,component.get('surface_bounds',measured['bounds_world'])
+    def resolve_belt(identity):
+        require(identity in belts,'relative_to must reference a measured conveyor ID')
+        if identity in resolved:return resolved[identity]
+        require(identity not in visiting,'cycle in conveyor placement references')
+        visiting.add(identity);obj=belts[identity];p=obj['placement']
+        if p['kind'] in ('anchor','absolute'):row=absolute(obj)
+        else:
+            require(p['kind']=='conveyor_after_conveyor' and set(p)=={'kind','relative_to','clearance_grid'},
+                    'conveyor placement needs anchor, absolute or conveyor_after_conveyor')
+            require(type(p['clearance_grid']) is int and p['clearance_grid']>=0,'conveyor clearance_grid must be a nonnegative integer')
+            parent=project(resolve_belt(p['relative_to']));d,axis,parent_surface=flow(parent)
+            local=native['prefabs'][templates[obj['template_id']]['prefab']]['component_geometry_local']['conveyor']['direction']
+            yaws=[y for y in (0,90,180,270) if sum(a*b for a,b in zip(rotate(local,y),d))>.999]
+            require(len(yaws)==1,'conveyor cannot align with the measured upstream flow')
+            row={'id':identity,'template_id':obj['template_id'],'position':[0,0,0],'yaw_deg':yaws[0]}
+            _,_,child_surface=flow(project(row));positive=d[axis]>0
+            delta=[(parent_surface['min'][i]+parent_surface['max'][i]-child_surface['min'][i]-child_surface['max'][i])/2 for i in range(3)]
+            delta[axis]=parent_surface['max' if positive else 'min'][axis]-child_surface['min' if positive else 'max'][axis]+d[axis]*p['clearance_grid']*scale
+            delta[1]=parent_surface['max'][1]-child_surface['max'][1]
+            row['position']=[int(round(v/scale)) for v in delta]
+            row['position'][axis]=int(math.ceil(delta[axis]/scale-1e-7) if positive else math.floor(delta[axis]/scale+1e-7))
+        resolved[identity]=row;visiting.remove(identity);return row
+    for belt in conveyors:resolve_belt(belt['id'])
     for obj in objects:
-        if obj['id']==belt['id']:continue
+        if obj['id'] in resolved:continue
         require(set(obj)=={'id','template_id','placement'},'relative object must contain only id, template_id, placement')
-        p=obj['placement'];require(isinstance(p,dict) and p.get('relative_to')==belt['id'],'placement must reference the selected conveyor ID')
+        p=obj['placement']
+        if p.get('kind')=='absolute':resolved[obj['id']]=absolute(obj);continue
+        anchor=resolve_belt(p.get('relative_to'));measured=project(anchor)
+        conveyor=measured['component_geometry']['conveyor'];direction,axis,bounds=flow(measured);surface=bounds['max'][1]
+        def fraction_point(f):
+            require(type(f) in (int,float) and math.isfinite(f) and 0<=f<=1,'along_fraction must lie between 0 and 1')
+            point=[(a+b)/2 for a,b in zip(bounds['min'],bounds['max'])]
+            point[axis]=(bounds['min'][axis]+f*(bounds['max'][axis]-bounds['min'][axis]) if direction[axis]>0 else
+                         bounds['max'][axis]-f*(bounds['max'][axis]-bounds['min'][axis]))
+            return point
         prefab=templates[obj['template_id']]['prefab'];metric=native['prefabs'][prefab];component=metric['component_geometry_local']
-        kind=p.get('kind');yaw=resolved[belt['id']]['yaw_deg']
+        kind=p.get('kind');yaw=anchor['yaw_deg']
         if kind=='emitter_over_conveyor':
             require(set(p)=={'kind','relative_to','along_fraction'} and 'emitter' in component,'emitter placement fields/type invalid')
             target=fraction_point(p['along_fraction']);offset=rotate(component['emitter']['origin'],yaw)
@@ -171,9 +204,8 @@ def resolve_relative_layout(value,catalog, *, verify=True):
             require(set(p)=={'kind','relative_to','along_fraction','side','height_above_surface_grid','clearance_grid'} and
                     'sensor' in component,'sensor placement fields/type invalid')
             require(p['side'] in ('left','right'),'sensor side must be left or right of positive conveying direction')
-            require(type(p['height_above_surface_grid']) is int and 1<=p['height_above_surface_grid']<=8,
-                    'sensor height_above_surface_grid must be integer 1..8')
-            require(type(p['clearance_grid']) is int and 1<=p['clearance_grid']<=4,'sensor clearance_grid must be integer 1..4')
+            require(type(p['height_above_surface_grid']) is int,'sensor height_above_surface_grid must be an integer')
+            require(type(p['clearance_grid']) is int and p['clearance_grid']>=0,'sensor clearance_grid must be a nonnegative integer')
             outward=[-direction[2],0,direction[0]]
             if p['side']=='right':outward=[-v for v in outward]
             side_axis=2 if axis==0 else 0
@@ -186,7 +218,7 @@ def resolve_relative_layout(value,catalog, *, verify=True):
             pos[1]=int(math.ceil((target[1]-offset[1])/scale-.5-1e-7))
         elif kind=='remover_after_conveyor':
             require(set(p)=={'kind','relative_to','clearance_grid'} and prefab=='Remover','remover placement fields/type invalid')
-            require(type(p['clearance_grid']) is int and 0<=p['clearance_grid']<=4,'remover clearance_grid must be integer 0..4')
+            require(type(p['clearance_grid']) is int and p['clearance_grid']>=0,'remover clearance_grid must be a nonnegative integer')
             local=metric['bounds_local_metres'];corners=[rotate(v,yaw) for v in itertools.product(*zip(local['min'],local['max']))]
             target=[(a+b)/2 for a,b in zip(bounds['min'],bounds['max'])]
             if direction[axis]>0:
@@ -201,7 +233,7 @@ def resolve_relative_layout(value,catalog, *, verify=True):
             require(set(p)=={'kind','relative_to','offset_grid','yaw_deg'} and prefab!='Remover' and not any(k in component for k in ('emitter','sensor','conveyor')),
                     'grid_offset is for ancillary controls/supports, not feed or detection geometry')
             delta=p['offset_grid'];require(isinstance(delta,list) and len(delta)==3 and all(type(v) is int for v in delta),'offset_grid needs integer XYZ')
-            pos=[a+b for a,b in zip(resolved[belt['id']]['position'],delta)];yaw=p['yaw_deg']
+            pos=[a+b for a,b in zip(anchor['position'],delta)];yaw=p['yaw_deg']
             require(type(yaw) in (int,float) and yaw%90==0,'offset object yaw must be cardinal')
         else:require(False,'unsupported relative placement kind: '+str(kind))
         resolved[obj['id']]={'id':obj['id'],'template_id':obj['template_id'],'position':pos,'yaw_deg':yaw}
@@ -232,26 +264,52 @@ def connection_checks(objects):
             'reason':'Native conveyor flow/surface geometry is missing; object bounds are insufficient to verify transport connections.',
             'issues':[{'object_id':o['id'],'target':'tools','error':'native conveyor component geometry missing',
                        'prefab':o.get('prefab')} for o in missing],'measurements':objects}
-    if len(conveyors)!=1 or len(emitters)!=1:
+    if not conveyors or not emitters:
         return {'passed':False,'scope':'unsupported_topology','spatial_checks_applied':False,'issues':[],
-            'reason':'No applicable spatial verifier: the current connection checker needs one measured conveyor and one emitter.',
+            'reason':'No applicable spatial verifier: connection checks need measured conveyors and an emitter.',
             'measured_conveyor_count':len(conveyors),'measured_emitter_count':len(emitters),'measurements':objects}
-    belt=conveyors[0];bounds=belt['bounds_world'];issues=[]
-    feed=emitters[0];origin=feed['component_geometry']['emitter']['origin']
-    if any(not bounds['min'][axis]<=origin[axis]<=bounds['max'][axis] for axis in (0,2)):
-        issues.append({'object_id':feed['id'],'error':'emission origin is outside conveyor XZ footprint',
-                       'origin_world':origin,'conveyor_id':belt['id'],'conveyor_bounds_world':bounds})
+    issues=[];reachable=set();links=[];sensor_targets={}
+    def surface(b):return b['component_geometry']['conveyor'].get('surface_bounds',b['bounds_world'])
+    for feed in emitters:
+        origin=feed['component_geometry']['emitter']['origin']
+        targets=[b for b in conveyors if all(surface(b)['min'][axis]<=origin[axis]<=surface(b)['max'][axis] for axis in (0,2))]
+        if not targets:
+            issues.append({'object_id':feed['id'],'error':'emission origin is outside conveyor XZ footprint',
+                           'origin_world':origin,'conveyor_ids':[b['id'] for b in conveyors]})
+        reachable.update(b['id'] for b in targets)
+    for upstream,downstream in itertools.permutations(conveyors,2):
+        d=upstream['component_geometry']['conveyor']['direction'];other=downstream['component_geometry']['conveyor']['direction']
+        axis=max((0,2),key=lambda i:abs(d[i]));side=2 if axis==0 else 0
+        if abs(d[axis])<.999 or abs(d[1])>1e-5 or sum(a*b for a,b in zip(d,other))<.999:continue
+        a,b=surface(upstream),surface(downstream);positive=d[axis]>0
+        gap=(b['min'][axis]-a['max'][axis]) if positive else (a['min'][axis]-b['max'][axis])
+        overlap=min(a['max'][side],b['max'][side])-max(a['min'][side],b['min'][side])
+        height=abs(a['max'][1]-b['max'][1])
+        if -1e-6<=gap<=.125+1e-6 and overlap>1e-6 and height<=.0625+1e-6:
+            links.append({'source':upstream['id'],'target':downstream['id'],'gap_metres':gap,'surface_height_difference_metres':height})
+    for _ in conveyors:
+        reachable.update(link['target'] for link in links if link['source'] in reachable)
+    for belt in conveyors:
+        if belt['id'] not in reachable:
+            issues.append({'object_id':belt['id'],'error':'conveyor is not connected to an emission path',
+                           'instruction':'Check transfer gap, alignment, carrying-surface height and conveying direction.'})
     for sensor in (o for o in objects if 'sensor' in o.get('component_geometry',{})):
         ray=sensor['component_geometry']['sensor']
-        if not ray_crosses_footprint(ray['origin'],ray['direction'],ray['range_metres'],bounds):
+        targets=[b for b in conveyors if ray_crosses_footprint(ray['origin'],ray['direction'],ray['range_metres'],surface(b))]
+        sensor_targets[sensor['id']]=[b['id'] for b in targets]
+        if not targets:
             issues.append({'object_id':sensor['id'],'error':'sensor ray cannot reach conveyor XZ footprint',
-                           'ray_world':ray,'conveyor_id':belt['id'],'conveyor_bounds_world':bounds})
-    return {'passed':not issues,'scope':'single_conveyor_spatial_connections','spatial_checks_applied':True,
+                           'ray_world':ray,'conveyor_ids':[b['id'] for b in conveyors]})
+        elif sensor.get('prefab') in ('DiffusePhotoelectricSensor','RetroreflectivePhotoelectricSensor') and all(
+                abs(sum(a*b for a,b in zip(b['component_geometry']['conveyor']['direction'],ray['direction'])))>.5 for b in targets):
+            issues.append({'object_id':sensor['id'],'error':'presence sensor beam is parallel to conveyor flow; a crossing beam is required'})
+    return {'passed':not issues,'scope':'single_conveyor_spatial_connections' if len(conveyors)==1 else 'multi_conveyor_spatial_connections','spatial_checks_applied':True,
             'issues':issues,'limitations':['XZ reachability only; no physical transport or timing acceptance'],
+            'conveyor_connections':links,'sensor_conveyor_ids':sensor_targets,
             'measurements':objects}
 
 
-def validate_layout_geometry(plan,catalog):
+def validate_layout_geometry(plan,catalog, *, check_connections=True):
     native=catalog.get('native_geometry')
     if native is None: return
     system=native['coordinate_system']
@@ -263,6 +321,8 @@ def validate_layout_geometry(plan,catalog):
         prefab=templates[obj['template_id']]['prefab']
         require(prefab in native['prefabs'],'native geometry unavailable for selected prefab '+prefab)
         projected.append(project_object(obj,prefab,native['prefabs'][prefab],system['grid_metres']))
+    if not check_connections:
+        return
     # A conservative clearance check for transport source/sink volumes. No object is moved.
     for conveyor in (o for o in projected if 'conveyor' in o['prefab'].lower()):
         a=conveyor['bounds_world']
@@ -285,17 +345,26 @@ def validate_layout_geometry(plan,catalog):
         require(result['passed'],'native layout geometry rejected: '+str(result['issues']))
 
 
-def loaded_geometry(receipt,manifest):
+def loaded_geometry(receipt,manifest, *, check_connections=True):
     native=(receipt.get('native_geometry') or {}).get('objects')
     if not native: return {'passed':False,'scope':'geometry_not_available','spatial_checks_applied':False,'issues':[],
         'reason':'The loader supplied no native geometry; scene alignment has not been checked.'}
     ids={o['key']:o['id'] for o in manifest['objects']}
-    result=connection_checks([{**o,'id':ids[o['key']]} for o in native if o['key'] in ids])
+    measured=[{**o,'id':ids[o['key']]} for o in native if o['key'] in ids]
+    if check_connections:
+        result=connection_checks(measured)
+    else:
+        missing=[identity for key,identity in ids.items() if key not in {o['key'] for o in native}]
+        unknown=[o['id'] for o in measured if type(o.get('native_registered')) is not bool]
+        result={'passed':not missing and not unknown,'scope':'native_object_registration',
+                'registration_checks_applied':True,'spatial_checks_applied':False,'measurements':measured,
+                'issues':[{'object_id':i,'target':'tools','error':'native object registration evidence is missing'} for i in missing+unknown],
+                'limitations':['Native registration checks object presence and occupied cells; task-specific physical layout is reviewed from images.']}
     for obj in native:
         if obj['key'] in ids and obj.get('native_registered') is False:
             result['issues'].append({'object_id':ids[obj['key']],
                 'error':'native voxel registration failed: overlap or out-of-world placement',
-                'bounds_world':obj['bounds_world'], 'evidence':'VoxelObject.RegistrationAllowed; EditContext.AddVoxelObject'})
+                'bounds_world':obj.get('bounds_world'), 'evidence':'VoxelObject.RegistrationAllowed; EditContext.AddVoxelObject'})
     result['passed']=result['passed'] and not result['issues']
     return result
 

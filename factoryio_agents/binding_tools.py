@@ -1,4 +1,4 @@
-"""Derive BOOL channel assignments from a hash-verified, previously inspected template.
+"""Derive channel assignments from a hash-verified, previously inspected template.
 
 This prepares device mappings in a project copy. It generates no scene geometry or PLC logic.
 """
@@ -7,7 +7,7 @@ from pathlib import Path
 import re
 
 from .contracts import ContractError, file_hash, read_json, require
-from .plc import run_codesys, transport_fingerprint
+from .plc import run_codesys, transport_fingerprint, _PLC_BITS, _TYPES
 
 
 class BindingConfigurationError(ContractError):
@@ -24,10 +24,11 @@ def inspected_io_capacity(config):
         require(transport_fingerprint(previous) == seed['verified_transport_sha256'], 'binding seed transport SHA changed')
         descriptors = {r['tag_key']:r for r in seed['verified_device_bindings']}
         channels = {kind:sorted(m['channel'] for m in previous['mappings'] if m['tag_key'] in descriptors and
-            m['kind'] == kind and m['channel_family'] == 'Bit' and descriptors[m['tag_key']]['bit_size'] == '1')
+            m['kind'] == kind)
             for kind in ('input','output')}
+        data_types=sorted({m['data_type'] for m in previous['mappings'] if m['tag_key'] in descriptors})
         return {'channels':channels,'counts':{k:len(v) for k,v in channels.items()},
-            'system_bool_inputs_reserved':1,'data_types':['bool'],
+            'system_bool_inputs_reserved':1,'data_types':data_types,
             'sources':{'seed_config_sha256':file_hash(source),'seed_io_sha256':file_hash(io_source),
                        'template_sha256':file_hash(template)},'scope':'existing inspected endpoints; no capacity expansion'}
     except (ContractError,OSError,KeyError,TypeError) as error:
@@ -41,7 +42,15 @@ def bool_bindings(config: dict, contract: dict) -> dict:
         raise BindingConfigurationError('device binding configuration: ' + str(error)) from None
 
 
-def _bool_bindings(config: dict, contract: dict) -> dict:
+def verified_bindings(config: dict, contract: dict) -> dict:
+    """Bind available verified endpoints; missing types/capacity are configuration gaps."""
+    try:
+        return _bool_bindings(config,contract,include_numeric=True)
+    except (ContractError,OSError,KeyError,TypeError) as error:
+        raise BindingConfigurationError('device binding configuration: '+str(error)) from None
+
+
+def _bool_bindings(config: dict, contract: dict, *, include_numeric=False) -> dict:
     seed = read_json(Path(config['binding_seed_config']))
     previous = read_json(Path(config['binding_seed_io']))
     seed = seed['codesys']
@@ -54,19 +63,38 @@ def _bool_bindings(config: dict, contract: dict) -> dict:
     descriptors = {r['tag_key']: r for r in seed['verified_device_bindings']}
     endpoints = {m['channel']: descriptors[m['tag_key']] for m in previous['mappings'] if m['tag_key'] in descriptors}
     tags = {t['key']: t for t in contract['tags']}
+    old_tags={t['key']:t for t in previous['tags']}
+    old_mappings={m['channel']:m for m in previous['mappings']}
+    old_bindings={b['tag_key']:b for b in seed.get('bindings',[])}
+    encodings={e['tag_key']:e for e in previous.get('wire_encodings',[])}
     bindings, verified = [], []
     for m in contract['mappings']:
         tag = tags[m['tag_key']]
         if tag.get('use_forced_value') is True: continue
-        if m['channel_family'] != 'Bit' or tag['data_type'] != 'bool' or m['channel'] not in endpoints:
+        if not include_numeric and (m['channel_family'] != 'Bit' or tag['data_type'] != 'bool' or m['channel'] not in endpoints):
             raise BindingConfigurationError('automatic binding supports only inspected BOOL channels: ' + m['channel'])
+        require(m['channel'] in endpoints,'no verified device endpoint for '+m['channel']+'; configure channel capacity/type before deployment')
         source = endpoints[m['channel']]
-        require(source['bit_size'] == '1' and source['channel_type'] == m['direction'], 'seed channel direction/width differs')
+        old_key=old_mappings[m['channel']]['tag_key']
+        require(old_tags[old_key]['data_type']==tag['data_type'],'verified endpoint data type differs: '+m['channel'])
+        type_=old_bindings.get(old_key,{}).get('plc_type',source.get('plc_type'))
+        if tag['data_type']=='bool':type_=type_ or 'BOOL'
+        encoding=encodings.get(old_key)
+        allowed={'WORD','UINT','INT'} if encoding else _TYPES.get(tag['data_type'],set())
+        require(type_ in allowed,'missing or incompatible verified PLC type for '+m['channel'])
+        require(int(source['bit_size'])==_PLC_BITS[type_] and source['channel_type']==m['direction'],'seed channel direction/width differs')
+        if tag['data_type']!='bool' and contract.get('driver')=='ModbusTCPClient':
+            require(encoding is not None,'numeric Modbus endpoint lacks verified wire encoding: '+m['channel'])
+            current_encoding={**encoding,'tag_key':tag['key']}
+            existing=next((e for e in contract.get('wire_encodings',[]) if e['tag_key']==tag['key']),None)
+            require(existing is None or existing==current_encoding,'numeric wire encoding differs from verified endpoint: '+m['channel'])
+            if existing is None:contract.setdefault('wire_encodings',[]).append(current_encoding)
         identity = re.sub('[^A-Za-z0-9_]', '_', tag['id'])[:48]
-        variable = 'Application.SceneIO.' + ('I_' if tag['kind'] == 'input' else 'Q_') + identity + '_' + tag['key'][:8]
-        bindings.append({'tag_key': tag['key'], 'variable': variable, 'plc_type': 'BOOL'})
+        suffix=re.sub('[^A-Za-z0-9_]','_',tag['key'][:8])
+        variable = config.get('application_name','Application')+'.SceneIO.' + ('I_' if tag['kind'] == 'input' else 'Q_') + identity + '_' + suffix
+        bindings.append({'tag_key': tag['key'], 'variable': variable, 'plc_type': type_})
         verified.append({**source, 'tag_key': tag['key'], 'variable': variable})
-    require(bool(bindings), 'no programmable BOOL mappings')
+    require(bool(bindings), 'no programmable mappings')
     result = deepcopy(config)
     result.update(template_project=str(template), bindings=bindings, verified_device_bindings=verified,
                   verified_template_sha256=seed['verified_template_sha256'], transport_confirmed=True,

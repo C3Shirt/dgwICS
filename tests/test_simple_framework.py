@@ -68,6 +68,61 @@ class SimpleFrameworkTests(unittest.TestCase):
         self.assertNotIn('native_geometry',vision);self.assertNotIn('measurement_checks',vision)
         self.assertEqual(len(list((workflow.output/'training-data/candidates').glob('*.json'))),2)
 
+    def test_runtime_and_plc_work_do_not_block_physical_scene_design(self):
+        design=deepcopy(DESIGN)
+        design['unresolved']=[{'owner':'runtime','reason':'Verify ten transfers and downstream blockage.'},
+                              {'owner':'plc','reason':'Implement downstream readiness interlock.'}]
+        client=Mock();client.complete.side_effect=[design,{'verdict':'pass','summary':'Aligned','findings':[]}]
+        workflow=self.module().SimpleWorkflow(self.config,self.root/'scoped',client=client,tools=self.tools())
+        result=workflow.run('Build the equipment, then verify ten transfers and blockage.')
+        self.assertEqual(result['status'],'scene_verified')
+        self.assertFalse(result['live_pipeline_passed'])
+        saved=read_json(workflow.output/'design.json')
+        self.assertEqual(saved['unresolved'],[])
+        self.assertEqual(saved['deferred_tasks'],design['unresolved'])
+        candidates=[read_json(p) for p in (workflow.output/'training-data/candidates').glob('*.json')]
+        raw=next(c for c in candidates if c['role']=='scene')['structured_output']
+        self.assertEqual(raw['unresolved'],design['unresolved'])
+
+    def test_deferred_scene_work_is_delivered_to_the_plc_stage(self):
+        from unittest.mock import patch
+        design=deepcopy(DESIGN)
+        task={'owner':'plc','reason':'Implement independent belt interlocks.'}
+        design['unresolved']=[task]
+        client=Mock();client.complete.side_effect=[design,{'verdict':'pass','summary':'Aligned','findings':[]}]
+        workflow=self.module().SimpleWorkflow(self.config,self.root/'handoff',client=client,tools=self.tools(),with_plc=True)
+        with patch('factoryio_agents.simple_plc.SimplePLCStage') as stage:
+            stage.return_value.run.return_value={'status':'plc_compiled'}
+            result=workflow.run('Design the equipment and generate control logic.')
+        self.assertEqual(result['status'],'plc_compiled')
+        stage.assert_called_once()
+        received=stage.return_value.run.call_args.args[1]
+        self.assertEqual(received['deferred_tasks'],[task])
+
+    def test_a_missing_scene_component_still_blocks_before_loading(self):
+        design=deepcopy(DESIGN)
+        design['unresolved']=[{'owner':'scene','reason':'Required component is not available.'}]
+        client=Mock();client.complete.return_value=design;tools=self.tools()
+        result=self.module().SimpleWorkflow(self.config,self.root/'missing',client=client,tools=tools).run('Build unavailable equipment')
+        self.assertEqual(result['status'],'needs_attention')
+        self.assertIn('Required component is not available',result['error'])
+        tools.render.assert_not_called();self.assertEqual(client.complete.call_count,1)
+
+    def test_echoed_deferred_tasks_are_not_duplicated(self):
+        task={'owner':'runtime','reason':'Verify repeated transfers.'}
+        design=deepcopy(DESIGN);design.update(unresolved=[task],deferred_tasks=[task])
+        routed=self.module().route_scene_design(design)
+        self.assertEqual(routed['deferred_tasks'],[task])
+
+    def test_layout_format_correction_preserves_downstream_work(self):
+        first=deepcopy(DESIGN);task={'owner':'runtime','reason':'Verify repeated transfers.'}
+        first['unresolved']=[task];first['objects'][1]['placement']['along_fraction']=-1
+        client=Mock();client.complete.side_effect=[first,deepcopy(DESIGN),{'verdict':'pass','summary':'Aligned','findings':[]}]
+        workflow=self.module().SimpleWorkflow(self.config,self.root/'scope-correction',client=client,tools=self.tools())
+        result=workflow.run('Design the layout and later verify repeated transfers.')
+        self.assertEqual(result['status'],'scene_verified')
+        self.assertEqual(read_json(workflow.output/'design.json')['deferred_tasks'],[task])
+
     def test_native_failure_cannot_be_overridden_by_a_visual_pass(self):
         client=Mock();client.complete.side_effect=[deepcopy(DESIGN),{'verdict':'pass','summary':'Looks plausible','findings':[]}]
         tools=self.tools([{'passed':False,'spatial_checks_applied':False,'issues':[],'scope':'missing_conveyor_geometry'}])
@@ -82,6 +137,17 @@ class SimpleFrameworkTests(unittest.TestCase):
         self.assertEqual(changed['objects'][0],plan['objects'][0])
         self.assertNotEqual(changed['objects'][1]['position'],plan['objects'][1]['position'])
         with self.assertRaises(ContractError):module.apply_local_patch(plan,patch,{'conveyor'},self.catalog)
+
+    def test_relative_patch_uses_the_named_conveyor_and_preserves_the_other(self):
+        module=self.module();plan=module.design_to_plan(DESIGN,self.catalog)
+        second=deepcopy(plan['objects'][0]);second['id']='second';second['position'][2]+=48
+        plan['objects'].append(second);before=deepcopy(plan)
+        patch={'changes':[{'object_id':'emitter','placement':{
+            'kind':'emitter_over_conveyor','relative_to':'second','along_fraction':.2}}]}
+        try:changed=module.apply_local_patch(plan,patch,{'emitter'},self.catalog)
+        except ContractError as error:self.fail('Patch must use its named conveyor: '+str(error))
+        self.assertEqual(changed['objects'][0],before['objects'][0]);self.assertEqual(changed['objects'][2],before['objects'][2])
+        self.assertGreater(changed['objects'][1]['position'][2],before['objects'][1]['position'][2]+40)
 
     def test_repair_loop_calls_only_scene_patch_then_image_review(self):
         client=Mock();client.complete.side_effect=[deepcopy(DESIGN),
@@ -105,7 +171,7 @@ class SimpleFrameworkTests(unittest.TestCase):
         client=Mock();client.complete.side_effect=[deepcopy(DESIGN),
             {'verdict':'repair','summary':'Feed gap','findings':[{'object_ids':['emitter'],'status':'issue',
                 'observed':'Feed detached','reason':'Box misses belt','suggestion':'Move above belt','image_ids':['image-top']}]},
-            {'changes':[{'object_id':'emitter','placement':{'kind':'emitter_over_conveyor','relative_to':'conveyor','along_fraction':0}}]},
+            {'changes':[{'object_id':'emitter','placement':{'kind':'emitter_over_conveyor','relative_to':'conveyor','along_fraction':-1}}]},
             {'changes':[{'object_id':'emitter','placement':{'kind':'emitter_over_conveyor','relative_to':'conveyor','along_fraction':.2}}]},
             {'verdict':'pass','summary':'Feed connected','findings':[]}]
         result=self.module().SimpleWorkflow(self.config,self.root/'correction',client=client,tools=self.tools([
@@ -113,7 +179,7 @@ class SimpleFrameworkTests(unittest.TestCase):
             {'passed':True,'spatial_checks_applied':True,'issues':[]}])).run('Make a conveyor')
         self.assertEqual(result['status'],'scene_verified')
         self.assertEqual([c.args[0] for c in client.complete.call_args_list],['scene','vision','scene','scene','vision'])
-        self.assertIn('strictly between',client.complete.call_args_list[3].args[2]['format_error'])
+        self.assertIn('between',client.complete.call_args_list[3].args[2]['format_error'])
 
     def test_unidentified_issue_stops_for_attention_instead_of_allowing_an_unsafe_patch(self):
         value={'verdict':'repair','summary':'A required button cannot be identified','findings':[{
@@ -155,6 +221,47 @@ class SimpleFrameworkTests(unittest.TestCase):
         plan=self.module().design_to_plan(design,self.catalog)
         self.assertEqual(len(plan['objects']),2)
         self.assertEqual(plan['objects'][1]['yaw_deg'],0)
+
+    def test_emission_configuration_is_not_replaced_by_single_item_defaults(self):
+        design=deepcopy(DESIGN)
+        design['objects'][1]['settings']=[{'path':'Emitter','attribute':'UpTo','value':5},
+                                         {'path':'Emitter','attribute':'RandomPartOrientation','value':True}]
+        row=self.module().design_to_plan(design,self.catalog)['objects'][1]
+        settings={(s['path'],s['attribute']):s['value'] for s in row['settings']}
+        self.assertEqual(settings['Emitter','UpTo'],'5')
+        self.assertEqual(settings['Emitter','RandomPartOrientation'],'True')
+        self.assertNotIn(('Emitter/Parts[1]','BoxS'),settings)
+
+    def test_omitted_component_settings_are_not_invented(self):
+        row=self.module().design_to_plan(deepcopy(DESIGN),self.catalog)['objects'][1]
+        self.assertEqual(row['settings'],[])
+
+    def test_component_repair_can_add_and_replace_without_moving_unaffected_objects(self):
+        module=self.module();design=deepcopy(DESIGN);plan=module.design_to_plan(design,self.catalog)
+        addition={'id':'extra_feed','prefab':'Emitter','function':'Supply a different requested stream',
+                  'placement':{'kind':'absolute','position':[240,12,145],'yaw_deg':0}}
+        replacement={'prefab':'RollerConveyor6M','function':'The requested second transport section',
+                     'placement':{'kind':'absolute','position':[240,3,170],'yaw_deg':0}}
+        updated=module.apply_local_patch(plan,{'add_objects':[addition],
+            'changes':[{'object_id':'emitter','replace_with':replacement}]},{'emitter'},self.catalog,design=design)
+        self.assertEqual(updated['objects'][0],plan['objects'][0])
+        self.assertEqual([o['id'] for o in updated['objects']],['conveyor','emitter','extra_feed'])
+        self.assertEqual(design['objects'][1]['prefab'],'RollerConveyor6M')
+        self.assertEqual(design['objects'][2]['function'],addition['function'])
+
+    def test_failed_component_repair_leaves_current_design_intact(self):
+        module=self.module();design=deepcopy(DESIGN);before=deepcopy(design);plan=module.design_to_plan(design,self.catalog)
+        with self.assertRaises(ContractError):
+            module.apply_local_patch(plan,{'changes':[],'add_objects':[{'id':'extra','prefab':'invented','function':'Unknown',
+                'placement':{'kind':'absolute','position':[0,0,0],'yaw_deg':0}}]},set(),self.catalog,design=design)
+        self.assertEqual(design,before)
+
+    def test_absolute_object_repair_does_not_require_a_conveyor_reference(self):
+        module=self.module();plan=module.design_to_plan(DESIGN,self.catalog)
+        changed=module.apply_local_patch(plan,{'changes':[{'object_id':'emitter',
+            'placement':{'kind':'absolute','position':[230,9,135],'yaw_deg':90}}]},{'emitter'},self.catalog)
+        self.assertEqual(changed['objects'][1]['position'],[230,9,135])
+        self.assertEqual(changed['objects'][0],plan['objects'][0])
 
     def test_plc_continuation_reuses_verified_layout_and_never_calls_scene_models(self):
         from unittest.mock import patch

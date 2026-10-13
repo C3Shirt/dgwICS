@@ -8,7 +8,7 @@ from copy import deepcopy
 import re
 
 from .contracts import canonical_hash, require
-from .plc import _name, _declarations, _mask, validate_program
+from .plc import _name, _declarations, _mask, validate_program, _TYPES, _PLC_BITS
 
 
 def io_scaffold(config, contract):
@@ -22,24 +22,30 @@ def io_scaffold(config, contract):
         require(set(binding) == {'tag_key','variable','plc_type'}, 'invalid scaffold binding fields')
         key, variable, type_ = (binding[k] for k in ('tag_key','variable','plc_type'))
         require(key in tags and key not in keys and variable.casefold() not in variables, 'duplicate/unknown scaffold binding')
-        require(type_ == 'BOOL' and tags[key]['data_type'] == 'bool', 'I/O scaffold supports verified BOOL only')
-        require(verified.get(key, {}).get('variable') == variable and verified[key].get('bit_size') == '1',
-                'scaffold variable is not a verified BOOL device binding')
+        encoding=next((e for e in contract.get('wire_encodings',[]) if e['tag_key']==key),None)
+        allowed={'WORD','UINT','INT'} if encoding else _TYPES.get(tags[key]['data_type'],set())
+        require(type_ in allowed,'I/O scaffold PLC type is incompatible with the tag')
+        require(verified.get(key, {}).get('variable') == variable and int(verified[key].get('bit_size',0)) == _PLC_BITS[type_],
+                'scaffold variable is not a verified device binding')
         parts = variable.split('.')
         require(len(parts) == 3 and parts[0] == config.get('application_name', 'Application'), 'scaffold needs application-qualified bindings')
         scope, name = (_name(p, 'scaffold identifier') for p in parts[1:])
         require(scope.casefold() != config.get('program_name', 'PLC_PRG').casefold(), 'I/O scope collides with program')
         scopes.setdefault(scope, []).append((name, type_))
         signal={**binding, 'st_reference':scope+'.'+name,
-                **{k:tags[key].get(k) for k in ('object_id','id','name','kind')}}
-        if config.get('normalize_bool_inputs') and tags[key]['kind']=='input':
+                **{k:tags[key].get(k) for k in ('object_id','id','name','kind','data_type','system_field')}}
+        if encoding:signal['wire_encoding']=deepcopy(encoding)
+        if config.get('normalize_bool_inputs') and tags[key]['kind']=='input' and tags[key]['data_type']=='bool':
             rows=[r for r in contract.get('component_semantics',[]) if r['tag_key']==key and r.get('app_version_confirmed') is True and r.get('evidence')]
             if tags[key].get('system_field')=='RunInputKey':
                 active=True;meaning='simulation_running'
             else:
-                require(len(rows)==1,'input normalization needs one evidence-confirmed polarity: '+key)
-                sem=rows[0]['semantics'];field='pressed_value' if sem.get('function')=='operator_button' else 'occupied_value'
-                require(type(sem.get(field)) is bool,'input has no verified active Boolean value: '+key)
+                sem=rows[0]['semantics'] if len(rows)==1 else {}
+                field='pressed_value' if sem.get('function')=='operator_button' else 'occupied_value'
+                if type(sem.get(field)) is not bool:
+                    signal['polarity']='unconfirmed_raw_value'
+                    signals.append(signal);keys.add(key);variables.add(variable.casefold())
+                    continue
                 active=sem[field];meaning='pressed' if field=='pressed_value' else 'occupied'
             alias='SceneInputs.'+name
             scopes.setdefault('SceneInputs',[]).append((name,'BOOL'))
@@ -74,16 +80,12 @@ def assemble_program(fragment, scaffold, contract):
     require(not short_names.intersection(locals_), 'logic fragment shadows tool-owned I/O variables')
     code = _mask(fragment['implementation'])
     for signal in scaffold['signals']:
-        # Qualified reference is mandatory; checking source text is only a bounded
-        # linkage check. CODESYS remains responsible for full ST type checking.
+        # Physical inputs remain read-only. The IDE checks ST syntax; unused
+        # optional channels and function-block output connections are permitted.
         ref = signal['st_reference']
         pattern = r'(?<![A-Za-z0-9_])'+re.escape(ref)+r'(?![A-Za-z0-9_])'
-        require(re.search(pattern,code,re.I) is not None, 'logic does not reference bound signal: '+ref)
-        if signal['kind'] == 'output':
-            require(re.search(pattern+r'\s*:=',code,re.I) is not None,
-                    'logic does not assign bound actuator/lamp: '+ref)
-        else:
-            require(re.search(pattern+r'\s*:=',code,re.I) is None,
+        if signal['kind'] == 'input':
+            require(re.search(pattern+r'\s*:=',code,re.I) is None and re.search(r'=>\s*'+pattern,code,re.I) is None,
                     'logic writes a physical input: '+ref)
             if signal.get('raw_st_reference'):
                 require(re.search(r'(?<![A-Za-z0-9_])'+re.escape(signal['raw_st_reference'])+r'(?![A-Za-z0-9_])',code,re.I) is None,

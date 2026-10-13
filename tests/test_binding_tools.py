@@ -59,6 +59,33 @@ class BindingTests(unittest.TestCase):
         with self.assertRaisesRegex(BindingConfigurationError, 'template SHA changed'):
             bool_bindings(self.config, self.contract)
 
+    def test_numeric_channels_require_and_reuse_verified_width_and_wire_encoding(self):
+        from factoryio_agents.binding_tools import verified_bindings
+        from factoryio_agents.contracts import read_json
+        from factoryio_agents.plc_scaffold import io_scaffold
+        previous=deepcopy(self.contract)
+        object_keys={t['key'] for t in previous['tags'] if t.get('object_id') is not None}
+        mapping=next(m for m in previous['mappings'] if m['tag_key'] in object_keys and m['kind']=='input')
+        key=mapping['tag_key'];tag=next(t for t in previous['tags'] if t['key']==key)
+        tag.update(type='IntInput',data_type='int')
+        mapping.update(channel='NumericInput0',channel_family='Numeric',channel_index=0,offset=0,type='IntInput',data_type='int')
+        previous['channel_counts']['NumericInputCount']=1
+        previous['channel_offsets']['NumericInputOffset']=0
+        previous['wire_encodings']=[{'tag_key':key,'format':'modbus_positive16','scale_factor':1.0,'logical_min':0.0,'logical_max':100.0}]
+        seed=read_json(self.root/'seed.json');seed['codesys']['verified_transport_sha256']=transport_fingerprint(previous)
+        next(b for b in seed['codesys']['verified_device_bindings'] if b['tag_key']==key)['bit_size']='16'
+        seed['codesys']['bindings']=[{'tag_key':key,'variable':'Application.OldIO.value','plc_type':'WORD'}]
+        write_json(self.root/'previous.json',previous);write_json(self.root/'seed.json',seed)
+        current=deepcopy(previous);current.pop('wire_encodings')
+        next(t for t in current['tags'] if t['key']==key)['key']='new-numeric-tag'
+        next(m for m in current['mappings'] if m['tag_key']==key)['tag_key']='new-numeric-tag'
+        config=verified_bindings(self.config,current)
+        self.assertEqual(next(b['plc_type'] for b in config['bindings'] if b['tag_key']=='new-numeric-tag'),'WORD')
+        self.assertEqual(current['wire_encodings'][0]['tag_key'],'new-numeric-tag')
+        current['bindings']=config['bindings']
+        signal=next(s for s in io_scaffold(config,current)['signals'] if s['tag_key']=='new-numeric-tag')
+        self.assertEqual(signal['data_type'],'int');self.assertEqual(signal['wire_encoding']['scale_factor'],1.0)
+
     def test_unverified_preparation_never_deploys(self):
         for field in ('compiled', 'bindings_verified', 'task_program_verified'):
             report = dict.fromkeys(('compiled', 'bindings_verified', 'task_program_verified'), True); report[field] = False

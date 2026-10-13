@@ -1,6 +1,6 @@
 # 工业自动化仿真 Agent
 
-按 [Issue #1](https://github.com/C3Shirt/dgwICS/issues/1) 新增简化框架：`run_simple_agents.py "场景需求"`。场景设计 → 原生生成/真实加载/三视角截图 → 视觉检查 → 必要的局部修复。`--with-plc` 接入 PLC 生成、编译部署与单件输送运行检查；也可从已验证布局直接继续，或只离线编译。使用、恢复、验证范围与记录见 [简化框架说明](docs/simple-framework.md)。PLC 已在本机实际生成并离线编译通过；新路径的实际运行验收仍待 Runtime 启动权限解决。原流程保留用于对照。
+按 [Issue #1](https://github.com/C3Shirt/dgwICS/issues/1) 新增简化框架：`run_simple_agents.py "场景需求"`。场景设计 → 原生生成/真实加载/三视角截图 → 视觉检查 → 必要的局部修复。`--with-plc` 接入 PLC 生成、编译部署和按任务规划的运行检查；也可从已验证布局直接继续，或只离线编译。对象数量、供料策略和检查项由实际需求决定，工具不预设单输送带或单箱工艺。使用、恢复、验证范围与记录见 [简化框架说明](docs/simple-framework.md)。SC002 两段交接已由框架生成 PLC 并真实离线编译通过；新路径的实际运行验收仍待 Runtime 启动权限解决。原流程保留用于对照。
 
 日常使用先看 [中文使用说明书](docs/agent-user-guide.zh-CN.md)：100 项设计材料的位置、单指令运行、实时日志、结果判定、失败续跑及两端同步操作。
 
