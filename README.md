@@ -1,5 +1,7 @@
 # 工业自动化仿真 Agent
 
+当前布局阶段按 [Issue #4](https://github.com/C3Shirt/dgwICS/issues/4) 实现需求驱动检查：独立需求提取 → 场景设计 → 动态 CheckPlan → 真实加载/原生检查/三视角 → 视觉反馈 → 有界局部修复。使用 `run_simple_agents.py "场景需求" --scene-only`，新场景默认启用动态关系验证。英文专业提示词和按角色筛选的载荷放在 Python 中，视觉不接收生成坐标。入口、恢复、同图对照、记录和证据边界见 [布局与视觉反馈说明](docs/scene-layout-issue4.md)。
+
 按 [Issue #1](https://github.com/C3Shirt/dgwICS/issues/1) 新增简化框架：`run_simple_agents.py "场景需求"`。场景设计 → 原生生成/真实加载/三视角截图 → 视觉检查 → 必要的局部修复。`--with-plc` 接入 PLC 生成、编译部署和按任务规划的运行检查；也可从已验证布局直接继续，或只离线编译。对象数量、供料策略和检查项由实际需求决定，工具不预设单输送带或单箱工艺。使用、恢复、验证范围与记录见 [简化框架说明](docs/simple-framework.md)。SC002 两段交接已由框架生成 PLC 并真实离线编译通过；新路径的实际运行验收仍待 Runtime 启动权限解决。原流程保留用于对照。
 
 日常使用先看 [中文使用说明书](docs/agent-user-guide.zh-CN.md)：100 项设计材料的位置、单指令运行、实时日志、结果判定、失败续跑及两端同步操作。
@@ -109,3 +111,5 @@ CLI 还支持 `inspect <scene>`、`build --plan <plan.json>`、`review --scene-d
 - [Factory I/O 软件内部调用分析](docs/factoryio-internal-automation.md)：实际程序集、延迟加载、对象放置路径，以及已完成加载/截图联机验证的版本限定桥接。
 
 官方参考：[CODESYS Modbus 接入教程](https://docs.factoryio.com/tutorials/codesys/setting-up/codesys-mb-sp16/)、[Factory I/O Web API](https://docs.factoryio.com/manual/web-api/)、[Console](https://docs.factoryio.com/manual/console/)、[CODESYS 脚本命令行](https://content.helpme-codesys.com/en/CODESYS%20Scripting/_cds_starting_script_via_command_line.html)。
+
+本次 Issue #4 的成功/失败轨迹、完整模型交互与原图见 [运行轨迹归档](experiments/issue4-layout-20261014/README.md)。

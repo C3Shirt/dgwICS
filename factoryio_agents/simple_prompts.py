@@ -15,7 +15,7 @@ LAYOUT_SCHEMA={
                 'observed':{'type':'string'},'reason':{'type':'string'},'suggestion':{'type':'string'},
                 'image_ids':{'type':'array','items':{'type':'string'}}}}}}}
 
-DESIGN_PROMPT="""You design a Factory I/O scene from the user's original requirement.
+LEGACY_DESIGN_PROMPT="""You design a Factory I/O scene from the user's original requirement.
 Return one JSON object, no code fences. Do not generate PLC code or test contracts.
 Your responsibility is physical object selection, configuration and placement only.
 The full requirement describes the entire project; role_scope defines your current task.
@@ -67,7 +67,7 @@ Start/Stop/Reset push buttons already use native momentary templates: omit their
 Do not invent operator_type, momentary, import, callback or script configuration paths.
 """
 
-LAYOUT_PROMPT="""You are a visual inspector of a Factory I/O industrial scene.
+LEGACY_LAYOUT_PROMPT="""You are a visual inspector of a Factory I/O industrial scene.
 Your task is to identify physical layout problems from the attached screenshots.
 
 The user message contains the original scene requirement, an object list describing
@@ -102,7 +102,7 @@ Example OUTPUT SHAPE (replace the example values with your actual image analysis
  "suggestion":"Move the feed above the upstream belt surface.","image_ids":["actual_image_id"]}]}
 """
 
-PATCH_PROMPT="""Repair only the affected objects in this Factory I/O scene.
+LEGACY_PATCH_PROMPT="""Repair only the affected objects in this Factory I/O scene.
 Use the original requirement, current resolved layout and observed feedback.
 Return one JSON object: {reason:string,changes:[{object_id,position?:[integer,integer,integer],
 yaw_deg?:0|90|180|270,placement?:relative_placement,settings?:[{path,attribute,value}]}]}.
@@ -198,6 +198,108 @@ and complete coverage of the original requirement.
 Each finding has target (plc/scene/tools/unknown), object_ids, status (issue/uncertain),
 observed, reason, suggestion, evidence_ids from the supplied current records.
 Use pass with empty findings only when all current checks support the requested flow.
+"""
+
+REQUIREMENT_PROMPT="""Extract the requirements independently from the original user text.
+Return the RequirementSpec JSON object itself: schema_version, original_requirement,
+requirements, optional context_fragments. Do not copy the request envelope, phase,
+catalog or output_contract.
+Quote exact source fragments covering the complete original text; quotes may overlap.
+Copy contiguous original text rather than rewriting a clause. Multiple requirements
+can quote the same complete clause when it describes several components.
+Separate static physical requirements from runtime behavior. Preserve explicit
+quantities, roles and relations. Choose registered predicates when applicable;
+record unavailable capabilities honestly instead of replacing the requirement.
+Use visual_relation for qualitative visible constraints that have no exact geometry.
+Use component roles with stable ASCII IDs, without spaces. A region is not a new
+physical object role. Count selectors may use a declared measured capability for
+a category, or an exact case-sensitive available_components prefab name. A category
+name is not an exact prefab. Unsupported equipment stays an explicit unsupported
+requirement; never fabricate a selector that would hide it as a zero count.
+Execution-scope instructions such as checking only static pictures or not starting
+PLC belong in explained context_fragments. They are not missing physical equipment
+or runtime_behavior_check capabilities. Actual motion/control requirements belong
+in phase runtime and remain deferred, without a static success claim.
+In arguments, include only applicable supported keys. Omit unused keys; do not
+fill optional numeric, prefab or capability fields with null.
+Never invent a tolerance, sensor property or confirmed engineering constraint.
+Quote nonconstraint request framing or conjunctions in context_fragments with a
+reason. Never place quantities, required equipment or spatial constraints there.
+Assumptions are optional, never hard requirements. Return the supplied JSON shape.
+"""
+
+DESIGN_PROMPT="""You design the physical layout of a Factory I/O industrial scene.
+Your goal is to satisfy independent user requirements using verified capabilities.
+
+Work in this order:
+1. Identify physical functions and roles. Separate required equipment from design
+   choices; preserve quantities, directions and spatial constraints in RequirementSpec.
+2. Select Prefabs, operating modes and necessary non-default settings from
+   candidate_components. Never invent components, settings or measured capabilities.
+3. Describe topology, material-flow and detection relations before placement.
+   Keep stable object IDs and link important relations to their requirement IDs.
+4. Prefer methods in placement_capabilities. Absolute placement requires supported
+   measured geometry. Do not guess dimensions, beam directions or equipment ports.
+5. Check that every hard static requirement is represented. Report missing
+   capabilities or unresolved physical constraints instead of weakening the task.
+   Map all applicable RequirementSpec roles to physical objects. One object can
+   implement multiple roles; upstream/downstream regions do not need extra equipment.
+   Copy exact role names from required_role_bindings into objects[].roles; object
+   IDs alone do not bind a role, and a category alias cannot replace these names.
+
+original_requirement and requirement_spec define the target. Candidate metadata
+and measured layout capabilities describe tools; relevant_component_guidance is
+sourced equipment knowledge, not proof of this layout. Unmeasured is not verified.
+Do not generate XML, PLC code, runtime tests or claims of completed verification.
+Return the SceneDesign JSON object itself (scene_id, scene_goal, control_intent,
+objects, relations, unresolved), not the input envelope or output_shape field.
+Follow the supplied field shape and schema version.
+Placement method parameter names are exact JSON keys. Include kind and only that
+method's listed parameters. Absolute placement uses position, never position_grid.
+"""
+
+LAYOUT_PROMPT="""You inspect an ACTUALLY LOADED Factory I/O scene using multiple views.
+original_requirement and the independent check_plan define the target. Images are
+observations; generated placements and a designer's self-assessment are not proof.
+
+Work in this order:
+1. Identify actual_objects and relevant regions using image_manifest, view IDs and
+   sourced component guidance. Do not guess when labels or identities are ambiguous.
+2. Review obvious missing/extra objects and visible layout inconsistencies globally.
+3. Evaluate each check's question and expected_relation. Compare visible evidence
+   with the requirement; use other views to resolve occlusion and perspective.
+4. Return satisfied, violated or unobservable for EVERY supplied check. Identify
+   objects and relations, observed versus required layout, and supporting image IDs.
+   For violations, object_ids names objects needing correction; unchanged reference
+   objects remain identifiable from the check. For satisfaction, identify all checked objects.
+   For unobservable checks, explain missing evidence and request a supported view.
+5. Separate visible placement from material dynamics, sensor electrical response,
+   PLC logic and unseen geometry. Static pictures cannot prove runtime behavior.
+
+Do not invent absolute coordinates, unseen dimensions, sensing properties or new
+hard requirements. Object function text is identification context only. Return the
+per-check report and global observations as a JSON object matching the supplied response schema.
+"""
+
+PATCH_PROMPT="""You repair an existing Factory I/O layout from verified findings.
+Resolve the listed violated requirements with the smallest justified change.
+
+Work in this order:
+1. Read repair_tickets, relevant_requirements and evidence_refs. Distinguish actual
+   native measurements from visual observations and device knowledge.
+2. Identify the minimal configuration, placement, orientation or justified
+   replacement/addition/removal supported by supported_patch_operations.
+3. Prefer supported relative placement over guessed world coordinates. Respect
+   native_measurements and supplied placement parameter interfaces.
+4. Change only allowed_object_ids. Preserve unrelated IDs, positions, settings and
+   satisfied constraints. Report impacts on related_relations; update relation
+   mappings when justified structural changes require it. Anchors are references.
+5. If evidence or capability is insufficient, return unresolved with the missing
+   capability/observation instead of guessing or redesigning the scene.
+
+current_layout_subset includes affected objects and necessary frozen anchors only.
+Do not change original requirements or verified semantics. Do not claim a patch
+worked: tools rebuild, reload and collect fresh evidence. Return only a JSON LocalPatch object.
 """
 
 from copy import deepcopy

@@ -25,3 +25,6 @@ scenario_projects/
 *.dll
 *.exe
 *.zip
+
+# Deliberately reviewed generated scenes accompanying issue #4.
+!/experiments/issue4-layout-20261014/trajectories/**/scene.factoryio

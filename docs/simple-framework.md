@@ -1,5 +1,7 @@
 # 简化场景框架（Issue #1，阶段 A）
 
+新布局任务已接入 Issue #4 的独立需求、动态关系检查及局部修复，默认 `--scene-verification relations`。当前专注静态场景，使用与真实联机记录见 [布局与视觉反馈说明](scene-layout-issue4.md)。本文保留原极简流程及 PLC 路径的用法；原路径可显式选择 `legacy`。
+
 这条路径基于 [Issue #1](https://github.com/C3Shirt/dgwICS/issues/1) 实现。原 `run_agents.py` 和原网页模式保留用于对照。
 
 ## 范围与流程
