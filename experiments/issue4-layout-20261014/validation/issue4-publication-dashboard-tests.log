@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: next-step control stays visible while viewing the previous reply and releases only the pending step
+ok 1 - next-step control stays visible while viewing the previous reply and releases only the pending step
+  ---
+  duration_ms: 12.0252
+  ...
+# Subtest: finished vision replay explains there is no next step and offers a full workflow without sending requests
+ok 2 - finished vision replay explains there is no next step and offers a full workflow without sending requests
+  ---
+  duration_ms: 3.6112
+  ...
+# Subtest: running or cancelled work cannot be released by the persistent control
+ok 3 - running or cancelled work cannot be released by the persistent control
+  ---
+  duration_ms: 3.6453
+  ...
+# Subtest: failed environment check explains the blocker and resumes the same requirement instead of creating a fresh task
+ok 4 - failed environment check explains the blocker and resumes the same requirement instead of creating a fresh task
+  ---
+  duration_ms: 22.8509
+  ...
+# Subtest: the tool reply shows its actual failed outcome rather than just permission to execute
+ok 5 - the tool reply shows its actual failed outcome rather than just permission to execute
+  ---
+  duration_ms: 2.9107
+  ...
+# Subtest: an executing tool must not borrow the result of another call to the same tool
+ok 6 - an executing tool must not borrow the result of another call to the same tool
+  ---
+  duration_ms: 2.5722
+  ...
+# Subtest: loaded scene with missing geometry names the affected objects without claiming a visual pass
+ok 7 - loaded scene with missing geometry names the affected objects without claiming a visual pass
+  ---
+  duration_ms: 3.0863
+  ...
+# Subtest: resume logs accept text and structured summaries without interrupting the next-step preview
+ok 8 - resume logs accept text and structured summaries without interrupting the next-step preview
+  ---
+  duration_ms: 4.3355
+  ...
+# Subtest: simple scene recovery selects the simple path instead of the legacy planner pipeline
+ok 9 - simple scene recovery selects the simple path instead of the legacy planner pipeline
+  ---
+  duration_ms: 3.1926
+  ...
+# Subtest: a successful simple scene explicitly ends at layout without claiming PLC execution
+ok 10 - a successful simple scene explicitly ends at layout without claiming PLC execution
+  ---
+  duration_ms: 2.3169
+  ...
+# Subtest: resuming a simple CLI history stays in the simple framework
+ok 11 - resuming a simple CLI history stays in the simple framework
+  ---
+  duration_ms: 5.5627
+  ...
+# Subtest: a verified simple scene exposes an explicit PLC continuation instead of a new scene task
+ok 12 - a verified simple scene exposes an explicit PLC continuation instead of a new scene task
+  ---
+  duration_ms: 3.8348
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 139.4491

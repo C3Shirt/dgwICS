@@ -1,0 +1,440 @@
+{
+  "schema_version": 1,
+  "kind": "agent_candidate",
+  "candidate_id": "9542b42fcbe74eec8fa804b5d53a2faa",
+  "run_id": "f9180186118f4acc9f314e7ae3302a32",
+  "role": "scene",
+  "phase": "scene_design",
+  "scenario_id": null,
+  "lineage_group": "simple-scene",
+  "source_kind": "live_model",
+  "started_at": "2026-10-14T03:37:07.904532+00:00",
+  "status": "response_received",
+  "handoff_id": null,
+  "versions": {},
+  "policy": {},
+  "prompt_sha256": "fade613134d6105d1d2f1d33c0abb8822a1f2ba5ab248b315b4ab0496f1eecc1",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You design the physical layout of a Factory I/O industrial scene.\nYour goal is to satisfy independent user requirements using verified capabilities.\n\nWork in this order:\n1. Identify physical functions and roles. Separate required equipment from design\n   choices; preserve quantities, directions and spatial constraints in RequirementSpec.\n2. Select Prefabs, operating modes and necessary non-default settings from\n   candidate_components. Never invent components, settings or measured capabilities.\n3. Describe topology, material-flow and detection relations before placement.\n   Keep stable object IDs and link important relations to their requirement IDs.\n4. Prefer methods in placement_capabilities. Absolute placement requires supported\n   measured geometry. Do not guess dimensions, beam directions or equipment ports.\n5. Check that every hard static requirement is represented. Report missing\n   capabilities or unresolved physical constraints instead of weakening the task.\n   Map all applicable RequirementSpec roles to physical objects. One object can\n   implement multiple roles; upstream/downstream regions do not need extra equipment.\n   Copy exact role names from required_role_bindings into objects[].roles; object\n   IDs alone do not bind a role, and a category alias cannot replace these names.\n\noriginal_requirement and requirement_spec define the target. Candidate metadata\nand measured layout capabilities describe tools; relevant_component_guidance is\nsourced equipment knowledge, not proof of this layout. Unmeasured is not verified.\nDo not generate XML, PLC code, runtime tests or claims of completed verification.\nReturn the SceneDesign JSON object itself (scene_id, scene_goal, control_intent,\nobjects, relations, unresolved), not the input envelope or output_shape field.\nFollow the supplied field shape and schema version.\nPlacement method parameter names are exact JSON keys. Include kind and only that\nmethod's listed parameters. Absolute placement uses position, never position_grid.\n"
+    },
+    {
+      "role": "user",
+      "content": "{\"phase\": \"scene_design\", \"scene_stage\": \"design\", \"original_requirement\": \"构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。\", \"requirement_spec\": {\"schema_version\": 1, \"original_requirement\": \"构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。\", \"context_fragments\": [{\"source_text\": \"此轮只检查布局与多视角图片，不运行 PLC。\", \"reason\": \"Execution-scope instruction; it constrains the checking process, not the physical scene.\"}, {\"source_text\": \"构建两个独立立柱的静态布置：\", \"reason\": \"Introductory framing that announces the task; the concrete constraints (two Columns, separated) are captured as separate requirements.\"}], \"requirements\": [{\"requirement_id\": \"REQ-COLUMN-001\", \"source_text\": \"使用两个 Column\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 2, \"prefab\": \"Column\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-COLUMN-002\", \"source_text\": \"分开放置，保持可见间隔\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"visual_relation\", \"arguments\": {\"question\": \"Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?\"}, \"required\": true, \"evidence_methods\": [\"visual\"]}, {\"requirement_id\": \"REQ-NO-EQUIP-001\", \"source_text\": \"不要放置输送带、供料器或移除器\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 0, \"capability\": \"conveyor\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-NO-EQUIP-002\", \"source_text\": \"不要放置输送带、供料器或移除器\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 0, \"prefab\": \"Emitter\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-NO-EQUIP-003\", \"source_text\": \"不要放置输送带、供料器或移除器\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 0, \"prefab\": \"Remover\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}]}, \"required_role_bindings\": [], \"candidate_components\": [{\"prefab\": \"Column\", \"function\": \"Metal structure typically used to hold an electric switchboard.\", \"measured_capabilities\": [], \"bounds_local_metres\": {\"min\": [-0.1875, -1.0625, -0.1875], \"max\": [0.1875, 0.9375, 0.1875]}, \"templates\": [{\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/21\", \"operating_mode\": null, \"settings\": []}, {\"template_id\": \"source-6862ca46dbe17012078c/object/40\", \"operating_mode\": null, \"settings\": []}], \"measurement_status\": \"measured\", \"component_geometry_local\": {}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}], \"candidate_coverage\": {\"missing_capabilities\": [], \"completeness\": \"required explicit prefabs and inferred operator capabilities retained; role ambiguity is reported, not downgraded\", \"catalog_expansion_required\": false}, \"placement_capabilities\": {\"absolute\": {\"position\": \"integer XYZ grid, Y vertical\", \"yaw_deg\": \"0|90|180|270\"}, \"anchor\": {\"position\": \"integer XYZ grid, Y vertical\", \"yaw_deg\": \"0|90|180|270\"}, \"conveyor_after_conveyor\": {\"relative_to\": \"measured straight conveyor ID\", \"clearance_grid\": \"nonnegative integer\"}, \"emitter_over_conveyor\": {\"relative_to\": \"measured conveyor ID\", \"along_fraction\": \"upstream-to-downstream fraction in [0,1]\"}, \"sensor_beside_conveyor\": {\"relative_to\": \"measured conveyor ID\", \"along_fraction\": \"fraction in [0,1]\", \"side\": \"left|right of flow\", \"height_above_surface_grid\": \"integer\", \"clearance_grid\": \"nonnegative integer\"}, \"remover_after_conveyor\": {\"relative_to\": \"measured conveyor ID\", \"clearance_grid\": \"nonnegative integer\"}, \"grid_offset\": {\"relative_to\": \"measured conveyor ID\", \"offset_grid\": \"integer XYZ offset\", \"yaw_deg\": \"0|90|180|270\"}}, \"measured_layout_capabilities\": {\"coordinate_system\": {\"grid_metres\": 0.125, \"axis_order\": [\"X\", \"Y\", \"Z\"], \"vertical_axis\": \"Y\", \"horizontal_axes\": [\"X\", \"Z\"], \"pivot_world_formula\": \"(position_grid + [0.5,0.5,0.5]) * 0.125\", \"evidence\": \"Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld\"}, \"world_bounds\": {\"min\": [0, 0, 0], \"max\": [59.625, 9.0, 35.625], \"grid_dimensions\": [477, 72, 285], \"evidence\": \"VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter\"}, \"source\": \"current native receipt\"}, \"relevant_component_guidance\": {\"knowledge_sha256\": \"d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26\", \"reference_kind\": \"official_component_documentation\", \"requested_prefabs\": [\"Column\"], \"components\": [{\"component_id\": \"parts:operators#column\", \"prefabs\": [\"Column\"], \"official_name\": \"Column\", \"function\": \"Metal structure typically used to hold an electric switchboard.\", \"function_basis\": \"official_text\", \"sources\": [{\"chapter_id\": \"parts:operators#column\", \"url\": \"https://docs.factoryio.com/manual/parts/operators/#column\"}]}], \"missing_prefabs\": []}, \"output_schema_version\": 1, \"output_shape\": {\"scene_id\": \"stable ID\", \"scene_goal\": \"physical scene purpose\", \"control_intent\": [], \"objects\": [{\"id\": \"stable ID\", \"prefab\": \"catalog prefab\", \"roles\": [\"requirement role\"], \"function\": \"purpose in this task\", \"placement\": {\"kind\": \"supplied placement kind\"}, \"settings\": []}], \"relations\": [{\"id\": \"stable ID\", \"subject_id\": \"object ID\", \"predicate\": \"relation\", \"target_id\": \"object ID\", \"parameters\": {}, \"requirement_ids\": [\"source requirement ID\"]}], \"unresolved\": []}, \"context_manifest\": {\"prompt_version\": \"issue4-guided-context-v3\", \"kind\": \"design\", \"sources\": {\"requirements_sha256\": \"eb6c92f398cf09e8f7118f448771461699bc50e01aea0e57c33909e1ccb158b6\", \"native_geometry_sha256\": \"0ccc683e8a9fd6c87f1ffa6f5ce6caece25ff939b7bdbca4faf35e56d1bb7aef\", \"template_sources\": {\"source-04da4aaaacbb3e5e0ade\": \"04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c\", \"source-7b6b0a6b063429d967cf\": \"7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918\", \"source-6862ca46dbe17012078c\": \"6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535\"}, \"knowledge_sha256\": \"d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26\"}, \"object_scope\": [], \"field_sources\": {\"requirement_spec\": \"independent source quotes\", \"required_role_bindings\": \"role names compiled from applicable independent static requirements\", \"candidate_components\": \"role/capability-filtered current catalog\", \"placement_capabilities\": \"implemented solver interface\", \"relevant_component_guidance\": \"official documentation\"}, \"limitations\": [\"Generated roles/functions are identification context, not independent ground truth.\", \"Native data describes this loaded software/version, not proven runtime behavior.\"]}}"
+    }
+  ],
+  "payload": {
+    "phase": "scene_design",
+    "scene_stage": "design",
+    "original_requirement": "构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。",
+    "requirement_spec": {
+      "schema_version": 1,
+      "original_requirement": "构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。",
+      "context_fragments": [
+        {
+          "source_text": "此轮只检查布局与多视角图片，不运行 PLC。",
+          "reason": "Execution-scope instruction; it constrains the checking process, not the physical scene."
+        },
+        {
+          "source_text": "构建两个独立立柱的静态布置：",
+          "reason": "Introductory framing that announces the task; the concrete constraints (two Columns, separated) are captured as separate requirements."
+        }
+      ],
+      "requirements": [
+        {
+          "requirement_id": "REQ-COLUMN-001",
+          "source_text": "使用两个 Column",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 2,
+            "prefab": "Column"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-COLUMN-002",
+          "source_text": "分开放置，保持可见间隔",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "visual_relation",
+          "arguments": {
+            "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+          },
+          "required": true,
+          "evidence_methods": [
+            "visual"
+          ]
+        },
+        {
+          "requirement_id": "REQ-NO-EQUIP-001",
+          "source_text": "不要放置输送带、供料器或移除器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 0,
+            "capability": "conveyor"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-NO-EQUIP-002",
+          "source_text": "不要放置输送带、供料器或移除器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 0,
+            "prefab": "Emitter"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-NO-EQUIP-003",
+          "source_text": "不要放置输送带、供料器或移除器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 0,
+            "prefab": "Remover"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        }
+      ]
+    },
+    "required_role_bindings": [],
+    "candidate_components": [
+      {
+        "prefab": "Column",
+        "function": "Metal structure typically used to hold an electric switchboard.",
+        "measured_capabilities": [],
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -1.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.9375,
+            0.1875
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/21",
+            "operating_mode": null,
+            "settings": []
+          },
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/40",
+            "operating_mode": null,
+            "settings": []
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {},
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      }
+    ],
+    "candidate_coverage": {
+      "missing_capabilities": [],
+      "completeness": "required explicit prefabs and inferred operator capabilities retained; role ambiguity is reported, not downgraded",
+      "catalog_expansion_required": false
+    },
+    "placement_capabilities": {
+      "absolute": {
+        "position": "integer XYZ grid, Y vertical",
+        "yaw_deg": "0|90|180|270"
+      },
+      "anchor": {
+        "position": "integer XYZ grid, Y vertical",
+        "yaw_deg": "0|90|180|270"
+      },
+      "conveyor_after_conveyor": {
+        "relative_to": "measured straight conveyor ID",
+        "clearance_grid": "nonnegative integer"
+      },
+      "emitter_over_conveyor": {
+        "relative_to": "measured conveyor ID",
+        "along_fraction": "upstream-to-downstream fraction in [0,1]"
+      },
+      "sensor_beside_conveyor": {
+        "relative_to": "measured conveyor ID",
+        "along_fraction": "fraction in [0,1]",
+        "side": "left|right of flow",
+        "height_above_surface_grid": "integer",
+        "clearance_grid": "nonnegative integer"
+      },
+      "remover_after_conveyor": {
+        "relative_to": "measured conveyor ID",
+        "clearance_grid": "nonnegative integer"
+      },
+      "grid_offset": {
+        "relative_to": "measured conveyor ID",
+        "offset_grid": "integer XYZ offset",
+        "yaw_deg": "0|90|180|270"
+      }
+    },
+    "measured_layout_capabilities": {
+      "coordinate_system": {
+        "grid_metres": 0.125,
+        "axis_order": [
+          "X",
+          "Y",
+          "Z"
+        ],
+        "vertical_axis": "Y",
+        "horizontal_axes": [
+          "X",
+          "Z"
+        ],
+        "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125",
+        "evidence": "Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld"
+      },
+      "world_bounds": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          59.625,
+          9.0,
+          35.625
+        ],
+        "grid_dimensions": [
+          477,
+          72,
+          285
+        ],
+        "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+      },
+      "source": "current native receipt"
+    },
+    "relevant_component_guidance": {
+      "knowledge_sha256": "d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26",
+      "reference_kind": "official_component_documentation",
+      "requested_prefabs": [
+        "Column"
+      ],
+      "components": [
+        {
+          "component_id": "parts:operators#column",
+          "prefabs": [
+            "Column"
+          ],
+          "official_name": "Column",
+          "function": "Metal structure typically used to hold an electric switchboard.",
+          "function_basis": "official_text",
+          "sources": [
+            {
+              "chapter_id": "parts:operators#column",
+              "url": "https://docs.factoryio.com/manual/parts/operators/#column"
+            }
+          ]
+        }
+      ],
+      "missing_prefabs": []
+    },
+    "output_schema_version": 1,
+    "output_shape": {
+      "scene_id": "stable ID",
+      "scene_goal": "physical scene purpose",
+      "control_intent": [],
+      "objects": [
+        {
+          "id": "stable ID",
+          "prefab": "catalog prefab",
+          "roles": [
+            "requirement role"
+          ],
+          "function": "purpose in this task",
+          "placement": {
+            "kind": "supplied placement kind"
+          },
+          "settings": []
+        }
+      ],
+      "relations": [
+        {
+          "id": "stable ID",
+          "subject_id": "object ID",
+          "predicate": "relation",
+          "target_id": "object ID",
+          "parameters": {},
+          "requirement_ids": [
+            "source requirement ID"
+          ]
+        }
+      ],
+      "unresolved": []
+    },
+    "context_manifest": {
+      "prompt_version": "issue4-guided-context-v3",
+      "kind": "design",
+      "sources": {
+        "requirements_sha256": "eb6c92f398cf09e8f7118f448771461699bc50e01aea0e57c33909e1ccb158b6",
+        "native_geometry_sha256": "0ccc683e8a9fd6c87f1ffa6f5ce6caece25ff939b7bdbca4faf35e56d1bb7aef",
+        "template_sources": {
+          "source-04da4aaaacbb3e5e0ade": "04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c",
+          "source-7b6b0a6b063429d967cf": "7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918",
+          "source-6862ca46dbe17012078c": "6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535"
+        },
+        "knowledge_sha256": "d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26"
+      },
+      "object_scope": [],
+      "field_sources": {
+        "requirement_spec": "independent source quotes",
+        "required_role_bindings": "role names compiled from applicable independent static requirements",
+        "candidate_components": "role/capability-filtered current catalog",
+        "placement_capabilities": "implemented solver interface",
+        "relevant_component_guidance": "official documentation"
+      },
+      "limitations": [
+        "Generated roles/functions are identification context, not independent ground truth.",
+        "Native data describes this loaded software/version, not proven runtime behavior."
+      ]
+    }
+  },
+  "images": [],
+  "input_metrics": {
+    "system_chars": 2014,
+    "payload_chars": 6856,
+    "image_count": 0,
+    "image_bytes": 0,
+    "token_estimate_used": false
+  },
+  "input_artifacts": [],
+  "response_text": "{\n  \"scene_id\": \"two-columns-static\",\n  \"scene_goal\": \"Create a static scene with two Column prefabs separated by a visible gap, containing no conveyor belts, emitters, or removers. This scene is for visual layout inspection only; no PLC control is intended.\",\n  \"control_intent\": [],\n  \"objects\": [\n    {\n      \"id\": \"column-1\",\n      \"prefab\": \"Column\",\n      \"roles\": [],\n      \"function\": \"First of two independent metal columns, placed with a visible gap from the second column.\",\n      \"placement\": {\n        \"kind\": \"absolute\",\n        \"position\": [10, 1, 10],\n        \"yaw_deg\": 0\n      },\n      \"settings\": []\n    },\n    {\n      \"id\": \"column-2\",\n      \"prefab\": \"Column\",\n      \"roles\": [],\n      \"function\": \"Second independent metal column, separated from column-1 by a visible gap.\",\n      \"placement\": {\n        \"kind\": \"absolute\",\n        \"position\": [20, 1, 10],\n        \"yaw_deg\": 0\n      },\n      \"settings\": []\n    }\n  ],\n  \"relations\": [\n    {\n      \"id\": \"rel-separation\",\n      \"subject_id\": \"column-1\",\n      \"predicate\": \"visually_separated\",\n      \"target_id\": \"column-2\",\n      \"parameters\": {\n        \"min_gap_metres\": 1.0\n      },\n      \"requirement_ids\": [\"REQ-COLUMN-002\"]\n    }\n  ],\n  \"unresolved\": []\n}",
+  "response_sha256": "2050a38174c81e3f5d2b2d9592ede6c4cee52c7b705bb19a778600a7873e83b4",
+  "structured_output": {
+    "scene_id": "two-columns-static",
+    "scene_goal": "Create a static scene with two Column prefabs separated by a visible gap, containing no conveyor belts, emitters, or removers. This scene is for visual layout inspection only; no PLC control is intended.",
+    "control_intent": [],
+    "objects": [
+      {
+        "id": "column-1",
+        "prefab": "Column",
+        "roles": [],
+        "function": "First of two independent metal columns, placed with a visible gap from the second column.",
+        "placement": {
+          "kind": "absolute",
+          "position": [
+            10,
+            1,
+            10
+          ],
+          "yaw_deg": 0
+        },
+        "settings": []
+      },
+      {
+        "id": "column-2",
+        "prefab": "Column",
+        "roles": [],
+        "function": "Second independent metal column, separated from column-1 by a visible gap.",
+        "placement": {
+          "kind": "absolute",
+          "position": [
+            20,
+            1,
+            10
+          ],
+          "yaw_deg": 0
+        },
+        "settings": []
+      }
+    ],
+    "relations": [
+      {
+        "id": "rel-separation",
+        "subject_id": "column-1",
+        "predicate": "visually_separated",
+        "target_id": "column-2",
+        "parameters": {
+          "min_gap_metres": 1.0
+        },
+        "requirement_ids": [
+          "REQ-COLUMN-002"
+        ]
+      }
+    ],
+    "unresolved": []
+  },
+  "redaction_count": 0,
+  "quality": {
+    "review_status": "pending",
+    "sft_eligible": false,
+    "dpo_eligible": false,
+    "split": "unassigned"
+  },
+  "finished_at": "2026-10-14T03:37:12.051925+00:00",
+  "latency_seconds": 4.146781,
+  "output_origin": "provider_content",
+  "model_metadata": {
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "provider": "DeepSeek",
+    "request_options": {
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 12000
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "requested_model": "deepseek-v4-pro",
+    "returned_model": "deepseek-v4-pro",
+    "response_id": "bd6fb3a2-9a2e-45ec-a840-f2df2249655d",
+    "http_status": 200,
+    "usage": {
+      "prompt_tokens": 2617,
+      "completion_tokens": 349,
+      "total_tokens": 2966,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 2617
+    },
+    "finish_reason": "stop",
+    "streaming_requested": true,
+    "response_mode": "sse",
+    "stream_stats": {
+      "packets": 352,
+      "content_chars": 1234,
+      "done_received": true,
+      "first_packet_seconds": 7.2e-05,
+      "first_content_seconds": 1.073346
+    }
+  },
+  "error": null
+}

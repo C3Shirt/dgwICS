@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "mode": "live",
+  "versions": {
+    "scene": "39ef7540e429f04ca8e3de376bbcc72aa61075e0b3d7f82512dac9f09f871375",
+    "io": "4c630c4ba7ce49922e132d08159e96aba88c516535b70c6466bcbee4854f12f3"
+  },
+  "started_at": "2026-10-14T02:44:35.286661+00:00",
+  "records": [
+    {
+      "id": "tags-0",
+      "kind": "tag_sample",
+      "timestamp": "2026-10-14T02:44:35.292470+00:00",
+      "elapsed_seconds": 0.0058207998517900705,
+      "tags": [
+        {
+          "name": "FACTORY I/O (Reset)",
+          "id": "01936c60-0201-4d54-aad2-0734eb391d35",
+          "address": 498,
+          "type": "Bit",
+          "kind": "Output",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Pause)",
+          "id": "41b90af6-25d1-4fa8-aaec-724f79701be1",
+          "address": 497,
+          "type": "Bit",
+          "kind": "Output",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Run)",
+          "id": "7754fab1-ed21-4fca-9ab9-45e844cd4766",
+          "address": 496,
+          "type": "Bit",
+          "kind": "Output",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Reset)",
+          "id": "12d66936-6f23-4979-90ee-cb151204d00a",
+          "address": 498,
+          "type": "Bit",
+          "kind": "Input",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Paused)",
+          "id": "37ecf53e-8541-4f7b-b5d8-0ec574308bc7",
+          "address": 497,
+          "type": "Bit",
+          "kind": "Input",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Running)",
+          "id": "3276f3a7-f85b-425f-9cd1-d9107ab7113f",
+          "address": 496,
+          "type": "Bit",
+          "kind": "Input",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "emitter1 0",
+          "id": "01bad5ca-134f-5b51-8a74-3f3a47691ea7",
+          "address": 26,
+          "type": "Bit",
+          "kind": "Output",
+          "value": true,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": true,
+          "forcedValue": true
+        },
+        {
+          "name": "remover1 0",
+          "id": "b2d003f4-eda2-50d1-9b88-7e4fde031e40",
+          "address": 27,
+          "type": "Bit",
+          "kind": "Output",
+          "value": true,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": true,
+          "forcedValue": true
+        },
+        {
+          "name": "conveyor1 0",
+          "id": "0e2d55e1-c2e5-54bf-ace9-29c6901d834f",
+          "address": 7,
+          "type": "Bit",
+          "kind": "Output",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Time Scale)",
+          "id": "71a6351a-a293-43bf-b7f1-b9bb1d648480",
+          "address": 240,
+          "type": "Float",
+          "kind": "Input",
+          "value": 0,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": 0
+        },
+        {
+          "name": "FACTORY I/O (Camera Position)",
+          "id": "f0855715-c7e4-48b3-8174-0fc06299798c",
+          "address": 240,
+          "type": "Int",
+          "kind": "Output",
+          "value": 0,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": 0
+        }
+      ]
+    },
+    {
+      "id": "image-0-top",
+      "kind": "image",
+      "timestamp": "2026-10-14T02:44:36.877596+00:00",
+      "path": "experiments/issue4-layout-20261014/assets/4c40875b2ba745e7f444dd22bf3d34893a11c1e7633c017cc2395a49657d7002.png",
+      "sha256": "4c40875b2ba745e7f444dd22bf3d34893a11c1e7633c017cc2395a49657d7002",
+      "source": "capture_command",
+      "camera_view": "top"
+    },
+    {
+      "id": "image-0-iso_a",
+      "kind": "image",
+      "timestamp": "2026-10-14T02:44:38.417403+00:00",
+      "path": "experiments/issue4-layout-20261014/assets/602d57736210c587b033a70ce9898fad9325f8367928ed8ee95852a9d6e8b280.png",
+      "sha256": "602d57736210c587b033a70ce9898fad9325f8367928ed8ee95852a9d6e8b280",
+      "source": "capture_command",
+      "camera_view": "iso_a"
+    },
+    {
+      "id": "image-0-iso_b",
+      "kind": "image",
+      "timestamp": "2026-10-14T02:44:39.852091+00:00",
+      "path": "experiments/issue4-layout-20261014/assets/cbf8b72af9559397347bcd8bfc5b312c8b60e48158a26c0488654bb6362a947d.png",
+      "sha256": "cbf8b72af9559397347bcd8bfc5b312c8b60e48158a26c0488654bb6362a947d",
+      "source": "capture_command",
+      "camera_view": "iso_b"
+    }
+  ],
+  "reconciliation": {
+    "passed": true,
+    "issues": [],
+    "actual_count": 11,
+    "expected_count": 11
+  },
+  "finished_at": "2026-10-14T02:44:39.864805+00:00"
+}

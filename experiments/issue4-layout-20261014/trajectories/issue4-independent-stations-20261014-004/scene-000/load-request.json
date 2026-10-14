@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "request_id": "32032861bddc4f64b94312ee86a73df5",
+  "scene_path": "experiments/issue4-layout-20261014/trajectories/issue4-independent-stations-20261014-004/scene-000/scene.factoryio",
+  "scene_sha256": "faba519b575d68d911e64949d605d636344ca3cf372f0e8700c5eb411af8031a",
+  "versions": {
+    "scene": "faba519b575d68d911e64949d605d636344ca3cf372f0e8700c5eb411af8031a",
+    "io": "a2271f5f15d919142d40e6e96f5ae19baa197ca5f303d235d4093558452df97c"
+  }
+}

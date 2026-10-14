@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "source": "factoryio-in-process-bridge",
+  "image_path": "experiments/issue4-layout-20261014/assets/fd4ca20d7014efdd7495ff27d9a2fd34047b81747221b4362e8787dfa03fb09e.png",
+  "image_sha256": "fd4ca20d7014efdd7495ff27d9a2fd34047b81747221b4362e8787dfa03fb09e",
+  "copied_at": "2026-10-14T03:35:42.760234+00:00",
+  "bridge_response": {
+    "schema_version": 1,
+    "protocol": "factoryio-agent-file-bridge/1",
+    "request_id": "80cccae76a534a98ae1c87b7dc1dd28a",
+    "action": "capture",
+    "ok": true,
+    "completed_at": "2026-10-14T03:35:42.7203117Z",
+    "error": null,
+    "data": {
+      "assembly_sha256": "1fc9429d6ddb2ac6f2285e8ab43f5116a26b03e06dfd33a5f6a1a5345636f2ff",
+      "app_version": "2.5.8",
+      "coordinate_system": {
+        "grid_metres": 0.125,
+        "axis_order": [
+          "X",
+          "Y",
+          "Z"
+        ],
+        "vertical_axis": "Y",
+        "horizontal_axes": [
+          "X",
+          "Z"
+        ],
+        "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125",
+        "evidence": "Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld"
+      },
+      "ui": {
+        "window_opened": false,
+        "acknowledge_visible": false,
+        "acknowledge_title": null,
+        "acknowledge_content": null
+      },
+      "driver": "ModbusTCPClient",
+      "modbus": {
+        "connected": false,
+        "socket_connected": false,
+        "has_error": true,
+        "host": "127.0.0.1",
+        "port": 502,
+        "unit_id": 1,
+        "auto_connect": false
+      },
+      "frame": 8372282,
+      "scene_loading": false,
+      "world_bounds": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          59.625,
+          9.0,
+          35.625
+        ],
+        "grid_dimensions": [
+          477,
+          72,
+          285
+        ],
+        "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+      },
+      "bridge": {
+        "protocol": "factoryio-agent-file-bridge/1",
+        "geometry_version": 2,
+        "bridge_sha256": "3eff062fecc9720a23bc65294d1a61ac8269cf635bdc2acfb8ea2acd1b75e387"
+      },
+      "scene_path": "experiments/issue4-layout-20261014/trajectories/issue4-independent-stations-20261014-004/scene-000/scene.factoryio",
+      "camera_index": -1,
+      "saved_camera_count": 6,
+      "objects": [
+        {
+          "key": "0dadcc6b-6f9f-5edc-b161-2143024b54b3",
+          "prefab": "BeltConveyor2M",
+          "position_grid": [
+            188,
+            3,
+            142
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "bounds_world": {
+            "min": [
+              23.125,
+              0.0,
+              16.75
+            ],
+            "max": [
+              24.0,
+              1.0,
+              18.75
+            ]
+          },
+          "component_geometry": {
+            "conveyor": {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "default_speed_metres_per_second": 0.6,
+              "surface_bounds": {
+                "min": [
+                  23.1253242,
+                  0.00173339248,
+                  16.7504768
+                ],
+                "max": [
+                  23.9996758,
+                  0.9992666,
+                  18.7495232
+                ]
+              },
+              "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+            }
+          },
+          "native_registered": true
+        },
+        {
+          "key": "3453164e-c597-5efb-8e8a-ed1172ef04f5",
+          "prefab": "BeltConveyor2M",
+          "position_grid": [
+            288,
+            3,
+            142
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "bounds_world": {
+            "min": [
+              35.625,
+              0.0,
+              16.75
+            ],
+            "max": [
+              36.5,
+              1.0,
+              18.75
+            ]
+          },
+          "component_geometry": {
+            "conveyor": {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "default_speed_metres_per_second": 0.6,
+              "surface_bounds": {
+                "min": [
+                  35.6253242,
+                  0.00173339248,
+                  16.7504768
+                ],
+                "max": [
+                  36.4996758,
+                  0.9992666,
+                  18.7495232
+                ]
+              },
+              "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+            }
+          },
+          "native_registered": true
+        }
+      ],
+      "item_count": 0,
+      "scene_changed": false,
+      "image_path": "<workspace>\\artifacts\\sc001-agent-validation-001\\ipc\\images\\80cccae76a534a98ae1c87b7dc1dd28a.png",
+      "image_sha256": "fd4ca20d7014efdd7495ff27d9a2fd34047b81747221b4362e8787dfa03fb09e",
+      "image_bytes": 5454616
+    }
+  },
+  "camera_receipt": {
+    "schema_version": 1,
+    "protocol": "factoryio-agent-file-bridge/1",
+    "request_id": "2e0fab3af9134e50b01d4632a984f4cf",
+    "action": "camera_fit",
+    "ok": true,
+    "completed_at": "2026-10-14T03:35:42.2346251Z",
+    "error": null,
+    "data": {
+      "assembly_sha256": "1fc9429d6ddb2ac6f2285e8ab43f5116a26b03e06dfd33a5f6a1a5345636f2ff",
+      "app_version": "2.5.8",
+      "coordinate_system": {
+        "grid_metres": 0.125,
+        "axis_order": [
+          "X",
+          "Y",
+          "Z"
+        ],
+        "vertical_axis": "Y",
+        "horizontal_axes": [
+          "X",
+          "Z"
+        ],
+        "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125",
+        "evidence": "Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld"
+      },
+      "ui": {
+        "window_opened": false,
+        "acknowledge_visible": false,
+        "acknowledge_title": null,
+        "acknowledge_content": null
+      },
+      "driver": "ModbusTCPClient",
+      "modbus": {
+        "connected": false,
+        "socket_connected": false,
+        "has_error": true,
+        "host": "127.0.0.1",
+        "port": 502,
+        "unit_id": 1,
+        "auto_connect": false
+      },
+      "frame": 8372257,
+      "scene_loading": false,
+      "world_bounds": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          59.625,
+          9.0,
+          35.625
+        ],
+        "grid_dimensions": [
+          477,
+          72,
+          285
+        ],
+        "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+      },
+      "bridge": {
+        "protocol": "factoryio-agent-file-bridge/1",
+        "geometry_version": 2,
+        "bridge_sha256": "3eff062fecc9720a23bc65294d1a61ac8269cf635bdc2acfb8ea2acd1b75e387"
+      },
+      "scene_path": "experiments/issue4-layout-20261014/trajectories/issue4-independent-stations-20261014-004/scene-000/scene.factoryio",
+      "camera_index": -1,
+      "saved_camera_count": 6,
+      "objects": [
+        {
+          "key": "0dadcc6b-6f9f-5edc-b161-2143024b54b3",
+          "prefab": "BeltConveyor2M",
+          "position_grid": [
+            188,
+            3,
+            142
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "bounds_world": {
+            "min": [
+              23.125,
+              0.0,
+              16.75
+            ],
+            "max": [
+              24.0,
+              1.0,
+              18.75
+            ]
+          },
+          "component_geometry": {
+            "conveyor": {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "default_speed_metres_per_second": 0.6,
+              "surface_bounds": {
+                "min": [
+                  23.1253242,
+                  0.00173339248,
+                  16.7504768
+                ],
+                "max": [
+                  23.9996758,
+                  0.9992666,
+                  18.7495232
+                ]
+              },
+              "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+            }
+          },
+          "native_registered": true
+        },
+        {
+          "key": "3453164e-c597-5efb-8e8a-ed1172ef04f5",
+          "prefab": "BeltConveyor2M",
+          "position_grid": [
+            288,
+            3,
+            142
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "bounds_world": {
+            "min": [
+              35.625,
+              0.0,
+              16.75
+            ],
+            "max": [
+              36.5,
+              1.0,
+              18.75
+            ]
+          },
+          "component_geometry": {
+            "conveyor": {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "default_speed_metres_per_second": 0.6,
+              "surface_bounds": {
+                "min": [
+                  35.6253242,
+                  0.00173339248,
+                  16.7504768
+                ],
+                "max": [
+                  36.4996758,
+                  0.9992666,
+                  18.7495232
+                ]
+              },
+              "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+            }
+          },
+          "native_registered": true
+        }
+      ],
+      "item_count": 0,
+      "scene_changed": false,
+      "camera_fit": {
+        "view": "top",
+        "distance_world": 19.2523079,
+        "target_world": [
+          29.8125,
+          0.5,
+          17.75
+        ],
+        "bounds_min_world": [
+          23.125,
+          0.0,
+          16.75
+        ],
+        "bounds_max_world": [
+          36.5,
+          1.0,
+          18.75
+        ]
+      }
+    }
+  }
+}

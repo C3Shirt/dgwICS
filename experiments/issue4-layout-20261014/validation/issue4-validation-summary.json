@@ -1,0 +1,106 @@
+{
+  "scope": "static layout and captured visual evidence; no PLC/runtime acceptance",
+  "runs": [
+    {
+      "run_dir": "experiments/issue4-layout-20261014/trajectories/issue4-line-layout-20261014-004",
+      "status": "scene_verified",
+      "model_calls": 3,
+      "elapsed_seconds": 26.761,
+      "tokens": {
+        "prompt_tokens": 26411,
+        "completion_tokens": 1499,
+        "total_tokens": 27910
+      },
+      "plc_executed": false,
+      "live_pipeline_passed": false,
+      "scene_revision": 0,
+      "error": null
+    },
+    {
+      "run_dir": "experiments/issue4-layout-20261014/trajectories/issue4-feed-fault-20261014-002",
+      "status": "scene_verified",
+      "model_calls": 4,
+      "elapsed_seconds": 45.381,
+      "tokens": {
+        "prompt_tokens": 43760,
+        "completion_tokens": 1437,
+        "total_tokens": 45197
+      },
+      "plc_executed": false,
+      "live_pipeline_passed": false,
+      "scene_revision": 1,
+      "error": null
+    },
+    {
+      "run_dir": "experiments/issue4-layout-20261014/trajectories/issue4-independent-stations-20261014-004",
+      "status": "scene_verified",
+      "model_calls": 2,
+      "elapsed_seconds": 17.621,
+      "tokens": {
+        "prompt_tokens": 19503,
+        "completion_tokens": 674,
+        "total_tokens": 20177
+      },
+      "plc_executed": false,
+      "live_pipeline_passed": false,
+      "scene_revision": 0,
+      "error": null
+    },
+    {
+      "run_dir": "experiments/issue4-layout-20261014/trajectories/issue4-column-layout-20261014-001",
+      "status": "scene_verified",
+      "model_calls": 5,
+      "elapsed_seconds": 43.74,
+      "tokens": {
+        "prompt_tokens": 22540,
+        "completion_tokens": 3267,
+        "total_tokens": 25807
+      },
+      "plc_executed": false,
+      "live_pipeline_passed": false,
+      "scene_revision": 0,
+      "error": null
+    },
+    {
+      "run_dir": "experiments/issue4-layout-20261014/trajectories/issue4-visual-comparison-20261014-001",
+      "status": "visual_comparison_recorded",
+      "model_calls": 3,
+      "elapsed_seconds": 33.724,
+      "tokens": {
+        "prompt_tokens": 25808,
+        "completion_tokens": 1481,
+        "total_tokens": 27289
+      },
+      "plc_executed": false,
+      "live_pipeline_passed": false,
+      "scene_revision": 0,
+      "error": null
+    },
+    {
+      "run_dir": "experiments/issue4-layout-20261014/trajectories/issue4-feed-fault-20261014-003",
+      "status": "needs_attention",
+      "model_calls": 2,
+      "elapsed_seconds": 15.849,
+      "tokens": {
+        "prompt_tokens": 23294,
+        "completion_tokens": 4,
+        "total_tokens": 23298
+      },
+      "plc_executed": false,
+      "live_pipeline_passed": false,
+      "scene_revision": 0,
+      "error": "vision model response must be object"
+    }
+  ],
+  "offline_tests": {
+    "python": 523,
+    "dashboard_node": 12,
+    "passed": true
+  },
+  "accuracy_metrics": null,
+  "remaining": [
+    "Independently reviewed ground truth and larger A/B/C benchmark.",
+    "Latest tightened repair scope not reaccepted live: provider returned the raw text [] twice; structured_output null is the parser result."
+  ],
+  "documentation": "<workspace>\\docs\\scene-layout-issue4.md"
+}

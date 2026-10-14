@@ -1,0 +1,32 @@
+{
+  "global_review": {
+    "status": "satisfied",
+    "summary": "The scene contains exactly two Column objects, placed independently with a clear visible gap between them. No conveyors, emitters, or removers are present in any of the provided views.",
+    "image_ids": [
+      "image-0-top",
+      "image-0-iso_a",
+      "image-0-iso_b"
+    ],
+    "findings": []
+  },
+  "check_results": [
+    {
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "observed": "Two distinct metal columns are visible in all three views. In the top view, they are separated by a clear horizontal gap. In both isometric views, the columns stand apart with significant empty space between their bases and bodies.",
+      "reason": "The requirement specifies that the two Columns must be placed separately with a visible gap. All three images confirm this spatial arrangement without overlap or contact.",
+      "repair_intent": "",
+      "check_id": "REQ-COLUMN-002-1",
+      "relation_ids": [],
+      "status": "satisfied",
+      "requested_view": null
+    }
+  ]
+}

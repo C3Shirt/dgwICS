@@ -1,0 +1,93 @@
+[
+  {
+    "check_id": "REQ-001-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "conveyor_a",
+      "conveyor_b"
+    ],
+    "observed": {
+      "count": 2
+    },
+    "expected": {
+      "equals": 2,
+      "capability": "conveyor"
+    },
+    "evidence_ids": [
+      "layout-090d65e577b95b894b5a2182af132f2fe52559c6bf2edc07912b05b46c6bc496"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-002-1",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "conveyor_a",
+      "conveyor_b"
+    ],
+    "observed": null,
+    "expected": {
+      "question": "Are the two conveyor belts physically separate and not connected as a single conveying line?"
+    },
+    "evidence_ids": [
+      "layout-090d65e577b95b894b5a2182af132f2fe52559c6bf2edc07912b05b46c6bc496"
+    ],
+    "reason": "This requested relation requires visual evidence.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-003-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [],
+    "observed": {
+      "count": 0
+    },
+    "expected": {
+      "equals": 0,
+      "capability": "emitter"
+    },
+    "evidence_ids": [
+      "layout-090d65e577b95b894b5a2182af132f2fe52559c6bf2edc07912b05b46c6bc496"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-004-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [],
+    "observed": {
+      "count": 0
+    },
+    "expected": {
+      "equals": 0,
+      "prefab": "Remover"
+    },
+    "evidence_ids": [
+      "layout-090d65e577b95b894b5a2182af132f2fe52559c6bf2edc07912b05b46c6bc496"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "G-registration",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "conveyor_a",
+      "conveyor_b"
+    ],
+    "observed": null,
+    "expected": {},
+    "evidence_ids": [
+      "layout-090d65e577b95b894b5a2182af132f2fe52559c6bf2edc07912b05b46c6bc496"
+    ],
+    "reason": "Registration requires actual software loading.",
+    "missing_capability": null
+  }
+]

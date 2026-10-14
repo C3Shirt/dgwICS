@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "scene_sha256": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+  "driver": "ModbusTCPClient",
+  "tags": [
+    {
+      "id": "system/RunInput",
+      "key": "16a73c5d-7d36-4bb2-a82b-5045b762a984",
+      "name": "RunInput",
+      "type": "BinaryInput",
+      "kind": "input",
+      "data_type": "bool",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "RunInputKey"
+    },
+    {
+      "id": "system/PauseInput",
+      "key": "15977ebc-f0b3-4238-8de2-6494a66af759",
+      "name": "PauseInput",
+      "type": "BinaryInput",
+      "kind": "input",
+      "data_type": "bool",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "PauseInputKey"
+    },
+    {
+      "id": "system/ResetInput",
+      "key": "f27412b6-ef61-4728-bd74-9bac27e662e8",
+      "name": "ResetInput",
+      "type": "BinaryInput",
+      "kind": "input",
+      "data_type": "bool",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "ResetInputKey"
+    },
+    {
+      "id": "system/TimeScaleInput",
+      "key": "63363b65-f4fb-42a9-9237-75b4919086ff",
+      "name": "TimeScaleInput",
+      "type": "AnalogueInput",
+      "kind": "input",
+      "data_type": "float",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "TimeScaleInputKey"
+    },
+    {
+      "id": "system/RunOutput",
+      "key": "7754fab1-ed21-4fca-9ab9-45e844cd4766",
+      "name": "RunOutput",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "RunOutputKey"
+    },
+    {
+      "id": "system/PauseOutput",
+      "key": "41b90af6-25d1-4fa8-aaec-724f79701be1",
+      "name": "PauseOutput",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "PauseOutputKey"
+    },
+    {
+      "id": "system/ResetOutput",
+      "key": "01936c60-0201-4d54-aad2-0734eb391d35",
+      "name": "ResetOutput",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "ResetOutputKey"
+    },
+    {
+      "id": "system/CameraIndexOutput",
+      "key": "f0855715-c7e4-48b3-8174-0fc06299798c",
+      "name": "CameraIndexOutput",
+      "type": "IntOutput",
+      "kind": "output",
+      "data_type": "int",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "CameraIndexOutputKey"
+    }
+  ],
+  "mappings": [
+    {
+      "channel": "BitInput0",
+      "tag_key": "16a73c5d-7d36-4bb2-a82b-5045b762a984",
+      "tag_id": "system/RunInput",
+      "kind": "input",
+      "data_type": "bool",
+      "type": "BinaryInput",
+      "channel_family": "Bit",
+      "direction": "Input",
+      "channel_index": 0,
+      "offset": 0
+    }
+  ],
+  "unmapped_tag_keys": [
+    "15977ebc-f0b3-4238-8de2-6494a66af759",
+    "f27412b6-ef61-4728-bd74-9bac27e662e8",
+    "63363b65-f4fb-42a9-9237-75b4919086ff",
+    "7754fab1-ed21-4fca-9ab9-45e844cd4766",
+    "41b90af6-25d1-4fa8-aaec-724f79701be1",
+    "01936c60-0201-4d54-aad2-0734eb391d35",
+    "f0855715-c7e4-48b3-8174-0fc06299798c"
+  ],
+  "driver_properties": {
+    "ReadCoils": "False",
+    "ReadHoldingRegisters": "False",
+    "ScaleFactor": "100"
+  },
+  "channel_counts": {
+    "BitInputCount": 1,
+    "BitOutputCount": 0,
+    "FloatInputCount": 0,
+    "FloatOutputCount": 0,
+    "IntInputCount": 0,
+    "IntOutputCount": 0,
+    "NumericInputCount": 0,
+    "NumericOutputCount": 0
+  },
+  "channel_offsets": {
+    "BitInputOffset": 0,
+    "BitOutputOffset": 0,
+    "FloatInputOffset": 0,
+    "FloatOutputOffset": 0,
+    "IntInputOffset": 0,
+    "IntOutputOffset": 0,
+    "NumericInputOffset": 0,
+    "NumericOutputOffset": 0
+  },
+  "transport_confirmed": false,
+  "software_load_confirmed": false,
+  "supported_limits": {
+    "Bit_channel_count": 256,
+    "Numeric_channel_count": 64,
+    "documented_count_source": "https://docs.factoryio.com/manual/drivers/modbus-client/",
+    "Float_and_Int_channel_count": 64,
+    "Float_and_Int_limit_basis": "conservative_implementation_policy",
+    "offset_and_slot_address_max": 65535,
+    "address_limit_basis": "implementation_policy",
+    "scalar_integer_max": 2147483647,
+    "scalar_integer_limit_basis": "implementation_policy",
+    "register_width_confirmed": false
+  },
+  "address_interpretation": "channel_index and configured offset; tag Address is separate"
+}

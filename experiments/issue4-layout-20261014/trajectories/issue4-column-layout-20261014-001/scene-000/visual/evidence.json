@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "mode": "live",
+  "versions": {
+    "scene": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+    "io": "992e35747b38e2cae1373f9914045a69222be02d40ac4c69276e7a54ac1ef65e"
+  },
+  "started_at": "2026-10-14T03:37:16.317624+00:00",
+  "records": [
+    {
+      "id": "tags-0",
+      "kind": "tag_sample",
+      "timestamp": "2026-10-14T03:37:16.319431+00:00",
+      "elapsed_seconds": 0.001816699979826808,
+      "tags": [
+        {
+          "name": "FACTORY I/O (Running)",
+          "id": "16a73c5d-7d36-4bb2-a82b-5045b762a984",
+          "address": 496,
+          "type": "Bit",
+          "kind": "Input",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Paused)",
+          "id": "15977ebc-f0b3-4238-8de2-6494a66af759",
+          "address": 497,
+          "type": "Bit",
+          "kind": "Input",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Reset)",
+          "id": "f27412b6-ef61-4728-bd74-9bac27e662e8",
+          "address": 498,
+          "type": "Bit",
+          "kind": "Input",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Run)",
+          "id": "7754fab1-ed21-4fca-9ab9-45e844cd4766",
+          "address": 496,
+          "type": "Bit",
+          "kind": "Output",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Pause)",
+          "id": "41b90af6-25d1-4fa8-aaec-724f79701be1",
+          "address": 497,
+          "type": "Bit",
+          "kind": "Output",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Reset)",
+          "id": "01936c60-0201-4d54-aad2-0734eb391d35",
+          "address": 498,
+          "type": "Bit",
+          "kind": "Output",
+          "value": false,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": false
+        },
+        {
+          "name": "FACTORY I/O (Time Scale)",
+          "id": "63363b65-f4fb-42a9-9237-75b4919086ff",
+          "address": 240,
+          "type": "Float",
+          "kind": "Input",
+          "value": 0,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": 0
+        },
+        {
+          "name": "FACTORY I/O (Camera Position)",
+          "id": "f0855715-c7e4-48b3-8174-0fc06299798c",
+          "address": 240,
+          "type": "Int",
+          "kind": "Output",
+          "value": 0,
+          "openCircuit": false,
+          "shortCircuit": false,
+          "isForced": false,
+          "forcedValue": 0
+        }
+      ]
+    },
+    {
+      "id": "image-0-top",
+      "kind": "image",
+      "timestamp": "2026-10-14T03:37:17.703337+00:00",
+      "path": "experiments/issue4-layout-20261014/assets/48a52a6b48763b90b941d7e0eda1921cca28307073f4b016d21fa6006be8a433.png",
+      "sha256": "48a52a6b48763b90b941d7e0eda1921cca28307073f4b016d21fa6006be8a433",
+      "source": "capture_command",
+      "camera_view": "top"
+    },
+    {
+      "id": "image-0-iso_a",
+      "kind": "image",
+      "timestamp": "2026-10-14T03:37:19.149357+00:00",
+      "path": "experiments/issue4-layout-20261014/assets/a3d0b6fe83508db8ef4714bdb3c93233d29e01f0a631a0e844466dc86733958d.png",
+      "sha256": "a3d0b6fe83508db8ef4714bdb3c93233d29e01f0a631a0e844466dc86733958d",
+      "source": "capture_command",
+      "camera_view": "iso_a"
+    },
+    {
+      "id": "image-0-iso_b",
+      "kind": "image",
+      "timestamp": "2026-10-14T03:37:20.650278+00:00",
+      "path": "experiments/issue4-layout-20261014/assets/431996f6e44321e16c53553b66973ea12dd9d1a1a6d1fa34d91733658487b9cc.png",
+      "sha256": "431996f6e44321e16c53553b66973ea12dd9d1a1a6d1fa34d91733658487b9cc",
+      "source": "capture_command",
+      "camera_view": "iso_b"
+    }
+  ],
+  "reconciliation": {
+    "passed": true,
+    "issues": [],
+    "actual_count": 8,
+    "expected_count": 8
+  },
+  "finished_at": "2026-10-14T03:37:20.661418+00:00"
+}

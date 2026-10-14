@@ -1,0 +1,155 @@
+{
+  "verdict": "pass",
+  "summary": "The scene contains exactly two BeltConveyor2M objects positioned far apart on the floor with no connecting structure, emitter or remover present. All views confirm independent conveyor stations as required.",
+  "findings": [],
+  "check_results": [
+    {
+      "object_ids": [
+        "conveyor_a",
+        "conveyor_b"
+      ],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "observed": "In the top view, the two conveyors are placed at a large horizontal distance from each other (roughly 5 grid cells apart) and oriented facing opposite directions; no belt, frame or connector spans between them. The iso_a and iso_b views confirm they are separate standalone units standing on their own legs with clear empty floor space between them.",
+      "reason": "Requirement REQ-002 asks whether the two conveyor belts are physically separate and not connected as a single conveying line. Visual evidence across all three views shows distinct independent conveyor stations with a wide gap and no coupling geometry, satisfying the expected relation.",
+      "repair_intent": "",
+      "check_id": "REQ-002-1",
+      "relation_ids": [
+        "rel_conveyors_separate"
+      ],
+      "status": "satisfied",
+      "requested_view": null
+    }
+  ],
+  "verification": {
+    "status": "satisfied",
+    "checks": [
+      {
+        "check_id": "REQ-001-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor_a",
+          "conveyor_b"
+        ],
+        "observed": {
+          "count": 2
+        },
+        "expected": {
+          "equals": 2,
+          "capability": "conveyor"
+        },
+        "evidence_ids": [
+          "load-32032861bddc4f64b94312ee86a73df5"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "REQ-002-1",
+        "status": "satisfied",
+        "checker": "geometry_and_visual",
+        "object_ids": [
+          "conveyor_a",
+          "conveyor_b"
+        ],
+        "observed": null,
+        "expected": {
+          "question": "Are the two conveyor belts physically separate and not connected as a single conveying line?"
+        },
+        "evidence_ids": [
+          "load-32032861bddc4f64b94312ee86a73df5",
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ],
+        "reason": "Requirement REQ-002 asks whether the two conveyor belts are physically separate and not connected as a single conveying line. Visual evidence across all three views shows distinct independent conveyor stations with a wide gap and no coupling geometry, satisfying the expected relation.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "REQ-003-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [],
+        "observed": {
+          "count": 0
+        },
+        "expected": {
+          "equals": 0,
+          "capability": "emitter"
+        },
+        "evidence_ids": [
+          "load-32032861bddc4f64b94312ee86a73df5"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "REQ-004-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [],
+        "observed": {
+          "count": 0
+        },
+        "expected": {
+          "equals": 0,
+          "prefab": "Remover"
+        },
+        "evidence_ids": [
+          "load-32032861bddc4f64b94312ee86a73df5"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "G-registration",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor_a",
+          "conveyor_b"
+        ],
+        "observed": {
+          "failed_object_ids": []
+        },
+        "expected": {},
+        "evidence_ids": [
+          "load-32032861bddc4f64b94312ee86a73df5"
+        ],
+        "reason": "Actual voxel object registration.",
+        "missing_capability": null
+      }
+    ],
+    "coverage": {
+      "REQ-001": [
+        "REQ-001-1"
+      ],
+      "REQ-002": [
+        "REQ-002-1"
+      ],
+      "REQ-003": [
+        "REQ-003-1"
+      ],
+      "REQ-004": [
+        "REQ-004-1"
+      ]
+    },
+    "registration_passed": true,
+    "static_requirements_covered": true,
+    "scope": "finite static scene evidence; no PLC or actual material transport acceptance",
+    "global_review": {
+      "status": "satisfied",
+      "summary": "The scene contains exactly two BeltConveyor2M objects positioned far apart on the floor with no connecting structure, emitter or remover present. All views confirm independent conveyor stations as required.",
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "findings": []
+    }
+  }
+}

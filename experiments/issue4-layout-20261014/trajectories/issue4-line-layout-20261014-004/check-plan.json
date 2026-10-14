@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "requirements_sha256": "40849ba3aa0a81fa62c8c3d9c825f7cb0f8bb60444af4616fb728465e195ad00",
+  "checks": [
+    {
+      "check_id": "REQ-COUNT-CONVEYOR-1",
+      "requirement_ids": [
+        "REQ-COUNT-CONVEYOR"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "conveyor1"
+      ],
+      "subject_ids": [
+        "conveyor1"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 1,
+        "capability": "conveyor"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-COUNT-FEEDER-1",
+      "requirement_ids": [
+        "REQ-COUNT-FEEDER"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "emitter1"
+      ],
+      "subject_ids": [
+        "emitter1"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 1,
+        "prefab": "Emitter"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-COUNT-REMOVER-1",
+      "requirement_ids": [
+        "REQ-COUNT-REMOVER"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "remover1"
+      ],
+      "subject_ids": [
+        "remover1"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 1,
+        "prefab": "Remover"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "requirement_ids": [
+        "REQ-FEEDER-ABOVE-CONVEYOR"
+      ],
+      "operator": "visual_relation",
+      "object_ids": [
+        "emitter1",
+        "conveyor1"
+      ],
+      "subject_ids": [
+        "emitter1"
+      ],
+      "target_ids": [
+        "conveyor1"
+      ],
+      "arguments": {
+        "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "visual"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "requirement_ids": [
+        "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+      ],
+      "operator": "visual_relation",
+      "object_ids": [
+        "remover1",
+        "conveyor1"
+      ],
+      "subject_ids": [
+        "remover1"
+      ],
+      "target_ids": [
+        "conveyor1"
+      ],
+      "arguments": {
+        "question": "Does the remover cover the downstream extension path of the conveyor?"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "visual"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "G-registration",
+      "requirement_ids": [],
+      "operator": "registered",
+      "object_ids": [
+        "conveyor1",
+        "emitter1",
+        "remover1"
+      ],
+      "subject_ids": [
+        "conveyor1",
+        "emitter1",
+        "remover1"
+      ],
+      "target_ids": [],
+      "relation_ids": [],
+      "arguments": {},
+      "evidence_methods": [
+        "native_geometry"
+      ],
+      "applicability": "software_prerequisite"
+    }
+  ],
+  "coverage": {
+    "REQ-COUNT-CONVEYOR": [
+      "REQ-COUNT-CONVEYOR-1"
+    ],
+    "REQ-COUNT-FEEDER": [
+      "REQ-COUNT-FEEDER-1"
+    ],
+    "REQ-COUNT-REMOVER": [
+      "REQ-COUNT-REMOVER-1"
+    ],
+    "REQ-FEEDER-ABOVE-CONVEYOR": [
+      "REQ-FEEDER-ABOVE-CONVEYOR-1"
+    ],
+    "REQ-REMOVER-COVERS-DOWNSTREAM-PATH": [
+      "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1"
+    ]
+  },
+  "deferred_requirement_ids": []
+}

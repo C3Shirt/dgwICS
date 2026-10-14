@@ -1,0 +1,34 @@
+{
+  "scene_id": "two_independent_conveyor_stations_v1",
+  "base_source_id": "source-6862ca46dbe17012078c",
+  "objects": [
+    {
+      "id": "conveyor_a",
+      "template_id": "source-6862ca46dbe17012078c/object/2",
+      "position": [
+        188,
+        3,
+        142
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "conveyor_a 0"
+      }
+    },
+    {
+      "id": "conveyor_b",
+      "template_id": "source-6862ca46dbe17012078c/object/2",
+      "position": [
+        288,
+        3,
+        142
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "conveyor_b 0"
+      }
+    }
+  ]
+}

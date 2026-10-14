@@ -1,0 +1,61 @@
+{
+  "scene_id": "two_independent_conveyor_stations_v1",
+  "scene_goal": "静态布局包含两个独立的输送工位，两条输送带彼此分开不连接成输送线，无供料器或移除器。",
+  "control_intent": [],
+  "objects": [
+    {
+      "id": "conveyor_a",
+      "prefab": "BeltConveyor2M",
+      "roles": [
+        "conveyor_a",
+        "conveyor_station"
+      ],
+      "function": "输送工位A的独立输送带",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          86,
+          0,
+          40
+        ],
+        "yaw_deg": 0
+      },
+      "settings": []
+    },
+    {
+      "id": "conveyor_b",
+      "prefab": "BeltConveyor2M",
+      "roles": [
+        "conveyor_b",
+        "conveyor_station"
+      ],
+      "function": "输送工位B的独立输送带",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          186,
+          0,
+          40
+        ],
+        "yaw_deg": 0
+      },
+      "settings": []
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel_conveyors_separate",
+      "subject_id": "conveyor_a",
+      "predicate": "visual_relation",
+      "target_id": "conveyor_b",
+      "parameters": {
+        "question": "Are the two conveyor belts physically separate and not connected as a single conveying line?"
+      },
+      "requirement_ids": [
+        "REQ-002"
+      ]
+    }
+  ],
+  "unresolved": [],
+  "deferred_tasks": []
+}

@@ -1,0 +1,15 @@
+{
+  "previous_failures": null,
+  "current_failures": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "object_ids": [
+        "emitter1",
+        "conveyor1"
+      ]
+    }
+  ],
+  "unchanged_failure_set": false,
+  "evaluated_layout_sha256": "6a1a77912ee1201f10cf9963b7931f3baca54be6ca34c6addf3d0b5b3b7ca965"
+}
