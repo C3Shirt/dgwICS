@@ -6,6 +6,18 @@ from factoryio_agents.geometry_tools import project_object, ray_crosses_footprin
 
 
 class GeometryToolTests(unittest.TestCase):
+    def test_registration_check_does_not_require_transport_or_a_conveyor_target(self):
+        native=[{'key':'tank','prefab':'Tank','native_registered':True,'component_geometry':{}},
+                {'key':'eye','prefab':'DiffusePhotoelectricSensor','native_registered':True,
+                 'component_geometry':{'sensor':{'origin':[0,1,0],'direction':[1,0,0],'range_metres':1}}}]
+        receipt={'native_geometry':{'objects':native}}
+        manifest={'objects':[{'key':'tank','id':'vessel'},{'key':'eye','id':'position_detector'}]}
+        result=loaded_geometry(receipt,manifest,check_connections=False)
+        self.assertTrue(result['passed']);self.assertTrue(result['registration_checks_applied'])
+        self.assertFalse(result['spatial_checks_applied'])
+        native[0]['native_registered']=False
+        self.assertFalse(loaded_geometry(receipt,manifest,check_connections=False)['passed'])
+
     def setUp(self):
         self.native={'coordinate_system':{'axis_order':['X','Y','Z'],'vertical_axis':'Y','grid_metres':0.125},'prefabs':{
             'RollerConveyor6M':{'bounds_local_metres':{'min':[-.5,-.3,-3],'max':[.5,.3,3]},
@@ -75,6 +87,51 @@ class GeometryToolTests(unittest.TestCase):
         constraints={'objects':[{'id':'belt','template_id':'RollerConveyor6M','placement':{'kind':'anchor','position':[100,2,100],'yaw_deg':0}},
             {'id':'eye','template_id':'Sensor','placement':{'kind':'grid_offset','relative_to':'belt','offset_grid':[0,3,0],'yaw_deg':0}}]}
         with self.assertRaisesRegex(ContractError,'not feed or detection'):resolve_relative_layout(constraints,self.catalog)
+
+    def test_multiple_conveyors_resolve_each_sensor_against_its_named_reference(self):
+        constraints={'objects':[
+            {'id':'a','template_id':'RollerConveyor6M','placement':{'kind':'anchor','position':[100,2,100],'yaw_deg':0}},
+            {'id':'b','template_id':'RollerConveyor6M','placement':{'kind':'absolute','position':[200,2,200],'yaw_deg':90}},
+            {'id':'eye','template_id':'Sensor','placement':{'kind':'sensor_beside_conveyor','relative_to':'b',
+                'along_fraction':.8,'side':'left','height_above_surface_grid':1,'clearance_grid':1}}]}
+        try:plan=resolve_relative_layout(constraints,self.catalog,verify=False)
+        except ContractError as error:self.fail('Multiple conveyor references must be supported: '+str(error))
+        a,b,eye=[project_object(o,o['template_id'],self.native['prefabs'][o['template_id']],.125) for o in plan['objects']]
+        ray=eye['component_geometry']['sensor']
+        self.assertTrue(ray_crosses_footprint(ray['origin'],ray['direction'],ray['range_metres'],b['bounds_world']))
+        self.assertFalse(ray_crosses_footprint(ray['origin'],ray['direction'],ray['range_metres'],a['bounds_world']))
+
+    def test_conveyor_chains_use_measured_ports_in_all_cardinal_directions(self):
+        for yaw in (0,90,180,270):
+            constraints={'objects':[
+                {'id':'c','template_id':'RollerConveyor6M','placement':{'kind':'conveyor_after_conveyor','relative_to':'b','clearance_grid':0}},
+                {'id':'b','template_id':'RollerConveyor6M','placement':{'kind':'conveyor_after_conveyor','relative_to':'a','clearance_grid':0}},
+                {'id':'a','template_id':'RollerConveyor6M','placement':{'kind':'anchor','position':[100,2,100],'yaw_deg':yaw}}]}
+            try:plan=resolve_relative_layout(constraints,self.catalog,verify=False)
+            except ContractError as error:self.fail('Measured conveyor chaining must be supported: '+str(error))
+            projected={o['id']:project_object(o,o['template_id'],self.native['prefabs'][o['template_id']],.125) for o in plan['objects']}
+            axis=0 if yaw%180 else 2
+            for parent,child in (('a','b'),('b','c')):
+                pa=projected[parent];ch=projected[child];positive=pa['component_geometry']['conveyor']['direction'][axis]>0
+                self.assertAlmostEqual(pa['bounds_world']['max' if positive else 'min'][axis],ch['bounds_world']['min' if positive else 'max'][axis])
+                self.assertAlmostEqual(pa['bounds_world']['max'][1],ch['bounds_world']['max'][1])
+
+    def test_cyclic_conveyor_references_are_rejected(self):
+        value={'objects':[{'id':i,'template_id':'RollerConveyor6M','placement':{
+            'kind':'conveyor_after_conveyor','relative_to':other,'clearance_grid':0}} for i,other in (('a','b'),('b','a'))]}
+        with self.assertRaisesRegex(ContractError,'cycle'):resolve_relative_layout(value,self.catalog,verify=False)
+
+    def test_loaded_multi_conveyor_connections_are_checked_without_single_belt_gate(self):
+        objects=deepcopy(self.plan)
+        second=deepcopy(objects['objects'][0]);second.update(id='second',position=[100,2,148])
+        objects['objects'].append(second);objects['objects'][2]['position']=[106,5,148]
+        rows=[{**project_object(o,o['template_id'],self.native['prefabs'][o['template_id']],.125),'key':o['id']} for o in objects['objects']]
+        result=loaded_geometry({'native_geometry':{'objects':rows}},{'objects':[{'key':o['id'],'id':o['id']} for o in rows]})
+        self.assertTrue(result['spatial_checks_applied']);self.assertTrue(result['passed'])
+        rows[-1]['bounds_world']['min'][2]+=.5;rows[-1]['bounds_world']['max'][2]+=.5
+        result=loaded_geometry({'native_geometry':{'objects':rows}},{'objects':[{'key':o['id'],'id':o['id']} for o in rows]})
+        self.assertFalse(result['passed'])
+        self.assertTrue(any(i['object_id']=='second' for i in result['issues']))
 
     def test_remover_volume_begins_after_conveyor_for_all_cardinal_flows(self):
         self.native['prefabs']['Remover']={'bounds_local_metres':{'min':[-.4,-.2,-.5],'max':[.4,.3,.5]},'component_geometry_local':{}}

@@ -16,6 +16,7 @@ mcp = ["mcp>=1.26,<2"]
 factoryio-agents = "factoryio_agents.__main__:main"
 factoryio-agent = "factoryio_agents.cli:main"
 factoryio-dashboard = "factoryio_agents.web_dashboard:main"
+factoryio-simple = "factoryio_agents.simple_cli:main"
 
 [tool.setuptools.packages.find]
 include = ["factoryio_agents*"]

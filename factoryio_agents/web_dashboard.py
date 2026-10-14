@@ -38,12 +38,16 @@ class Dashboard:
 
     def scan_history(self):
         paths=[]
+        def has_records(root):
+            if (root/'training-data/candidates').is_dir():return True
+            try:return (root/'run.json').is_file() and read_json(root/'run.json').get('framework')=='simple'
+            except (ValueError,OSError):return False
         for area in ('runs','artifacts'):
             base=self.project/area
             if not base.is_dir(): continue
             for root in base.iterdir():
                 if not root.is_dir(): continue
-                if (root/'training-data/candidates').is_dir(): paths.append(root)
+                if has_records(root): paths.append(root)
                 if area=='artifacts':
                     for child in root.iterdir():
                         if child.is_dir() and child.name not in ('framework-source','build','memory','training-data') and (
@@ -99,8 +103,29 @@ class Dashboard:
                     'provider':record.get('model_metadata',{})},
                 'response':record.get('structured_output'),'raw_response':record.get('response_text'),
                 'metadata':record.get('model_metadata',{}),'error':record.get('error')}))
+        result=read_json(root/'run.json') if (root/'run.json').is_file() else None
+        if (result or {}).get('framework')=='simple' and (root/'trace.jsonl').is_file():
+            events=[json.loads(line) for line in (root/'trace.jsonl').read_text(encoding='utf-8').splitlines() if line.strip()]
+            pending=[]
+            for event in events:
+                if event.get('event')=='tool_requested':
+                    step={'id':'historical-tool-'+str(len(pending))+'-'+str(len(control.steps)),'kind':'tool','role':'tools',
+                        'phase':event.get('phase'),'status':'released','created_at':event['timestamp'],
+                        'request':{'tool':event['tool'],'action':event.get('action'),'details':event,'images':[]}}
+                    control.steps.append(step);pending.append(step)
+                elif event.get('event')=='tool_completed':
+                    matches=[s for s in pending if s['request']['tool']==event.get('tool') and
+                             s['request']['action']==event.get('action')]
+                    if matches:
+                        step=matches[-1];step.update(status='completed',finished_at=event['timestamp'],response=event);pending.remove(step)
+            if result.get('status') not in ('created','running'):
+                for step in pending:step.update(status='failed',error=result.get('error','tool completion not recorded'))
+            control.steps.sort(key=lambda s:s.get('created_at') or '')
+            for index,step in enumerate(control.steps,1):step['number']=index
+            control.events=events[-70:]
         session={'id':identifier,'name':str(root.relative_to(self.project)),'output':str(root),'mode':'history',
-            'historical':True,'status':'history','created_at':None,'control':control,'result':None}
+            'framework':(result or {}).get('framework'),'historical':True,'status':'history',
+            'created_at':None,'control':control,'result':result}
         self.sessions[identifier]=session
         return session
 
@@ -138,7 +163,7 @@ class Dashboard:
 
     def summary(self, session):
         snapshot=session['control'].snapshot()
-        return {k:session.get(k) for k in ('id','name','output','mode','historical','created_at','result')} | {
+        return {k:session.get(k) for k in ('id','name','output','mode','framework','historical','created_at','result')} | {
             'status':'waiting' if snapshot['pending_id'] else session['status'],
             'pending_id':snapshot['pending_id'],'revision':snapshot['revision'],
             'steps':snapshot['steps'],'events':snapshot['events']}
@@ -149,13 +174,19 @@ class Dashboard:
 
     def create(self, body):
         mode=body.get('mode','prepare')
-        require(mode in ('prepare','run','vision','resume'),'unknown workflow mode')
+        require(mode in ('simple_scene','simple_run','simple_plc','simple_resume','prepare','run','vision','resume'),'unknown workflow mode')
         prompt=body.get('prompt','').strip()
-        require(mode in ('vision','resume') or bool(prompt),'enter a scene requirement')
+        require(mode in ('vision','resume','simple_resume','simple_plc') or bool(prompt),'enter a scene requirement')
         with self.lock:
             require(not any(s['status'] in ('running','cancelling') for s in self.sessions.values() if not s.get('historical')),
                     '已有手动任务正在运行，请先结束当前任务。')
-            source=self.resolve_source(body['source_id']) if mode in ('vision','resume') else None
+            source=self.resolve_source(body['source_id']) if mode in ('vision','resume','simple_resume','simple_plc') else None
+            options={}
+            if mode in ('simple_resume','simple_plc'):
+                prompt=read_json(source/'requirement.json')['requirement'];old=read_json(source/'run.json')
+                options=old.get('execution_options',{}).copy()
+            if mode in ('simple_run','simple_plc'):options.update(with_plc=True,keep_running=True,start_local_services=True,plc_mode='run')
+            if options.get('with_plc') and source is not None:options['start_from']='plc'
             if mode=='vision':
                 require((source/'task.json').is_file(),'source has no task.json')
                 prompt=read_json(source/'task.json')['requirement']
@@ -164,6 +195,7 @@ class Dashboard:
             control=ManualControl(output,self.secrets)
             session={'id':identifier,'name':prompt[:80] or '恢复已有任务','output':str(output),'mode':mode,
                 'historical':False,'status':'running','created_at':now(),'control':control,'result':None}
+            session['execution_options']=options
             self.sessions[identifier]=session
             output.mkdir(parents=True)
             write_json(output/'web-session.json',{k:v for k,v in session.items() if k!='control'})
@@ -174,8 +206,12 @@ class Dashboard:
     def work(self, session, prompt, source):
         output=Path(session['output']); config=deepcopy(self.config); control=session['control']
         try:
-            if session['mode'] in ('run','resume'): protected_credentials(config)
-            workflow=Workflow(config,output,progress=control.observe,interaction=control)
+            options=session.get('execution_options',{})
+            if session['mode'] in ('run','resume') or (options.get('with_plc') and options.get('plc_mode','run')=='run'): protected_credentials(config)
+            if session['mode'].startswith('simple_'):
+                from .simple import SimpleWorkflow
+                workflow=SimpleWorkflow(config,output,progress=control.observe,interaction=control,**session.get('execution_options',{}))
+            else:workflow=Workflow(config,output,progress=control.observe,interaction=control)
             control.redactor=workflow.redactor
             write_json(output/'config.snapshot.json',workflow.redactor.clean(config))
             # Hash identity avoids copying the entire source tree into every web run.
@@ -183,7 +219,9 @@ class Dashboard:
                 (self.project/'factoryio_agents').rglob('*.py')}
             write_json(output/'execution.json',{'interface':'manual_web','source_hashes':source_hashes,
                 'framework_source_storage':'hashes_only','started_at':now()})
-            if session['mode']=='vision': result=self.replay_vision(workflow,source)
+            if session['mode'] in ('simple_scene','simple_run'):result=workflow.run(prompt)
+            elif session['mode'] in ('simple_resume','simple_plc'):result=workflow.resume(source)
+            elif session['mode']=='vision': result=self.replay_vision(workflow,source)
             elif session['mode']=='resume':
                 from .memory import inspect_resume
                 result=workflow.resume(inspect_resume(source,config))

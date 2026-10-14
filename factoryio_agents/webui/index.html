@@ -22,13 +22,15 @@
         <span class="eyebrow">看清每一次交接</span><h1>先看请求，再决定下一步。</h1>
         <p>逐步查看 Agent 的提示词、上下文、图片和原始回复。每次模型调用与主要工具操作，都由你点击放行。</p>
         <button id="welcome-new" class="primary">新建手动任务</button>
-        <div class="flow-preview"><span>规划</span><i>→</i><span>布局提案</span><i>→</i><span>规划审核</span><i>→</i><span>场景生成</span><i>→</i><span>视觉检查</span><i>→</i><span>PLC 与运行</span></div>
+        <div class="flow-preview"><span>场景设计</span><i>→</i><span>原生生成</span><i>→</i><span>真实加载与截图</span><i>→</i><span>视觉检查</span><i>→</i><span>局部修复</span></div>
+        <p>简化流程先完成场景布局闭环。原流程的 PLC 联机模式保留，供后续对照。</p>
         <div class="welcome-note">也可以在左侧选择历史运行，查看当时真正发送的请求和图片，或重新进行视觉检查。</div>
       </section>
       <section id="session-view" hidden>
         <div class="session-header"><div><div class="eyebrow" id="session-mode"></div><h1 id="session-title"></h1><div id="output-path" class="output-path"></div></div><div class="session-actions"><span id="session-status" class="badge"></span><button id="cancel" class="danger" hidden>取消后续步骤</button></div></div>
         <div id="pending-banner" class="pending-banner" hidden aria-label="流程控制"><div class="continuation-description"><strong id="continuation-title">下一步正在等待你</strong><span id="pending-label"></span><p id="continuation-hint"></p></div><div class="continuation-actions"><button id="view-pending" class="secondary">查看下一步请求</button><button id="continue-next" class="primary" disabled>继续下一步</button><button id="recover-workflow" class="primary" hidden>恢复此任务，手动继续</button><button id="new-full-workflow" class="secondary" hidden>新建完整流程任务</button></div></div>
         <div id="history-actions" class="history-actions" hidden><span>历史记录 · 只读查看</span><button id="replay-vision" class="secondary">用这些图片重新进行视觉检查</button><button id="resume" class="secondary">恢复此任务，手动继续</button></div>
+        <button id="continue-plc" class="primary" hidden>继续 PLC 流程，手动执行</button>
         <div class="execution-grid">
           <section class="timeline-panel"><div class="panel-heading">执行步骤 <span id="step-count"></span></div><div id="timeline"></div></section>
           <section class="detail-panel">
@@ -49,7 +51,7 @@
       </section>
     </main>
   </div>
-  <dialog id="new-dialog"><form id="new-form"><div class="dialog-header"><h2>新建手动任务</h2><button type="button" id="close-dialog" class="icon-button">×</button></div><label for="mode">执行范围</label><select id="mode"><option value="prepare">生成任务与场景文件</option><option value="run">完整联机流程：场景、PLC 与运行验证</option></select><label for="prompt">场景需求</label><textarea id="prompt" rows="7" required placeholder="描述场景的物品、工艺流程和控制要求…">构建简单直线输送场景：一条输送带、单件供料器、入口和出口光电传感器、末端移除器。一次只允许一箱在线，入口确认后停止供料，完成输送和移除后再供下一箱；运行时输送带保持运行，停止和复位需同步操作 Factory I/O 与 PLC。</textarea><p class="muted">创建后先预览请求。点击“执行当前步骤”才会调用模型或放行工具操作。</p><button type="submit" class="primary">创建任务，等待手动执行</button></form></dialog>
+  <dialog id="new-dialog"><form id="new-form"><div class="dialog-header"><h2>新建手动任务</h2><button type="button" id="close-dialog" class="icon-button">×</button></div><label for="mode">执行范围</label><select id="mode"><option value="simple_scene">简化流程：场景设计、真实截图与局部修复</option><option value="simple_run">简化流程：场景、PLC 与实际运行检查</option><option value="prepare">原流程：生成任务与场景文件</option><option value="run">原流程：场景、PLC 与运行验证</option></select><label for="prompt">场景需求</label><textarea id="prompt" rows="7" required placeholder="描述场景的物品、工艺流程和控制要求…">构建简单直线输送场景：一条输送带、单件供料器、入口和出口光电传感器、末端移除器，以及启动、停止和复位按钮。一次只允许一箱在线，入口确认后停止供料，完成输送和移除后再供下一箱；运行时输送带保持运行，停止和复位需同步操作 Factory I/O 与 PLC。</textarea><p class="muted">已通过的简化场景也可点击“继续 PLC 流程”。每次模型请求和工具操作仍由你手动放行。</p><button type="submit" class="primary">创建任务，等待手动执行</button></form></dialog>
   <dialog id="image-dialog"><div class="image-dialog-header"><strong id="large-image-title"></strong><button id="close-image" class="icon-button">×</button></div><img id="large-image" alt="发送给视觉模型的原始图片"></dialog>
   <dialog id="knowledge-dialog"><div class="dialog-header"><h2>官方组件知识库</h2><button id="close-knowledge" class="icon-button">×</button></div><form id="knowledge-form" class="knowledge-search"><input id="knowledge-query" class="search" aria-label="组件名称或关键词" placeholder="例如：Remover、光电传感器、输送带" value="Remover"><button type="submit" class="primary">搜索</button></form><p id="knowledge-summary" class="muted"></p><div id="knowledge-results"></div></dialog>
   <div id="toast" class="toast" hidden></div>
