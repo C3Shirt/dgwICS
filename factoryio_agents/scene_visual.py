@@ -37,7 +37,7 @@ def image_context(rendered, directory):
     return rows
 
 
-def validate_visual(value, checks, spec, design, images):
+def validate_legacy_visual(value, checks, spec, design, images):
     require(isinstance(value, dict) and set(value) == {'global_review', 'check_results'}, 'invalid relation visual response fields')
     objects = {o['id'] for o in design['objects']}; image_ids = {i['id'] for i in images}
     requirements = {r['requirement_id'] for r in spec['requirements']}; relations = {r['id'] for r in design['relations']}
@@ -82,10 +82,78 @@ def _text(): return {'type': 'string'}
 def _object(properties): return {'type': 'object', 'additionalProperties': False, 'required': list(properties), 'properties': properties}
 
 _common = {'object_ids': _array(), 'image_ids': _array(), 'observed': _text(), 'reason': _text(), 'repair_intent': _text()}
-VISUAL_SCHEMA = _object({
+LEGACY_VISUAL_SCHEMA = _object({
     'global_review': _object({'status': {'type': 'string', 'enum': ['satisfied', 'violated', 'unobservable']},
         'summary': _text(), 'image_ids': _array(), 'findings': {'type': 'array', 'items': _object({
             **_common, 'status': {'type': 'string', 'enum': ['violated', 'unobservable']}, 'requirement_ids': _array()})}}),
     'check_results': {'type': 'array', 'items': _object({**_common, 'check_id': _text(), 'relation_ids': _array(),
         'status': {'type': 'string', 'enum': ['satisfied', 'violated', 'unobservable']},
         'requested_view': {'type': ['string', 'null'], 'enum': [None, *VIEWS]}})}})
+
+ISSUE_SHAPE = {'check_id':'supplied check ID or null for an unbound concern',
+    'status':'violated|unobservable','suspect_object_ids':['affected supplied IDs'],
+    'observation':'what the screenshots show','spatial_observation':'auxiliary measurement interpretation, or empty string',
+    'reason':'contradiction or missing evidence','repair_intent':'relational correction, or empty string',
+    'evidence_image_ids':['attached image IDs'],'requested_view':None}
+ISSUES_CONTRACT = {'inspection_complete':'boolean; true only after all tasks and views have been inspected',
+    'issues':[ISSUE_SHAPE], 'no_anomaly_response':{'inspection_complete':True,'issues':[]}}
+VISUAL_SCHEMA = _object({'inspection_complete':{'type':'boolean'},'issues':{'type':'array','items':_object({
+    'check_id':{'type':['string','null']},'status':{'type':'string','enum':['violated','unobservable']},
+    'suspect_object_ids':_array(),'observation':_text(),'spatial_observation':_text(),'reason':_text(),
+    'repair_intent':_text(),'evidence_image_ids':_array(),
+    'requested_view':{'type':['string','null'],'enum':[None,*VIEWS]}})}})
+
+
+def validate_visual(value, checks, spec, design, images):
+    """Validate sparse model findings, then deterministically restore internal maps.
+
+    Omitted rows are not independent observations: they mean no anomaly was
+    reported in a declared complete inspection. Raw output stays issues-only.
+    """
+    require(isinstance(value,dict) and set(value)=={'inspection_complete','issues'},'Return one JSON object with inspection_complete and issues; [] is not a valid report')
+    require(type(value['inspection_complete']) is bool and isinstance(value['issues'],list),'invalid sparse inspection fields')
+    objects={o['id'] for o in design['objects']};image_ids={i['id'] for i in images}
+    wanted={c['check_id']:c for c in checks['checks'] if c['requirement_ids']}
+    findings=[];by_check={};raw=deepcopy(value)
+    for issue in raw['issues']:
+        require(isinstance(issue,dict) and set(issue)==set(ISSUE_SHAPE),'invalid issue fields; use supplied output_contract')
+        key=issue['check_id'];require(key is None or key in wanted,'issue references unknown check ID')
+        require(issue['status'] in ('violated','unobservable'),'only anomalous checks may be returned')
+        ids=issue['suspect_object_ids'];require(isinstance(ids,list) and len(set(ids))==len(ids) and set(ids)<=objects,'issue references unknown/duplicate object')
+        require(isinstance(issue['evidence_image_ids'],list) and issue['evidence_image_ids'] and set(issue['evidence_image_ids'])<=image_ids,'issue needs actual attached image IDs')
+        require(all(isinstance(issue[k],str) for k in ('observation','spatial_observation','reason','repair_intent')) and issue['observation'].strip() and issue['reason'].strip(),'issue needs observation and reason')
+        require(issue['requested_view'] is None or issue['requested_view'] in VIEWS,'unsupported requested view')
+        if key is not None:require(set(ids)<=set(wanted[key]['object_ids']),'issue targets unrelated objects')
+        if issue['status']=='violated' and key is not None and wanted[key]['operator'] not in ('count','exists'):
+            require(ids,'a placement violation needs the suspected object ID')
+        status=issue['status'] if key is not None else 'unobservable'
+        req_ids=wanted[key]['requirement_ids'] if key else []
+        f={'check_id':key,'status':status,'object_ids':ids,'requirement_ids':req_ids,'observed':issue['observation'],
+           'reason':issue['reason'],'repair_intent':issue['repair_intent'],'image_ids':issue['evidence_image_ids']}
+        if key is None:f['reason']+=' No compiled original requirement supports this extra concern; it requires review, not an automatic patch.'
+        findings.append(f)
+        if key is not None:by_check.setdefault(key,[]).append(issue)
+    rows=[]
+    for key,c in wanted.items():
+        issues=by_check.get(key)
+        if issues:
+            def joined(field):return ' '.join(i[field] for i in issues if i[field])
+            requested=list(dict.fromkeys(i['requested_view'] for i in issues if i['requested_view']))
+            row={'check_id':key,'status':'violated' if any(i['status']=='violated' for i in issues) else 'unobservable',
+                'object_ids':list(dict.fromkeys(o for i in issues for o in i['suspect_object_ids'])),
+                'relation_ids':c['relation_ids'],'image_ids':list(dict.fromkeys(o for i in issues for o in i['evidence_image_ids'])),
+                'observed':joined('observation'),'reason':joined('reason'),'repair_intent':joined('repair_intent'),
+                'requested_view':requested[0] if requested else None,'requested_views':requested,
+                'spatial_observation':joined('spatial_observation'),'evidence_basis':'reported_visual_issue'}
+        else:
+            row={'check_id':key,'status':'satisfied' if value['inspection_complete'] else 'unobservable',
+                'object_ids':c['object_ids'],'relation_ids':c['relation_ids'],'image_ids':list(image_ids),
+                'observed':'No anomaly reported.' if value['inspection_complete'] else 'Inspection was not completed.',
+                'reason':'Implicit absence of reported anomaly, not a per-check model observation.' if value['inspection_complete'] else 'Model did not complete all supplied tasks.',
+                'repair_intent':'','requested_view':None,'spatial_observation':'',
+                'evidence_basis':'complete_inspection_no_reported_issue' if value['inspection_complete'] else 'incomplete_inspection'}
+        rows.append(row)
+    status='violated' if any(f['status']=='violated' for f in findings) else 'unobservable' if findings or not value['inspection_complete'] else 'satisfied'
+    return {'inspection_complete':value['inspection_complete'],'issues':raw['issues'],'raw_output':raw,'contract_version':2,
+        'global_review':{'status':status,'summary':str(len(raw['issues']))+' anomalies reported; inspection '+('complete.' if value['inspection_complete'] else 'incomplete.'),
+                         'image_ids':list(image_ids),'findings':findings},'check_results':rows}

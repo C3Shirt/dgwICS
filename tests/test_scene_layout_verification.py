@@ -10,7 +10,7 @@ from factoryio_agents.scene_spec import validate_requirement_spec, validate_requ
 from factoryio_agents.scene_verifier import default_registry, compile_check_plan, evaluate_plan, fuse_results, repair_ticket, project_scene
 from factoryio_agents.scene_context import PromptContextBuilder
 from factoryio_agents.scene_layout import apply_ticket_patch, PLACEMENTS
-from factoryio_agents.scene_visual import validate_visual, image_context
+from factoryio_agents.scene_visual import validate_visual, validate_legacy_visual, image_context
 import test_simple_framework as fixture
 from test_simple_framework import DESIGN
 
@@ -30,6 +30,20 @@ def visual(checks, image_ids, status='satisfied', requested=None):
             'relation_ids':c['relation_ids'],'image_ids':image_ids,'observed':'Synthetic relation observation.',
             'reason':'Compared with independent fixture requirement.','repair_intent':'Adjust the affected relation.' if status=='violated' else '',
             'requested_view':requested} for c in checks['checks'] if 'visual' in c['evidence_methods']]}
+
+
+def reply(checks, image_ids, status='satisfied', requested=None):
+    issues=[]
+    if status!='satisfied':
+        for c in checks['checks']:
+            if 'visual' not in c['evidence_methods']:continue
+            issues.append({'check_id':c['check_id'],'status':status,
+                'suspect_object_ids':c.get('subject_ids',c['object_ids']),
+                'observation':'Synthetic visible relation observation.','spatial_observation':'',
+                'reason':'Independent fixture requirement differs, or cannot be observed.',
+                'repair_intent':'Adjust the subject relative to its anchor.' if status=='violated' else '',
+                'evidence_image_ids':image_ids,'requested_view':requested})
+    return {'inspection_complete':True,'issues':issues}
 
 
 class SceneLayoutVerificationTests(unittest.TestCase):
@@ -142,41 +156,41 @@ class SceneLayoutVerificationTests(unittest.TestCase):
         self.assertEqual(repaired['objects'][0],p['objects'][0]);self.assertNotEqual(repaired['objects'][1],p['objects'][1])
         with self.assertRaises(ContractError):apply_ticket_patch(p,self.design,{'changes':[{'object_id':'conveyor','position':[0,0,0]}]},ticket,self.spec,self.catalog)
 
-    def test_visual_contract_requires_every_check_and_existing_views(self):
+    def test_legacy_visual_contract_requires_every_check_and_existing_views(self):
         checks,_=self.evaluate();v=visual(checks,['top']);manifest=[{'id':'top'}]
-        validate_visual(v,checks,self.spec,self.design,manifest)
+        validate_legacy_visual(v,checks,self.spec,self.design,manifest)
         v['check_results']=[]
-        with self.assertRaisesRegex(ContractError,'omitted'):validate_visual(v,checks,self.spec,self.design,manifest)
+        with self.assertRaisesRegex(ContractError,'omitted'):validate_legacy_visual(v,checks,self.spec,self.design,manifest)
         v=visual(checks,['top'],'unobservable',requested='free_camera')
-        with self.assertRaisesRegex(ContractError,'unsupported requested view'):validate_visual(v,checks,self.spec,self.design,manifest)
+        with self.assertRaisesRegex(ContractError,'unsupported requested view'):validate_legacy_visual(v,checks,self.spec,self.design,manifest)
 
     def test_contexts_are_scoped_and_visual_has_no_generated_coordinate_leak(self):
         from factoryio_agents.scene_layout import catalog_context
         builder=PromptContextBuilder(self.catalog,self.spec,PLACEMENTS);checks,rows=self.evaluate()
         payload=builder.visual(self.text,self.design,checks,[{'id':'top','view_id':'top'}])
-        self.assertNotIn('placement',str(payload['actual_objects']));self.assertNotIn('expected_position',str(payload))
-        self.assertNotIn('native_geometry',payload);self.assertIn('question',payload['check_plan']['checks'][0])
+        self.assertNotIn('placement',str(payload['objects']));self.assertNotIn('expected_position',str(payload))
+        self.assertNotIn('native_geometry',payload);self.assertIn('focus',payload['inspection_tasks'][0]);self.assertNotIn('context_manifest',payload);self.assertNotIn('requirement_spec',payload)
         p=self.plan();p['objects'][1]['position'][0]+=30;checks,rows=self.evaluate(plan=p);rows[-1]['status']='satisfied'
         v=visual(checks,['top']);fused=fuse_results(checks,rows,v,registration_passed=True);ticket=repair_ticket(checks,fused,v,self.design)
         repair=builder.repair(self.design,p,ticket,fused,v,catalog_context(self.catalog))
         self.assertEqual(repair['allowed_object_ids'],['emitter']);self.assertEqual({o['id'] for o in repair['current_layout_subset']},{'emitter','conveyor'})
         self.assertNotIn('original_requirement',repair);self.assertNotIn('current_design',repair)
-        self.assertEqual(repair['context_manifest']['prompt_version'],'issue4-guided-context-v3')
+        self.assertEqual(repair['context_manifest']['prompt_version'],'issue4-inspection-issues-v4')
 
     def test_scene_only_loop_uses_independent_oracle_and_verified_capture_version(self):
         from factoryio_agents.simple import SimpleWorkflow
-        checks,_=self.evaluate();client=Mock();client.complete.side_effect=[deepcopy(self.design),visual(checks,['image-top','image-iso_a','image-iso_b'])]
+        checks,_=self.evaluate();client=Mock();client.complete.side_effect=[deepcopy(self.design),reply(checks,['image-top','image-iso_a','image-iso_b'])]
         tools=self.fake_tools();w=SimpleWorkflow(self.config,self.root/'run',client=client,tools=tools,requirement_spec=self.spec)
         r=w.run(self.text);self.assertEqual(r['status'],'scene_verified',r)
         self.assertFalse(r['plc_executed']);self.assertFalse(r['live_pipeline_passed'])
-        payload=client.complete.call_args_list[-1].args[2];self.assertIn('image_manifest',payload);self.assertIn('actual_objects',payload)
+        payload=client.complete.call_args_list[-1].args[2];self.assertIn('images',payload);self.assertIn('objects',payload)
         self.assertTrue((w.output/'scene-000/verification.json').is_file())
         self.assertEqual(read_json(w.output/'requirement-spec.json')['original_requirement'],self.text)
 
     def test_real_loop_patch_reloads_and_freezes_unaffected_objects(self):
         from factoryio_agents.simple import SimpleWorkflow
-        checks,_=self.evaluate();good=visual(checks,['image-top','image-iso_a','image-iso_b'])
-        bad=visual(checks,['image-top','image-iso_a','image-iso_b'],'violated')
+        checks,_=self.evaluate();good=reply(checks,['image-top','image-iso_a','image-iso_b'])
+        bad=reply(checks,['image-top','image-iso_a','image-iso_b'],'violated')
         patch={'changes':[{'object_id':'emitter','placement':{'kind':'emitter_over_conveyor','relative_to':'conveyor','along_fraction':.3}}]}
         client=Mock();client.complete.side_effect=[deepcopy(self.design),bad,patch,good];tools=self.fake_tools()
         w=SimpleWorkflow(self.config,self.root/'repair',client=client,tools=tools,requirement_spec=self.spec,inject_fault='emitter_gap')
@@ -196,7 +210,7 @@ class SceneLayoutVerificationTests(unittest.TestCase):
 
     def test_online_requirement_extraction_is_separate_from_design(self):
         from factoryio_agents.simple import SimpleWorkflow
-        checks,_=self.evaluate();client=Mock();client.complete.side_effect=[deepcopy(self.spec),deepcopy(self.design),visual(checks,['image-top','image-iso_a','image-iso_b'])]
+        checks,_=self.evaluate();client=Mock();client.complete.side_effect=[deepcopy(self.spec),deepcopy(self.design),reply(checks,['image-top','image-iso_a','image-iso_b'])]
         w=SimpleWorkflow(self.config,self.root/'online',client=client,tools=self.fake_tools())
         r=w.run(self.text);self.assertEqual(r['status'],'scene_verified',r)
         self.assertEqual([c.args[2]['phase'] for c in client.complete.call_args_list],['scene_requirements','scene_design','scene_visual'])
@@ -216,13 +230,13 @@ class SceneLayoutVerificationTests(unittest.TestCase):
 
     def test_unobservable_stops_without_silent_pass_or_infinite_retake(self):
         from factoryio_agents.simple import SimpleWorkflow
-        checks,_=self.evaluate();client=Mock();client.complete.side_effect=[deepcopy(self.design),visual(checks,['image-top','image-iso_a','image-iso_b'],'unobservable')]
+        checks,_=self.evaluate();client=Mock();client.complete.side_effect=[deepcopy(self.design),reply(checks,['image-top','image-iso_a','image-iso_b'],'unobservable')]
         w=SimpleWorkflow(self.config,self.root/'unknown',client=client,tools=self.fake_tools(),requirement_spec=self.spec,max_view_retries=0)
         r=w.run(self.text);self.assertEqual(r['status'],'needs_attention');self.assertEqual(r['target'],'vision')
 
     def test_resume_reuses_independent_requirements_and_design(self):
         from factoryio_agents.simple import SimpleWorkflow
-        checks,_=self.evaluate();good=visual(checks,['image-top','image-iso_a','image-iso_b']);first=Mock();first.complete.side_effect=[deepcopy(self.design),good]
+        checks,_=self.evaluate();good=reply(checks,['image-top','image-iso_a','image-iso_b']);first=Mock();first.complete.side_effect=[deepcopy(self.design),good]
         w=SimpleWorkflow(self.config,self.root/'source',client=first,tools=self.fake_tools(),requirement_spec=self.spec);self.assertEqual(w.run(self.text)['status'],'scene_verified')
         client=Mock();client.complete.return_value=good
         resumed=SimpleWorkflow(self.config,self.root/'resumed',client=client,tools=self.fake_tools())
@@ -280,7 +294,7 @@ class SceneLayoutVerificationTests(unittest.TestCase):
 
     def test_partial_resume_reuses_valid_requirements_only(self):
         from factoryio_agents.simple import SimpleWorkflow
-        checks,_=self.evaluate();good=visual(checks,['image-top','image-iso_a','image-iso_b'])
+        checks,_=self.evaluate();good=reply(checks,['image-top','image-iso_a','image-iso_b'])
         client=Mock();client.complete.side_effect=[deepcopy(self.spec),{'unresolved':['Unavailable configuration']}]
         first=SimpleWorkflow(self.config,self.root/'partial',client=client,tools=self.fake_tools())
         self.assertEqual(first.run(self.text)['status'],'needs_attention');self.assertTrue((first.output/'requirement-spec.json').is_file())
@@ -291,7 +305,7 @@ class SceneLayoutVerificationTests(unittest.TestCase):
 
     def test_partial_resume_rejects_invalid_saved_binding_without_replacing_source(self):
         from factoryio_agents.simple import SimpleWorkflow
-        checks,_=self.evaluate();good=visual(checks,['image-top','image-iso_a','image-iso_b'])
+        checks,_=self.evaluate();good=reply(checks,['image-top','image-iso_a','image-iso_b'])
         client=Mock();client.complete.side_effect=[deepcopy(self.spec),{'unresolved':['Unavailable configuration']}]
         first=SimpleWorkflow(self.config,self.root/'old_partial',client=client,tools=self.fake_tools());first.run(self.text)
         old=deepcopy(self.spec);old['requirements'][0]['arguments']={'equals':1,'prefab':'conveyor'}
@@ -307,16 +321,16 @@ class SceneLayoutVerificationTests(unittest.TestCase):
     def test_comparison_reuses_captures_and_quarantines_training_candidates(self):
         from factoryio_agents.simple import SimpleWorkflow
         from factoryio_agents.scene_benchmark import compare_captures
-        checks,_=self.evaluate();good=visual(checks,['image-top','image-iso_a','image-iso_b'])
+        checks,_=self.evaluate();good=reply(checks,['image-top','image-iso_a','image-iso_b'])
         first_client=Mock();first_client.complete.side_effect=[deepcopy(self.design),good]
         source=SimpleWorkflow(self.config,self.root/'comparison_source',client=first_client,tools=self.fake_tools(),requirement_spec=self.spec)
         self.assertEqual(source.run(self.text)['status'],'scene_verified')
         write_json(source.output/'catalog.json',self.catalog)
         baseline={'verdict':'pass','summary':'Synthetic baseline','findings':[]}
-        client=Mock();client.complete.side_effect=[baseline,baseline,good];tools=self.fake_tools()
+        client=Mock();client.complete.side_effect=[baseline,baseline,good,good];tools=self.fake_tools()
         comparison=SimpleWorkflow(self.config,self.root/'comparison',client=client,tools=tools)
         result=compare_captures(comparison,source.output)
-        self.assertEqual(result['status'],'visual_comparison_recorded');tools.render.assert_not_called();self.assertEqual(client.complete.call_count,3)
+        self.assertEqual(result['status'],'visual_comparison_recorded');tools.render.assert_not_called();self.assertEqual(client.complete.call_count,4)
         self.assertIsNone(result['accuracy_metrics']);self.assertEqual(comparison.training.source_kind,'visual_benchmark')
 
     def test_missing_object_patch_uses_count_selector_and_preserves_anchor(self):
@@ -342,3 +356,141 @@ class SceneLayoutVerificationTests(unittest.TestCase):
         rendered=tools.render(self.plan(),self.catalog,directory)
         rendered['images'].reverse()
         with self.assertRaisesRegex(ContractError,'order'):image_context(rendered,directory)
+
+    def test_sparse_empty_report_requires_completion_and_keeps_native_failures(self):
+        checks,rows=self.evaluate();rows[-1]['status']='satisfied'
+        with self.assertRaisesRegex(ContractError,'JSON object'):validate_visual([],checks,self.spec,self.design,[{'id':'top'}])
+        incomplete=validate_visual({'inspection_complete':False,'issues':[]},checks,self.spec,self.design,[{'id':'top'}])
+        self.assertNotEqual(fuse_results(checks,rows,incomplete,registration_passed=True)['status'],'satisfied')
+        p=self.plan();p['objects'][1]['position'][0]+=30
+        checks,rows=self.evaluate(plan=p);rows[-1]['status']='satisfied'
+        complete=validate_visual({'inspection_complete':True,'issues':[]},checks,self.spec,self.design,[{'id':'top'}])
+        fused=fuse_results(checks,rows,complete,registration_passed=True)
+        self.assertEqual(fused['checks'][1]['status'],'violated')
+        self.assertEqual(complete['raw_output'],{'inspection_complete':True,'issues':[]})
+
+    def test_sparse_issues_map_original_checks_and_reject_invented_references(self):
+        checks,_=self.evaluate();raw=reply(checks,['top'],'unobservable')
+        accepted=validate_visual(raw,checks,self.spec,self.design,[{'id':'top'}])
+        self.assertEqual(accepted['global_review']['findings'][0]['requirement_ids'],['R2'])
+        self.assertEqual(accepted['check_results'][1]['evidence_basis'],'reported_visual_issue')
+        for field,value in [('check_id','invented'),('evidence_image_ids',['old-image']),('suspect_object_ids',['imaginary']),('status','satisfied')]:
+            changed=deepcopy(raw);changed['issues'][0][field]=value
+            with self.assertRaises(ContractError):validate_visual(changed,checks,self.spec,self.design,[{'id':'top'}])
+
+    def test_sparse_inventory_conflict_never_authorizes_object_removal(self):
+        checks,rows=self.evaluate();rows[-1]['status']='satisfied'
+        raw=reply(checks,['top'],'violated');raw['issues']=raw['issues'][:1]
+        raw['issues'][0].update(check_id=checks['checks'][0]['check_id'],suspect_object_ids=['conveyor'])
+        v=validate_visual(raw,checks,self.spec,self.design,[{'id':'top'}])
+        fused=fuse_results(checks,rows,v,registration_passed=True)
+        self.assertEqual(fused['checks'][0]['status'],'unobservable')
+        self.assertIsNone(repair_ticket(checks,fused,v,self.design))
+
+    def test_sparse_native_repair_does_not_broaden_to_reference_anchor(self):
+        p=self.plan();p['objects'][1]['position'][0]+=30
+        checks,rows=self.evaluate(plan=p);rows[-1]['status']='satisfied'
+        raw=reply(checks,['top'],'violated');raw['issues'][0]['suspect_object_ids']=['emitter','conveyor']
+        v=validate_visual(raw,checks,self.spec,self.design,[{'id':'top'}])
+        ticket=repair_ticket(checks,fuse_results(checks,rows,v,registration_passed=True),v,self.design)
+        self.assertEqual(ticket['affected_object_ids'],['emitter']);self.assertEqual(ticket['frozen_object_ids'],['conveyor'])
+
+    def test_unbound_concern_is_review_only_and_not_a_new_hard_requirement(self):
+        checks,rows=self.evaluate();rows[-1]['status']='satisfied'
+        raw=reply(checks,['top'],'violated');raw['issues'][0]['check_id']=None
+        v=validate_visual(raw,checks,self.spec,self.design,[{'id':'top'}])
+        self.assertEqual(v['global_review']['status'],'unobservable')
+        fused=fuse_results(checks,rows,v,registration_passed=True)
+        self.assertEqual(fused['status'],'unknown');self.assertIsNone(repair_ticket(checks,fused,v,self.design))
+
+    def test_visual_profiles_use_loaded_pose_and_sourced_identity_without_audit_noise(self):
+        import math
+        checks,_=self.evaluate();builder=PromptContextBuilder(self.catalog,self.spec,PLACEMENTS)
+        receipt={'native_geometry':{'coordinate_system':{'axis_order':['X','Y','Z'],'vertical_axis':'Y','grid_metres':.125},
+            'objects':[{'key':'actual-key','prefab':'Emitter','native_registered':True,'position_grid':[123,9,88],
+                'rotation':[0,math.sin(math.pi/4),0,math.cos(math.pi/4)],'component_geometry':{},'bounds_world':{'min':[0,0,0],'max':[1,1,1]}}]},
+            'manifest_objects':[{'key':'actual-key','id':'emitter'}]}
+        payload=builder.visual(self.text,self.design,checks,[{'id':'top','view_id':'top'}],self.plan(),receipt)
+        obj=next(o for o in payload['objects'] if o['id']=='emitter')
+        self.assertEqual(obj['actual_pose']['position_grid'],[123,9,88]);self.assertEqual(obj['actual_pose']['yaw_deg'],90)
+        self.assertTrue(obj['visual_identity']['sources']);self.assertIn('basis',str(obj['visual_identity']['distinctive_features']))
+        self.assertIn('missing_measurements',obj['native_spatial_state'])
+        self.assertNotIn('requirements_sha256',str(payload));self.assertNotIn('context_manifest',payload)
+        visual_only=builder.visual(self.text,self.design,checks,[{'id':'top','view_id':'top'}],self.plan(),receipt,spatial_context=False)
+        self.assertIsNone(visual_only['coordinate_system']);self.assertTrue(all(o['actual_pose'] is None and o['native_spatial_state'] is None for o in visual_only['objects']))
+        self.assertEqual(payload['scene_overview'],visual_only['scene_overview'])
+        self.assertEqual(payload['output_contract'],visual_only['output_contract'])
+
+    def test_scene_intent_references_existing_roles_and_requirements(self):
+        s=deepcopy(self.spec);s['scene_intent']={'goal':'Supply a carrier.','process_description':'Feed boxes above the conveyor carrying surface.',
+            'requirement_ids':['R1','R2'],'process_stages':[{'stage':'feed','purpose':'Place the supply above its carrier.',
+                'equipment_role':'feed','requirement_ids':['R2']}]}
+        validate_requirement_spec(s,self.text)
+        s['scene_intent']['process_stages'][0]['equipment_role']='invented_station'
+        with self.assertRaises(ContractError):validate_requirement_spec(s,self.text)
+
+    def test_outer_receiver_bounds_are_not_active_volume_measurements(self):
+        from factoryio_agents.geometry_tools import relation_geometry
+        subject={'prefab':'Remover','bounds_world':{'min':[0,0,0],'max':[1,2,5]},'component_geometry':{}}
+        target={'component_geometry':{'conveyor':{'surface_bounds':{'min':[0,0,0],'max':[1,1,4]},'direction':[0,0,1]}}}
+        row=relation_geometry('receives_from',subject,target,{})
+        self.assertEqual(row['status'],'unsupported');self.assertEqual(row['missing_capability'],'receiver.active_volume_bounds')
+
+    def test_array_protocol_failure_keeps_raw_reply_in_bounded_retry(self):
+        from types import SimpleNamespace
+        from factoryio_agents.llm import ModelClient
+        from factoryio_agents.scene_layout import checked_call
+        client=ModelClient({'base_url':'http://unused','response_schemas':{'vision':{'type':'object'}},'schema_roles':['vision']})
+        client._exchange={'raw_content':'[]','http_status':200}
+        calls=[]
+        def call(role,prompt,payload,images):
+            calls.append(payload)
+            if len(calls)==1:raise ContractError('vision model response must be object')
+            return {'inspection_complete':True,'issues':[]}
+        w=SimpleNamespace(raw_model=client,call=call,trace=Mock())
+        checked_call(w,'vision','Inspect.',{},lambda v:v,[])
+        self.assertEqual(calls[1]['rejected_output'],'[]');self.assertEqual(len(calls),2)
+
+    def test_multiple_anomalies_for_one_check_keep_all_evidence_gaps(self):
+        checks,_=self.evaluate();raw=reply(checks,['top'],'violated')
+        other=deepcopy(raw['issues'][0]);other.update(status='unobservable',reason='Anchor identity is occluded.',requested_view='iso_b')
+        raw['issues'].append(other)
+        v=validate_visual(raw,checks,self.spec,self.design,[{'id':'top'}])
+        self.assertEqual(len(v['raw_output']['issues']),2);self.assertEqual(v['check_results'][1]['requested_views'],['iso_b'])
+
+    def test_transport_frame_follows_native_direction_instead_of_world_axis_preset(self):
+        checks,_=self.evaluate();builder=PromptContextBuilder(self.catalog,self.spec,PLACEMENTS)
+        bounds={'min':[2,1,4],'max':[6,2,8]}
+        for direction,longitudinal,lateral,start,end in [([0,0,1],'Z','X',4,8),([-1,0,0],'X','Z',6,2)]:
+            receipt={'native_geometry':{'objects':[{'id':'conveyor','prefab':'RollerConveyor6M','native_registered':True,
+                'component_geometry':{'conveyor':{'direction':direction,'surface_bounds':bounds}}}]}}
+            payload=builder.visual(self.text,self.design,checks,[{'id':'top'}],self.plan(),receipt)
+            frame=payload['objects'][0]['native_spatial_state']['transport_frame']
+            self.assertEqual((frame['longitudinal_axis'],frame['lateral_axis']),(longitudinal,lateral))
+            self.assertEqual((frame['upstream_coordinate_metres'],frame['downstream_coordinate_metres']),(start,end))
+
+    def test_protocol_probe_freezes_content_and_restores_client_configuration(self):
+        from factoryio_agents.simple import SimpleWorkflow
+        from factoryio_agents.llm import ModelClient
+        from factoryio_agents.scene_visual import VISUAL_SCHEMA
+        from factoryio_agents.scene_benchmark import probe_vision_protocol
+        source=self.root/'probe-source/training-data/candidates/record.json';image=source.parents[1]/'assets/frame.png'
+        image.parent.mkdir(parents=True);image.write_bytes(b'synthetic image')
+        payload={'phase':'scene_visual','original_text':'Frozen fixture input.'}
+        write_json(source,{'role':'vision','messages':[{'role':'system','content':'Frozen system.'}],'payload':payload,
+            'images':[{'path':'assets/frame.png','sha256':file_hash(image)}],
+            'model_metadata':{'response_format':{'type':'json_schema','json_schema':{'schema':VISUAL_SCHEMA}}}})
+        client=ModelClient({'base_url':'http://unused','models':{'vision':'fixture'},'stream':True,'schema_roles':['vision']})
+        original=deepcopy(client.config);calls=[]
+        def complete(role,prompt,request,images):
+            calls.append((prompt,deepcopy(request),list(images),deepcopy(client.config)))
+            client._exchange={'raw_content':'{"inspection_complete":true,"issues":[]}'}
+            return {'inspection_complete':True,'issues':[]}
+        client.complete=Mock(side_effect=complete)
+        w=SimpleWorkflow(self.config,self.root/'probe-result',client=client,tools=Mock())
+        result=probe_vision_protocol(w,source)
+        self.assertEqual(result['status'],'protocol_probe_recorded');self.assertEqual(len(calls),6)
+        self.assertEqual(client.config,original);self.assertEqual(w.training.source_kind,'protocol_probe')
+        self.assertTrue(all(c[:3]==calls[0][:3] for c in calls));w.tools.render.assert_not_called()
+        image.write_bytes(b'changed')
+        with self.assertRaisesRegex(ContractError,'identity changed'):probe_vision_protocol(w,source)

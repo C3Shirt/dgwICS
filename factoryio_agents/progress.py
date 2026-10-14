@@ -31,6 +31,7 @@ PUBLIC_FIELDS = {'purpose','description','requirement','control_rules','assumpti
     'scene_goal','function','relation','requirements','relative_to','summary',
     'notes','observed','expected','suggestion','reason','verdict','decision','next_role',
     'hypothesis','discriminating_check','expected_result','retest','status','object_ids','related_object_ids','evidence_images'}
+PUBLIC_FIELDS.update({'observation','spatial_observation','repair_intent','suspect_object_ids','inspection_complete'})
 BLOCKED_FIELDS = {'declaration','implementation','globals','xml','code','script','scripts',
     'raw_content','response_text','reasoning_content','credentials','password','api_key'}
 FIELD_LABELS = {'purpose':'用途', 'description':'工艺步骤', 'requirement':'需求',
@@ -42,6 +43,7 @@ FIELD_LABELS = {'purpose':'用途', 'description':'工艺步骤', 'requirement':
     'hypothesis':'原因假设', 'discriminating_check':'区分原因的检查',
     'expected_result':'检查预期', 'retest':'复测要求','status':'审查状态','object_ids':'检查对象',
     'related_object_ids':'关联对象','evidence_images':'图片证据'}
+FIELD_LABELS.update(observation='图像观察',spatial_observation='测量辅助说明',repair_intent='修复意图',suspect_object_ids='疑似问题对象',inspection_complete='检查完成')
 
 
 def safe_text(value, limit=1100):
@@ -142,6 +144,7 @@ def response_summary(role, value, payload):
                 if isinstance(item,str): add(label,item)
             if len(values)>12: add(label,f'另有 {len(values)-12} 项，见候选文件')
     if not isinstance(value,dict): return ['回复不是 JSON 对象，等待合同检查报告']
+    if type(value.get('inspection_complete')) is bool:add('检查完成','是' if value['inspection_complete'] else '否')
     add('场景类型',value.get('scenario_type')); add('需求',value.get('requirement'))
     add('场景目标',value.get('scene_goal')); add('审核说明',value.get('summary'))
     objects=value.get('objects')
@@ -199,6 +202,11 @@ def response_summary(role, value, payload):
         add('审查状态',check.get('status'))
         for field in ('observed','expected','reason','suggestion'): add(FIELD_LABELS[field],check.get(field))
         strings('图片证据',check.get('evidence_images'))
+    if isinstance(value.get('issues'),list):
+        add('异常项数',len(value['issues']))
+        for issue in value['issues']:
+            strings('疑似问题对象',issue.get('suspect_object_ids'));add('审查状态',issue.get('status'))
+            for field in ('observation','spatial_observation','reason','repair_intent'):add(FIELD_LABELS[field],issue.get(field))
     for finding in value.get('findings',[]) if isinstance(value.get('findings'),list) else []:
         if not isinstance(finding,dict): continue
         add('问题目标',finding.get('target'))

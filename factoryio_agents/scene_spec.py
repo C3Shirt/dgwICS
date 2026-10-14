@@ -34,7 +34,7 @@ def finite(value):
 
 def validate_requirement_spec(value, original, *, trusted=False):
     require(isinstance(value, dict), 'RequirementSpec must be a JSON object')
-    fields={'schema_version','original_requirement','requirements','context_fragments'}
+    fields={'schema_version','original_requirement','requirements','context_fragments','scene_intent'}
     require(set(value) <= fields,
             'Return the RequirementSpec itself, not the request envelope; unexpected root keys: '+str(sorted(set(value)-fields)))
     require(value.get('original_requirement') == original, 'RequirementSpec must preserve the original requirement')
@@ -82,6 +82,18 @@ def validate_requirement_spec(value, original, *, trusted=False):
             if any(c.isalnum() for c in text):gaps.append(text)
             start=None
     require(not omitted, 'RequirementSpec omits source fragments: '+str(gaps)+'. Keep constraints as requirements; quote nonconstraint framing in context_fragments with a reason.')
+    intent=result.get('scene_intent')
+    if intent is not None:
+        require(isinstance(intent,dict) and set(intent)=={'goal','process_description','requirement_ids','process_stages'},'invalid scene_intent fields')
+        require(all(isinstance(intent[k],str) and intent[k].strip() for k in ('goal','process_description')),'scene_intent needs a coherent goal and process_description')
+        require(isinstance(intent['requirement_ids'],list) and intent['requirement_ids'] and set(intent['requirement_ids'])<=ids,'scene_intent needs existing requirement references')
+        require(isinstance(intent['process_stages'],list),'process_stages must be an array')
+        roles={r[k] for r in rows for k in ('subject_role','target_role') if r.get(k)}
+        for stage in intent['process_stages']:
+            require(isinstance(stage,dict) and set(stage)=={'stage','equipment_role','purpose','requirement_ids'},'invalid process stage fields')
+            require(all(isinstance(stage[k],str) and stage[k].strip() for k in ('stage','purpose')),'process stage needs description')
+            require(stage['equipment_role'] is None or stage['equipment_role'] in roles,'process stage invents an equipment role')
+            require(isinstance(stage['requirement_ids'],list) and stage['requirement_ids'] and set(stage['requirement_ids'])<=ids,'process stage needs original requirement references')
     finite(result); result['schema_version'] = 1
     return result
 
@@ -178,6 +190,9 @@ def contract_version(spec, design, plan):
 
 REQUIREMENT_SHAPE = {
     'original_requirement': 'verbatim input',
+    'scene_intent':{'goal':'English industrial goal','process_description':'Coherent English paragraph explaining intended equipment collaboration and spatial requirements, not observed success',
+        'requirement_ids':['existing original requirement IDs'],
+        'process_stages':[{'stage':'English stage name','equipment_role':'existing role or null','purpose':'expected purpose','requirement_ids':['original requirement IDs']}]},
     'context_fragments':[{'source_text':'verbatim nonconstraint framing only','reason':'why this is framing, not an omitted constraint'}],
     'requirements': [{'requirement_id': 'stable ID', 'source_text': 'verbatim source fragment',
         'origin': 'explicit_user or design_assumption', 'phase': 'static_scene or runtime',

@@ -1,12 +1,13 @@
 """Role-specific, allowlisted prompt contexts with traceable source identities."""
 import re
+import math
 from copy import deepcopy
 
 from .contracts import canonical_hash
 from .component_kb import knowledge_base
 from .scene_spec import hard_static, DESIGN_SHAPE
 
-PROMPT_VERSION = 'issue4-guided-context-v3'
+PROMPT_VERSION = 'issue4-inspection-issues-v4'
 
 
 class PromptContextBuilder:
@@ -87,24 +88,88 @@ class PromptContextBuilder:
                 'candidate_components': 'role/capability-filtered current catalog', 'placement_capabilities': 'implemented solver interface',
                 'relevant_component_guidance': 'official documentation'})}
 
-    def visual(self, original, design, checks, images):
-        by_id = {r['requirement_id']: r for r in self.spec['requirements']}; rows = []
+    def visual(self, original, design, checks, images, plan=None, native_receipt=None, *, spatial_context=True):
+        from .scene_visual import ISSUES_CONTRACT
+        spec_rows={r['requirement_id']:r for r in self.spec['requirements']}
+        tasks=[];relations=[];equipment=[]
+        for r in hard_static(self.spec):
+            if r['predicate'] in ('count','exists'):
+                equipment.append({'requirement_id':r['requirement_id'],'role':r['subject_role'],
+                                  'selection_and_quantity':r['arguments'],'source_requirement':r['source_text']})
         for c in checks['checks']:
-            if 'visual' not in c['evidence_methods']: continue
-            requirements = [by_id[i] for i in c['requirement_ids']]
-            rows.append({**{k: c[k] for k in ('check_id', 'requirement_ids', 'operator', 'object_ids', 'relation_ids')},
-                'question': 'Does the visible layout satisfy: ' + ' / '.join(r['source_text'] for r in requirements) + '?',
-                'expected_relation': {'predicate': c['operator'], 'parameters': c['arguments'],
-                    'source_text': [r['source_text'] for r in requirements]}, 'preferred_views': ['top', 'iso_a', 'iso_b']})
-        return {'phase': 'scene_visual', 'original_requirement': original, 'requirement_spec': self.spec,
-            'actual_objects': [{k: o[k] for k in ('id', 'prefab', 'roles', 'function')} for o in design['objects']],
-            'check_plan': {'checks': rows, 'coverage': checks['coverage'],
-                'acceptance_scope': 'visible static relations only; no runtime/electrical response proof'},
-            'image_manifest': images, 'supported_views': ['top', 'iso_a', 'iso_b'],
-            'relevant_component_guidance': knowledge_base().references([o['prefab'] for o in design['objects']], 'vision'),
-            'context_manifest': self.manifest('visual', {'requirement_spec': 'independent source quotes',
-                'actual_objects': 'current manifest identities plus design identification labels', 'check_plan': 'independently compiled checks',
-                'image_manifest': 'current load and capture receipts'}, [o['id'] for o in design['objects']])}
+            if not c['requirement_ids']:continue
+            source=[spec_rows[i]['source_text'] for i in c['requirement_ids']]
+            expected={'check_id':c['check_id'],'subject_ids':c.get('subject_ids',c['object_ids']),
+                'reference_ids':c.get('target_ids',[]),'description':' / '.join(source),
+                'predicate':c['operator'],'parameters':c['arguments']}
+            relations.append(expected)
+            tasks.append({'check_id':c['check_id'],'subject_ids':expected['subject_ids'],
+                'reference_ids':expected['reference_ids'],'focus':'Compare visible equipment and functional regions with: '+' / '.join(source),
+                'preferred_views':['top','iso_a','iso_b']})
+        receipt=native_receipt or {};native=receipt.get('native_geometry',{})
+        identities={o['key']:o['id'] for o in receipt.get('manifest_objects',[])}
+        measured={identities.get(o.get('key'),o.get('id')):o for o in native.get('objects',[])}
+        resolved={o['id']:o for o in (plan or {}).get('objects',[])}
+        profiles=[];function_paragraphs=[]
+        for obj in design['objects']:
+            refs=knowledge_base().references([obj['prefab']],'vision');card=refs['components'][0] if refs['components'] else None
+            linked=[r for r in relations if obj['id'] in r['subject_ids']+r['reference_ids']]
+            m=measured.get(obj['id']);pose=None
+            if spatial_context and m:
+                rotation=m.get('rotation');yaw=None
+                if isinstance(rotation,list) and len(rotation)==4:
+                    x,y,z,w=rotation;yaw=round(math.degrees(math.atan2(2*(w*y+x*z),1-2*(y*y+z*z)))%360,6)
+                pose={'position_grid':m.get('position_grid'),'yaw_deg':yaw,'rotation_quaternion':rotation,
+                      'fine_position':m.get('fine_position'),'fine_rotation':m.get('fine_rotation'),
+                      'source':'current native load receipt; actual state under inspection'}
+            profile={'id':obj['id'],'prefab':m.get('prefab') if m else obj['prefab'],
+                'roles':obj['roles'],'task_role_source':'role bindings from design linked to independent requirements',
+                'function':card['function'] if card else 'Official equipment function is not indexed.',
+                'function_basis':card['function_basis'] if card else 'missing_official_knowledge',
+                'visual_identity':{'appearance':card.get('appearance') if card else None,
+                    'distinctive_features':card.get('markers',[]) if card else [],
+                    'sources':card['sources'] if card else [],
+                    'identity_limit':'Same-prefab objects require labels or multi-view spatial evidence, not appearance alone.'},
+                'scene_file_configuration':deepcopy(resolved.get(obj['id'],{}).get('settings',[])),
+                'configuration_source':'settings in confirmed loaded scene file; not independently read runtime configuration',
+                'native_presence':'confirmed' if m and m.get('native_registered') is True else 'not confirmed',
+                'actual_pose':pose,
+                'native_spatial_state':{'bounds_world_metres':m.get('bounds_world'),'component_geometry_world':m.get('component_geometry',{}),
+                    'source':'current native load receipt','limitation':'Outer bounds and pivots are not proof of an active functional region.'} if spatial_context and m else None,
+                'expected_relations':linked}
+            if spatial_context and m and not m.get('component_geometry'):
+                profile['native_spatial_state']['missing_measurements']=['Separate active functional-region geometry is not provided by this receipt.']
+            carrier=(m or {}).get('component_geometry',{}).get('conveyor')
+            if spatial_context and carrier:
+                direction=carrier.get('direction',[]);bounds=carrier.get('surface_bounds')
+                axis=next((j for j in (0,2) if len(direction)==3 and abs(abs(direction[j])-1)<1e-6 and
+                           all(abs(direction[k])<1e-6 for k in range(3) if k!=j)),None)
+                frame={'flow_direction_world':direction,'source':'current native conveyor direction; auxiliary identification context',
+                       'longitudinal_axis':('X','Y','Z')[axis] if axis is not None else None,
+                       'lateral_axis':('Z' if axis==0 else 'X') if axis is not None else None}
+                if axis is not None and bounds:
+                    frame.update(upstream_coordinate_metres=bounds['min' if direction[axis]>0 else 'max'][axis],
+                                 downstream_coordinate_metres=bounds['max' if direction[axis]>0 else 'min'][axis],
+                                 interpretation='Separation on the longitudinal axis may be the intended upstream/downstream relation. Lateral alignment is evaluated on the lateral axis.')
+                profile['native_spatial_state']['transport_frame']=frame
+            profiles.append(profile)
+            if card:function_paragraphs.append(obj['prefab']+' equipment: '+card['function'])
+        intent=self.spec.get('scene_intent')
+        description=(intent['process_description'] if intent else
+            'The independent user request describes this intended industrial arrangement: '+original+
+            ' Its explicit equipment and spatial objectives are listed below; no unspecified process stage is assumed.')
+        description+=' Equipment principles relevant to interpreting this scene: '+' '.join(dict.fromkeys(function_paragraphs))
+        description+=' Required collaboration and spatial objectives: '+' '.join(dict.fromkeys(r['description'] for r in relations))
+        description+=' This is an intended process and static arrangement, not proven material motion or PLC execution. Inspect functional regions in relation to support surfaces and paths, not merely whether housings appear nearby.'
+        return {'phase':'scene_visual','scene_overview':{'goal':intent['goal'] if intent else original,
+            'process_description':description,'process_stages':intent['process_stages'] if intent else [],
+            'required_equipment':equipment,'acceptance_scope':'static_layout_only; runtime requirements are deferred',
+            'background_basis':'independent requirements and sourced device knowledge; narrative adds no mandatory constraints'},
+            'coordinate_system':{k:native.get('coordinate_system',{}).get(k) for k in ('axis_order','vertical_axis','horizontal_axes','grid_metres','pivot_world_formula')} if spatial_context else None,
+            'objects':profiles,'expected_relations':relations,'inspection_tasks':tasks,
+            'images':[{'image_id':i['id'],'view_id':i.get('view_id')} for i in images],
+            'supported_views':['top','iso_a','iso_b'],'output_contract':ISSUES_CONTRACT,
+            'inspection_mode':'geometry_assisted' if spatial_context else 'visual_only'}
 
     def repair(self, design, plan, ticket, verification, visual, components,loaded_measurements=(),image_manifest=()):
         affected = set(ticket['affected_object_ids']); scope = set(affected)

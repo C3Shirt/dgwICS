@@ -202,7 +202,7 @@ Use pass with empty findings only when all current checks support the requested 
 
 REQUIREMENT_PROMPT="""Extract the requirements independently from the original user text.
 Return the RequirementSpec JSON object itself: schema_version, original_requirement,
-requirements, optional context_fragments. Do not copy the request envelope, phase,
+requirements, scene_intent, optional context_fragments. Do not copy the request envelope, phase,
 catalog or output_contract.
 Quote exact source fragments covering the complete original text; quotes may overlap.
 Copy contiguous original text rather than rewriting a clause. Multiple requirements
@@ -226,6 +226,13 @@ Never invent a tolerance, sensor property or confirmed engineering constraint.
 Quote nonconstraint request framing or conjunctions in context_fragments with a
 reason. Never place quantities, required equipment or spatial constraints there.
 Assumptions are optional, never hard requirements. Return the supplied JSON shape.
+Provide scene_intent in English: a coherent industrial goal and process_description,
+not only a short equipment arrow chain. Explain intended stages, equipment cooperation
+and the user's spatial objectives, linking every stage to original requirement IDs.
+Use only roles already defined in requirements (or null for a general stage).
+Do not invent stages or equipment. A static arrangement may have no material flow.
+The narrative is background interpretation; only the original requirements define
+mandatory checks. Never describe proposed or observed execution as proven success.
 """
 
 DESIGN_PROMPT="""You design the physical layout of a Factory I/O industrial scene.
@@ -258,27 +265,65 @@ Placement method parameter names are exact JSON keys. Include kind and only that
 method's listed parameters. Absolute placement uses position, never position_grid.
 """
 
-LAYOUT_PROMPT="""You inspect an ACTUALLY LOADED Factory I/O scene using multiple views.
-original_requirement and the independent check_plan define the target. Images are
-observations; generated placements and a designer's self-assessment are not proof.
+LAYOUT_PROMPT="""You inspect the physical layout of an actually loaded Factory I/O scene.
+Understand the intended industrial task before judging the screenshots. The independent
+scene_overview and expected_relations define the target; object poses describe the
+current layout under inspection, not proof that placement is correct.
+
+Factory I/O axes are [X,Y,Z]: Y is vertical and X/Z are horizontal. Use the supplied
+coordinate_system for grid/metre conversion; never assume a fixed scale or world flow
+direction. When supplied, transport_frame identifies the actual longitudinal and
+lateral axes; a longitudinal position difference alone is not lateral misalignment.
+Distinguish the object pivot and visible housing from an outer bounding box
+and from functional regions: carrying surface, emission origin, sensing ray or active
+removal volume. An outer box alone does not prove functional coverage.
 
 Work in this order:
-1. Identify actual_objects and relevant regions using image_manifest, view IDs and
-   sourced component guidance. Do not guess when labels or identities are ambiguous.
-2. Review obvious missing/extra objects and visible layout inconsistencies globally.
-3. Evaluate each check's question and expected_relation. Compare visible evidence
-   with the requirement; use other views to resolve occlusion and perspective.
-4. Return satisfied, violated or unobservable for EVERY supplied check. Identify
-   objects and relations, observed versus required layout, and supporting image IDs.
-   For violations, object_ids names objects needing correction; unchanged reference
-   objects remain identifiable from the check. For satisfaction, identify all checked objects.
-   For unobservable checks, explain missing evidence and request a supported view.
-5. Separate visible placement from material dynamics, sensor electrical response,
-   PLC logic and unseen geometry. Static pictures cannot prove runtime behavior.
+1. Read the industrial goal, coherent process description, required equipment and
+   independent spatial objectives. Intended collaboration is not observed execution.
+2. Identify each task's subject and references using its instance profile, sourced
+   appearance/markers and multiple screenshots. Same-prefab objects cannot be matched
+   by appearance alone. Report ambiguity rather than guessing an ID. Do not invent
+   official features when the knowledge profile explicitly has missing information.
+3. Describe what is actually visible before evaluating the expected relation. Check
+   relevant functional regions, alignment, direction and relative height across views.
+   Evaluate the requested relation literally: adjacency, downstream continuation,
+   contact and overlap are different. Do not turn coverage of a continuing path into
+   mandatory overlap with the reference equipment, or invent a numerical clearance.
+   A violation needs an observable contradiction of the specified relation; a
+   potential failure or an unknown functional extent is an evidence gap.
+4. Use actual_pose and selected native_spatial_state only as auxiliary identification
+   and interpretation. Keep screenshot observations separate from measurement-based
+   explanations; Python performs independent geometric verification. If a functional
+   volume is not measured or not visible, explain the gap rather than using a pivot
+   or outer bounds as an equivalent region.
+   If your measurement interpretation contradicts your screenshot impression,
+   report the conflict as unobservable. Do not describe a lateral offset or gap
+   while the cited measurements show alignment or contact without explaining why.
+5. Inspect EVERY supplied inspection task and review obvious missing/extra equipment
+   and visible inconsistencies globally. REPORT ONLY ANOMALIES: violated requirements
+   and unobservable checks. Omit satisfied checks and normally identified objects.
+6. Name suspected misplaced objects separately from reference anchors. References
+   are read-only by default. Give relational repair intent, not guessed XYZ patches.
+   Do not add industrial constraints absent from the independent task.
 
-Do not invent absolute coordinates, unseen dimensions, sensing properties or new
-hard requirements. Object function text is identification context only. Return the
-per-check report and global observations as a JSON object matching the supplied response schema.
+Return exactly one JSON object: inspection_complete (boolean) and issues (array).
+Set inspection_complete=true only after reviewing all tasks and attached views.
+When no anomaly is found, return {"inspection_complete":true,"issues":[]}.
+Never return [] or null as the whole response. Each issue has:
+- check_id: the supplied task ID; null only for an extra concern outside the tasks.
+- status: violated or unobservable; never emit satisfied rows.
+- suspect_object_ids: supplied IDs needing correction or unclear identification;
+  do not include unchanged references merely because they participate in a relation.
+- observation: visible evidence, using ordinary relational language.
+- spatial_observation: a separate interpretation of supplied measurements, or "".
+- reason: why the observation contradicts the requirement or cannot be established.
+- repair_intent: smallest justified relational correction, or "" if not justified.
+- evidence_image_ids: exact attached image IDs supporting the observation.
+- requested_view: null or a supplied supported view when further evidence is useful.
+An unobservable issue must explain missing evidence. An unbound concern cannot become
+a new mandatory constraint. Static screenshots cannot establish PLC operation, actual
+material transport, sensor electrical response or runtime control correctness.
 """
 
 PATCH_PROMPT="""You repair an existing Factory I/O layout from verified findings.

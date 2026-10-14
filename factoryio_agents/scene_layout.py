@@ -31,7 +31,7 @@ def checked_call(w, role, prompt, payload, validator, images=None):
     try:value = w.call(role, prompt, payload, images)
     except ModelServiceError:raise
     except ContractError as error:
-        if role!='vision' or not str(error).startswith('vision model response'):raise
+        if role!='vision' or not str(error).startswith(('vision model response','vision model did not return')):raise
         parse_error=error
     try:
         if parse_error is not None:raise parse_error
@@ -42,6 +42,7 @@ def checked_call(w, role, prompt, payload, validator, images=None):
         retry={**payload,'rejected_output':value,'format_error':str(error)}
         saved=None;saved_modes=None
         if parse_error is not None and isinstance(w.raw_model,ModelClient):
+            retry['rejected_output']=w.raw_model.exchange_metadata().get('raw_content')
             saved=w.raw_model.config.get('response_schemas',{}).pop('vision',None)
             saved_modes={k:deepcopy(w.raw_model.config[k]) for k in ('schema_roles','json_mode') if k in w.raw_model.config}
             w.raw_model.config['schema_roles']=[r for r in w.raw_model.config.get('schema_roles',[]) if r!='vision']
@@ -224,11 +225,19 @@ def run_layout(w, requirement, catalog, resume_source=None):
         visual = None
         for view_attempt in range(w.max_view_retries + 1):
             images = image_context(rendered, directory); write_json(directory / 'image-index.json', images)
-            payload = builder.visual(requirement,design,checks,images)
+            payload = builder.visual(requirement,design,checks,images,plan,receipt,spatial_context=geometry_enabled)
+            write_json(directory/('vision-input-'+str(view_attempt)+'.json'),payload)
+            write_json(directory/('vision-context-audit-'+str(view_attempt)+'.json'),
+                {'context_manifest':builder.manifest('visual',{'scene_overview':'independent requirements and official functions',
+                    'objects':'native identity/pose, declared roles, sourced knowledge','expected_relations':'compiled original constraints',
+                    'images':'validated actual image attachments'},[o['id'] for o in design['objects']]),
+                 'image_manifest':images,'load_request_id':receipt['request_id'],'requirements_sha256':canonical_hash(spec)})
             visual = checked_call(w, 'vision', LAYOUT_PROMPT, payload,
                 lambda v: validate_visual(v, checks, spec, design, images), rendered['images'])
-            write_json(directory / ('visual-review-' + str(view_attempt) + '.json'), visual)
-            requested = {r['requested_view'] for r in visual['check_results'] if r['status'] == 'unobservable' and r['requested_view']}
+            visual['inspection_mode']=payload['inspection_mode']
+            write_json(directory / ('visual-review-' + str(view_attempt) + '.json'), visual['raw_output'])
+            write_json(directory / ('visual-review-normalized-' + str(view_attempt) + '.json'), visual)
+            requested = {i['requested_view'] for i in visual['issues'] if i['status']=='unobservable' and i['requested_view']}
             if not requested or view_attempt == w.max_view_retries: break
             rendered = w.tools.capture_views(rendered, directory, sorted(requested), view_attempt + 1)
         verification = fuse_results(checks, native, visual, registration_passed=rendered['geometry'].get('passed') is True)
@@ -238,8 +247,8 @@ def run_layout(w, requirement, catalog, resume_source=None):
             'unchanged_failure_set': previous_failures == failures, 'evaluated_layout_sha256': fingerprint})
         previous_failures = failures
         feedback = {'verdict': 'pass' if verification['status'] == 'satisfied' else 'repair' if verification['status'] == 'violated' else 'uncertain',
-            'summary': visual['global_review']['summary'], 'findings': visual['global_review']['findings'],
-            'check_results': visual['check_results'], 'verification': verification}
+            'summary': visual['global_review']['summary'], 'inspection_complete':visual['inspection_complete'],
+            'issues':visual['issues'], 'verification_file':str(directory/'verification.json')}
         write_json(directory / 'scene-feedback.json', feedback)
         if verification['status'] == 'satisfied':
             return w.finish('scene_verified', scene_dir=str(directory), visual_verdict='pass',

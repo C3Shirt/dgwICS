@@ -29,7 +29,7 @@ class CheckerRegistry:
         meanings={'count':'Count selected physical roles, optionally filtered by exact prefab or measured capability.',
             'exists':'Presence of the selected physical role; no transport equipment is implied.',
             'feeds_into':'Subject emitter origin lies above target carrier footprint. Upstream region can also be reviewed visually.',
-            'receives_from':'Subject receiving volume (currently Remover) intersects target carrier downstream continuation; visible proximity/height also need review.',
+            'receives_from':'A separately measured active receiving volume intersects the target carrier downstream continuation. Outer object bounds are insufficient; absent active-volume measurements remain unsupported.',
             'detects_path':'Subject sensor beam reaches target carrier path. Orientation and height limits only apply when explicitly requested.',
             'transfers_to':'Selected upstream and downstream carriers have compatible measured straight carrying surfaces. Missing permitted gap/height tolerance remains unknown.',
             'reachable':'Reachability over the selected transfer relations, not all components.',
@@ -291,27 +291,40 @@ def fuse_results(check_plan, geometry_results, visual, *, registration_passed):
     for check in check_plan['checks']:
         native = by_id[check['check_id']]; observation = seen.get(check['check_id'])
         row = deepcopy(native)
+        row['native_result']=deepcopy(native)
+        row['visual_result']=deepcopy(observation)
         geometry_incomplete = native['status']=='unknown' and 'native_geometry' in check['evidence_methods'] and 'ablated' not in native['reason']
         if native['status'] not in ('violated', 'unsupported') and not geometry_incomplete and 'visual' in check['evidence_methods']:
             if observation:
-                row.update(status=observation['status'], checker='geometry_and_visual', reason=observation['reason'],
+                row.update(status=observation['status'], checker='geometry_and_visual' if native['status']=='satisfied' and 'native_geometry' in check['evidence_methods'] else 'visual', reason=observation['reason'],
                     evidence_ids=list(dict.fromkeys(native['evidence_ids'] + observation['image_ids'])))
             else: row.update(status='unobservable', reason='Required visual check was not returned.')
         if observation and observation['status'] == 'violated' and native['status'] != 'unsupported':
-            row.update(status='violated', checker='geometry_and_visual', reason=observation['reason'],
+            row.update(status='violated', checker='geometry_and_visual' if native['status'] in ('satisfied','violated') and 'native_geometry' in check['evidence_methods'] else 'visual', reason=observation['reason'],
                        evidence_ids=list(dict.fromkeys(native['evidence_ids'] + observation['image_ids'])))
             if native['status']!='violated':row['object_ids']=observation['object_ids']
+        if observation and observation['status']=='violated' and check['operator'] in ('count','exists') and native['status']=='satisfied':
+            row.update(status='unobservable',checker='conflicting_inventory_evidence',reason='Visual inventory disagrees with native structure; review identity before changing registered objects.')
         rows.append(row)
-    satisfied = registration_passed and all(r['status'] == 'satisfied' for r in rows) and visual['global_review']['status'] == 'satisfied'
+    global_review=deepcopy(visual['global_review'])
+    if visual.get('contract_version')==2:
+        disputed={r['check_id'] for r in rows if r['checker']=='conflicting_inventory_evidence'}
+        for finding in global_review['findings']:
+            if finding.get('check_id') in disputed:
+                finding.update(status='unobservable',reason='Visual inventory conflicts with native registration; identity review is needed before a structural change.')
+        global_review['status']='violated' if any(f['status']=='violated' for f in global_review['findings']) else 'unobservable' if global_review['findings'] or not visual['inspection_complete'] else 'satisfied'
+    satisfied = registration_passed and all(r['status'] == 'satisfied' for r in rows) and global_review['status'] == 'satisfied'
     return {'status': 'satisfied' if satisfied else 'violated' if any(r['status'] == 'violated' for r in rows) or
-            visual['global_review']['status'] == 'violated' else 'unknown', 'checks': rows, 'coverage': check_plan['coverage'],
+            global_review['status'] == 'violated' else 'unknown', 'checks': rows, 'coverage': check_plan['coverage'],
             'registration_passed': registration_passed, 'static_requirements_covered': satisfied,
-            'scope': 'finite static scene evidence; no PLC or actual material transport acceptance', 'global_review': visual['global_review']}
+            'scope': 'finite static scene evidence; no PLC or actual material transport acceptance', 'global_review': global_review}
 
 
 def repair_ticket(check_plan, verification, visual, design):
     violated = [r for r in verification['checks'] if r['status'] == 'violated']; checks = {c['check_id']: c for c in check_plan['checks']}
-    findings = [f for f in visual['global_review']['findings'] if f['status'] == 'violated' and f['requirement_ids']]
+    actionable_checks = {row['check_id'] for row in violated}
+    findings = [f for f in visual['global_review']['findings'] if f['status'] == 'violated' and f['requirement_ids'] and
+                (visual.get('contract_version') != 2 or f.get('check_id') in actionable_checks)]
     objects=set();count_operations=set()
     for row in violated:
         check=checks[row['check_id']]
@@ -320,6 +333,8 @@ def repair_ticket(check_plan, verification, visual, design):
             deficit=row.get('observed',{}).get('count',0)<minimum
             count_operations.add('add' if deficit else 'remove')
             targets=[] if deficit else row['object_ids']
+        elif visual.get('contract_version')==2 and row.get('visual_result') and row['visual_result']['status']=='violated' and row.get('native_result',{}).get('status')!='violated':
+            targets=row['visual_result']['object_ids']
         elif check['operator']=='registered':targets=row['object_ids']
         elif check['operator']=='transfers_to':targets=check.get('target_ids',[])
         elif check['operator'] in ('feeds_into','detects_path','receives_from','ray_intersects_volume','relative_direction','aligned','distance_range'):
@@ -329,7 +344,10 @@ def repair_ticket(check_plan, verification, visual, design):
             targets=[i for i in row['object_ids'] if i in named] or row['object_ids']
         else:targets=row['object_ids']
         objects.update(targets)
-    objects.update(i for f in findings for i in f['object_ids'])
+    # Native counterexamples retain the operator's movable endpoint. A model
+    # cannot broaden a native repair by naming reference anchors as suspects.
+    if visual.get('contract_version')!=2:
+        objects.update(i for f in findings for i in f['object_ids'])
     requirement_ids = {i for r in violated for i in checks[r['check_id']]['requirement_ids']} | {i for f in findings for i in f['requirement_ids']}
     operations = ['change', 'replace'] if objects else []
     operations += sorted(count_operations)

@@ -300,9 +300,10 @@ def relation_geometry(predicate, subject, target, parameters):
             'Finite beam reaches the requested XZ path and any explicitly required orientation/height. Workpiece detection is not proven.',
             {'xz_reachable': reaches, 'height_above_surface_metres': height, 'flow_dot': dot})
     if predicate == 'receives_from':
-        if subject.get('prefab') != 'Remover':
-            return answer('unsupported', 'No measured receiving-volume semantics for this component.', missing='receiving_volume:' + str(subject.get('prefab')))
-        volume = subject['bounds_world']; positive = direction[axis] > 0
+        volume = subject.get('component_geometry', {}).get('receiver', {}).get('active_volume_bounds')
+        if not volume:
+            return answer('unsupported', 'Separate active receiving-volume measurement is unavailable; outer object bounds are not equivalent.', missing='receiver.active_volume_bounds')
+        positive = direction[axis] > 0
         arrival = [(lo + hi) / 2 for lo, hi in zip(bounds['min'], bounds['max'])]
         arrival[axis] = bounds['max'][axis] if positive else bounds['min'][axis]; arrival[1] = surface
         # The volume must reach the continuation of this carrier's actual exit ray.

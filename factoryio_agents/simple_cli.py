@@ -27,6 +27,7 @@ def main(argv=None):
     parser.add_argument('--scene-only',action='store_true',help='恢复时也只进行场景布局，不继承 PLC 执行范围')
     parser.add_argument('--max-view-retries',type=int,help='现有视角的补拍次数，0 或 1，默认 1')
     parser.add_argument('--compare-visual-prompts',type=Path,help='仅重放指定新布局任务的同一组图片，对比旧提示词单/多视角、动态检查和几何融合')
+    parser.add_argument('--probe-vision-protocol',type=Path,help='重放一条保存的 vision candidate，比较流式/非流式与三种 JSON 输出协议；不操作场景')
     parser.add_argument('--comparison-revision',type=int,help='对照源任务的某一 scene-NNN 版本；默认最终版本')
     parser.add_argument('--with-plc',action='store_true',default=None,help='继续 PLC 生成、编译部署与真实工艺检查')
     parser.add_argument('--keep-running',action='store_true',default=None,help='通过本次运行检查后保持两端运行，需要 --with-plc')
@@ -40,9 +41,10 @@ def main(argv=None):
     parser.add_argument('--quiet',action='store_true')
     parser.add_argument('--check',action='store_true',help='只读检查本地接口和服务，不调用模型或修改软件')
     args=parser.parse_args(argv)
-    if not args.prompt and not args.resume and not args.check and not args.compare_visual_prompts:parser.error('provide a scene requirement, --resume or --compare-visual-prompts')
+    if not args.prompt and not args.resume and not args.check and not args.compare_visual_prompts and not args.probe_vision_protocol:parser.error('provide a scene requirement, --resume or a diagnostic replay option')
     if args.prompt and args.resume:parser.error('resume uses the original requirement; do not supply a new prompt')
     if args.compare_visual_prompts and (args.prompt or args.resume or args.with_plc or args.plc_mode or args.check):parser.error('visual comparison only replays captured images; do not combine with execution options')
+    if args.probe_vision_protocol and (args.prompt or args.resume or args.with_plc or args.plc_mode or args.check or args.compare_visual_prompts or args.inject_fault):parser.error('protocol probe only replays a recorded request; do not combine with execution options')
     if args.comparison_revision is not None and not args.compare_visual_prompts:parser.error('--comparison-revision needs --compare-visual-prompts')
     output=(args.out or ROOT/'runs'/('simple-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'-'+uuid.uuid4().hex[:8])).resolve()
     if output.exists():parser.error('choose a fresh output directory')
@@ -80,13 +82,16 @@ def main(argv=None):
         write_json(output/'execution.json',{'framework':'simple','interface':'cli','framework_source_storage':'hashes_only',
             'execution_options':options,'started_from':start_from,
             'source_hashes':{str(p.relative_to(ROOT)):file_hash(p) for p in sources}})
-        if args.compare_visual_prompts:
+        if args.probe_vision_protocol:
+            from .scene_benchmark import probe_vision_protocol
+            result=probe_vision_protocol(workflow,args.probe_vision_protocol)
+        elif args.compare_visual_prompts:
             from .scene_benchmark import compare_captures
             result=compare_captures(workflow,args.compare_visual_prompts,revision=args.comparison_revision)
         else:result=workflow.resume(args.resume) if args.resume else workflow.run(args.prompt)
         write_json(output/'result.json',result)
         print(json.dumps({**result,'output':str(output)},ensure_ascii=False,indent=2))
-        return 0 if result['status'] in ('scene_verified','plc_compiled','passed','visual_comparison_recorded') else 2
+        return 0 if result['status'] in ('scene_verified','plc_compiled','passed','visual_comparison_recorded','protocol_probe_recorded') else 2
     except Exception as error:
         print(json.dumps({'status':'needs_configuration','error':str(error),'output':str(output)},ensure_ascii=False))
         return 2
