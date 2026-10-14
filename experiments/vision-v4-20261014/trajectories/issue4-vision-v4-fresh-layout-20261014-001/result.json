@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "framework": "simple",
+  "status": "needs_attention",
+  "phase": "scene_repair",
+  "model_calls": 7,
+  "scene_revision": 0,
+  "plc_executed": false,
+  "live_pipeline_passed": false,
+  "started_at": "2026-10-14T08:54:00.167376+00:00",
+  "execution_scope": "scene_only",
+  "started_from": "scene",
+  "execution_options": {
+    "with_plc": false,
+    "keep_running": false,
+    "max_plc_repairs": 2,
+    "runtime_seconds": 30,
+    "reset_mode": "warm",
+    "start_local_services": false,
+    "plc_mode": "run",
+    "scene_verification": "relations",
+    "max_view_retries": 1
+  },
+  "template_sources": {
+    "source-04da4aaaacbb3e5e0ade": "04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c",
+    "source-7b6b0a6b063429d967cf": "7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918",
+    "source-6862ca46dbe17012078c": "6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535"
+  },
+  "protocol_sha256": "3dd4a336834791e0ce3f401f1e95487635f9dac844df79f832761f1b412efe0a",
+  "requirements_sha256": "f5882ad18034d208db9791bd073aa7e5688eb9abebdb3404ada865a94fccaa1b",
+  "deferred_requirement_ids": [],
+  "deferred_tasks": [],
+  "design_sha256": "120207ab6688dd0dd8bab65f5979a47364c5866601ac04a78b8b980a7e265bf9",
+  "plan_sha256": "61d330c000a30013dcf4e81ec29623ba00843f6c38d3461393a3d009869c3a55",
+  "scene_dir": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-fresh-layout-20261014-001\\scene-000",
+  "tokens": {
+    "prompt_tokens": 57459,
+    "completion_tokens": 5276,
+    "total_tokens": 62735
+  },
+  "usage_missing_calls": 0,
+  "error": "grid_offset is for ancillary controls/supports, not feed or detection geometry",
+  "error_type": "ContractError",
+  "elapsed_seconds": 96.875
+}

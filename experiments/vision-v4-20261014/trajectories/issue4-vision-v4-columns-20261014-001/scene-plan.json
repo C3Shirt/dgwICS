@@ -1,0 +1,30 @@
+{
+  "scene_id": "two-columns-static",
+  "base_source_id": "source-04da4aaaacbb3e5e0ade",
+  "objects": [
+    {
+      "id": "column-1",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/21",
+      "position": [
+        233,
+        8,
+        142
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {}
+    },
+    {
+      "id": "column-2",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/21",
+      "position": [
+        243,
+        8,
+        142
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {}
+    }
+  ]
+}

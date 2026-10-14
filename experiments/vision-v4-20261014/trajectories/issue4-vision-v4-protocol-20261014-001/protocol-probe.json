@@ -1,0 +1,470 @@
+{
+  "source_candidate": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-feed-fault-20261014-001/training-data/candidates/119ca34aec8e4ca6ab7d173944847c4f.json",
+  "frozen_input_sha256": "2c5bd2adc287f2777afe6e97d87ce5e30c7428eac6a6fa81d928a99cbfb9720d",
+  "trials": [
+    {
+      "stream": true,
+      "format": "json_object",
+      "json_object_received": true,
+      "error": null,
+      "response_text": "{\n\"inspection_complete\": true,\n\"issues\": [\n{\n\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\",\n\"status\": \"violated\",\n\"suspect_object_ids\": [\n\"emitter1\"\n],\n\"observation\": \"The feeder (identified by the green arrow icon) is positioned laterally to the side of the conveyor belt. It is not located above the carrying surface.\",\n\"spatial_observation\": \"Comparing native spatial states: The conveyor's surface bounds are X:[29.375, 30.25] and Z:[15.5, 19.5]. The emitter is centered at X:31.6875, Z:15.5625. The emitter's X position places it completely outside the conveyor's width range.\",\n\"reason\": \"The requirement specifies that the feeder must be positioned above the upstream carrying surface of the conveyor. Currently, it is beside the conveyor, which would cause emitted items to fall on the floor rather than the belt.\",\n\"repair_intent\": \"Move the emitter horizontally so its emission volume aligns directly over the upstream end of the conveyor surface.\",\n\"evidence_image_ids\": [\n\"image-0-top\",\n\"image-0-iso_a\"\n],\n\"requested_view\": null\n}\n]\n}",
+      "candidate": "training-data\\candidates\\9b4102b97d4d42a0886ed351be95215a.json",
+      "metadata": {
+        "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+        "provider": "AliyunLLM",
+        "request_options": {
+          "max_tokens": 8000,
+          "enable_thinking": false
+        },
+        "response_format": {
+          "type": "json_object"
+        },
+        "requested_model": "qwen3.8-flash",
+        "returned_model": "qwen3.8-flash",
+        "response_id": "chatcmpl-9f11af89-958f-9dfc-aa31-612ffd8905f0",
+        "http_status": 200,
+        "usage": {
+          "prompt_tokens": 11709,
+          "total_tokens": 12007,
+          "completion_tokens": 298,
+          "prompt_tokens_details": {
+            "cached_tokens": 4096,
+            "image_tokens": 7554,
+            "text_tokens": 4155
+          },
+          "completion_tokens_details": {}
+        },
+        "finish_reason": "stop",
+        "streaming_requested": true,
+        "response_mode": "sse",
+        "stream_stats": {
+          "packets": 110,
+          "content_chars": 1042,
+          "done_received": true,
+          "first_packet_seconds": 7.2e-05,
+          "first_content_seconds": 0.000115
+        }
+      }
+    },
+    {
+      "stream": true,
+      "format": "simple_schema",
+      "json_object_received": false,
+      "error": "vision model response must be object",
+      "response_text": "[]",
+      "candidate": "training-data\\candidates\\2230180d6a25490d97ef58f379ba59ef.json",
+      "metadata": {
+        "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+        "provider": "AliyunLLM",
+        "request_options": {
+          "max_tokens": 8000,
+          "enable_thinking": false
+        },
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "FactoryIO_vision",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "inspection_complete",
+                "issues"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "inspection_complete": {
+                  "type": "boolean"
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requested_model": "qwen3.8-flash",
+        "returned_model": "qwen3.8-flash",
+        "response_id": "chatcmpl-b96bc8a8-f4a9-9688-b04b-d1e58eb0ae08",
+        "http_status": 200,
+        "usage": {
+          "prompt_tokens": 11791,
+          "total_tokens": 11793,
+          "completion_tokens": 2,
+          "prompt_tokens_details": {
+            "cached_tokens": 512,
+            "image_tokens": 7554,
+            "text_tokens": 4237
+          },
+          "completion_tokens_details": {}
+        },
+        "finish_reason": "stop",
+        "streaming_requested": true,
+        "response_mode": "sse",
+        "stream_stats": {
+          "packets": 4,
+          "content_chars": 2,
+          "done_received": true,
+          "first_packet_seconds": 4.5e-05,
+          "first_content_seconds": 8.2e-05
+        }
+      }
+    },
+    {
+      "stream": true,
+      "format": "full_schema",
+      "json_object_received": false,
+      "error": "vision model response must be object",
+      "response_text": "[]",
+      "candidate": "training-data\\candidates\\5053f09c91c34208a8dd2169ef778ef9.json",
+      "metadata": {
+        "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+        "provider": "AliyunLLM",
+        "request_options": {
+          "max_tokens": 8000,
+          "enable_thinking": false
+        },
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "FactoryIO_vision",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "inspection_complete",
+                "issues"
+              ],
+              "properties": {
+                "inspection_complete": {
+                  "type": "boolean"
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "check_id",
+                      "status",
+                      "suspect_object_ids",
+                      "observation",
+                      "spatial_observation",
+                      "reason",
+                      "repair_intent",
+                      "evidence_image_ids",
+                      "requested_view"
+                    ],
+                    "properties": {
+                      "check_id": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "violated",
+                          "unobservable"
+                        ]
+                      },
+                      "suspect_object_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "observation": {
+                        "type": "string"
+                      },
+                      "spatial_observation": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "repair_intent": {
+                        "type": "string"
+                      },
+                      "evidence_image_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "requested_view": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "enum": [
+                          null,
+                          "top",
+                          "iso_a",
+                          "iso_b"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requested_model": "qwen3.8-flash",
+        "returned_model": "qwen3.8-flash",
+        "response_id": "chatcmpl-62610bc8-504e-97a4-885e-002b34d2585b",
+        "http_status": 200,
+        "usage": {
+          "prompt_tokens": 11987,
+          "total_tokens": 11989,
+          "completion_tokens": 2,
+          "prompt_tokens_details": {
+            "cached_tokens": 11776,
+            "image_tokens": 7554,
+            "text_tokens": 4433
+          },
+          "completion_tokens_details": {}
+        },
+        "finish_reason": "stop",
+        "streaming_requested": true,
+        "response_mode": "sse",
+        "stream_stats": {
+          "packets": 4,
+          "content_chars": 2,
+          "done_received": true,
+          "first_packet_seconds": 7.3e-05,
+          "first_content_seconds": 0.000115
+        }
+      }
+    },
+    {
+      "stream": false,
+      "format": "json_object",
+      "json_object_received": false,
+      "error": "vision model response must be object",
+      "response_text": "[]",
+      "candidate": "training-data\\candidates\\2310e2a7037f4983b388ca62e1c3d007.json",
+      "metadata": {
+        "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+        "provider": "AliyunLLM",
+        "request_options": {
+          "max_tokens": 8000,
+          "enable_thinking": false
+        },
+        "response_format": {
+          "type": "json_object"
+        },
+        "requested_model": "qwen3.8-flash",
+        "returned_model": "qwen3.8-flash",
+        "response_id": "chatcmpl-6a3a12bd-866a-9586-bd0d-31b863661453",
+        "http_status": 200,
+        "usage": {
+          "prompt_tokens": 11709,
+          "total_tokens": 11711,
+          "completion_tokens": 2,
+          "prompt_tokens_details": {
+            "cached_tokens": 11520,
+            "image_tokens": 7554,
+            "text_tokens": 4155
+          },
+          "completion_tokens_details": {}
+        },
+        "finish_reason": "stop",
+        "streaming_requested": false,
+        "response_mode": "json"
+      }
+    },
+    {
+      "stream": false,
+      "format": "simple_schema",
+      "json_object_received": true,
+      "error": null,
+      "response_text": "{\"inspection_complete\": true, \"issues\": [{\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"status\": \"violated\", \"suspect_object_ids\": [\"emitter1\"], \"observation\": \"The feeder (identified by the green arrow and dashed volume) is positioned on the ground to the side of the conveyor belt. It is not located above the carrying surface of the conveyor.\", \"spatial_observation\": \"The emitter's bounding box minimum Y coordinate is 1.0m, while the conveyor surface maximum Y coordinate is approximately 1.0m. The X/Z coordinates show lateral separation rather than vertical overlap.\", \"reason\": \"The requirement specifies the feeder must be 'above' the upstream carrying surface. Currently, it is placed adjacent to the conveyor on the floor level, failing to meet the spatial condition for feeding items onto the belt.\", \"repair_intent\": \"Move the emitter horizontally so its emission volume aligns with the upstream end of the conveyor belt surface, and ensure it is elevated sufficiently to drop items onto the belt.\", \"evidence_image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"requested_view\": null}]}",
+      "candidate": "training-data\\candidates\\32aac643e42a44a7865416e8588613a9.json",
+      "metadata": {
+        "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+        "provider": "AliyunLLM",
+        "request_options": {
+          "max_tokens": 8000,
+          "enable_thinking": false
+        },
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "FactoryIO_vision",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "inspection_complete",
+                "issues"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "inspection_complete": {
+                  "type": "boolean"
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requested_model": "qwen3.8-flash",
+        "returned_model": "qwen3.8-flash",
+        "response_id": "chatcmpl-7c583805-9649-94d8-a69b-1c2de58025a1",
+        "http_status": 200,
+        "usage": {
+          "prompt_tokens": 11791,
+          "total_tokens": 12049,
+          "completion_tokens": 258,
+          "prompt_tokens_details": {
+            "cached_tokens": 11776,
+            "image_tokens": 7554,
+            "text_tokens": 4237
+          },
+          "completion_tokens_details": {}
+        },
+        "finish_reason": "stop",
+        "streaming_requested": false,
+        "response_mode": "json"
+      }
+    },
+    {
+      "stream": false,
+      "format": "full_schema",
+      "json_object_received": false,
+      "error": "vision model response must be object",
+      "response_text": "[]",
+      "candidate": "training-data\\candidates\\4354449e1b504c339a6566b7731dd236.json",
+      "metadata": {
+        "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+        "provider": "AliyunLLM",
+        "request_options": {
+          "max_tokens": 8000,
+          "enable_thinking": false
+        },
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "FactoryIO_vision",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "inspection_complete",
+                "issues"
+              ],
+              "properties": {
+                "inspection_complete": {
+                  "type": "boolean"
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "check_id",
+                      "status",
+                      "suspect_object_ids",
+                      "observation",
+                      "spatial_observation",
+                      "reason",
+                      "repair_intent",
+                      "evidence_image_ids",
+                      "requested_view"
+                    ],
+                    "properties": {
+                      "check_id": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "violated",
+                          "unobservable"
+                        ]
+                      },
+                      "suspect_object_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "observation": {
+                        "type": "string"
+                      },
+                      "spatial_observation": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "repair_intent": {
+                        "type": "string"
+                      },
+                      "evidence_image_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "requested_view": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "enum": [
+                          null,
+                          "top",
+                          "iso_a",
+                          "iso_b"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requested_model": "qwen3.8-flash",
+        "returned_model": "qwen3.8-flash",
+        "response_id": "chatcmpl-9e70dfaa-8d46-93ca-b866-64f0469d50ff",
+        "http_status": 200,
+        "usage": {
+          "prompt_tokens": 11987,
+          "total_tokens": 11989,
+          "completion_tokens": 2,
+          "prompt_tokens_details": {
+            "cached_tokens": 11776,
+            "image_tokens": 7554,
+            "text_tokens": 4433
+          },
+          "completion_tokens_details": {}
+        },
+        "finish_reason": "stop",
+        "streaming_requested": false,
+        "response_mode": "json"
+      }
+    }
+  ],
+  "scope": "protocol shape diagnostics only; no layout acceptance or causal claim from one trial per combination"
+}

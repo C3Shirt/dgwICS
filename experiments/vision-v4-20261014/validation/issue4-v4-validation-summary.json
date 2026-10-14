@@ -1,0 +1,176 @@
+{
+  "scope": "static layout + visual feedback only",
+  "runs": [
+    {
+      "run": "issue4-vision-v4-columns-20261014-001",
+      "status": "scene_verified",
+      "model_calls": 1,
+      "scene_revision": 0,
+      "elapsed_seconds": 10.049,
+      "tokens": {
+        "prompt_tokens": 11684,
+        "completion_tokens": 12,
+        "total_tokens": 11696
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-comparison-20261014-001",
+      "status": "visual_comparison_recorded",
+      "model_calls": 4,
+      "scene_revision": 0,
+      "elapsed_seconds": 29.852,
+      "tokens": {
+        "prompt_tokens": 37349,
+        "completion_tokens": 937,
+        "total_tokens": 38286
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-feed-fault-20261014-001",
+      "status": "scene_verified",
+      "model_calls": 4,
+      "scene_revision": 1,
+      "elapsed_seconds": 37.753,
+      "tokens": {
+        "prompt_tokens": 47318,
+        "completion_tokens": 771,
+        "total_tokens": 48089
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-feed-fault-20261014-002",
+      "status": "scene_verified",
+      "model_calls": 3,
+      "scene_revision": 1,
+      "elapsed_seconds": 35.31,
+      "tokens": {
+        "prompt_tokens": 32435,
+        "completion_tokens": 557,
+        "total_tokens": 32992
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-feed-fault-20261014-003",
+      "status": "needs_attention",
+      "model_calls": 4,
+      "scene_revision": 1,
+      "elapsed_seconds": 44.993,
+      "tokens": {
+        "prompt_tokens": 36147,
+        "completion_tokens": 1503,
+        "total_tokens": 37650
+      },
+      "error": "scene model HTTP 402",
+      "usage_missing_calls": 1,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-fresh-layout-20261014-001",
+      "status": "needs_attention",
+      "model_calls": 7,
+      "scene_revision": 0,
+      "elapsed_seconds": 96.875,
+      "tokens": {
+        "prompt_tokens": 57459,
+        "completion_tokens": 5276,
+        "total_tokens": 62735
+      },
+      "error": "grid_offset is for ancillary controls/supports, not feed or detection geometry",
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-fresh-layout-20261014-002",
+      "status": "scene_verified",
+      "model_calls": 1,
+      "scene_revision": 0,
+      "elapsed_seconds": 10.161,
+      "tokens": {
+        "prompt_tokens": 12542,
+        "completion_tokens": 16,
+        "total_tokens": 12558
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-negative-check-20261014-001",
+      "status": "scene_verified",
+      "model_calls": 1,
+      "scene_revision": 0,
+      "elapsed_seconds": 12.85,
+      "tokens": {
+        "prompt_tokens": 12252,
+        "completion_tokens": 12,
+        "total_tokens": 12264
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false,
+      "review_status": "known injected feeder offset was missed; automatic scene_verified is not accepted as correctness"
+    },
+    {
+      "run": "issue4-vision-v4-positive-check-20261014-001",
+      "status": "scene_verified",
+      "model_calls": 1,
+      "scene_revision": 0,
+      "elapsed_seconds": 10.642,
+      "tokens": {
+        "prompt_tokens": 12691,
+        "completion_tokens": 12,
+        "total_tokens": 12703
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    },
+    {
+      "run": "issue4-vision-v4-protocol-20261014-001",
+      "status": "protocol_probe_recorded",
+      "model_calls": 6,
+      "scene_revision": 0,
+      "elapsed_seconds": 33.27,
+      "tokens": {
+        "prompt_tokens": 70974,
+        "completion_tokens": 564,
+        "total_tokens": 71538
+      },
+      "error": null,
+      "usage_missing_calls": 0,
+      "plc_executed": false,
+      "live_pipeline_passed": false
+    }
+  ],
+  "python_tests": 535,
+  "layout_tests": 40,
+  "dashboard_tests": 12,
+  "accuracy_metrics": null,
+  "limitations": [
+    "Model false positives and one known injected-offset miss persist.",
+    "Raw [] protocol failures persist; six single trials do not establish causation.",
+    "Latest repair stopped at scene HTTP 402; no account-cause inference.",
+    "No PLC or material transport acceptance."
+  ]
+}

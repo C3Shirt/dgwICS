@@ -1,0 +1,35 @@
+{
+  "ticket_id": "ticket-d16d1f78fefe0e8e",
+  "failed_check_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR-1",
+    "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1"
+  ],
+  "requirement_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR",
+    "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+  ],
+  "affected_object_ids": [
+    "emitter1",
+    "remover1"
+  ],
+  "issue_type": "requirement_relation_violation",
+  "evidence_ids": [
+    "image-0-iso_a",
+    "image-0-iso_b",
+    "image-0-top",
+    "load-a0c3aec6f1e34bf18203772c4bfca386"
+  ],
+  "repair_intent": [
+    "任务要求供料器位于输送带上游承载面上方，以便物品能直接落入输送带。当前布局中供料器位于输送带侧面且无覆盖关系，违反空间定位要求。",
+    "任务要求移除器覆盖下游延伸路径。图像显示移除器位于输送带侧边，未能有效阻挡或捕获沿输送带轴向运动并离开末端的物品。",
+    "将供料器移动至输送带起始端（上游）的正上方，使其发射体积垂直投影覆盖输送带入口区域的承载面。",
+    "将移除器移动至输送带末端（下游）的正前方，使其移除体积对准并覆盖输送带物品的抛出路径。"
+  ],
+  "allowed_operations": [
+    "change",
+    "replace"
+  ],
+  "frozen_object_ids": [
+    "conveyor1"
+  ]
+}

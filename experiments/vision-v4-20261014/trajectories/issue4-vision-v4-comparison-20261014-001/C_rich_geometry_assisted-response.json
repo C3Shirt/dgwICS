@@ -1,0 +1,22 @@
+{
+  "inspection_complete": true,
+  "issues": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "emitter1"
+      ],
+      "observation": "The feeder (Emitter, identified by the green downward arrow) is positioned on the floor to the side of the conveyor. It is not located above the carrying surface of the belt.",
+      "spatial_observation": "Native spatial state shows the conveyor surface bounds are at X ≈ 29.375–30.25 m and Z ≈ 15.5–19.5 m. The emitter's position is centered at X ≈ 31.6875 m, which places it horizontally outside the conveyor's footprint.",
+      "reason": "The requirement states the feeder must be positioned above the upstream carrying surface of the conveyor. The current layout has the feeder beside the conveyor, meaning emitted items would spawn on the ground rather than on the belt.",
+      "repair_intent": "Move the emitter so its emission volume is directly above the upstream end of the conveyor belt.",
+      "evidence_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    }
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "status": "satisfied",
+  "checks": [
+    {
+      "check_id": "REQ-STATIC-001-1",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "conveyor-1"
+      ],
+      "observed": {
+        "count": 1
+      },
+      "expected": {
+        "capability": "conveyor",
+        "equals": 1
+      },
+      "evidence_ids": [
+        "load-dfc3c38edab5471d8e72792e5de1d866"
+      ],
+      "reason": "Object-role count compared with independent requirement.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-STATIC-001-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor-1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "capability": "conveyor",
+          "equals": 1
+        },
+        "evidence_ids": [
+          "load-dfc3c38edab5471d8e72792e5de1d866"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-STATIC-001-1",
+        "status": "satisfied",
+        "object_ids": [
+          "conveyor-1",
+          "feeder-1",
+          "remover-1"
+        ],
+        "relation_ids": [],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-top",
+          "image-0-iso_b"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "REQ-STATIC-002-1",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "feeder-1"
+      ],
+      "observed": {
+        "count": 1
+      },
+      "expected": {
+        "equals": 1
+      },
+      "evidence_ids": [
+        "load-dfc3c38edab5471d8e72792e5de1d866"
+      ],
+      "reason": "Object-role count compared with independent requirement.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-STATIC-002-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "feeder-1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1
+        },
+        "evidence_ids": [
+          "load-dfc3c38edab5471d8e72792e5de1d866"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-STATIC-002-1",
+        "status": "satisfied",
+        "object_ids": [
+          "feeder-1"
+        ],
+        "relation_ids": [],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-top",
+          "image-0-iso_b"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "REQ-STATIC-003-1",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "remover-1"
+      ],
+      "observed": {
+        "count": 1
+      },
+      "expected": {
+        "equals": 1
+      },
+      "evidence_ids": [
+        "load-dfc3c38edab5471d8e72792e5de1d866"
+      ],
+      "reason": "Object-role count compared with independent requirement.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-STATIC-003-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "remover-1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1
+        },
+        "evidence_ids": [
+          "load-dfc3c38edab5471d8e72792e5de1d866"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-STATIC-003-1",
+        "status": "satisfied",
+        "object_ids": [
+          "remover-1"
+        ],
+        "relation_ids": [],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-top",
+          "image-0-iso_b"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "REQ-STATIC-004-1",
+      "status": "satisfied",
+      "checker": "visual",
+      "object_ids": [
+        "feeder-1",
+        "conveyor-1"
+      ],
+      "observed": null,
+      "expected": {
+        "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+      },
+      "evidence_ids": [
+        "load-dfc3c38edab5471d8e72792e5de1d866",
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-STATIC-004-1",
+        "status": "unknown",
+        "checker": "native_geometry",
+        "object_ids": [
+          "feeder-1",
+          "conveyor-1"
+        ],
+        "observed": null,
+        "expected": {
+          "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+        },
+        "evidence_ids": [
+          "load-dfc3c38edab5471d8e72792e5de1d866"
+        ],
+        "reason": "This requested relation requires visual evidence.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-STATIC-004-1",
+        "status": "satisfied",
+        "object_ids": [
+          "feeder-1",
+          "conveyor-1"
+        ],
+        "relation_ids": [
+          "rel-1"
+        ],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-top",
+          "image-0-iso_b"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "REQ-STATIC-005-1",
+      "status": "satisfied",
+      "checker": "visual",
+      "object_ids": [
+        "remover-1",
+        "conveyor-1"
+      ],
+      "observed": null,
+      "expected": {
+        "question": "Does the remover cover the downstream extension path of the conveyor?"
+      },
+      "evidence_ids": [
+        "load-dfc3c38edab5471d8e72792e5de1d866",
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-STATIC-005-1",
+        "status": "unknown",
+        "checker": "native_geometry",
+        "object_ids": [
+          "remover-1",
+          "conveyor-1"
+        ],
+        "observed": null,
+        "expected": {
+          "question": "Does the remover cover the downstream extension path of the conveyor?"
+        },
+        "evidence_ids": [
+          "load-dfc3c38edab5471d8e72792e5de1d866"
+        ],
+        "reason": "This requested relation requires visual evidence.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-STATIC-005-1",
+        "status": "satisfied",
+        "object_ids": [
+          "remover-1",
+          "conveyor-1"
+        ],
+        "relation_ids": [
+          "rel-2"
+        ],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-top",
+          "image-0-iso_b"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "G-registration",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "conveyor-1",
+        "feeder-1",
+        "remover-1"
+      ],
+      "observed": {
+        "failed_object_ids": []
+      },
+      "expected": {},
+      "evidence_ids": [
+        "load-dfc3c38edab5471d8e72792e5de1d866"
+      ],
+      "reason": "Actual voxel object registration.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "G-registration",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor-1",
+          "feeder-1",
+          "remover-1"
+        ],
+        "observed": {
+          "failed_object_ids": []
+        },
+        "expected": {},
+        "evidence_ids": [
+          "load-dfc3c38edab5471d8e72792e5de1d866"
+        ],
+        "reason": "Actual voxel object registration.",
+        "missing_capability": null
+      },
+      "visual_result": null
+    }
+  ],
+  "coverage": {
+    "REQ-STATIC-001": [
+      "REQ-STATIC-001-1"
+    ],
+    "REQ-STATIC-002": [
+      "REQ-STATIC-002-1"
+    ],
+    "REQ-STATIC-003": [
+      "REQ-STATIC-003-1"
+    ],
+    "REQ-STATIC-004": [
+      "REQ-STATIC-004-1"
+    ],
+    "REQ-STATIC-005": [
+      "REQ-STATIC-005-1"
+    ]
+  },
+  "registration_passed": true,
+  "static_requirements_covered": true,
+  "scope": "finite static scene evidence; no PLC or actual material transport acceptance",
+  "global_review": {
+    "status": "satisfied",
+    "summary": "0 anomalies reported; inspection complete.",
+    "image_ids": [
+      "image-0-iso_a",
+      "image-0-top",
+      "image-0-iso_b"
+    ],
+    "findings": []
+  }
+}

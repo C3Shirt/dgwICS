@@ -1,0 +1,39 @@
+{
+  "inspection_complete": true,
+  "issues": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "emitter1"
+      ],
+      "observation": "供料器（emitter1）及其虚线发射体积位于输送带侧面的地面区域，并未处于输送带上游承载面正上方。在 iso_a 和 iso_b 视图中均可见其与输送带侧面保持水平间距。",
+      "spatial_observation": "",
+      "reason": "要求供料器位于上游承载面上方，但实际布局显示其横向偏离输送带承载路径，无法将物品直接投放到皮带上。",
+      "repair_intent": "将供料器移动到输送带上游端承载面的正上方，使发射体积与皮带表面垂直对齐。",
+      "evidence_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    },
+    {
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "remover1"
+      ],
+      "observation": "移除器（remover1）及其虚线体积位于输送带下游端的侧面地面区域，未覆盖输送带末端的延伸路径。从多个视角观察，移除体积与输送带承载面之间有明显的水平间隙。",
+      "spatial_observation": "",
+      "reason": "要求移除器覆盖下游延伸路径，但其功能体积偏离了输送带轴线，无法拦截沿输送带运动的物品。",
+      "repair_intent": "将移除器移动到输送带下游末端，使其移除体积覆盖输送带轴线的延伸路径。",
+      "evidence_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    }
+  ]
+}

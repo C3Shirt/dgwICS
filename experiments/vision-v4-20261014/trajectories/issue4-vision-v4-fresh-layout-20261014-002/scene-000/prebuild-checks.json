@@ -1,0 +1,113 @@
+[
+  {
+    "check_id": "REQ-STATIC-001-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "conveyor-1"
+    ],
+    "observed": {
+      "count": 1
+    },
+    "expected": {
+      "capability": "conveyor",
+      "equals": 1
+    },
+    "evidence_ids": [
+      "layout-61d330c000a30013dcf4e81ec29623ba00843f6c38d3461393a3d009869c3a55"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-STATIC-002-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "feeder-1"
+    ],
+    "observed": {
+      "count": 1
+    },
+    "expected": {
+      "equals": 1
+    },
+    "evidence_ids": [
+      "layout-61d330c000a30013dcf4e81ec29623ba00843f6c38d3461393a3d009869c3a55"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-STATIC-003-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "remover-1"
+    ],
+    "observed": {
+      "count": 1
+    },
+    "expected": {
+      "equals": 1
+    },
+    "evidence_ids": [
+      "layout-61d330c000a30013dcf4e81ec29623ba00843f6c38d3461393a3d009869c3a55"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-STATIC-004-1",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "feeder-1",
+      "conveyor-1"
+    ],
+    "observed": null,
+    "expected": {
+      "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+    },
+    "evidence_ids": [
+      "layout-61d330c000a30013dcf4e81ec29623ba00843f6c38d3461393a3d009869c3a55"
+    ],
+    "reason": "This requested relation requires visual evidence.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-STATIC-005-1",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "remover-1",
+      "conveyor-1"
+    ],
+    "observed": null,
+    "expected": {
+      "question": "Does the remover cover the downstream extension path of the conveyor?"
+    },
+    "evidence_ids": [
+      "layout-61d330c000a30013dcf4e81ec29623ba00843f6c38d3461393a3d009869c3a55"
+    ],
+    "reason": "This requested relation requires visual evidence.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "G-registration",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "conveyor-1",
+      "feeder-1",
+      "remover-1"
+    ],
+    "observed": null,
+    "expected": {},
+    "evidence_ids": [
+      "layout-61d330c000a30013dcf4e81ec29623ba00843f6c38d3461393a3d009869c3a55"
+    ],
+    "reason": "Registration requires actual software loading.",
+    "missing_capability": null
+  }
+]

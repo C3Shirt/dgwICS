@@ -1,0 +1,125 @@
+{
+  "inspection_complete": true,
+  "issues": [],
+  "raw_output": {
+    "inspection_complete": true,
+    "issues": []
+  },
+  "contract_version": 2,
+  "global_review": {
+    "status": "satisfied",
+    "summary": "0 anomalies reported; inspection complete.",
+    "image_ids": [
+      "image-0-iso_a",
+      "image-0-top",
+      "image-0-iso_b"
+    ],
+    "findings": []
+  },
+  "check_results": [
+    {
+      "check_id": "REQ-STATIC-001-1",
+      "status": "satisfied",
+      "object_ids": [
+        "conveyor-1",
+        "feeder-1",
+        "remover-1"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-STATIC-002-1",
+      "status": "satisfied",
+      "object_ids": [
+        "feeder-1"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-STATIC-003-1",
+      "status": "satisfied",
+      "object_ids": [
+        "remover-1"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-STATIC-004-1",
+      "status": "satisfied",
+      "object_ids": [
+        "feeder-1",
+        "conveyor-1"
+      ],
+      "relation_ids": [
+        "rel-1"
+      ],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-STATIC-005-1",
+      "status": "satisfied",
+      "object_ids": [
+        "remover-1",
+        "conveyor-1"
+      ],
+      "relation_ids": [
+        "rel-2"
+      ],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    }
+  ],
+  "inspection_mode": "geometry_assisted"
+}

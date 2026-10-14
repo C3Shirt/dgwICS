@@ -1,0 +1,39 @@
+{
+  "inspection_complete": true,
+  "issues": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "emitter1"
+      ],
+      "observation": "The feeder's dashed emission volume is positioned entirely to the side of the conveyor belt. It does not intersect with or sit above the carrying surface where items would land.",
+      "spatial_observation": "The conveyor spans from X=29.375 to 30.25 and Z=15.5 to 19.5. The feeder's bounds are at X=31.25 to 32.125, placing it approximately 1 meter laterally away from the conveyor's edge.",
+      "reason": "The requirement states the feeder must be located above the upstream carrying surface, but it is currently placed on the floor beside the conveyor path.",
+      "repair_intent": "Move the feeder horizontally so its emission volume is directly centered over the upstream end of the conveyor belt.",
+      "evidence_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    },
+    {
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "remover1"
+      ],
+      "observation": "The remover's volume is offset to the left of the conveyor's downstream exit point (relative to the flow direction). It does not cover the straight extension path of the belt.",
+      "spatial_observation": "The conveyor ends at Z=19.5. While the remover starts at this Z-depth, its X-position is shifted to [29.375, 30.25] while the emitter and the general alignment suggest a deviation from the center line or an incorrect lateral placement relative to the intended 'straight' transport layout.",
+      "reason": "The requirement specifies that the remover must cover the downstream extension path; currently, it is displaced laterally and would miss items traveling in a straight line off the belt.",
+      "repair_intent": "Align the remover's volume with the central axis of the conveyor's downstream extension.",
+      "evidence_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    }
+  ]
+}

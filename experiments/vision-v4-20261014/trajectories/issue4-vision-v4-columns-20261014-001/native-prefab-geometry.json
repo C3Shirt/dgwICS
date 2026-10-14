@@ -1,0 +1,1921 @@
+{
+  "schema_version": 1,
+  "protocol": "factoryio-agent-file-bridge/1",
+  "request_id": "5c49701392d245fbaf345a70e6582c64",
+  "action": "prefab_geometry",
+  "ok": true,
+  "completed_at": "2026-10-14T08:58:52.9779392Z",
+  "error": null,
+  "data": {
+    "app_version": "2.5.8",
+    "assembly_sha256": "1fc9429d6ddb2ac6f2285e8ab43f5116a26b03e06dfd33a5f6a1a5345636f2ff",
+    "coordinate_system": {
+      "grid_metres": 0.125,
+      "axis_order": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "vertical_axis": "Y",
+      "horizontal_axes": [
+        "X",
+        "Z"
+      ],
+      "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125",
+      "evidence": "Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld"
+    },
+    "world_bounds": {
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        59.625,
+        9.0,
+        35.625
+      ],
+      "grid_dimensions": [
+        477,
+        72,
+        285
+      ],
+      "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+    },
+    "bridge": {
+      "protocol": "factoryio-agent-file-bridge/1",
+      "geometry_version": 2,
+      "bridge_sha256": "3eff062fecc9720a23bc65294d1a61ac8269cf635bdc2acfb8ea2acd1b75e387"
+    },
+    "prefabs": {
+      "Emitter": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.1875,
+            -0.5625
+          ],
+          "max": [
+            0.4375,
+            0.3125,
+            0.5625
+          ]
+        },
+        "component_geometry_local": {
+          "emitter": {
+            "origin": [
+              0.0,
+              -0.125,
+              0.0
+            ]
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Remover": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.1875,
+            -0.5625
+          ],
+          "max": [
+            0.4375,
+            0.3125,
+            0.5625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PalletizingBox": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BoxS": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.3125
+          ],
+          "max": [
+            0.1875,
+            0.1875,
+            0.3125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BoxM": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.3125
+          ],
+          "max": [
+            0.1875,
+            0.1875,
+            0.3125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BoxL": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.1875,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.1875,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Pallet": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.0625,
+            -0.5625
+          ],
+          "max": [
+            0.4375,
+            0.0625,
+            0.5625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "SquarePallet": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.0625,
+            -0.4375
+          ],
+          "max": [
+            0.4375,
+            0.0625,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "StackableBox": {
+        "bounds_local_metres": {
+          "min": [
+            -0.3125,
+            -0.1875,
+            -0.4375
+          ],
+          "max": [
+            0.3125,
+            0.1875,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RawMaterialBlue": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RawMaterialGreen": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RawMaterialMetal": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ProductLidBlue": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ProductLidGreen": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ProductLidMetal": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ProductBaseBlue": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ProductBaseGreen": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ProductBaseMetal": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ChainTransfer": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -0.4375
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "LoadingConveyor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -0.6875
+          ],
+          "max": [
+            0.8125,
+            0.3125,
+            0.5625
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              1.74845553e-07,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.45,
+            "surface_bounds": {
+              "min": [
+                -0.5624413,
+                -0.3136992,
+                -0.686373651
+              ],
+              "max": [
+                0.7444405,
+                0.3109992,
+                0.5619764
+              ]
+            }
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ChuteConveyorLow": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -0.5625
+          ],
+          "max": [
+            0.5625,
+            0.4375,
+            0.5625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RollerConveyor2M": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -1.0625
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.45,
+            "surface_bounds": {
+              "min": [
+                -0.562412858,
+                -0.311874777,
+                -1.06245947
+              ],
+              "max": [
+                0.5624815,
+                0.3116745,
+                0.93694067
+              ]
+            }
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RollerConveyor4M": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -2.0625
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            1.9375
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.45,
+            "surface_bounds": {
+              "min": [
+                -0.5624472,
+                -0.311469018,
+                -2.062491
+              ],
+              "max": [
+                0.5624472,
+                0.3119293,
+                1.937201
+              ]
+            }
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RollerConveyor6M": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -2.9375
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            3.0625
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.45,
+            "surface_bounds": {
+              "min": [
+                -0.5624472,
+                -0.31212908,
+                -2.937355
+              ],
+              "max": [
+                0.5624472,
+                0.311269224,
+                3.062355
+              ]
+            }
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "FreeRoller": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            0.0625,
+            -0.3125
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            -0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "CurvedRollerConveyor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.9375,
+            -0.3125,
+            -1.0625
+          ],
+          "max": [
+            1.0625,
+            0.4375,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RollerStop": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.1875,
+            -0.0625
+          ],
+          "max": [
+            0.4375,
+            0.1875,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Turntable": {
+        "bounds_local_metres": {
+          "min": [
+            -0.9375,
+            -0.3125,
+            -0.9375
+          ],
+          "max": [
+            0.9375,
+            0.4375,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BeltConveyor2M": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.4375,
+            -1.0625
+          ],
+          "max": [
+            0.4375,
+            0.5625,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.437174976,
+                -0.435766637,
+                -1.06202412
+              ],
+              "max": [
+                0.437174976,
+                0.5617666,
+                0.9370241
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BeltConveyor4M": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.4375,
+            -2.0625
+          ],
+          "max": [
+            0.4375,
+            0.5625,
+            1.9375
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.437174976,
+                -0.4360406,
+                -2.06215334
+              ],
+              "max": [
+                0.437174976,
+                0.5614927,
+                1.93735945
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BeltConveyor6M": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.4375,
+            -3.0625
+          ],
+          "max": [
+            0.4375,
+            0.5625,
+            2.9375
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.436854541,
+                -0.437062,
+                -3.06215334
+              ],
+              "max": [
+                0.4374954,
+                0.5604713,
+                2.93659687
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "CurvedBeltConveyor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.4375,
+            -0.4375
+          ],
+          "max": [
+            0.4375,
+            0.6875,
+            0.5625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BeltConveyorGate": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.0625,
+            -0.6875
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            0.8125
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.524046361,
+                -0.00206241,
+                -0.6543342
+              ],
+              "max": [
+                0.5273575,
+                0.2545229,
+                0.7684127
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "BeltConveyorInclined": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.5625,
+            -1.8125
+          ],
+          "max": [
+            0.4375,
+            1.3125,
+            1.9375
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              -3.852492e-06,
+              0.400349051,
+              -0.916362762
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.437175155,
+                -0.501748,
+                -1.8121556
+              ],
+              "max": [
+                0.437175155,
+                1.30987,
+                1.93722975
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ChuteConveyor": {
+        "bounds_local_metres": {
+          "min": [
+            -1.0625,
+            -0.5625,
+            -0.4375
+          ],
+          "max": [
+            1.1875,
+            0.5625,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ConveyorScale": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.1875,
+            -0.6875
+          ],
+          "max": [
+            0.3125,
+            0.8125,
+            0.5625
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              2.27592977e-06,
+              0.0,
+              -1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.5284682,
+                0.5573504,
+                -0.660749853
+              ],
+              "max": [
+                0.2744665,
+                0.810729,
+                0.530749857
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PivotArmSorter": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.6875
+          ],
+          "max": [
+            0.0625,
+            0.5625,
+            0.6875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PopUpWheelSorter": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.1875,
+            -0.4375
+          ],
+          "max": [
+            0.4375,
+            0.3125,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Pusher": {
+        "bounds_local_metres": {
+          "min": [
+            -0.6875,
+            -0.0625,
+            -0.3125
+          ],
+          "max": [
+            0.4375,
+            0.4375,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "StopBlade": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.1875,
+            -0.0625
+          ],
+          "max": [
+            0.4375,
+            0.1875,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "StraightSpurConveyor": {
+        "bounds_local_metres": {
+          "min": [
+            -1.0625,
+            -0.5625,
+            -0.6875
+          ],
+          "max": [
+            0.9375,
+            0.5625,
+            1.3125
+          ]
+        },
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              -0.7071069,
+              0.0,
+              0.7071067
+            ],
+            "default_speed_metres_per_second": 0.8,
+            "surface_bounds": {
+              "min": [
+                -1.02979064,
+                -0.5598269,
+                -0.6560173
+              ],
+              "max": [
+                0.9358432,
+                0.5523011,
+                1.31106639
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PositioningLeftBar": {
+        "bounds_local_metres": {
+          "min": [
+            -0.3125,
+            -0.4375,
+            -0.4375
+          ],
+          "max": [
+            0.8125,
+            0.4375,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PositioningRightBar": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.4375,
+            -0.4375
+          ],
+          "max": [
+            0.6875,
+            0.4375,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Aligner1": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.0625,
+            -1.8125
+          ],
+          "max": [
+            0.4375,
+            0.0625,
+            1.5625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Aligner2": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -0.0625,
+            -0.9375
+          ],
+          "max": [
+            0.3125,
+            0.0625,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Aligner3": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.9375
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.8125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "WheelAligner": {
+        "bounds_local_metres": {
+          "min": [
+            -0.3125,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.0625,
+            0.3125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "MetalCorner": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Bracket": {
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.5625,
+            -0.0625
+          ],
+          "max": [
+            0.5625,
+            0.6875,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "CapacitiveSensor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {
+          "sensor": {
+            "origin": [
+              0.0440406874,
+              0.0,
+              -3.7252903e-09
+            ],
+            "direction": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "range_metres": 0.1
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "DiffusePhotoelectricSensor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {
+          "sensor": {
+            "origin": [
+              0.04218865,
+              -0.022605896,
+              0.000425338745
+            ],
+            "direction": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "range_metres": 0.8
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "InductiveSensor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {
+          "sensor": {
+            "origin": [
+              0.04404068,
+              0.0,
+              0.0
+            ],
+            "direction": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "range_metres": 0.1
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "LightCurtainEmitter": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.6875,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.5625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "LightCurtainReceiver": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.6875,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.5625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RetroreflectivePhotoelectricSensor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {
+          "sensor": {
+            "origin": [
+              0.0223000087,
+              -0.00450000167,
+              -0.009499999
+            ],
+            "direction": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "range_metres": 1.0
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RetroreflectiveMirror": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "RFIDReader": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "VisionSensor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {
+          "sensor": {
+            "origin": [
+              -7.45058149e-09,
+              -0.06100001,
+              0.004999996
+            ],
+            "direction": [
+              5.684342e-14,
+              -1.00000036,
+              3.57627925e-07
+            ],
+            "range_metres": 2.0
+          }
+        },
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "EmergencyStopButton": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "LightIndicator": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "DigitalDisplay": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Potentiometer": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Selector": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "StartPushButton": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ResetPushButton": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "StopPushButton": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PushButtonNO": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PushButtonNC": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "ElectricSwitchboard": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.4375,
+            -0.3125
+          ],
+          "max": [
+            0.1875,
+            0.3125,
+            0.3125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Column": {
+        "bounds_local_metres": {
+          "min": [
+            -0.1875,
+            -1.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.9375,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "MachiningCenter": {
+        "bounds_local_metres": {
+          "min": [
+            -2.8125,
+            -1.1875,
+            -2.8125
+          ],
+          "max": [
+            3.1875,
+            1.4375,
+            2.8125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Elevator": {
+        "bounds_local_metres": {
+          "min": [
+            -0.9375,
+            -4.1875,
+            -0.9375
+          ],
+          "max": [
+            0.9375,
+            4.1875,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PickNPlace": {
+        "bounds_local_metres": {
+          "min": [
+            -1.4375,
+            -1.4375,
+            -1.0625
+          ],
+          "max": [
+            1.4375,
+            2.1875,
+            1.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "StackerCrane": {
+        "bounds_local_metres": {
+          "min": [
+            -0.6875,
+            -4.1875,
+            -7.3125
+          ],
+          "max": [
+            0.6875,
+            4.0625,
+            7.3125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Rack": {
+        "bounds_local_metres": {
+          "min": [
+            -0.6875,
+            -3.1875,
+            -1.6875
+          ],
+          "max": [
+            0.5625,
+            4.4375,
+            1.6875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Palletizer": {
+        "bounds_local_metres": {
+          "min": [
+            -1.1875,
+            -1.3125,
+            -1.0625
+          ],
+          "max": [
+            1.1875,
+            1.4375,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "TwoAxisPickNPlace": {
+        "bounds_local_metres": {
+          "min": [
+            -0.9375,
+            -1.3125,
+            -0.3125
+          ],
+          "max": [
+            1.3125,
+            2.1875,
+            0.3125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Tank": {
+        "bounds_local_metres": {
+          "min": [
+            -1.1875,
+            -2.3125,
+            -1.8125
+          ],
+          "max": [
+            1.1875,
+            2.3125,
+            1.9375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "AlarmSiren": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.1875
+          ],
+          "max": [
+            0.1875,
+            0.1875,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "VisualStatusIndicator": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.1875,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "WarningLight": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.1875,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "CornerHandrail": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.4375,
+            -0.5625
+          ],
+          "max": [
+            0.5625,
+            0.4375,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "HandrailS": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.3125,
+            -0.3125
+          ],
+          "max": [
+            0.0625,
+            0.5625,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "HandrailM": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.3125,
+            -0.5625
+          ],
+          "max": [
+            0.0625,
+            0.5625,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "HandrailL": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.4375,
+            -0.9375
+          ],
+          "max": [
+            0.0625,
+            0.4375,
+            1.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "HandrailXL": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.4375,
+            -1.4375
+          ],
+          "max": [
+            0.0625,
+            0.4375,
+            1.5625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "StairsHandrail": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -1.3125,
+            -1.1875
+          ],
+          "max": [
+            0.0625,
+            1.0625,
+            1.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PlatformS": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.0625,
+            -0.3125
+          ],
+          "max": [
+            0.5625,
+            0.1875,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PlatformM": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.0625,
+            -0.5625
+          ],
+          "max": [
+            0.5625,
+            0.1875,
+            0.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PlatformL": {
+        "bounds_local_metres": {
+          "min": [
+            -1.5625,
+            -0.0625,
+            -1.0625
+          ],
+          "max": [
+            1.4375,
+            0.1875,
+            0.9375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PlatformXL": {
+        "bounds_local_metres": {
+          "min": [
+            -1.4375,
+            -0.1875,
+            -1.5625
+          ],
+          "max": [
+            1.5625,
+            0.0625,
+            1.4375
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "PlatformPillar": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.6875,
+            -0.0625
+          ],
+          "max": [
+            0.0625,
+            0.6875,
+            0.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Stairs": {
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -1.3125,
+            -2.0625
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            0.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "Safeguard": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -0.8125,
+            -1.3125
+          ],
+          "max": [
+            0.0625,
+            0.6875,
+            0.8125
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "SafeguardL": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -1.3125,
+            -1.0625
+          ],
+          "max": [
+            0.0625,
+            1.0625,
+            1.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "SafeguardI": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -1.3125,
+            -0.9375
+          ],
+          "max": [
+            0.0625,
+            1.0625,
+            1.1875
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      },
+      "SafetyDoor": {
+        "bounds_local_metres": {
+          "min": [
+            -0.0625,
+            -1.1875,
+            -1.0625
+          ],
+          "max": [
+            0.0625,
+            1.3125,
+            1.0625
+          ]
+        },
+        "component_geometry_local": {},
+        "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+      }
+    }
+  }
+}

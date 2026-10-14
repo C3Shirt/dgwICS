@@ -1,0 +1,36 @@
+{
+  "reason": "Align feeder over upstream conveyor surface and remover over downstream extension path using supported relative placement operations.",
+  "changes": [
+    {
+      "object_id": "emitter1",
+      "placement": {
+        "kind": "emitter_over_conveyor",
+        "relative_to": "conveyor1",
+        "along_fraction": 0.0
+      }
+    },
+    {
+      "object_id": "remover1",
+      "placement": {
+        "kind": "remover_after_conveyor",
+        "relative_to": "conveyor1",
+        "clearance_grid": 0
+      }
+    }
+  ],
+  "add_objects": [],
+  "remove_object_ids": [],
+  "relation_updates": [],
+  "remove_relation_ids": [],
+  "relation_impacts": [
+    {
+      "relation_id": "rel1",
+      "expected_effect": "Feeder volume will be centered over upstream conveyor surface, satisfying above relation."
+    },
+    {
+      "relation_id": "rel2",
+      "expected_effect": "Remover volume will cover downstream conveyor extension, satisfying covers relation."
+    }
+  ],
+  "unresolved": []
+}

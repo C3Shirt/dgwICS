@@ -1,0 +1,36 @@
+{
+  "previous_failures": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "object_ids": [
+        "emitter1"
+      ]
+    },
+    {
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "status": "violated",
+      "object_ids": [
+        "remover1"
+      ]
+    }
+  ],
+  "current_failures": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "object_ids": [
+        "emitter1"
+      ]
+    },
+    {
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "status": "violated",
+      "object_ids": [
+        "remover1"
+      ]
+    }
+  ],
+  "unchanged_failure_set": true,
+  "evaluated_layout_sha256": "1d932711ef9d8127e978fb92906707714da0187e03cfcf428a499b8d3a220ea2"
+}

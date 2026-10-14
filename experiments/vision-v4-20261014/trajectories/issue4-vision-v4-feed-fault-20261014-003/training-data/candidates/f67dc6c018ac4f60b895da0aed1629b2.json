@@ -1,0 +1,1892 @@
+{
+  "schema_version": 1,
+  "kind": "agent_candidate",
+  "candidate_id": "f67dc6c018ac4f60b895da0aed1629b2",
+  "run_id": "dc0d13853545495d9a1476e9ae322128",
+  "role": "scene",
+  "phase": "scene_repair",
+  "scenario_id": null,
+  "lineage_group": "simple-scene",
+  "source_kind": "live_model",
+  "started_at": "2026-10-14T09:01:18.206305+00:00",
+  "status": "call_error",
+  "handoff_id": null,
+  "versions": {},
+  "policy": {},
+  "prompt_sha256": "a9c22134bab056a7a15eed18d21e98a3b8d7348e0535d3ee6fb8509eee16b64b",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You repair an existing Factory I/O layout from verified findings.\nResolve the listed violated requirements with the smallest justified change.\n\nWork in this order:\n1. Read repair_tickets, relevant_requirements and evidence_refs. Distinguish actual\n   native measurements from visual observations and device knowledge.\n2. Identify the minimal configuration, placement, orientation or justified\n   replacement/addition/removal supported by supported_patch_operations.\n3. Prefer supported relative placement over guessed world coordinates. Respect\n   native_measurements and supplied placement parameter interfaces.\n4. Change only allowed_object_ids. Preserve unrelated IDs, positions, settings and\n   satisfied constraints. Report impacts on related_relations; update relation\n   mappings when justified structural changes require it. Anchors are references.\n5. If evidence or capability is insufficient, return unresolved with the missing\n   capability/observation instead of guessing or redesigning the scene.\n\ncurrent_layout_subset includes affected objects and necessary frozen anchors only.\nDo not change original requirements or verified semantics. Do not claim a patch\nworked: tools rebuild, reload and collect fresh evidence. Return only a JSON LocalPatch object.\n"
+    },
+    {
+      "role": "user",
+      "content": "{\"phase\": \"scene_repair\", \"scene_stage\": \"local_repair\", \"repair_tickets\": [{\"ticket_id\": \"ticket-cdf0eb17b3c8fdc1\", \"failed_check_ids\": [\"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\"], \"requirement_ids\": [\"REQ-FEEDER-ABOVE-CONVEYOR\", \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH\"], \"affected_object_ids\": [\"emitter1\", \"remover1\"], \"issue_type\": \"requirement_relation_violation\", \"evidence_ids\": [\"image-0-iso_a\", \"image-0-iso_b\", \"image-0-top\", \"load-c0366719845747439c9b849313f122be\"], \"repair_intent\": [\"The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.\", \"The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.\", \"Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.\", \"Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end.\"], \"allowed_operations\": [\"change\", \"replace\"], \"frozen_object_ids\": [\"conveyor1\"]}], \"relevant_requirements\": [{\"requirement_id\": \"REQ-FEEDER-ABOVE-CONVEYOR\", \"source_text\": \"供料器位于输送带上游承载面上方\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": \"feeder\", \"target_role\": \"conveyor_upstream\", \"predicate\": \"visual_relation\", \"arguments\": {\"question\": \"Is the feeder positioned above the upstream carrying surface of the conveyor?\"}, \"required\": true, \"evidence_methods\": [\"visual\"]}, {\"requirement_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH\", \"source_text\": \"移除器覆盖下游延伸路径\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": \"remover\", \"target_role\": \"conveyor_downstream\", \"predicate\": \"visual_relation\", \"arguments\": {\"question\": \"Does the remover cover the downstream extension path of the conveyor?\"}, \"required\": true, \"evidence_methods\": [\"visual\"]}], \"current_objects\": [{\"id\": \"conveyor1\", \"prefab\": \"BeltConveyor4M\", \"roles\": [\"conveyor\", \"conveyor_upstream\", \"conveyor_downstream\"], \"function\": \"Main belt conveyor that transports items from upstream to downstream, serving as the reference for both upstream and downstream spatial constraints.\", \"placement\": {\"kind\": \"absolute\", \"position\": [238, 3, 140], \"yaw_deg\": 0}, \"settings\": [], \"template_id\": \"source-6862ca46dbe17012078c/object/24\"}, {\"id\": \"emitter1\", \"prefab\": \"Emitter\", \"roles\": [\"feeder\"], \"function\": \"Feeder that emits items onto the upstream carrying surface of the conveyor.\", \"placement\": {\"kind\": \"absolute\", \"position\": [238, 9, 124], \"yaw_deg\": 0}, \"settings\": [], \"template_id\": \"source-04da4aaaacbb3e5e0ade/object/18\"}, {\"id\": \"remover1\", \"prefab\": \"Remover\", \"roles\": [\"remover\"], \"function\": \"Remover that covers the downstream extension path beyond the conveyor end.\", \"placement\": {\"kind\": \"absolute\", \"position\": [238, 9, 160], \"yaw_deg\": 0}, \"settings\": [], \"template_id\": \"source-04da4aaaacbb3e5e0ade/object/19\"}], \"current_layout_subset\": [{\"id\": \"conveyor1\", \"template_id\": \"source-6862ca46dbe17012078c/object/24\", \"position\": [238, 3, 140], \"yaw_deg\": 0, \"settings\": [], \"tag_names\": {\"0\": \"conveyor1 0\"}}, {\"id\": \"emitter1\", \"template_id\": \"source-04da4aaaacbb3e5e0ade/object/18\", \"position\": [238, 9, 124], \"yaw_deg\": 0, \"settings\": [], \"tag_names\": {\"0\": \"emitter1 0\"}}, {\"id\": \"remover1\", \"template_id\": \"source-04da4aaaacbb3e5e0ade/object/19\", \"position\": [238, 9, 160], \"yaw_deg\": 0, \"settings\": [], \"tag_names\": {\"0\": \"remover1 0\"}}], \"related_relations\": [{\"id\": \"rel1\", \"subject_id\": \"emitter1\", \"predicate\": \"above\", \"target_id\": \"conveyor1\", \"parameters\": {\"region\": \"upstream carrying surface\"}, \"requirement_ids\": [\"REQ-FEEDER-ABOVE-CONVEYOR\"]}, {\"id\": \"rel2\", \"subject_id\": \"remover1\", \"predicate\": \"covers\", \"target_id\": \"conveyor1\", \"parameters\": {\"region\": \"downstream extension path\"}, \"requirement_ids\": [\"REQ-REMOVER-COVERS-DOWNSTREAM-PATH\"]}], \"native_measurements\": {\"conveyor1\": {\"prefab\": \"BeltConveyor4M\", \"instance_source\": \"current load receipt\", \"instance\": {\"key\": \"0435575f-6add-5b93-aa80-013379bbbbbc\", \"prefab\": \"BeltConveyor4M\", \"position_grid\": [238, 3, 140], \"rotation\": [0.0, 0.0, 0.0, 1.0], \"fine_position\": 0.0, \"fine_rotation\": 0.0, \"bounds_world\": {\"min\": [29.375, 0.0, 15.5], \"max\": [30.25, 1.0, 19.5]}, \"component_geometry\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.6, \"surface_bounds\": {\"min\": [29.3753242, 0.00145938993, 15.5003462], \"max\": [30.2496758, 0.9989927, 19.4998589]}, \"evidence\": \"BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)\"}}, \"native_registered\": true, \"id\": \"conveyor1\"}, \"prefab_source\": \"current native prefab receipt\", \"prefab_local_geometry\": {\"bounds_local_metres\": {\"min\": [-0.4375, -0.4375, -2.0625], \"max\": [0.4375, 0.5625, 1.9375]}, \"component_geometry_local\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.6, \"surface_bounds\": {\"min\": [-0.437174976, -0.4360406, -2.06215334], \"max\": [0.437174976, 0.5614927, 1.93735945]}, \"evidence\": \"BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)\"}}, \"evidence\": \"serialized VoxelObject.localVoxels and native component transforms\"}}, \"emitter1\": {\"prefab\": \"Emitter\", \"instance_source\": \"current load receipt\", \"instance\": {\"key\": \"ed287bf4-4093-51f0-8339-4cdd3b807be6\", \"prefab\": \"Emitter\", \"position_grid\": [238, 9, 124], \"rotation\": [0.0, 0.0, 0.0, 1.0], \"fine_position\": 0.0, \"fine_rotation\": 0.0, \"bounds_world\": {\"min\": [29.375, 1.0, 15.0], \"max\": [30.25, 1.5, 16.125]}, \"component_geometry\": {\"emitter\": {\"origin\": [29.8125, 1.0625, 15.5625]}}, \"native_registered\": true, \"id\": \"emitter1\"}, \"prefab_source\": \"current native prefab receipt\", \"prefab_local_geometry\": {\"bounds_local_metres\": {\"min\": [-0.4375, -0.1875, -0.5625], \"max\": [0.4375, 0.3125, 0.5625]}, \"component_geometry_local\": {\"emitter\": {\"origin\": [0.0, -0.125, 0.0]}}, \"evidence\": \"serialized VoxelObject.localVoxels and native component transforms\"}}, \"remover1\": {\"prefab\": \"Remover\", \"instance_source\": \"current load receipt\", \"instance\": {\"key\": \"355a5502-36fc-514f-a473-1a06168965d7\", \"prefab\": \"Remover\", \"position_grid\": [238, 9, 160], \"rotation\": [0.0, 0.0, 0.0, 1.0], \"fine_position\": 0.0, \"fine_rotation\": 0.0, \"bounds_world\": {\"min\": [29.375, 1.0, 19.5], \"max\": [30.25, 1.5, 20.625]}, \"component_geometry\": {}, \"native_registered\": true, \"id\": \"remover1\"}, \"prefab_source\": \"current native prefab receipt\", \"prefab_local_geometry\": {\"bounds_local_metres\": {\"min\": [-0.4375, -0.1875, -0.5625], \"max\": [0.4375, 0.3125, 0.5625]}, \"component_geometry_local\": {}, \"evidence\": \"serialized VoxelObject.localVoxels and native component transforms\"}}}, \"measured_layout_capabilities\": {\"coordinate_system\": {\"grid_metres\": 0.125, \"axis_order\": [\"X\", \"Y\", \"Z\"], \"vertical_axis\": \"Y\", \"horizontal_axes\": [\"X\", \"Z\"], \"pivot_world_formula\": \"(position_grid + [0.5,0.5,0.5]) * 0.125\", \"evidence\": \"Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld\"}, \"world_bounds\": {\"min\": [0, 0, 0], \"max\": [59.625, 9.0, 35.625], \"grid_dimensions\": [477, 72, 285], \"evidence\": \"VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter\"}, \"source\": \"current native receipt\"}, \"allowed_object_ids\": [\"emitter1\", \"remover1\"], \"supported_patch_operations\": [\"change\", \"replace\"], \"placement_capabilities\": {\"absolute\": {\"position\": \"integer XYZ grid, Y vertical\", \"yaw_deg\": \"0|90|180|270\"}, \"anchor\": {\"position\": \"integer XYZ grid, Y vertical\", \"yaw_deg\": \"0|90|180|270\"}, \"conveyor_after_conveyor\": {\"relative_to\": \"measured straight conveyor ID\", \"clearance_grid\": \"nonnegative integer\"}, \"emitter_over_conveyor\": {\"relative_to\": \"measured conveyor ID\", \"along_fraction\": \"upstream-to-downstream fraction in [0,1]\"}, \"sensor_beside_conveyor\": {\"relative_to\": \"measured conveyor ID\", \"along_fraction\": \"fraction in [0,1]\", \"side\": \"left|right of flow\", \"height_above_surface_grid\": \"integer\", \"clearance_grid\": \"nonnegative integer\"}, \"remover_after_conveyor\": {\"relative_to\": \"measured conveyor ID\", \"clearance_grid\": \"nonnegative integer\"}, \"grid_offset\": {\"relative_to\": \"measured conveyor ID\", \"offset_grid\": \"integer XYZ offset\", \"yaw_deg\": \"0|90|180|270\"}}, \"candidate_components\": [{\"prefab\": \"BeltConveyor2M\", \"function\": \"Transport light-load cargo using a belt conveyor.\", \"measured_capabilities\": [\"conveyor\"], \"bounds_local_metres\": {\"min\": [-0.4375, -0.4375, -1.0625], \"max\": [0.4375, 0.5625, 0.9375]}, \"templates\": [{\"template_id\": \"source-6862ca46dbe17012078c/object/2\", \"operating_mode\": \"$C_BeltConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.6, \"surface_bounds\": {\"min\": [-0.437174976, -0.435766637, -1.06202412], \"max\": [0.437174976, 0.5617666, 0.9370241]}, \"evidence\": \"BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)\"}}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}, {\"prefab\": \"BeltConveyor4M\", \"function\": \"Transport light-load cargo using a belt conveyor.\", \"measured_capabilities\": [\"conveyor\"], \"bounds_local_metres\": {\"min\": [-0.4375, -0.4375, -2.0625], \"max\": [0.4375, 0.5625, 1.9375]}, \"templates\": [{\"template_id\": \"source-6862ca46dbe17012078c/object/24\", \"operating_mode\": \"$C_BeltConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-6862ca46dbe17012078c/object/25\", \"operating_mode\": \"$C_BeltConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-6862ca46dbe17012078c/object/26\", \"operating_mode\": \"$C_BeltConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.6, \"surface_bounds\": {\"min\": [-0.437174976, -0.4360406, -2.06215334], \"max\": [0.437174976, 0.5614927, 1.93735945]}, \"evidence\": \"BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)\"}}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}, {\"prefab\": \"ConveyorScale\", \"function\": \"High-speed conveyor scale used for weight control. Measures different weight ranges according to the selected configuration.\", \"measured_capabilities\": [\"conveyor\"], \"bounds_local_metres\": {\"min\": [-0.5625, -0.1875, -0.6875], \"max\": [0.3125, 0.8125, 0.5625]}, \"templates\": [{\"template_id\": \"source-6862ca46dbe17012078c/object/1\", \"operating_mode\": \"$C_ConveyorScale_OM_Default20_NAME\", \"settings\": [{\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}, {\"path\": \"OperatingMode/GroupIO[2]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}, {\"path\": \"OperatingMode/GroupIO[3]/AnalogueInput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {\"conveyor\": {\"direction\": [2.27592977e-06, 0.0, -1.0], \"default_speed_metres_per_second\": 0.6, \"surface_bounds\": {\"min\": [-0.5284682, 0.5573504, -0.660749853], \"max\": [0.2744665, 0.810729, 0.530749857]}, \"evidence\": \"BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)\"}}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}, {\"prefab\": \"Emitter\", \"function\": \"Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted.\", \"measured_capabilities\": [\"emitter\"], \"bounds_local_metres\": {\"min\": [-0.4375, -0.1875, -0.5625], \"max\": [0.4375, 0.3125, 0.5625]}, \"templates\": [{\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/18\", \"operating_mode\": \"$C_Emitter_OM_Default_NAME\", \"settings\": [{\"path\": \"Emitter\", \"attributes\": [\"MinTimeToEmit\", \"MaxTimeToEmit\", \"UpTo\", \"RandomPartPosition\", \"RandomPartOrientation\"]}, {\"path\": \"Emitter/Bases[1]\", \"attributes\": [\"Pallet\"]}, {\"path\": \"Emitter/Parts[1]\", \"attributes\": [\"BoxS\", \"BoxM\", \"BoxL\", \"StackableBox\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-6862ca46dbe17012078c/object/3\", \"operating_mode\": \"$C_Emitter_OM_Default_NAME\", \"settings\": [{\"path\": \"Emitter\", \"attributes\": [\"MinTimeToEmit\", \"MaxTimeToEmit\", \"UpTo\", \"RandomPartPosition\", \"RandomPartOrientation\"]}, {\"path\": \"Emitter/Bases[1]\", \"attributes\": []}, {\"path\": \"Emitter/Parts[1]\", \"attributes\": [\"BoxS\", \"BoxM\", \"BoxL\", \"PalletizingBox\", \"ProductBaseGreen\", \"ProductLidBlue\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {\"emitter\": {\"origin\": [0.0, -0.125, 0.0]}}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}, {\"prefab\": \"Remover\", \"function\": \"Remove configured items from the scene when they intersect the remover volume and removal is enabled.\", \"measured_capabilities\": [], \"bounds_local_metres\": {\"min\": [-0.4375, -0.1875, -0.5625], \"max\": [0.4375, 0.3125, 0.5625]}, \"templates\": [{\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/19\", \"operating_mode\": \"$C_Remover_OM_Default_NAME\", \"settings\": [{\"path\": \"Remover/Bases[1]\", \"attributes\": [\"Pallet\", \"SquarePallet\", \"StackableBox\"]}, {\"path\": \"Remover/Parts[1]\", \"attributes\": [\"BoxS\", \"BoxM\", \"BoxL\", \"PalletizingBox\", \"RawMaterialBlue\", \"RawMaterialGreen\", \"RawMaterialMetal\", \"ProductBaseBlue\", \"ProductBaseGreen\", \"ProductBaseMetal\", \"ProductLidBlue\", \"ProductLidGreen\", \"ProductLidMetal\", \"StackableBox\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/20\", \"operating_mode\": \"$C_Remover_OM_Default_NAME\", \"settings\": [{\"path\": \"Remover/Bases[1]\", \"attributes\": [\"Pallet\", \"SquarePallet\", \"StackableBox\"]}, {\"path\": \"Remover/Parts[1]\", \"attributes\": [\"BoxS\", \"BoxM\", \"BoxL\", \"PalletizingBox\", \"RawMaterialBlue\", \"RawMaterialGreen\", \"RawMaterialMetal\", \"ProductBaseBlue\", \"ProductBaseGreen\", \"ProductBaseMetal\", \"ProductLidBlue\", \"ProductLidGreen\", \"ProductLidMetal\", \"StackableBox\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-6862ca46dbe17012078c/object/5\", \"operating_mode\": \"$C_Remover_OM_Default_NAME\", \"settings\": [{\"path\": \"Remover/Bases[1]\", \"attributes\": [\"Pallet\", \"SquarePallet\", \"StackableBox\"]}, {\"path\": \"Remover/Parts[1]\", \"attributes\": [\"BoxS\", \"BoxM\", \"BoxL\", \"PalletizingBox\", \"RawMaterialBlue\", \"RawMaterialGreen\", \"RawMaterialMetal\", \"ProductBaseBlue\", \"ProductBaseGreen\", \"ProductBaseMetal\", \"ProductLidBlue\", \"ProductLidGreen\", \"ProductLidMetal\", \"StackableBox\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-6862ca46dbe17012078c/object/6\", \"operating_mode\": \"$C_Remover_OM_Default_NAME\", \"settings\": [{\"path\": \"Remover/Bases[1]\", \"attributes\": [\"Pallet\", \"SquarePallet\", \"StackableBox\"]}, {\"path\": \"Remover/Parts[1]\", \"attributes\": [\"BoxS\", \"BoxM\", \"BoxL\", \"PalletizingBox\", \"RawMaterialBlue\", \"RawMaterialGreen\", \"RawMaterialMetal\", \"ProductBaseBlue\", \"ProductBaseGreen\", \"ProductBaseMetal\", \"ProductLidBlue\", \"ProductLidGreen\", \"ProductLidMetal\", \"StackableBox\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-6862ca46dbe17012078c/object/7\", \"operating_mode\": \"$C_Remover_OM_Default_NAME\", \"settings\": [{\"path\": \"Remover/Bases[1]\", \"attributes\": [\"Pallet\", \"SquarePallet\", \"StackableBox\"]}, {\"path\": \"Remover/Parts[1]\", \"attributes\": [\"BoxS\", \"BoxM\", \"BoxL\", \"PalletizingBox\", \"RawMaterialBlue\", \"RawMaterialGreen\", \"RawMaterialMetal\", \"ProductBaseBlue\", \"ProductBaseGreen\", \"ProductBaseMetal\", \"ProductLidBlue\", \"ProductLidGreen\", \"ProductLidMetal\", \"StackableBox\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}, {\"prefab\": \"RollerConveyor2M\", \"function\": \"Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.\", \"measured_capabilities\": [\"conveyor\"], \"bounds_local_metres\": {\"min\": [-0.5625, -0.3125, -1.0625], \"max\": [0.5625, 0.3125, 0.9375]}, \"templates\": [{\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/17\", \"operating_mode\": \"$C_RollerConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-7b6b0a6b063429d967cf/object/5\", \"operating_mode\": \"$C_RollerConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.45, \"surface_bounds\": {\"min\": [-0.562412858, -0.311874777, -1.06245947], \"max\": [0.5624815, 0.3116745, 0.93694067]}}}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}, {\"prefab\": \"RollerConveyor4M\", \"function\": \"Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.\", \"measured_capabilities\": [\"conveyor\"], \"bounds_local_metres\": {\"min\": [-0.5625, -0.3125, -2.0625], \"max\": [0.5625, 0.3125, 1.9375]}, \"templates\": [{\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/2\", \"operating_mode\": \"$C_RollerConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/3\", \"operating_mode\": \"$C_RollerConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}, {\"template_id\": \"source-7b6b0a6b063429d967cf/object/1\", \"operating_mode\": \"$C_RollerConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.45, \"surface_bounds\": {\"min\": [-0.5624472, -0.311469018, -2.062491], \"max\": [0.5624472, 0.3119293, 1.937201]}}}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}, {\"prefab\": \"RollerConveyor6M\", \"function\": \"Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.\", \"measured_capabilities\": [\"conveyor\"], \"bounds_local_metres\": {\"min\": [-0.5625, -0.3125, -2.9375], \"max\": [0.5625, 0.3125, 3.0625]}, \"templates\": [{\"template_id\": \"source-04da4aaaacbb3e5e0ade/object/12\", \"operating_mode\": \"$C_RollerConveyor_OM_SingleBinary_NAME\", \"settings\": [{\"path\": \"Encoder\", \"attributes\": [\"Enabled\"]}, {\"path\": \"OperatingMode/GroupIO[1]/BinaryOutput[1]\", \"attributes\": [\"Name\", \"Address\", \"Key\", \"OpenCircuit\", \"ShortCircuit\", \"UseForcedValue\", \"ForcedValue\"]}]}], \"measurement_status\": \"measured\", \"component_geometry_local\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.45, \"surface_bounds\": {\"min\": [-0.5624472, -0.31212908, -2.937355], \"max\": [0.5624472, 0.311269224, 3.062355]}}}, \"geometry_basis\": \"current native prefab receipt\", \"knowledge_basis\": \"official indexed documentation\"}], \"candidate_coverage\": {\"missing_capabilities\": [], \"completeness\": \"required explicit prefabs and inferred operator capabilities retained; role ambiguity is reported, not downgraded\", \"catalog_expansion_required\": false}, \"relevant_component_guidance\": {\"knowledge_sha256\": \"d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26\", \"reference_kind\": \"official_component_documentation\", \"requested_prefabs\": [\"BeltConveyor4M\", \"Emitter\", \"Remover\"], \"components\": [{\"component_id\": \"parts:light-load#belt-conveyors\", \"prefabs\": [\"BeltConveyor4M\"], \"official_name\": \"Belt Conveyors\", \"function\": \"Transport light-load cargo using a belt conveyor.\", \"function_basis\": \"curated_summary_of_official_text\", \"sources\": [{\"chapter_id\": \"parts:light-load#belt-conveyors\", \"url\": \"https://docs.factoryio.com/manual/parts/light-load/#belt-conveyors\"}], \"markers\": [{\"text\": \"The white arrow indicates the conveying flow direction.\", \"basis\": \"official_text\", \"source_url\": \"https://docs.factoryio.com/getting-started/creating-a-scene/\"}]}, {\"component_id\": \"parts:emitter#emitter\", \"prefabs\": [\"Emitter\"], \"official_name\": \"Emitter\", \"function\": \"Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted.\", \"function_basis\": \"curated_summary_of_official_text\", \"sources\": [{\"chapter_id\": \"parts:emitter#emitter\", \"url\": \"https://docs.factoryio.com/manual/parts/emitter/#emitter\"}], \"appearance\": {\"text\": \"Official illustration shows a white dashed volume and a downward arrow.\", \"basis\": \"official_image_observation\"}, \"markers\": [{\"text\": \"The dashed volume depicts the region associated with emission; compare it with the intended receiving support surface.\", \"basis\": \"text_and_image_interpretation\"}]}, {\"component_id\": \"parts:remover#remover\", \"prefabs\": [\"Remover\"], \"official_name\": \"Remover\", \"function\": \"Remove configured items from the scene when they intersect the remover volume and removal is enabled.\", \"function_basis\": \"curated_summary_of_official_text\", \"sources\": [{\"chapter_id\": \"parts:remover#remover\", \"url\": \"https://docs.factoryio.com/manual/parts/remover/#remover\"}], \"appearance\": {\"text\": \"Official illustration shows a white dashed volume and an upward arrow.\", \"basis\": \"official_image_observation\"}, \"markers\": [{\"text\": \"The dashed volume depicts the removal region; compare its overlap with the intended item arrival path.\", \"basis\": \"text_and_image_interpretation\"}]}], \"missing_prefabs\": []}, \"evidence_refs\": {\"ids\": [\"image-0-iso_a\", \"image-0-iso_b\", \"image-0-top\", \"load-c0366719845747439c9b849313f122be\"], \"image_manifest\": [{\"id\": \"image-0-top\", \"kind\": \"image\", \"view_id\": \"top\", \"sha256\": \"f0d831a7a7a8e753db5999761b81ec151c1d4cf562b49db93775e264faa3b18d\", \"scene_sha256\": \"39ef7540e429f04ca8e3de376bbcc72aa61075e0b3d7f82512dac9f09f871375\", \"timestamp\": \"2026-10-14T09:01:03.5698708Z\", \"load_request_id\": \"c0366719845747439c9b849313f122be\", \"capture_request_id\": \"308b55d357cc405d930db4e1bce40cb8\"}, {\"id\": \"image-0-iso_a\", \"kind\": \"image\", \"view_id\": \"iso_a\", \"sha256\": \"535db4ebfd73bc8494cc2461b8dcea96d3c3d93820dfa14983cba446a5ba328f\", \"scene_sha256\": \"39ef7540e429f04ca8e3de376bbcc72aa61075e0b3d7f82512dac9f09f871375\", \"timestamp\": \"2026-10-14T09:01:05.0434742Z\", \"load_request_id\": \"c0366719845747439c9b849313f122be\", \"capture_request_id\": \"e0da14a66f784c249955155d0a6accfb\"}, {\"id\": \"image-0-iso_b\", \"kind\": \"image\", \"view_id\": \"iso_b\", \"sha256\": \"74673b43834d47f59e5f1b6296ff230969fdfdc43fb7843532a3d20786e5982b\", \"scene_sha256\": \"39ef7540e429f04ca8e3de376bbcc72aa61075e0b3d7f82512dac9f09f871375\", \"timestamp\": \"2026-10-14T09:01:06.5249164Z\", \"load_request_id\": \"c0366719845747439c9b849313f122be\", \"capture_request_id\": \"c141335316514a07aa113a67f3a1259a\"}], \"checks\": [{\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"status\": \"violated\", \"checker\": \"visual\", \"object_ids\": [\"emitter1\"], \"observed\": null, \"expected\": {\"question\": \"Is the feeder positioned above the upstream carrying surface of the conveyor?\"}, \"evidence_ids\": [\"load-c0366719845747439c9b849313f122be\", \"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"reason\": \"The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.\", \"missing_capability\": null, \"native_result\": {\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"status\": \"unknown\", \"checker\": \"native_geometry\", \"object_ids\": [\"emitter1\", \"conveyor1\"], \"observed\": null, \"expected\": {\"question\": \"Is the feeder positioned above the upstream carrying surface of the conveyor?\"}, \"evidence_ids\": [\"load-c0366719845747439c9b849313f122be\"], \"reason\": \"This requested relation requires visual evidence.\", \"missing_capability\": null}, \"visual_result\": {\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"status\": \"violated\", \"object_ids\": [\"emitter1\"], \"relation_ids\": [\"rel1\"], \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"observed\": \"The feeder (green emitter) is positioned adjacent to the side of the conveyor belt rather than directly above the carrying surface. In the top view, the dashed volume of the feeder and the belt show no overlap.\", \"reason\": \"The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.\", \"repair_intent\": \"Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.\", \"requested_view\": null, \"requested_views\": [], \"spatial_observation\": \"The conveyor's Z-axis range is [15.5, 19.5], while the emitter's Z-axis range is [15.0, 16.125]. The lateral offset in the Z-axis prevents the functional emission volume from covering the transport path.\", \"evidence_basis\": \"reported_visual_issue\"}}, {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"status\": \"violated\", \"checker\": \"visual\", \"object_ids\": [\"remover1\"], \"observed\": null, \"expected\": {\"question\": \"Does the remover cover the downstream extension path of the conveyor?\"}, \"evidence_ids\": [\"load-c0366719845747439c9b849313f122be\", \"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"reason\": \"The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.\", \"missing_capability\": null, \"native_result\": {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"status\": \"unknown\", \"checker\": \"native_geometry\", \"object_ids\": [\"remover1\", \"conveyor1\"], \"observed\": null, \"expected\": {\"question\": \"Does the remover cover the downstream extension path of the conveyor?\"}, \"evidence_ids\": [\"load-c0366719845747439c9b849313f122be\"], \"reason\": \"This requested relation requires visual evidence.\", \"missing_capability\": null}, \"visual_result\": {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"status\": \"violated\", \"object_ids\": [\"remover1\"], \"relation_ids\": [\"rel2\"], \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"observed\": \"The remover (orange unit) is positioned laterally to the side of the conveyor exit rather than covering the downstream extension path. Its removal volume does not intersect the area where items leaving the belt would travel.\", \"reason\": \"The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.\", \"repair_intent\": \"Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end.\", \"requested_view\": null, \"requested_views\": [], \"spatial_observation\": \"The remover's Z-axis range is [19.5, 20.625], whereas the conveyor's transport axis is centered at Z=17.5. This confirms a significant lateral misalignment relative to the flow direction.\", \"evidence_basis\": \"reported_visual_issue\"}}], \"visual_checks\": [{\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"status\": \"violated\", \"object_ids\": [\"emitter1\"], \"relation_ids\": [\"rel1\"], \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"observed\": \"The feeder (green emitter) is positioned adjacent to the side of the conveyor belt rather than directly above the carrying surface. In the top view, the dashed volume of the feeder and the belt show no overlap.\", \"reason\": \"The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.\", \"repair_intent\": \"Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.\", \"requested_view\": null, \"requested_views\": [], \"spatial_observation\": \"The conveyor's Z-axis range is [15.5, 19.5], while the emitter's Z-axis range is [15.0, 16.125]. The lateral offset in the Z-axis prevents the functional emission volume from covering the transport path.\", \"evidence_basis\": \"reported_visual_issue\"}, {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"status\": \"violated\", \"object_ids\": [\"remover1\"], \"relation_ids\": [\"rel2\"], \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"observed\": \"The remover (orange unit) is positioned laterally to the side of the conveyor exit rather than covering the downstream extension path. Its removal volume does not intersect the area where items leaving the belt would travel.\", \"reason\": \"The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.\", \"repair_intent\": \"Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end.\", \"requested_view\": null, \"requested_views\": [], \"spatial_observation\": \"The remover's Z-axis range is [19.5, 20.625], whereas the conveyor's transport axis is centered at Z=17.5. This confirms a significant lateral misalignment relative to the flow direction.\", \"evidence_basis\": \"reported_visual_issue\"}], \"global_findings\": [{\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"status\": \"violated\", \"object_ids\": [\"emitter1\"], \"requirement_ids\": [\"REQ-FEEDER-ABOVE-CONVEYOR\"], \"observed\": \"The feeder (green emitter) is positioned adjacent to the side of the conveyor belt rather than directly above the carrying surface. In the top view, the dashed volume of the feeder and the belt show no overlap.\", \"reason\": \"The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.\", \"repair_intent\": \"Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.\", \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"]}, {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"status\": \"violated\", \"object_ids\": [\"remover1\"], \"requirement_ids\": [\"REQ-REMOVER-COVERS-DOWNSTREAM-PATH\"], \"observed\": \"The remover (orange unit) is positioned laterally to the side of the conveyor exit rather than covering the downstream extension path. Its removal volume does not intersect the area where items leaving the belt would travel.\", \"reason\": \"The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.\", \"repair_intent\": \"Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end.\", \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"]}]}, \"output_schema_version\": 1, \"patch_shape\": {\"reason\": \"justification\", \"changes\": [{\"object_id\": \"allowed ID\", \"placement\": {\"kind\": \"supported kind\"}}], \"add_objects\": [], \"remove_object_ids\": [], \"relation_updates\": [], \"remove_relation_ids\": [], \"relation_impacts\": [{\"relation_id\": \"affected relation ID\", \"expected_effect\": \"expected consequence, not a validation claim\"}], \"unresolved\": []}, \"context_manifest\": {\"prompt_version\": \"issue4-inspection-issues-v4\", \"kind\": \"repair\", \"sources\": {\"requirements_sha256\": \"40849ba3aa0a81fa62c8c3d9c825f7cb0f8bb60444af4616fb728465e195ad00\", \"native_geometry_sha256\": \"0ccc683e8a9fd6c87f1ffa6f5ce6caece25ff939b7bdbca4faf35e56d1bb7aef\", \"template_sources\": {\"source-04da4aaaacbb3e5e0ade\": \"04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c\", \"source-7b6b0a6b063429d967cf\": \"7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918\", \"source-6862ca46dbe17012078c\": \"6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535\"}, \"knowledge_sha256\": \"d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26\"}, \"object_scope\": [\"conveyor1\", \"emitter1\", \"remover1\"], \"field_sources\": {\"relevant_requirements\": \"violated independent requirements\", \"current_layout_subset\": \"current resolved positions, including frozen anchors\", \"native_measurements\": \"current native receipt\", \"evidence_refs\": \"current validated checks and visual observations\", \"repair_tickets\": \"verified violations\"}, \"limitations\": [\"Generated roles/functions are identification context, not independent ground truth.\", \"Native data describes this loaded software/version, not proven runtime behavior.\"]}}"
+    }
+  ],
+  "payload": {
+    "phase": "scene_repair",
+    "scene_stage": "local_repair",
+    "repair_tickets": [
+      {
+        "ticket_id": "ticket-cdf0eb17b3c8fdc1",
+        "failed_check_ids": [
+          "REQ-FEEDER-ABOVE-CONVEYOR-1",
+          "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1"
+        ],
+        "requirement_ids": [
+          "REQ-FEEDER-ABOVE-CONVEYOR",
+          "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+        ],
+        "affected_object_ids": [
+          "emitter1",
+          "remover1"
+        ],
+        "issue_type": "requirement_relation_violation",
+        "evidence_ids": [
+          "image-0-iso_a",
+          "image-0-iso_b",
+          "image-0-top",
+          "load-c0366719845747439c9b849313f122be"
+        ],
+        "repair_intent": [
+          "The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.",
+          "The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.",
+          "Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.",
+          "Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end."
+        ],
+        "allowed_operations": [
+          "change",
+          "replace"
+        ],
+        "frozen_object_ids": [
+          "conveyor1"
+        ]
+      }
+    ],
+    "relevant_requirements": [
+      {
+        "requirement_id": "REQ-FEEDER-ABOVE-CONVEYOR",
+        "source_text": "供料器位于输送带上游承载面上方",
+        "origin": "explicit_user",
+        "phase": "static_scene",
+        "subject_role": "feeder",
+        "target_role": "conveyor_upstream",
+        "predicate": "visual_relation",
+        "arguments": {
+          "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+        },
+        "required": true,
+        "evidence_methods": [
+          "visual"
+        ]
+      },
+      {
+        "requirement_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH",
+        "source_text": "移除器覆盖下游延伸路径",
+        "origin": "explicit_user",
+        "phase": "static_scene",
+        "subject_role": "remover",
+        "target_role": "conveyor_downstream",
+        "predicate": "visual_relation",
+        "arguments": {
+          "question": "Does the remover cover the downstream extension path of the conveyor?"
+        },
+        "required": true,
+        "evidence_methods": [
+          "visual"
+        ]
+      }
+    ],
+    "current_objects": [
+      {
+        "id": "conveyor1",
+        "prefab": "BeltConveyor4M",
+        "roles": [
+          "conveyor",
+          "conveyor_upstream",
+          "conveyor_downstream"
+        ],
+        "function": "Main belt conveyor that transports items from upstream to downstream, serving as the reference for both upstream and downstream spatial constraints.",
+        "placement": {
+          "kind": "absolute",
+          "position": [
+            238,
+            3,
+            140
+          ],
+          "yaw_deg": 0
+        },
+        "settings": [],
+        "template_id": "source-6862ca46dbe17012078c/object/24"
+      },
+      {
+        "id": "emitter1",
+        "prefab": "Emitter",
+        "roles": [
+          "feeder"
+        ],
+        "function": "Feeder that emits items onto the upstream carrying surface of the conveyor.",
+        "placement": {
+          "kind": "absolute",
+          "position": [
+            238,
+            9,
+            124
+          ],
+          "yaw_deg": 0
+        },
+        "settings": [],
+        "template_id": "source-04da4aaaacbb3e5e0ade/object/18"
+      },
+      {
+        "id": "remover1",
+        "prefab": "Remover",
+        "roles": [
+          "remover"
+        ],
+        "function": "Remover that covers the downstream extension path beyond the conveyor end.",
+        "placement": {
+          "kind": "absolute",
+          "position": [
+            238,
+            9,
+            160
+          ],
+          "yaw_deg": 0
+        },
+        "settings": [],
+        "template_id": "source-04da4aaaacbb3e5e0ade/object/19"
+      }
+    ],
+    "current_layout_subset": [
+      {
+        "id": "conveyor1",
+        "template_id": "source-6862ca46dbe17012078c/object/24",
+        "position": [
+          238,
+          3,
+          140
+        ],
+        "yaw_deg": 0,
+        "settings": [],
+        "tag_names": {
+          "0": "conveyor1 0"
+        }
+      },
+      {
+        "id": "emitter1",
+        "template_id": "source-04da4aaaacbb3e5e0ade/object/18",
+        "position": [
+          238,
+          9,
+          124
+        ],
+        "yaw_deg": 0,
+        "settings": [],
+        "tag_names": {
+          "0": "emitter1 0"
+        }
+      },
+      {
+        "id": "remover1",
+        "template_id": "source-04da4aaaacbb3e5e0ade/object/19",
+        "position": [
+          238,
+          9,
+          160
+        ],
+        "yaw_deg": 0,
+        "settings": [],
+        "tag_names": {
+          "0": "remover1 0"
+        }
+      }
+    ],
+    "related_relations": [
+      {
+        "id": "rel1",
+        "subject_id": "emitter1",
+        "predicate": "above",
+        "target_id": "conveyor1",
+        "parameters": {
+          "region": "upstream carrying surface"
+        },
+        "requirement_ids": [
+          "REQ-FEEDER-ABOVE-CONVEYOR"
+        ]
+      },
+      {
+        "id": "rel2",
+        "subject_id": "remover1",
+        "predicate": "covers",
+        "target_id": "conveyor1",
+        "parameters": {
+          "region": "downstream extension path"
+        },
+        "requirement_ids": [
+          "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+        ]
+      }
+    ],
+    "native_measurements": {
+      "conveyor1": {
+        "prefab": "BeltConveyor4M",
+        "instance_source": "current load receipt",
+        "instance": {
+          "key": "0435575f-6add-5b93-aa80-013379bbbbbc",
+          "prefab": "BeltConveyor4M",
+          "position_grid": [
+            238,
+            3,
+            140
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "bounds_world": {
+            "min": [
+              29.375,
+              0.0,
+              15.5
+            ],
+            "max": [
+              30.25,
+              1.0,
+              19.5
+            ]
+          },
+          "component_geometry": {
+            "conveyor": {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "default_speed_metres_per_second": 0.6,
+              "surface_bounds": {
+                "min": [
+                  29.3753242,
+                  0.00145938993,
+                  15.5003462
+                ],
+                "max": [
+                  30.2496758,
+                  0.9989927,
+                  19.4998589
+                ]
+              },
+              "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+            }
+          },
+          "native_registered": true,
+          "id": "conveyor1"
+        },
+        "prefab_source": "current native prefab receipt",
+        "prefab_local_geometry": {
+          "bounds_local_metres": {
+            "min": [
+              -0.4375,
+              -0.4375,
+              -2.0625
+            ],
+            "max": [
+              0.4375,
+              0.5625,
+              1.9375
+            ]
+          },
+          "component_geometry_local": {
+            "conveyor": {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "default_speed_metres_per_second": 0.6,
+              "surface_bounds": {
+                "min": [
+                  -0.437174976,
+                  -0.4360406,
+                  -2.06215334
+                ],
+                "max": [
+                  0.437174976,
+                  0.5614927,
+                  1.93735945
+                ]
+              },
+              "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+            }
+          },
+          "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+        }
+      },
+      "emitter1": {
+        "prefab": "Emitter",
+        "instance_source": "current load receipt",
+        "instance": {
+          "key": "ed287bf4-4093-51f0-8339-4cdd3b807be6",
+          "prefab": "Emitter",
+          "position_grid": [
+            238,
+            9,
+            124
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "bounds_world": {
+            "min": [
+              29.375,
+              1.0,
+              15.0
+            ],
+            "max": [
+              30.25,
+              1.5,
+              16.125
+            ]
+          },
+          "component_geometry": {
+            "emitter": {
+              "origin": [
+                29.8125,
+                1.0625,
+                15.5625
+              ]
+            }
+          },
+          "native_registered": true,
+          "id": "emitter1"
+        },
+        "prefab_source": "current native prefab receipt",
+        "prefab_local_geometry": {
+          "bounds_local_metres": {
+            "min": [
+              -0.4375,
+              -0.1875,
+              -0.5625
+            ],
+            "max": [
+              0.4375,
+              0.3125,
+              0.5625
+            ]
+          },
+          "component_geometry_local": {
+            "emitter": {
+              "origin": [
+                0.0,
+                -0.125,
+                0.0
+              ]
+            }
+          },
+          "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+        }
+      },
+      "remover1": {
+        "prefab": "Remover",
+        "instance_source": "current load receipt",
+        "instance": {
+          "key": "355a5502-36fc-514f-a473-1a06168965d7",
+          "prefab": "Remover",
+          "position_grid": [
+            238,
+            9,
+            160
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "bounds_world": {
+            "min": [
+              29.375,
+              1.0,
+              19.5
+            ],
+            "max": [
+              30.25,
+              1.5,
+              20.625
+            ]
+          },
+          "component_geometry": {},
+          "native_registered": true,
+          "id": "remover1"
+        },
+        "prefab_source": "current native prefab receipt",
+        "prefab_local_geometry": {
+          "bounds_local_metres": {
+            "min": [
+              -0.4375,
+              -0.1875,
+              -0.5625
+            ],
+            "max": [
+              0.4375,
+              0.3125,
+              0.5625
+            ]
+          },
+          "component_geometry_local": {},
+          "evidence": "serialized VoxelObject.localVoxels and native component transforms"
+        }
+      }
+    },
+    "measured_layout_capabilities": {
+      "coordinate_system": {
+        "grid_metres": 0.125,
+        "axis_order": [
+          "X",
+          "Y",
+          "Z"
+        ],
+        "vertical_axis": "Y",
+        "horizontal_axes": [
+          "X",
+          "Z"
+        ],
+        "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125",
+        "evidence": "Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld"
+      },
+      "world_bounds": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          59.625,
+          9.0,
+          35.625
+        ],
+        "grid_dimensions": [
+          477,
+          72,
+          285
+        ],
+        "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+      },
+      "source": "current native receipt"
+    },
+    "allowed_object_ids": [
+      "emitter1",
+      "remover1"
+    ],
+    "supported_patch_operations": [
+      "change",
+      "replace"
+    ],
+    "placement_capabilities": {
+      "absolute": {
+        "position": "integer XYZ grid, Y vertical",
+        "yaw_deg": "0|90|180|270"
+      },
+      "anchor": {
+        "position": "integer XYZ grid, Y vertical",
+        "yaw_deg": "0|90|180|270"
+      },
+      "conveyor_after_conveyor": {
+        "relative_to": "measured straight conveyor ID",
+        "clearance_grid": "nonnegative integer"
+      },
+      "emitter_over_conveyor": {
+        "relative_to": "measured conveyor ID",
+        "along_fraction": "upstream-to-downstream fraction in [0,1]"
+      },
+      "sensor_beside_conveyor": {
+        "relative_to": "measured conveyor ID",
+        "along_fraction": "fraction in [0,1]",
+        "side": "left|right of flow",
+        "height_above_surface_grid": "integer",
+        "clearance_grid": "nonnegative integer"
+      },
+      "remover_after_conveyor": {
+        "relative_to": "measured conveyor ID",
+        "clearance_grid": "nonnegative integer"
+      },
+      "grid_offset": {
+        "relative_to": "measured conveyor ID",
+        "offset_grid": "integer XYZ offset",
+        "yaw_deg": "0|90|180|270"
+      }
+    },
+    "candidate_components": [
+      {
+        "prefab": "BeltConveyor2M",
+        "function": "Transport light-load cargo using a belt conveyor.",
+        "measured_capabilities": [
+          "conveyor"
+        ],
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.4375,
+            -1.0625
+          ],
+          "max": [
+            0.4375,
+            0.5625,
+            0.9375
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/2",
+            "operating_mode": "$C_BeltConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.437174976,
+                -0.435766637,
+                -1.06202412
+              ],
+              "max": [
+                0.437174976,
+                0.5617666,
+                0.9370241
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      },
+      {
+        "prefab": "BeltConveyor4M",
+        "function": "Transport light-load cargo using a belt conveyor.",
+        "measured_capabilities": [
+          "conveyor"
+        ],
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.4375,
+            -2.0625
+          ],
+          "max": [
+            0.4375,
+            0.5625,
+            1.9375
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/24",
+            "operating_mode": "$C_BeltConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/25",
+            "operating_mode": "$C_BeltConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/26",
+            "operating_mode": "$C_BeltConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.437174976,
+                -0.4360406,
+                -2.06215334
+              ],
+              "max": [
+                0.437174976,
+                0.5614927,
+                1.93735945
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      },
+      {
+        "prefab": "ConveyorScale",
+        "function": "High-speed conveyor scale used for weight control. Measures different weight ranges according to the selected configuration.",
+        "measured_capabilities": [
+          "conveyor"
+        ],
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.1875,
+            -0.6875
+          ],
+          "max": [
+            0.3125,
+            0.8125,
+            0.5625
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/1",
+            "operating_mode": "$C_ConveyorScale_OM_Default20_NAME",
+            "settings": [
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[2]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[3]/AnalogueInput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              2.27592977e-06,
+              0.0,
+              -1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                -0.5284682,
+                0.5573504,
+                -0.660749853
+              ],
+              "max": [
+                0.2744665,
+                0.810729,
+                0.530749857
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      },
+      {
+        "prefab": "Emitter",
+        "function": "Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted.",
+        "measured_capabilities": [
+          "emitter"
+        ],
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.1875,
+            -0.5625
+          ],
+          "max": [
+            0.4375,
+            0.3125,
+            0.5625
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/18",
+            "operating_mode": "$C_Emitter_OM_Default_NAME",
+            "settings": [
+              {
+                "path": "Emitter",
+                "attributes": [
+                  "MinTimeToEmit",
+                  "MaxTimeToEmit",
+                  "UpTo",
+                  "RandomPartPosition",
+                  "RandomPartOrientation"
+                ]
+              },
+              {
+                "path": "Emitter/Bases[1]",
+                "attributes": [
+                  "Pallet"
+                ]
+              },
+              {
+                "path": "Emitter/Parts[1]",
+                "attributes": [
+                  "BoxS",
+                  "BoxM",
+                  "BoxL",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/3",
+            "operating_mode": "$C_Emitter_OM_Default_NAME",
+            "settings": [
+              {
+                "path": "Emitter",
+                "attributes": [
+                  "MinTimeToEmit",
+                  "MaxTimeToEmit",
+                  "UpTo",
+                  "RandomPartPosition",
+                  "RandomPartOrientation"
+                ]
+              },
+              {
+                "path": "Emitter/Bases[1]",
+                "attributes": []
+              },
+              {
+                "path": "Emitter/Parts[1]",
+                "attributes": [
+                  "BoxS",
+                  "BoxM",
+                  "BoxL",
+                  "PalletizingBox",
+                  "ProductBaseGreen",
+                  "ProductLidBlue"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {
+          "emitter": {
+            "origin": [
+              0.0,
+              -0.125,
+              0.0
+            ]
+          }
+        },
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      },
+      {
+        "prefab": "Remover",
+        "function": "Remove configured items from the scene when they intersect the remover volume and removal is enabled.",
+        "measured_capabilities": [],
+        "bounds_local_metres": {
+          "min": [
+            -0.4375,
+            -0.1875,
+            -0.5625
+          ],
+          "max": [
+            0.4375,
+            0.3125,
+            0.5625
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/19",
+            "operating_mode": "$C_Remover_OM_Default_NAME",
+            "settings": [
+              {
+                "path": "Remover/Bases[1]",
+                "attributes": [
+                  "Pallet",
+                  "SquarePallet",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "Remover/Parts[1]",
+                "attributes": [
+                  "BoxS",
+                  "BoxM",
+                  "BoxL",
+                  "PalletizingBox",
+                  "RawMaterialBlue",
+                  "RawMaterialGreen",
+                  "RawMaterialMetal",
+                  "ProductBaseBlue",
+                  "ProductBaseGreen",
+                  "ProductBaseMetal",
+                  "ProductLidBlue",
+                  "ProductLidGreen",
+                  "ProductLidMetal",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/20",
+            "operating_mode": "$C_Remover_OM_Default_NAME",
+            "settings": [
+              {
+                "path": "Remover/Bases[1]",
+                "attributes": [
+                  "Pallet",
+                  "SquarePallet",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "Remover/Parts[1]",
+                "attributes": [
+                  "BoxS",
+                  "BoxM",
+                  "BoxL",
+                  "PalletizingBox",
+                  "RawMaterialBlue",
+                  "RawMaterialGreen",
+                  "RawMaterialMetal",
+                  "ProductBaseBlue",
+                  "ProductBaseGreen",
+                  "ProductBaseMetal",
+                  "ProductLidBlue",
+                  "ProductLidGreen",
+                  "ProductLidMetal",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/5",
+            "operating_mode": "$C_Remover_OM_Default_NAME",
+            "settings": [
+              {
+                "path": "Remover/Bases[1]",
+                "attributes": [
+                  "Pallet",
+                  "SquarePallet",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "Remover/Parts[1]",
+                "attributes": [
+                  "BoxS",
+                  "BoxM",
+                  "BoxL",
+                  "PalletizingBox",
+                  "RawMaterialBlue",
+                  "RawMaterialGreen",
+                  "RawMaterialMetal",
+                  "ProductBaseBlue",
+                  "ProductBaseGreen",
+                  "ProductBaseMetal",
+                  "ProductLidBlue",
+                  "ProductLidGreen",
+                  "ProductLidMetal",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/6",
+            "operating_mode": "$C_Remover_OM_Default_NAME",
+            "settings": [
+              {
+                "path": "Remover/Bases[1]",
+                "attributes": [
+                  "Pallet",
+                  "SquarePallet",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "Remover/Parts[1]",
+                "attributes": [
+                  "BoxS",
+                  "BoxM",
+                  "BoxL",
+                  "PalletizingBox",
+                  "RawMaterialBlue",
+                  "RawMaterialGreen",
+                  "RawMaterialMetal",
+                  "ProductBaseBlue",
+                  "ProductBaseGreen",
+                  "ProductBaseMetal",
+                  "ProductLidBlue",
+                  "ProductLidGreen",
+                  "ProductLidMetal",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-6862ca46dbe17012078c/object/7",
+            "operating_mode": "$C_Remover_OM_Default_NAME",
+            "settings": [
+              {
+                "path": "Remover/Bases[1]",
+                "attributes": [
+                  "Pallet",
+                  "SquarePallet",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "Remover/Parts[1]",
+                "attributes": [
+                  "BoxS",
+                  "BoxM",
+                  "BoxL",
+                  "PalletizingBox",
+                  "RawMaterialBlue",
+                  "RawMaterialGreen",
+                  "RawMaterialMetal",
+                  "ProductBaseBlue",
+                  "ProductBaseGreen",
+                  "ProductBaseMetal",
+                  "ProductLidBlue",
+                  "ProductLidGreen",
+                  "ProductLidMetal",
+                  "StackableBox"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {},
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      },
+      {
+        "prefab": "RollerConveyor2M",
+        "function": "Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.",
+        "measured_capabilities": [
+          "conveyor"
+        ],
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -1.0625
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            0.9375
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/17",
+            "operating_mode": "$C_RollerConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-7b6b0a6b063429d967cf/object/5",
+            "operating_mode": "$C_RollerConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.45,
+            "surface_bounds": {
+              "min": [
+                -0.562412858,
+                -0.311874777,
+                -1.06245947
+              ],
+              "max": [
+                0.5624815,
+                0.3116745,
+                0.93694067
+              ]
+            }
+          }
+        },
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      },
+      {
+        "prefab": "RollerConveyor4M",
+        "function": "Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.",
+        "measured_capabilities": [
+          "conveyor"
+        ],
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -2.0625
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            1.9375
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/2",
+            "operating_mode": "$C_RollerConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/3",
+            "operating_mode": "$C_RollerConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          },
+          {
+            "template_id": "source-7b6b0a6b063429d967cf/object/1",
+            "operating_mode": "$C_RollerConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.45,
+            "surface_bounds": {
+              "min": [
+                -0.5624472,
+                -0.311469018,
+                -2.062491
+              ],
+              "max": [
+                0.5624472,
+                0.3119293,
+                1.937201
+              ]
+            }
+          }
+        },
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      },
+      {
+        "prefab": "RollerConveyor6M",
+        "function": "Heavy-duty roller conveyor, can be controlled by digital and analog values according to the selected configuration.",
+        "measured_capabilities": [
+          "conveyor"
+        ],
+        "bounds_local_metres": {
+          "min": [
+            -0.5625,
+            -0.3125,
+            -2.9375
+          ],
+          "max": [
+            0.5625,
+            0.3125,
+            3.0625
+          ]
+        },
+        "templates": [
+          {
+            "template_id": "source-04da4aaaacbb3e5e0ade/object/12",
+            "operating_mode": "$C_RollerConveyor_OM_SingleBinary_NAME",
+            "settings": [
+              {
+                "path": "Encoder",
+                "attributes": [
+                  "Enabled"
+                ]
+              },
+              {
+                "path": "OperatingMode/GroupIO[1]/BinaryOutput[1]",
+                "attributes": [
+                  "Name",
+                  "Address",
+                  "Key",
+                  "OpenCircuit",
+                  "ShortCircuit",
+                  "UseForcedValue",
+                  "ForcedValue"
+                ]
+              }
+            ]
+          }
+        ],
+        "measurement_status": "measured",
+        "component_geometry_local": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.45,
+            "surface_bounds": {
+              "min": [
+                -0.5624472,
+                -0.31212908,
+                -2.937355
+              ],
+              "max": [
+                0.5624472,
+                0.311269224,
+                3.062355
+              ]
+            }
+          }
+        },
+        "geometry_basis": "current native prefab receipt",
+        "knowledge_basis": "official indexed documentation"
+      }
+    ],
+    "candidate_coverage": {
+      "missing_capabilities": [],
+      "completeness": "required explicit prefabs and inferred operator capabilities retained; role ambiguity is reported, not downgraded",
+      "catalog_expansion_required": false
+    },
+    "relevant_component_guidance": {
+      "knowledge_sha256": "d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26",
+      "reference_kind": "official_component_documentation",
+      "requested_prefabs": [
+        "BeltConveyor4M",
+        "Emitter",
+        "Remover"
+      ],
+      "components": [
+        {
+          "component_id": "parts:light-load#belt-conveyors",
+          "prefabs": [
+            "BeltConveyor4M"
+          ],
+          "official_name": "Belt Conveyors",
+          "function": "Transport light-load cargo using a belt conveyor.",
+          "function_basis": "curated_summary_of_official_text",
+          "sources": [
+            {
+              "chapter_id": "parts:light-load#belt-conveyors",
+              "url": "https://docs.factoryio.com/manual/parts/light-load/#belt-conveyors"
+            }
+          ],
+          "markers": [
+            {
+              "text": "The white arrow indicates the conveying flow direction.",
+              "basis": "official_text",
+              "source_url": "https://docs.factoryio.com/getting-started/creating-a-scene/"
+            }
+          ]
+        },
+        {
+          "component_id": "parts:emitter#emitter",
+          "prefabs": [
+            "Emitter"
+          ],
+          "official_name": "Emitter",
+          "function": "Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted.",
+          "function_basis": "curated_summary_of_official_text",
+          "sources": [
+            {
+              "chapter_id": "parts:emitter#emitter",
+              "url": "https://docs.factoryio.com/manual/parts/emitter/#emitter"
+            }
+          ],
+          "appearance": {
+            "text": "Official illustration shows a white dashed volume and a downward arrow.",
+            "basis": "official_image_observation"
+          },
+          "markers": [
+            {
+              "text": "The dashed volume depicts the region associated with emission; compare it with the intended receiving support surface.",
+              "basis": "text_and_image_interpretation"
+            }
+          ]
+        },
+        {
+          "component_id": "parts:remover#remover",
+          "prefabs": [
+            "Remover"
+          ],
+          "official_name": "Remover",
+          "function": "Remove configured items from the scene when they intersect the remover volume and removal is enabled.",
+          "function_basis": "curated_summary_of_official_text",
+          "sources": [
+            {
+              "chapter_id": "parts:remover#remover",
+              "url": "https://docs.factoryio.com/manual/parts/remover/#remover"
+            }
+          ],
+          "appearance": {
+            "text": "Official illustration shows a white dashed volume and an upward arrow.",
+            "basis": "official_image_observation"
+          },
+          "markers": [
+            {
+              "text": "The dashed volume depicts the removal region; compare its overlap with the intended item arrival path.",
+              "basis": "text_and_image_interpretation"
+            }
+          ]
+        }
+      ],
+      "missing_prefabs": []
+    },
+    "evidence_refs": {
+      "ids": [
+        "image-0-iso_a",
+        "image-0-iso_b",
+        "image-0-top",
+        "load-c0366719845747439c9b849313f122be"
+      ],
+      "image_manifest": [
+        {
+          "id": "image-0-top",
+          "kind": "image",
+          "view_id": "top",
+          "sha256": "f0d831a7a7a8e753db5999761b81ec151c1d4cf562b49db93775e264faa3b18d",
+          "scene_sha256": "39ef7540e429f04ca8e3de376bbcc72aa61075e0b3d7f82512dac9f09f871375",
+          "timestamp": "2026-10-14T09:01:03.5698708Z",
+          "load_request_id": "c0366719845747439c9b849313f122be",
+          "capture_request_id": "308b55d357cc405d930db4e1bce40cb8"
+        },
+        {
+          "id": "image-0-iso_a",
+          "kind": "image",
+          "view_id": "iso_a",
+          "sha256": "535db4ebfd73bc8494cc2461b8dcea96d3c3d93820dfa14983cba446a5ba328f",
+          "scene_sha256": "39ef7540e429f04ca8e3de376bbcc72aa61075e0b3d7f82512dac9f09f871375",
+          "timestamp": "2026-10-14T09:01:05.0434742Z",
+          "load_request_id": "c0366719845747439c9b849313f122be",
+          "capture_request_id": "e0da14a66f784c249955155d0a6accfb"
+        },
+        {
+          "id": "image-0-iso_b",
+          "kind": "image",
+          "view_id": "iso_b",
+          "sha256": "74673b43834d47f59e5f1b6296ff230969fdfdc43fb7843532a3d20786e5982b",
+          "scene_sha256": "39ef7540e429f04ca8e3de376bbcc72aa61075e0b3d7f82512dac9f09f871375",
+          "timestamp": "2026-10-14T09:01:06.5249164Z",
+          "load_request_id": "c0366719845747439c9b849313f122be",
+          "capture_request_id": "c141335316514a07aa113a67f3a1259a"
+        }
+      ],
+      "checks": [
+        {
+          "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+          "status": "violated",
+          "checker": "visual",
+          "object_ids": [
+            "emitter1"
+          ],
+          "observed": null,
+          "expected": {
+            "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+          },
+          "evidence_ids": [
+            "load-c0366719845747439c9b849313f122be",
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ],
+          "reason": "The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.",
+          "missing_capability": null,
+          "native_result": {
+            "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+            "status": "unknown",
+            "checker": "native_geometry",
+            "object_ids": [
+              "emitter1",
+              "conveyor1"
+            ],
+            "observed": null,
+            "expected": {
+              "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+            },
+            "evidence_ids": [
+              "load-c0366719845747439c9b849313f122be"
+            ],
+            "reason": "This requested relation requires visual evidence.",
+            "missing_capability": null
+          },
+          "visual_result": {
+            "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+            "status": "violated",
+            "object_ids": [
+              "emitter1"
+            ],
+            "relation_ids": [
+              "rel1"
+            ],
+            "image_ids": [
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ],
+            "observed": "The feeder (green emitter) is positioned adjacent to the side of the conveyor belt rather than directly above the carrying surface. In the top view, the dashed volume of the feeder and the belt show no overlap.",
+            "reason": "The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.",
+            "repair_intent": "Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.",
+            "requested_view": null,
+            "requested_views": [],
+            "spatial_observation": "The conveyor's Z-axis range is [15.5, 19.5], while the emitter's Z-axis range is [15.0, 16.125]. The lateral offset in the Z-axis prevents the functional emission volume from covering the transport path.",
+            "evidence_basis": "reported_visual_issue"
+          }
+        },
+        {
+          "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+          "status": "violated",
+          "checker": "visual",
+          "object_ids": [
+            "remover1"
+          ],
+          "observed": null,
+          "expected": {
+            "question": "Does the remover cover the downstream extension path of the conveyor?"
+          },
+          "evidence_ids": [
+            "load-c0366719845747439c9b849313f122be",
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ],
+          "reason": "The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.",
+          "missing_capability": null,
+          "native_result": {
+            "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+            "status": "unknown",
+            "checker": "native_geometry",
+            "object_ids": [
+              "remover1",
+              "conveyor1"
+            ],
+            "observed": null,
+            "expected": {
+              "question": "Does the remover cover the downstream extension path of the conveyor?"
+            },
+            "evidence_ids": [
+              "load-c0366719845747439c9b849313f122be"
+            ],
+            "reason": "This requested relation requires visual evidence.",
+            "missing_capability": null
+          },
+          "visual_result": {
+            "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+            "status": "violated",
+            "object_ids": [
+              "remover1"
+            ],
+            "relation_ids": [
+              "rel2"
+            ],
+            "image_ids": [
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ],
+            "observed": "The remover (orange unit) is positioned laterally to the side of the conveyor exit rather than covering the downstream extension path. Its removal volume does not intersect the area where items leaving the belt would travel.",
+            "reason": "The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.",
+            "repair_intent": "Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end.",
+            "requested_view": null,
+            "requested_views": [],
+            "spatial_observation": "The remover's Z-axis range is [19.5, 20.625], whereas the conveyor's transport axis is centered at Z=17.5. This confirms a significant lateral misalignment relative to the flow direction.",
+            "evidence_basis": "reported_visual_issue"
+          }
+        }
+      ],
+      "visual_checks": [
+        {
+          "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+          "status": "violated",
+          "object_ids": [
+            "emitter1"
+          ],
+          "relation_ids": [
+            "rel1"
+          ],
+          "image_ids": [
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ],
+          "observed": "The feeder (green emitter) is positioned adjacent to the side of the conveyor belt rather than directly above the carrying surface. In the top view, the dashed volume of the feeder and the belt show no overlap.",
+          "reason": "The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.",
+          "repair_intent": "Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.",
+          "requested_view": null,
+          "requested_views": [],
+          "spatial_observation": "The conveyor's Z-axis range is [15.5, 19.5], while the emitter's Z-axis range is [15.0, 16.125]. The lateral offset in the Z-axis prevents the functional emission volume from covering the transport path.",
+          "evidence_basis": "reported_visual_issue"
+        },
+        {
+          "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+          "status": "violated",
+          "object_ids": [
+            "remover1"
+          ],
+          "relation_ids": [
+            "rel2"
+          ],
+          "image_ids": [
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ],
+          "observed": "The remover (orange unit) is positioned laterally to the side of the conveyor exit rather than covering the downstream extension path. Its removal volume does not intersect the area where items leaving the belt would travel.",
+          "reason": "The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.",
+          "repair_intent": "Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end.",
+          "requested_view": null,
+          "requested_views": [],
+          "spatial_observation": "The remover's Z-axis range is [19.5, 20.625], whereas the conveyor's transport axis is centered at Z=17.5. This confirms a significant lateral misalignment relative to the flow direction.",
+          "evidence_basis": "reported_visual_issue"
+        }
+      ],
+      "global_findings": [
+        {
+          "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+          "status": "violated",
+          "object_ids": [
+            "emitter1"
+          ],
+          "requirement_ids": [
+            "REQ-FEEDER-ABOVE-CONVEYOR"
+          ],
+          "observed": "The feeder (green emitter) is positioned adjacent to the side of the conveyor belt rather than directly above the carrying surface. In the top view, the dashed volume of the feeder and the belt show no overlap.",
+          "reason": "The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.",
+          "repair_intent": "Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.",
+          "image_ids": [
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ]
+        },
+        {
+          "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+          "status": "violated",
+          "object_ids": [
+            "remover1"
+          ],
+          "requirement_ids": [
+            "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+          ],
+          "observed": "The remover (orange unit) is positioned laterally to the side of the conveyor exit rather than covering the downstream extension path. Its removal volume does not intersect the area where items leaving the belt would travel.",
+          "reason": "The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.",
+          "repair_intent": "Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end.",
+          "image_ids": [
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ]
+        }
+      ]
+    },
+    "output_schema_version": 1,
+    "patch_shape": {
+      "reason": "justification",
+      "changes": [
+        {
+          "object_id": "allowed ID",
+          "placement": {
+            "kind": "supported kind"
+          }
+        }
+      ],
+      "add_objects": [],
+      "remove_object_ids": [],
+      "relation_updates": [],
+      "remove_relation_ids": [],
+      "relation_impacts": [
+        {
+          "relation_id": "affected relation ID",
+          "expected_effect": "expected consequence, not a validation claim"
+        }
+      ],
+      "unresolved": []
+    },
+    "context_manifest": {
+      "prompt_version": "issue4-inspection-issues-v4",
+      "kind": "repair",
+      "sources": {
+        "requirements_sha256": "40849ba3aa0a81fa62c8c3d9c825f7cb0f8bb60444af4616fb728465e195ad00",
+        "native_geometry_sha256": "0ccc683e8a9fd6c87f1ffa6f5ce6caece25ff939b7bdbca4faf35e56d1bb7aef",
+        "template_sources": {
+          "source-04da4aaaacbb3e5e0ade": "04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c",
+          "source-7b6b0a6b063429d967cf": "7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918",
+          "source-6862ca46dbe17012078c": "6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535"
+        },
+        "knowledge_sha256": "d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26"
+      },
+      "object_scope": [
+        "conveyor1",
+        "emitter1",
+        "remover1"
+      ],
+      "field_sources": {
+        "relevant_requirements": "violated independent requirements",
+        "current_layout_subset": "current resolved positions, including frozen anchors",
+        "native_measurements": "current native receipt",
+        "evidence_refs": "current validated checks and visual observations",
+        "repair_tickets": "verified violations"
+      },
+      "limitations": [
+        "Generated roles/functions are identification context, not independent ground truth.",
+        "Native data describes this loaded software/version, not proven runtime behavior."
+      ]
+    }
+  },
+  "images": [],
+  "input_metrics": {
+    "system_chars": 1270,
+    "payload_chars": 34965,
+    "image_count": 0,
+    "image_bytes": 0,
+    "token_estimate_used": false
+  },
+  "input_artifacts": [],
+  "response_text": null,
+  "response_sha256": null,
+  "structured_output": null,
+  "redaction_count": 0,
+  "quality": {
+    "review_status": "pending",
+    "sft_eligible": false,
+    "dpo_eligible": false,
+    "split": "unassigned"
+  },
+  "finished_at": "2026-10-14T09:01:18.755622+00:00",
+  "latency_seconds": 0.548016,
+  "output_origin": "no_completion",
+  "model_metadata": {
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "provider": "DeepSeek",
+    "request_options": {
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 12000
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "requested_model": "deepseek-v4-pro",
+    "http_status": 402,
+    "streaming_requested": true
+  },
+  "error": {
+    "type": "ModelServiceError",
+    "message": "scene model HTTP 402"
+  }
+}

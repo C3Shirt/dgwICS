@@ -1,0 +1,62 @@
+{
+  "authority": "measured_factory_bounds",
+  "translation_grid": [
+    218,
+    3,
+    123
+  ],
+  "world_bounds": {
+    "min": [
+      0,
+      0,
+      0
+    ],
+    "max": [
+      59.625,
+      9.0,
+      35.625
+    ],
+    "grid_dimensions": [
+      477,
+      72,
+      285
+    ],
+    "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+  },
+  "original_bounds_world": {
+    "min": [
+      2.125,
+      -0.375,
+      0.875
+    ],
+    "max": [
+      3.0,
+      1.125,
+      4.0
+    ]
+  },
+  "result_bounds_world": {
+    "min": [
+      29.375,
+      0.0,
+      16.25
+    ],
+    "max": [
+      30.25,
+      1.5,
+      19.375
+    ]
+  },
+  "target_center_world": [
+    29.8125,
+    4.5,
+    17.8125
+  ],
+  "result_center_world": [
+    29.8125,
+    0.75,
+    17.8125
+  ],
+  "relative_positions_preserved": true,
+  "physical_acceptance_passed": false
+}

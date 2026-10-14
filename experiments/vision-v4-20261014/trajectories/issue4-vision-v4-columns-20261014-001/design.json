@@ -1,0 +1,59 @@
+{
+  "scene_id": "two-columns-static",
+  "scene_goal": "Create a static scene with two Column prefabs separated by a visible gap, containing no conveyor belts, emitters, or removers. This scene is for visual layout inspection only; no PLC control is intended.",
+  "control_intent": [],
+  "objects": [
+    {
+      "id": "column-1",
+      "prefab": "Column",
+      "roles": [
+        "REQ-COLUMN-001"
+      ],
+      "function": "First of two independent metal columns, placed with a visible gap from the second column.",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          10,
+          1,
+          10
+        ],
+        "yaw_deg": 0
+      },
+      "settings": []
+    },
+    {
+      "id": "column-2",
+      "prefab": "Column",
+      "roles": [
+        "REQ-COLUMN-001"
+      ],
+      "function": "Second independent metal column, separated from column-1 by a visible gap.",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          20,
+          1,
+          10
+        ],
+        "yaw_deg": 0
+      },
+      "settings": []
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-separation",
+      "subject_id": "column-1",
+      "predicate": "visually_separated",
+      "target_id": "column-2",
+      "parameters": {
+        "min_gap_metres": 1.0
+      },
+      "requirement_ids": [
+        "REQ-COLUMN-002"
+      ]
+    }
+  ],
+  "unresolved": [],
+  "deferred_tasks": []
+}

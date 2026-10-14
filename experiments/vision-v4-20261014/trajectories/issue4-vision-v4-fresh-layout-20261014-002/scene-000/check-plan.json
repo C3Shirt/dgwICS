@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "requirements_sha256": "f5882ad18034d208db9791bd073aa7e5688eb9abebdb3404ada865a94fccaa1b",
+  "checks": [
+    {
+      "check_id": "REQ-STATIC-001-1",
+      "requirement_ids": [
+        "REQ-STATIC-001"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "conveyor-1",
+        "feeder-1",
+        "remover-1"
+      ],
+      "subject_ids": [
+        "conveyor-1",
+        "feeder-1",
+        "remover-1"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "capability": "conveyor",
+        "equals": 1
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-STATIC-002-1",
+      "requirement_ids": [
+        "REQ-STATIC-002"
+      ],
+      "operator": "exists",
+      "object_ids": [
+        "feeder-1"
+      ],
+      "subject_ids": [
+        "feeder-1"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 1
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-STATIC-003-1",
+      "requirement_ids": [
+        "REQ-STATIC-003"
+      ],
+      "operator": "exists",
+      "object_ids": [
+        "remover-1"
+      ],
+      "subject_ids": [
+        "remover-1"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 1
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-STATIC-004-1",
+      "requirement_ids": [
+        "REQ-STATIC-004"
+      ],
+      "operator": "visual_relation",
+      "object_ids": [
+        "feeder-1",
+        "conveyor-1"
+      ],
+      "subject_ids": [
+        "feeder-1"
+      ],
+      "target_ids": [
+        "conveyor-1"
+      ],
+      "arguments": {
+        "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+      },
+      "relation_ids": [
+        "rel-1"
+      ],
+      "evidence_methods": [
+        "visual"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-STATIC-005-1",
+      "requirement_ids": [
+        "REQ-STATIC-005"
+      ],
+      "operator": "visual_relation",
+      "object_ids": [
+        "remover-1",
+        "conveyor-1"
+      ],
+      "subject_ids": [
+        "remover-1"
+      ],
+      "target_ids": [
+        "conveyor-1"
+      ],
+      "arguments": {
+        "question": "Does the remover cover the downstream extension path of the conveyor?"
+      },
+      "relation_ids": [
+        "rel-2"
+      ],
+      "evidence_methods": [
+        "visual"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "G-registration",
+      "requirement_ids": [],
+      "operator": "registered",
+      "object_ids": [
+        "conveyor-1",
+        "feeder-1",
+        "remover-1"
+      ],
+      "subject_ids": [
+        "conveyor-1",
+        "feeder-1",
+        "remover-1"
+      ],
+      "target_ids": [],
+      "relation_ids": [],
+      "arguments": {},
+      "evidence_methods": [
+        "native_geometry"
+      ],
+      "applicability": "software_prerequisite"
+    }
+  ],
+  "coverage": {
+    "REQ-STATIC-001": [
+      "REQ-STATIC-001-1"
+    ],
+    "REQ-STATIC-002": [
+      "REQ-STATIC-002-1"
+    ],
+    "REQ-STATIC-003": [
+      "REQ-STATIC-003-1"
+    ],
+    "REQ-STATIC-004": [
+      "REQ-STATIC-004-1"
+    ],
+    "REQ-STATIC-005": [
+      "REQ-STATIC-005-1"
+    ]
+  },
+  "deferred_requirement_ids": []
+}

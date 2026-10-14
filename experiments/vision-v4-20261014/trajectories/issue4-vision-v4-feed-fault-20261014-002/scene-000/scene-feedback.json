@@ -1,0 +1,25 @@
+{
+  "verdict": "repair",
+  "summary": "1 anomalies reported; inspection complete.",
+  "inspection_complete": true,
+  "issues": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "emitter1"
+      ],
+      "observation": "In the top view (image-0-top), the feeder's emission volume (dashed box with green arrow) is located to the left of the conveyor. In iso views (image-0-iso_a, image-0-iso_b), the feeder sits on the floor beside the belt, not vertically above it.",
+      "spatial_observation": "The conveyor surface spans X=[29.375, 30.25] and Z=[15.5, 19.5]. The emitter origin is at X=31.6875, which is approximately 1.4 meters outside the lateral boundary of the carrying surface.",
+      "reason": "The requirement states the feeder must be positioned 'above' the upstream carrying surface. Currently, it is placed laterally adjacent to the conveyor, meaning emitted items would fall onto the floor rather than the belt.",
+      "repair_intent": "Move the emitter horizontally so its emission volume aligns directly over the upstream end of the conveyor belt surface.",
+      "evidence_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    }
+  ],
+  "verification_file": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-feed-fault-20261014-002/scene-000/verification.json"
+}

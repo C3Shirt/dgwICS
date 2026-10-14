@@ -1,0 +1,737 @@
+{
+  "schema_version": 1,
+  "kind": "agent_candidate",
+  "candidate_id": "bb6d65874751464fb04a3d9849b737d1",
+  "run_id": "7ee73c534d7e4dfe87d2b18844f832f1",
+  "role": "scene",
+  "phase": "scene_requirements",
+  "scenario_id": null,
+  "lineage_group": "simple-scene",
+  "source_kind": "live_model",
+  "started_at": "2026-10-14T08:54:13.609160+00:00",
+  "status": "response_received",
+  "handoff_id": null,
+  "versions": {},
+  "policy": {},
+  "prompt_sha256": "07d8e012653b4c4b1a5edd256d6a5e36d5626041324a59080a8e0c4c280752d7",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Extract the requirements independently from the original user text.\nReturn the RequirementSpec JSON object itself: schema_version, original_requirement,\nrequirements, scene_intent, optional context_fragments. Do not copy the request envelope, phase,\ncatalog or output_contract.\nQuote exact source fragments covering the complete original text; quotes may overlap.\nCopy contiguous original text rather than rewriting a clause. Multiple requirements\ncan quote the same complete clause when it describes several components.\nSeparate static physical requirements from runtime behavior. Preserve explicit\nquantities, roles and relations. Choose registered predicates when applicable;\nrecord unavailable capabilities honestly instead of replacing the requirement.\nUse visual_relation for qualitative visible constraints that have no exact geometry.\nUse component roles with stable ASCII IDs, without spaces. A region is not a new\nphysical object role. Count selectors may use a declared measured capability for\na category, or an exact case-sensitive available_components prefab name. A category\nname is not an exact prefab. Unsupported equipment stays an explicit unsupported\nrequirement; never fabricate a selector that would hide it as a zero count.\nExecution-scope instructions such as checking only static pictures or not starting\nPLC belong in explained context_fragments. They are not missing physical equipment\nor runtime_behavior_check capabilities. Actual motion/control requirements belong\nin phase runtime and remain deferred, without a static success claim.\nIn arguments, include only applicable supported keys. Omit unused keys; do not\nfill optional numeric, prefab or capability fields with null.\nNever invent a tolerance, sensor property or confirmed engineering constraint.\nQuote nonconstraint request framing or conjunctions in context_fragments with a\nreason. Never place quantities, required equipment or spatial constraints there.\nAssumptions are optional, never hard requirements. Return the supplied JSON shape.\nProvide scene_intent in English: a coherent industrial goal and process_description,\nnot only a short equipment arrow chain. Explain intended stages, equipment cooperation\nand the user's spatial objectives, linking every stage to original requirement IDs.\nUse only roles already defined in requirements (or null for a general stage).\nDo not invent stages or equipment. A static arrangement may have no material flow.\nThe narrative is background interpretation; only the original requirements define\nmandatory checks. Never describe proposed or observed execution as proven success.\n"
+    },
+    {
+      "role": "user",
+      "content": "{\"phase\": \"scene_requirements\", \"original_requirement\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。\", \"output_contract\": {\"original_requirement\": \"verbatim input\", \"scene_intent\": {\"goal\": \"English industrial goal\", \"process_description\": \"Coherent English paragraph explaining intended equipment collaboration and spatial requirements, not observed success\", \"requirement_ids\": [\"existing original requirement IDs\"], \"process_stages\": [{\"stage\": \"English stage name\", \"equipment_role\": \"existing role or null\", \"purpose\": \"expected purpose\", \"requirement_ids\": [\"original requirement IDs\"]}]}, \"context_fragments\": [{\"source_text\": \"verbatim nonconstraint framing only\", \"reason\": \"why this is framing, not an omitted constraint\"}], \"requirements\": [{\"requirement_id\": \"stable ID\", \"source_text\": \"verbatim source fragment\", \"origin\": \"explicit_user or design_assumption\", \"phase\": \"static_scene or runtime\", \"subject_role\": \"semantic role or null\", \"target_role\": \"semantic role or null\", \"predicate\": \"registered operator, or the unavailable capability name\", \"arguments\": {}, \"required\": true, \"evidence_methods\": [\"structure\", \"native_geometry\", \"visual\"]}]}, \"checker_capabilities\": {\"registered\": {\"arguments\": {}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\"], \"meaning\": \"registered\"}, \"forall\": {\"arguments\": {\"operator\": \"string\", \"arguments\": \"object\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"Apply a supported nonrecursive predicate to only selected role instances.\"}, \"exists\": {\"arguments\": {\"equals\": \"integer\", \"min\": \"integer\", \"max\": \"integer\", \"prefab\": \"string\", \"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"structure\"], \"meaning\": \"Presence of the selected physical role; no transport equipment is implied.\"}, \"count\": {\"arguments\": {\"equals\": \"integer\", \"min\": \"integer\", \"max\": \"integer\", \"prefab\": \"string\", \"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"structure\"], \"meaning\": \"Count selected physical roles, optionally filtered by exact prefab or measured capability.\"}, \"has_capability\": {\"arguments\": {\"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\"], \"meaning\": \"has capability\"}, \"within_bounds\": {\"arguments\": {\"bounds\": \"bounds\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\"], \"meaning\": \"within bounds\"}, \"relative_direction\": {\"arguments\": {\"axis\": \"string\", \"direction\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"relative direction\"}, \"aligned\": {\"arguments\": {\"axes\": \"axes\", \"tolerance_metres\": \"nonnegative\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"aligned\"}, \"distance_range\": {\"arguments\": {\"min_metres\": \"nonnegative\", \"max_metres\": \"nonnegative\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"distance range\"}, \"intersects_volume\": {\"arguments\": {}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"intersects volume\"}, \"ray_intersects_volume\": {\"arguments\": {}, \"capabilities\": [\"sensor\"], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"ray intersects volume\"}, \"feeds_into\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"Subject emitter origin lies above target carrier footprint. Upstream region can also be reviewed visually.\"}, \"transfers_to\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"Selected upstream and downstream carriers have compatible measured straight carrying surfaces. Missing permitted gap/height tolerance remains unknown.\"}, \"receives_from\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"A separately measured active receiving volume intersects the target carrier downstream continuation. Outer object bounds are insufficient; absent active-volume measurements remain unsupported.\"}, \"detects_path\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"Subject sensor beam reaches target carrier path. Orientation and height limits only apply when explicitly requested.\"}, \"reachable\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"], \"meaning\": \"Reachability over the selected transfer relations, not all components.\"}, \"visual_relation\": {\"arguments\": {\"question\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"visual\"], \"meaning\": \"Qualitative visible arrangement, including region or topology questions without exact numeric geometry.\"}, \"unsupported\": {\"arguments\": {\"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [], \"meaning\": \"A physical capability not provided by the current adapters; not a substitute for a supported visual question.\"}}, \"available_components\": [{\"prefab\": \"Aligner3\", \"measured_capabilities\": []}, {\"prefab\": \"BeltConveyor2M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"BeltConveyor4M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"ChuteConveyorLow\", \"measured_capabilities\": []}, {\"prefab\": \"Column\", \"measured_capabilities\": []}, {\"prefab\": \"ConveyorScale\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"DiffusePhotoelectricSensor\", \"measured_capabilities\": [\"sensor\"]}, {\"prefab\": \"DigitalDisplay\", \"measured_capabilities\": []}, {\"prefab\": \"ElectricSwitchboard\", \"measured_capabilities\": []}, {\"prefab\": \"EmergencyStopButton\", \"measured_capabilities\": []}, {\"prefab\": \"Emitter\", \"measured_capabilities\": [\"emitter\"]}, {\"prefab\": \"LightCurtainEmitter\", \"measured_capabilities\": []}, {\"prefab\": \"LightCurtainReceiver\", \"measured_capabilities\": []}, {\"prefab\": \"MetalCorner\", \"measured_capabilities\": []}, {\"prefab\": \"PopUpWheelSorter\", \"measured_capabilities\": []}, {\"prefab\": \"Remover\", \"measured_capabilities\": []}, {\"prefab\": \"ResetPushButton\", \"measured_capabilities\": []}, {\"prefab\": \"RetroreflectiveMirror\", \"measured_capabilities\": []}, {\"prefab\": \"RetroreflectivePhotoelectricSensor\", \"measured_capabilities\": [\"sensor\"]}, {\"prefab\": \"RollerConveyor2M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"RollerConveyor4M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"RollerConveyor6M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"Safeguard\", \"measured_capabilities\": []}, {\"prefab\": \"SafeguardI\", \"measured_capabilities\": []}, {\"prefab\": \"SafeguardL\", \"measured_capabilities\": []}, {\"prefab\": \"Selector\", \"measured_capabilities\": []}, {\"prefab\": \"StackableBox\", \"measured_capabilities\": []}, {\"prefab\": \"StartPushButton\", \"measured_capabilities\": []}, {\"prefab\": \"StopPushButton\", \"measured_capabilities\": []}, {\"prefab\": \"Turntable\", \"measured_capabilities\": []}, {\"prefab\": \"VisualStatusIndicator\", \"measured_capabilities\": []}], \"rejected_output\": {\"schema_version\": \"1.0\", \"original_requirement\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。\", \"requirements\": [{\"requirement_id\": \"REQ-STATIC-001\", \"source_text\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"prefab\": \"conveyor\", \"equals\": 1}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-STATIC-002\", \"source_text\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"prefab\": \"feeder\", \"equals\": 1}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-STATIC-003\", \"source_text\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"prefab\": \"remover\", \"equals\": 1}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-STATIC-004\", \"source_text\": \"供料器位于输送带上游承载面上方\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": \"feeder\", \"target_role\": \"conveyor\", \"predicate\": \"visual_relation\", \"arguments\": {\"question\": \"Is the feeder located above the upstream carrying surface of the conveyor?\"}, \"required\": true, \"evidence_methods\": [\"visual\"]}, {\"requirement_id\": \"REQ-STATIC-005\", \"source_text\": \"移除器覆盖下游延伸路径\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": \"remover\", \"target_role\": \"conveyor\", \"predicate\": \"visual_relation\", \"arguments\": {\"question\": \"Does the remover cover the downstream extension path of the conveyor?\"}, \"required\": true, \"evidence_methods\": [\"visual\"]}], \"scene_intent\": {\"goal\": \"Create a static straight-line conveyor layout with a feeder, conveyor belt, and end remover for visual inspection without starting the PLC.\", \"process_description\": \"The intended layout is a static arrangement for visual inspection. A single conveyor belt is positioned along a straight path. A feeder is placed above the upstream carrying surface of the conveyor belt to supply items onto the belt. An end remover is situated to cover the downstream extension path of the conveyor, presumably to remove items at the end of the line. These components are arranged according to spatial constraints but no material flow or control logic is activated; only layout and image checks are performed.\", \"requirement_ids\": [\"REQ-STATIC-001\", \"REQ-STATIC-002\", \"REQ-STATIC-003\", \"REQ-STATIC-004\", \"REQ-STATIC-005\"], \"process_stages\": [{\"stage\": \"Static inspection setup\", \"equipment_role\": null, \"purpose\": \"Establish the prescribed layout for visual inspection without activating PLC control.\", \"requirement_ids\": [\"REQ-STATIC-001\", \"REQ-STATIC-002\", \"REQ-STATIC-003\", \"REQ-STATIC-004\", \"REQ-STATIC-005\"]}]}, \"context_fragments\": [{\"source_text\": \"只做布局和图片检查，不启动 PLC。\", \"reason\": \"This sentence defines the execution scope (layout and image checks only, no PLC startup). It is not a physical equipment or spatial constraint.\"}]}, \"format_error\": \"Requirement REQ-STATIC-001 invalid count arguments {'prefab': 'conveyor', 'equals': 1}: Unknown exact prefab selector: conveyor. Use an exact available_components prefab, or its declared measured capability for a component category. Preserve genuinely unavailable equipment as unsupported.. Omit unused argument keys; optional does not mean nullable.\"}"
+    }
+  ],
+  "payload": {
+    "phase": "scene_requirements",
+    "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+    "output_contract": {
+      "original_requirement": "verbatim input",
+      "scene_intent": {
+        "goal": "English industrial goal",
+        "process_description": "Coherent English paragraph explaining intended equipment collaboration and spatial requirements, not observed success",
+        "requirement_ids": [
+          "existing original requirement IDs"
+        ],
+        "process_stages": [
+          {
+            "stage": "English stage name",
+            "equipment_role": "existing role or null",
+            "purpose": "expected purpose",
+            "requirement_ids": [
+              "original requirement IDs"
+            ]
+          }
+        ]
+      },
+      "context_fragments": [
+        {
+          "source_text": "verbatim nonconstraint framing only",
+          "reason": "why this is framing, not an omitted constraint"
+        }
+      ],
+      "requirements": [
+        {
+          "requirement_id": "stable ID",
+          "source_text": "verbatim source fragment",
+          "origin": "explicit_user or design_assumption",
+          "phase": "static_scene or runtime",
+          "subject_role": "semantic role or null",
+          "target_role": "semantic role or null",
+          "predicate": "registered operator, or the unavailable capability name",
+          "arguments": {},
+          "required": true,
+          "evidence_methods": [
+            "structure",
+            "native_geometry",
+            "visual"
+          ]
+        }
+      ]
+    },
+    "checker_capabilities": {
+      "registered": {
+        "arguments": {},
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ],
+        "meaning": "registered"
+      },
+      "forall": {
+        "arguments": {
+          "operator": "string",
+          "arguments": "object"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "Apply a supported nonrecursive predicate to only selected role instances."
+      },
+      "exists": {
+        "arguments": {
+          "equals": "integer",
+          "min": "integer",
+          "max": "integer",
+          "prefab": "string",
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "structure"
+        ],
+        "meaning": "Presence of the selected physical role; no transport equipment is implied."
+      },
+      "count": {
+        "arguments": {
+          "equals": "integer",
+          "min": "integer",
+          "max": "integer",
+          "prefab": "string",
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "structure"
+        ],
+        "meaning": "Count selected physical roles, optionally filtered by exact prefab or measured capability."
+      },
+      "has_capability": {
+        "arguments": {
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ],
+        "meaning": "has capability"
+      },
+      "within_bounds": {
+        "arguments": {
+          "bounds": "bounds"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ],
+        "meaning": "within bounds"
+      },
+      "relative_direction": {
+        "arguments": {
+          "axis": "string",
+          "direction": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "relative direction"
+      },
+      "aligned": {
+        "arguments": {
+          "axes": "axes",
+          "tolerance_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "aligned"
+      },
+      "distance_range": {
+        "arguments": {
+          "min_metres": "nonnegative",
+          "max_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "distance range"
+      },
+      "intersects_volume": {
+        "arguments": {},
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "intersects volume"
+      },
+      "ray_intersects_volume": {
+        "arguments": {},
+        "capabilities": [
+          "sensor"
+        ],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "ray intersects volume"
+      },
+      "feeds_into": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "Subject emitter origin lies above target carrier footprint. Upstream region can also be reviewed visually."
+      },
+      "transfers_to": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "Selected upstream and downstream carriers have compatible measured straight carrying surfaces. Missing permitted gap/height tolerance remains unknown."
+      },
+      "receives_from": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "A separately measured active receiving volume intersects the target carrier downstream continuation. Outer object bounds are insufficient; absent active-volume measurements remain unsupported."
+      },
+      "detects_path": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "Subject sensor beam reaches target carrier path. Orientation and height limits only apply when explicitly requested."
+      },
+      "reachable": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ],
+        "meaning": "Reachability over the selected transfer relations, not all components."
+      },
+      "visual_relation": {
+        "arguments": {
+          "question": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "visual"
+        ],
+        "meaning": "Qualitative visible arrangement, including region or topology questions without exact numeric geometry."
+      },
+      "unsupported": {
+        "arguments": {
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [],
+        "meaning": "A physical capability not provided by the current adapters; not a substitute for a supported visual question."
+      }
+    },
+    "available_components": [
+      {
+        "prefab": "Aligner3",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "BeltConveyor2M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "BeltConveyor4M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "ChuteConveyorLow",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Column",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ConveyorScale",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "DiffusePhotoelectricSensor",
+        "measured_capabilities": [
+          "sensor"
+        ]
+      },
+      {
+        "prefab": "DigitalDisplay",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ElectricSwitchboard",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "EmergencyStopButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Emitter",
+        "measured_capabilities": [
+          "emitter"
+        ]
+      },
+      {
+        "prefab": "LightCurtainEmitter",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "LightCurtainReceiver",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "MetalCorner",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "PopUpWheelSorter",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Remover",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ResetPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "RetroreflectiveMirror",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "RetroreflectivePhotoelectricSensor",
+        "measured_capabilities": [
+          "sensor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor2M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor4M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor6M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "Safeguard",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "SafeguardI",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "SafeguardL",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Selector",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StackableBox",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StartPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StopPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Turntable",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "VisualStatusIndicator",
+        "measured_capabilities": []
+      }
+    ],
+    "rejected_output": {
+      "schema_version": "1.0",
+      "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+      "requirements": [
+        {
+          "requirement_id": "REQ-STATIC-001",
+          "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "prefab": "conveyor",
+            "equals": 1
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-STATIC-002",
+          "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "prefab": "feeder",
+            "equals": 1
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-STATIC-003",
+          "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "prefab": "remover",
+            "equals": 1
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-STATIC-004",
+          "source_text": "供料器位于输送带上游承载面上方",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": "feeder",
+          "target_role": "conveyor",
+          "predicate": "visual_relation",
+          "arguments": {
+            "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+          },
+          "required": true,
+          "evidence_methods": [
+            "visual"
+          ]
+        },
+        {
+          "requirement_id": "REQ-STATIC-005",
+          "source_text": "移除器覆盖下游延伸路径",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": "remover",
+          "target_role": "conveyor",
+          "predicate": "visual_relation",
+          "arguments": {
+            "question": "Does the remover cover the downstream extension path of the conveyor?"
+          },
+          "required": true,
+          "evidence_methods": [
+            "visual"
+          ]
+        }
+      ],
+      "scene_intent": {
+        "goal": "Create a static straight-line conveyor layout with a feeder, conveyor belt, and end remover for visual inspection without starting the PLC.",
+        "process_description": "The intended layout is a static arrangement for visual inspection. A single conveyor belt is positioned along a straight path. A feeder is placed above the upstream carrying surface of the conveyor belt to supply items onto the belt. An end remover is situated to cover the downstream extension path of the conveyor, presumably to remove items at the end of the line. These components are arranged according to spatial constraints but no material flow or control logic is activated; only layout and image checks are performed.",
+        "requirement_ids": [
+          "REQ-STATIC-001",
+          "REQ-STATIC-002",
+          "REQ-STATIC-003",
+          "REQ-STATIC-004",
+          "REQ-STATIC-005"
+        ],
+        "process_stages": [
+          {
+            "stage": "Static inspection setup",
+            "equipment_role": null,
+            "purpose": "Establish the prescribed layout for visual inspection without activating PLC control.",
+            "requirement_ids": [
+              "REQ-STATIC-001",
+              "REQ-STATIC-002",
+              "REQ-STATIC-003",
+              "REQ-STATIC-004",
+              "REQ-STATIC-005"
+            ]
+          }
+        ]
+      },
+      "context_fragments": [
+        {
+          "source_text": "只做布局和图片检查，不启动 PLC。",
+          "reason": "This sentence defines the execution scope (layout and image checks only, no PLC startup). It is not a physical equipment or spatial constraint."
+        }
+      ]
+    },
+    "format_error": "Requirement REQ-STATIC-001 invalid count arguments {'prefab': 'conveyor', 'equals': 1}: Unknown exact prefab selector: conveyor. Use an exact available_components prefab, or its declared measured capability for a component category. Preserve genuinely unavailable equipment as unsupported.. Omit unused argument keys; optional does not mean nullable."
+  },
+  "images": [],
+  "input_metrics": {
+    "system_chars": 2610,
+    "payload_chars": 11350,
+    "image_count": 0,
+    "image_bytes": 0,
+    "token_estimate_used": false
+  },
+  "input_artifacts": [],
+  "response_text": "{\n  \"schema_version\": \"1.0\",\n  \"original_requirement\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。\",\n  \"requirements\": [\n    {\n      \"requirement_id\": \"REQ-STATIC-001\",\n      \"source_text\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。\",\n      \"origin\": \"explicit_user\",\n      \"phase\": \"static_scene\",\n      \"subject_role\": null,\n      \"target_role\": null,\n      \"predicate\": \"count\",\n      \"arguments\": {\n        \"capability\": \"conveyor\",\n        \"equals\": 1\n      },\n      \"required\": true,\n      \"evidence_methods\": [\n        \"structure\"\n      ]\n    },\n    {\n      \"requirement_id\": \"REQ-STATIC-002\",\n      \"source_text\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。\",\n      \"origin\": \"explicit_user\",\n      \"phase\": \"static_scene\",\n      \"subject_role\": \"feeder\",\n      \"target_role\": null,\n      \"predicate\": \"exists\",\n      \"arguments\": {\n        \"equals\": 1\n      },\n      \"required\": true,\n      \"evidence_methods\": [\n        \"structure\"\n      ]\n    },\n    {\n      \"requirement_id\": \"REQ-STATIC-003\",\n      \"source_text\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。\",\n      \"origin\": \"explicit_user\",\n      \"phase\": \"static_scene\",\n      \"subject_role\": \"remover\",\n      \"target_role\": null,\n      \"predicate\": \"exists\",\n      \"arguments\": {\n        \"equals\": 1\n      },\n      \"required\": true,\n      \"evidence_methods\": [\n        \"structure\"\n      ]\n    },\n    {\n      \"requirement_id\": \"REQ-STATIC-004\",\n      \"source_text\": \"供料器位于输送带上游承载面上方\",\n      \"origin\": \"explicit_user\",\n      \"phase\": \"static_scene\",\n      \"subject_role\": \"feeder\",\n      \"target_role\": \"conveyor\",\n      \"predicate\": \"visual_relation\",\n      \"arguments\": {\n        \"question\": \"Is the feeder located above the upstream carrying surface of the conveyor?\"\n      },\n      \"required\": true,\n      \"evidence_methods\": [\n        \"visual\"\n      ]\n    },\n    {\n      \"requirement_id\": \"REQ-STATIC-005\",\n      \"source_text\": \"移除器覆盖下游延伸路径\",\n      \"origin\": \"explicit_user\",\n      \"phase\": \"static_scene\",\n      \"subject_role\": \"remover\",\n      \"target_role\": \"conveyor\",\n      \"predicate\": \"visual_relation\",\n      \"arguments\": {\n        \"question\": \"Does the remover cover the downstream extension path of the conveyor?\"\n      },\n      \"required\": true,\n      \"evidence_methods\": [\n        \"visual\"\n      ]\n    }\n  ],\n  \"scene_intent\": {\n    \"goal\": \"Create a static straight-line conveyor layout with a feeder, conveyor belt, and end remover for visual inspection without starting the PLC.\",\n    \"process_description\": \"The intended layout is a static arrangement for visual inspection. A single conveyor belt is positioned along a straight path. A feeder is placed above the upstream carrying surface of the conveyor belt to supply items onto the belt. An end remover is situated to cover the downstream extension path of the conveyor, presumably to remove items at the end of the line. These components are arranged according to spatial constraints but no material flow or control logic is activated; only layout and image checks are performed.\",\n    \"requirement_ids\": [\n      \"REQ-STATIC-001\",\n      \"REQ-STATIC-002\",\n      \"REQ-STATIC-003\",\n      \"REQ-STATIC-004\",\n      \"REQ-STATIC-005\"\n    ],\n    \"process_stages\": [\n      {\n        \"stage\": \"Static inspection setup\",\n        \"equipment_role\": null,\n        \"purpose\": \"Establish the prescribed layout for visual inspection without activating PLC control.\",\n        \"requirement_ids\": [\n          \"REQ-STATIC-001\",\n          \"REQ-STATIC-002\",\n          \"REQ-STATIC-003\",\n          \"REQ-STATIC-004\",\n          \"REQ-STATIC-005\"\n        ]\n      }\n    ]\n  },\n  \"context_fragments\": [\n    {\n      \"source_text\": \"只做布局和图片检查，不启动 PLC。\",\n      \"reason\": \"This sentence defines the execution scope (layout and image checks only, no PLC startup). It is not a physical equipment or spatial constraint.\"\n    }\n  ]\n}",
+  "response_sha256": "9e959868db4c9376c781def4367dc8bebce97db0cf772b1465969f5d19bdbbe3",
+  "structured_output": {
+    "schema_version": "1.0",
+    "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+    "requirements": [
+      {
+        "requirement_id": "REQ-STATIC-001",
+        "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+        "origin": "explicit_user",
+        "phase": "static_scene",
+        "subject_role": null,
+        "target_role": null,
+        "predicate": "count",
+        "arguments": {
+          "capability": "conveyor",
+          "equals": 1
+        },
+        "required": true,
+        "evidence_methods": [
+          "structure"
+        ]
+      },
+      {
+        "requirement_id": "REQ-STATIC-002",
+        "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+        "origin": "explicit_user",
+        "phase": "static_scene",
+        "subject_role": "feeder",
+        "target_role": null,
+        "predicate": "exists",
+        "arguments": {
+          "equals": 1
+        },
+        "required": true,
+        "evidence_methods": [
+          "structure"
+        ]
+      },
+      {
+        "requirement_id": "REQ-STATIC-003",
+        "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+        "origin": "explicit_user",
+        "phase": "static_scene",
+        "subject_role": "remover",
+        "target_role": null,
+        "predicate": "exists",
+        "arguments": {
+          "equals": 1
+        },
+        "required": true,
+        "evidence_methods": [
+          "structure"
+        ]
+      },
+      {
+        "requirement_id": "REQ-STATIC-004",
+        "source_text": "供料器位于输送带上游承载面上方",
+        "origin": "explicit_user",
+        "phase": "static_scene",
+        "subject_role": "feeder",
+        "target_role": "conveyor",
+        "predicate": "visual_relation",
+        "arguments": {
+          "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+        },
+        "required": true,
+        "evidence_methods": [
+          "visual"
+        ]
+      },
+      {
+        "requirement_id": "REQ-STATIC-005",
+        "source_text": "移除器覆盖下游延伸路径",
+        "origin": "explicit_user",
+        "phase": "static_scene",
+        "subject_role": "remover",
+        "target_role": "conveyor",
+        "predicate": "visual_relation",
+        "arguments": {
+          "question": "Does the remover cover the downstream extension path of the conveyor?"
+        },
+        "required": true,
+        "evidence_methods": [
+          "visual"
+        ]
+      }
+    ],
+    "scene_intent": {
+      "goal": "Create a static straight-line conveyor layout with a feeder, conveyor belt, and end remover for visual inspection without starting the PLC.",
+      "process_description": "The intended layout is a static arrangement for visual inspection. A single conveyor belt is positioned along a straight path. A feeder is placed above the upstream carrying surface of the conveyor belt to supply items onto the belt. An end remover is situated to cover the downstream extension path of the conveyor, presumably to remove items at the end of the line. These components are arranged according to spatial constraints but no material flow or control logic is activated; only layout and image checks are performed.",
+      "requirement_ids": [
+        "REQ-STATIC-001",
+        "REQ-STATIC-002",
+        "REQ-STATIC-003",
+        "REQ-STATIC-004",
+        "REQ-STATIC-005"
+      ],
+      "process_stages": [
+        {
+          "stage": "Static inspection setup",
+          "equipment_role": null,
+          "purpose": "Establish the prescribed layout for visual inspection without activating PLC control.",
+          "requirement_ids": [
+            "REQ-STATIC-001",
+            "REQ-STATIC-002",
+            "REQ-STATIC-003",
+            "REQ-STATIC-004",
+            "REQ-STATIC-005"
+          ]
+        }
+      ]
+    },
+    "context_fragments": [
+      {
+        "source_text": "只做布局和图片检查，不启动 PLC。",
+        "reason": "This sentence defines the execution scope (layout and image checks only, no PLC startup). It is not a physical equipment or spatial constraint."
+      }
+    ]
+  },
+  "redaction_count": 0,
+  "quality": {
+    "review_status": "pending",
+    "sft_eligible": false,
+    "dpo_eligible": false,
+    "split": "unassigned"
+  },
+  "finished_at": "2026-10-14T08:54:24.243092+00:00",
+  "latency_seconds": 10.633176,
+  "output_origin": "provider_content",
+  "model_metadata": {
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "provider": "DeepSeek",
+    "request_options": {
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 12000
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "requested_model": "deepseek-v4-pro",
+    "returned_model": "deepseek-v4-pro",
+    "response_id": "e0ed9b67-8f5e-496f-baab-55575163a391",
+    "http_status": 200,
+    "usage": {
+      "prompt_tokens": 3603,
+      "completion_tokens": 1081,
+      "total_tokens": 4684,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "prompt_cache_hit_tokens": 2560,
+      "prompt_cache_miss_tokens": 1043
+    },
+    "finish_reason": "stop",
+    "streaming_requested": true,
+    "response_mode": "sse",
+    "stream_stats": {
+      "packets": 1084,
+      "content_chars": 3864,
+      "done_received": true,
+      "first_packet_seconds": 0.006421,
+      "first_content_seconds": 0.872617
+    }
+  },
+  "error": null
+}

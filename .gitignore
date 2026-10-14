@@ -28,3 +28,5 @@ scenario_projects/
 
 # Deliberately reviewed generated scenes accompanying issue #4.
 !/experiments/issue4-layout-20261014/trajectories/**/scene.factoryio
+
+!/experiments/vision-v4-20261014/trajectories/**/scene.factoryio

@@ -1,0 +1,176 @@
+{
+  "inspection_complete": true,
+  "issues": [
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "emitter1"
+      ],
+      "observation": "In the top view (image-0-top), the feeder's emission volume (dashed box with green arrow) is located to the left of the conveyor. In iso views (image-0-iso_a, image-0-iso_b), the feeder sits on the floor beside the belt, not vertically above it.",
+      "spatial_observation": "The conveyor surface spans X=[29.375, 30.25] and Z=[15.5, 19.5]. The emitter origin is at X=31.6875, which is approximately 1.4 meters outside the lateral boundary of the carrying surface.",
+      "reason": "The requirement states the feeder must be positioned 'above' the upstream carrying surface. Currently, it is placed laterally adjacent to the conveyor, meaning emitted items would fall onto the floor rather than the belt.",
+      "repair_intent": "Move the emitter horizontally so its emission volume aligns directly over the upstream end of the conveyor belt surface.",
+      "evidence_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    }
+  ],
+  "raw_output": {
+    "inspection_complete": true,
+    "issues": [
+      {
+        "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+        "status": "violated",
+        "suspect_object_ids": [
+          "emitter1"
+        ],
+        "observation": "In the top view (image-0-top), the feeder's emission volume (dashed box with green arrow) is located to the left of the conveyor. In iso views (image-0-iso_a, image-0-iso_b), the feeder sits on the floor beside the belt, not vertically above it.",
+        "spatial_observation": "The conveyor surface spans X=[29.375, 30.25] and Z=[15.5, 19.5]. The emitter origin is at X=31.6875, which is approximately 1.4 meters outside the lateral boundary of the carrying surface.",
+        "reason": "The requirement states the feeder must be positioned 'above' the upstream carrying surface. Currently, it is placed laterally adjacent to the conveyor, meaning emitted items would fall onto the floor rather than the belt.",
+        "repair_intent": "Move the emitter horizontally so its emission volume aligns directly over the upstream end of the conveyor belt surface.",
+        "evidence_image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ],
+        "requested_view": null
+      }
+    ]
+  },
+  "contract_version": 2,
+  "global_review": {
+    "status": "violated",
+    "summary": "1 anomalies reported; inspection complete.",
+    "image_ids": [
+      "image-0-iso_a",
+      "image-0-top",
+      "image-0-iso_b"
+    ],
+    "findings": [
+      {
+        "status": "violated",
+        "object_ids": [
+          "emitter1"
+        ],
+        "requirement_ids": [
+          "REQ-FEEDER-ABOVE-CONVEYOR"
+        ],
+        "observed": "In the top view (image-0-top), the feeder's emission volume (dashed box with green arrow) is located to the left of the conveyor. In iso views (image-0-iso_a, image-0-iso_b), the feeder sits on the floor beside the belt, not vertically above it.",
+        "reason": "The requirement states the feeder must be positioned 'above' the upstream carrying surface. Currently, it is placed laterally adjacent to the conveyor, meaning emitted items would fall onto the floor rather than the belt.",
+        "repair_intent": "Move the emitter horizontally so its emission volume aligns directly over the upstream end of the conveyor belt surface.",
+        "image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ]
+      }
+    ]
+  },
+  "check_results": [
+    {
+      "check_id": "REQ-COUNT-CONVEYOR-1",
+      "status": "satisfied",
+      "object_ids": [
+        "conveyor1"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-COUNT-FEEDER-1",
+      "status": "satisfied",
+      "object_ids": [
+        "emitter1"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-COUNT-REMOVER-1",
+      "status": "satisfied",
+      "object_ids": [
+        "remover1"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "object_ids": [
+        "emitter1"
+      ],
+      "relation_ids": [
+        "rel1"
+      ],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "observed": "In the top view (image-0-top), the feeder's emission volume (dashed box with green arrow) is located to the left of the conveyor. In iso views (image-0-iso_a, image-0-iso_b), the feeder sits on the floor beside the belt, not vertically above it.",
+      "reason": "The requirement states the feeder must be positioned 'above' the upstream carrying surface. Currently, it is placed laterally adjacent to the conveyor, meaning emitted items would fall onto the floor rather than the belt.",
+      "repair_intent": "Move the emitter horizontally so its emission volume aligns directly over the upstream end of the conveyor belt surface.",
+      "requested_view": null,
+      "spatial_observation": "The conveyor surface spans X=[29.375, 30.25] and Z=[15.5, 19.5]. The emitter origin is at X=31.6875, which is approximately 1.4 meters outside the lateral boundary of the carrying surface.",
+      "evidence_basis": "reported_visual_issue"
+    },
+    {
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "status": "satisfied",
+      "object_ids": [
+        "remover1",
+        "conveyor1"
+      ],
+      "relation_ids": [
+        "rel2"
+      ],
+      "image_ids": [
+        "image-0-iso_a",
+        "image-0-top",
+        "image-0-iso_b"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    }
+  ],
+  "inspection_mode": "geometry_assisted"
+}

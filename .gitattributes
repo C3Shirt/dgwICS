@@ -3,3 +3,6 @@
 # Keep generated evidence collapsed in the PR; it remains fully reviewable.
 experiments/issue4-layout-20261014/** -text linguist-generated=true whitespace=-blank-at-eol,-blank-at-eof
 experiments/issue4-layout-20261014/README.md linguist-generated=false
+
+experiments/vision-v4-20261014/** -text linguist-generated=true whitespace=-blank-at-eol,-blank-at-eof
+experiments/vision-v4-20261014/README.md linguist-generated=false

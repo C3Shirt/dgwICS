@@ -1,0 +1,30 @@
+{
+  "ticket_id": "ticket-a589bacede023b65",
+  "failed_check_ids": [
+    "REQ-STATIC-005-1"
+  ],
+  "requirement_ids": [
+    "REQ-STATIC-005"
+  ],
+  "affected_object_ids": [
+    "remover-1"
+  ],
+  "issue_type": "requirement_relation_violation",
+  "evidence_ids": [
+    "image-0-iso_a",
+    "image-0-iso_b",
+    "load-bab473cebb3042cdb5c0d0acb90fde77"
+  ],
+  "repair_intent": [
+    "The requirement states the remover must cover the downstream extension path. By being placed strictly beyond the physical end of the belt without overlapping the exit region, it fails to 'cover' the path effectively for item removal.",
+    "Move the remover closer to the conveyor along the Z-axis so that its active volume overlaps with the downstream end of the conveyor belt's carrying surface."
+  ],
+  "allowed_operations": [
+    "change",
+    "replace"
+  ],
+  "frozen_object_ids": [
+    "conveyor-1",
+    "feeder-1"
+  ]
+}

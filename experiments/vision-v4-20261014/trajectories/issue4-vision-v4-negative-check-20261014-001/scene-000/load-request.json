@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "request_id": "28d917a3f49746fc9f6ff2cbbc2a8af2",
+  "scene_path": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-negative-check-20261014-001/scene-000/scene.factoryio",
+  "scene_sha256": "0de1cea16c15955a7b4711b9fa538562fd5a35786659ea02366e65c21bae0867",
+  "versions": {
+    "scene": "0de1cea16c15955a7b4711b9fa538562fd5a35786659ea02366e65c21bae0867",
+    "io": "c728ec2a87c44a97feeba9749824c2680a595289d49a2b58065c2615cb16b373"
+  }
+}

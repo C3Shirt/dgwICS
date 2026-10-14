@@ -1,0 +1,122 @@
+{
+  "inspection_complete": true,
+  "issues": [],
+  "raw_output": {
+    "inspection_complete": true,
+    "issues": []
+  },
+  "contract_version": 2,
+  "global_review": {
+    "status": "satisfied",
+    "summary": "0 anomalies reported; inspection complete.",
+    "image_ids": [
+      "image-0-top",
+      "image-0-iso_b",
+      "image-0-iso_a"
+    ],
+    "findings": []
+  },
+  "check_results": [
+    {
+      "check_id": "REQ-COLUMN-001-1",
+      "status": "satisfied",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_b",
+        "image-0-iso_a"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-COLUMN-002-1",
+      "status": "satisfied",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_b",
+        "image-0-iso_a"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-001-1",
+      "status": "satisfied",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_b",
+        "image-0-iso_a"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-002-1",
+      "status": "satisfied",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_b",
+        "image-0-iso_a"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-003-1",
+      "status": "satisfied",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "relation_ids": [],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_b",
+        "image-0-iso_a"
+      ],
+      "observed": "No anomaly reported.",
+      "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+      "repair_intent": "",
+      "requested_view": null,
+      "spatial_observation": "",
+      "evidence_basis": "complete_inspection_no_reported_issue"
+    }
+  ],
+  "inspection_mode": "geometry_assisted"
+}

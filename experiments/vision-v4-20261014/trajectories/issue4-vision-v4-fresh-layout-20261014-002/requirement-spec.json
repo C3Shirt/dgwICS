@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+  "requirements": [
+    {
+      "requirement_id": "REQ-STATIC-001",
+      "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": null,
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "capability": "conveyor",
+        "equals": 1
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-STATIC-002",
+      "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "feeder",
+      "target_role": null,
+      "predicate": "exists",
+      "arguments": {
+        "equals": 1
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-STATIC-003",
+      "source_text": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "remover",
+      "target_role": null,
+      "predicate": "exists",
+      "arguments": {
+        "equals": 1
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-STATIC-004",
+      "source_text": "供料器位于输送带上游承载面上方",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "feeder",
+      "target_role": "conveyor",
+      "predicate": "visual_relation",
+      "arguments": {
+        "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+      },
+      "required": true,
+      "evidence_methods": [
+        "visual"
+      ]
+    },
+    {
+      "requirement_id": "REQ-STATIC-005",
+      "source_text": "移除器覆盖下游延伸路径",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "remover",
+      "target_role": "conveyor",
+      "predicate": "visual_relation",
+      "arguments": {
+        "question": "Does the remover cover the downstream extension path of the conveyor?"
+      },
+      "required": true,
+      "evidence_methods": [
+        "visual"
+      ]
+    }
+  ],
+  "scene_intent": {
+    "goal": "Create a static straight-line conveyor layout with a feeder, conveyor belt, and end remover for visual inspection without starting the PLC.",
+    "process_description": "The intended layout is a static arrangement for visual inspection. A single conveyor belt is positioned along a straight path. A feeder is placed above the upstream carrying surface of the conveyor belt to supply items onto the belt. An end remover is situated to cover the downstream extension path of the conveyor, presumably to remove items at the end of the line. These components are arranged according to spatial constraints but no material flow or control logic is activated; only layout and image checks are performed.",
+    "requirement_ids": [
+      "REQ-STATIC-001",
+      "REQ-STATIC-002",
+      "REQ-STATIC-003",
+      "REQ-STATIC-004",
+      "REQ-STATIC-005"
+    ],
+    "process_stages": [
+      {
+        "stage": "Static inspection setup",
+        "equipment_role": null,
+        "purpose": "Establish the prescribed layout for visual inspection without activating PLC control.",
+        "requirement_ids": [
+          "REQ-STATIC-001",
+          "REQ-STATIC-002",
+          "REQ-STATIC-003",
+          "REQ-STATIC-004",
+          "REQ-STATIC-005"
+        ]
+      }
+    ]
+  },
+  "context_fragments": [
+    {
+      "source_text": "只做布局和图片检查，不启动 PLC。",
+      "reason": "This sentence defines the execution scope (layout and image checks only, no PLC startup). It is not a physical equipment or spatial constraint."
+    }
+  ]
+}

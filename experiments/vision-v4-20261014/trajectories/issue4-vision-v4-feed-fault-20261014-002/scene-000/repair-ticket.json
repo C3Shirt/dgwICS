@@ -1,0 +1,31 @@
+{
+  "ticket_id": "ticket-fc36440877add6cf",
+  "failed_check_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR-1"
+  ],
+  "requirement_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR"
+  ],
+  "affected_object_ids": [
+    "emitter1"
+  ],
+  "issue_type": "requirement_relation_violation",
+  "evidence_ids": [
+    "image-0-iso_a",
+    "image-0-iso_b",
+    "image-0-top",
+    "load-d5f32ec323684671b5f6e1bd29f30e05"
+  ],
+  "repair_intent": [
+    "The requirement states the feeder must be positioned 'above' the upstream carrying surface. Currently, it is placed laterally adjacent to the conveyor, meaning emitted items would fall onto the floor rather than the belt.",
+    "Move the emitter horizontally so its emission volume aligns directly over the upstream end of the conveyor belt surface."
+  ],
+  "allowed_operations": [
+    "change",
+    "replace"
+  ],
+  "frozen_object_ids": [
+    "conveyor1",
+    "remover1"
+  ]
+}
