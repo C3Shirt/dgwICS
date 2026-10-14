@@ -20,7 +20,7 @@ CheckPlan 从独立要求绑定本轮角色与关系，不接受设计方的“�
 
 ## Prompt 与动态信息
 
-英文静态提示词在 `factoryio_agents/simple_prompts.py`；三个角色上下文由 `factoryio_agents/scene_context.py:PromptContextBuilder` 分别生成，版本为 `issue4-inspection-issues-v4`。
+英文静态提示词在 `factoryio_agents/simple_prompts.py`；三个角色上下文由 `factoryio_agents/scene_context.py:PromptContextBuilder` 分别生成，版本为 `issue4-explicit-layout-summary-v5`。
 
 | 调用 | 本轮信息 |
 | --- | --- |
@@ -35,7 +35,7 @@ CheckPlan 从独立要求绑定本轮角色与关系，不接受设计方的“�
 
 每张图片绑定场景 SHA、图像 SHA、视角、采集时间及加载/截图请求；版本、文件哈希或相机回执不一致会拒绝检查。这些审计元数据保存在 `vision-context-audit-N.json`，不重复塞进模型上下文。请求不包含完整 Spec、XML、PLC 或设计方自评。
 
-VLM 必须检查全部任务，但只输出异常：根对象为 `{"inspection_complete":true,"issues":[]}`。每项 issue 包含 check_id、violated/unobservable、suspect_object_ids、图像观察、单独的测量解释、原因、修复意图、图片 ID 和可选补拍视角。正常对象和满足的项不输出。无法判断时指出对象与证据缺口；未绑定原始检查的额外担忧不能变为自动修复约束。最多补拍一次现有视角。
+VLM 必须检查全部任务，但只输出异常：根对象为 `{"inspection_complete":true,"summary":"Layout correct.","issues":[]}`。summary 必须非空；无异常也明确给出“布局正确”的模型判断，不能只返回数组或沉默。每项 issue 包含 check_id、violated/unobservable、suspect_object_ids、图像观察、单独的测量解释、原因、修复意图、图片 ID 和可选补拍视角。正常对象和满足的项不输出。无法判断时指出对象与证据缺口；未绑定原始检查的额外担忧不能变为自动修复约束。最多补拍一次现有视角。
 
 程序校验当前图像及对象引用，再用 CheckPlan 恢复内部映射。空异常只有在检查完成、原生注册和所有独立强制检查通过时才表示静态通过；缺失/未知/不支持不算通过。原生数量与视觉数量冲突需要核对身份，不允许据此直接删除设备。局部修复优先采用明确 suspect IDs，原生反例保留算子的可移动端点，参照物冻结。
 
@@ -123,3 +123,12 @@ Set-Location 'F:\phd\project\digital-twin-factoryi-o'
 结论：新协议和动态信息传递已实现，严格范围成功样例存在；实机模型的误判、漏检和协议异常仍未解决，完整稳定验收未完成。没有将失败、HTTP 错误或已知故障的自动通过当作训练 gold。transport_frame 只是原生方向的辅助解释，不是新约束或模型准确率保证；记录留存每次源码哈希和完整实际回复。
 
 - `issue4-vision-v4-positive-check-20261014-001`：最终 transport_frame 输入下，重新加载之前的 2 m 布局并拍摄三视角；1 次调用、10.642 秒返回合法空异常。与负例同时保留，不能用正例通过掩盖负例漏检。软件由框架重新载入这一布局，未启动 PLC。
+
+
+## 明确的无异常回复（Vision v5）
+
+英文 prompt、动态输出说明、JSON schema 和本地校验同时增加非空 summary。无问题时返回 `{"inspection_complete":true,"summary":"Layout correct.","issues":[]}`，终端显示“布局正确（模型判断，待程序验收）”。仅异常的 object/check 列表仍然可以为空，但整条报告有明确的文字说明。有问题或无法确定时，summary 简述问题，issues 保留对象和原因。
+
+“Layout correct.” 是视觉模型的判断，不替代程序汇总；检查未完成、存在异常或原生几何反例时，即使 summary 写“布局正确”，也不会因此通过。裸 []/null 与空 summary 继续作为返回协议异常处理。增加文字说明用于消除正常分支的表达歧义，不能据此声称 API 问题或视觉漏检已被解决，也不能证明输入与异常完全无关。
+
+本次实际 CLI 记录 `issue4-vision-v5-explicit-result-20261014-001`：复用正例，真实重新加载/三视角截图，1 次模型调用、10.737 秒。回复明确为 `Layout correct.`，此请求没有返回裸 []；537 项 Python 回归通过。单次成功不证明接口或感知问题已普遍解决。

@@ -307,10 +307,16 @@ Work in this order:
    are read-only by default. Give relational repair intent, not guessed XYZ patches.
    Do not add industrial constraints absent from the independent task.
 
-Return exactly one JSON object: inspection_complete (boolean) and issues (array).
+Return exactly one JSON object: inspection_complete (boolean), summary (nonempty
+string), and issues (array). Always state your assessment in summary.
 Set inspection_complete=true only after reviewing all tasks and attached views.
-When no anomaly is found, return {"inspection_complete":true,"issues":[]}.
-Never return [] or null as the whole response. Each issue has:
+When no anomaly is found, explicitly say the layout is correct and return:
+{"inspection_complete":true,"summary":"Layout correct.","issues":[]}.
+When issues exist, briefly summarize the problems or uncertainty and list only
+the anomalous checks. Never return [] or null as the whole response, an empty
+summary, or a silent response. This is your visual assessment; the framework
+independently decides overall acceptance from all required evidence.
+Each issue has:
 - check_id: the supplied task ID; null only for an extra concern outside the tasks.
 - status: violated or unobservable; never emit satisfied rows.
 - suspect_object_ids: supplied IDs needing correction or unclear identification;

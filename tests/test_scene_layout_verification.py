@@ -43,7 +43,7 @@ def reply(checks, image_ids, status='satisfied', requested=None):
                 'reason':'Independent fixture requirement differs, or cannot be observed.',
                 'repair_intent':'Adjust the subject relative to its anchor.' if status=='violated' else '',
                 'evidence_image_ids':image_ids,'requested_view':requested})
-    return {'inspection_complete':True,'issues':issues}
+    return {'inspection_complete':True,'summary':'Layout correct.' if not issues else 'Problems or missing evidence found.','issues':issues}
 
 
 class SceneLayoutVerificationTests(unittest.TestCase):
@@ -175,7 +175,7 @@ class SceneLayoutVerificationTests(unittest.TestCase):
         repair=builder.repair(self.design,p,ticket,fused,v,catalog_context(self.catalog))
         self.assertEqual(repair['allowed_object_ids'],['emitter']);self.assertEqual({o['id'] for o in repair['current_layout_subset']},{'emitter','conveyor'})
         self.assertNotIn('original_requirement',repair);self.assertNotIn('current_design',repair)
-        self.assertEqual(repair['context_manifest']['prompt_version'],'issue4-inspection-issues-v4')
+        self.assertEqual(repair['context_manifest']['prompt_version'],'issue4-explicit-layout-summary-v5')
 
     def test_scene_only_loop_uses_independent_oracle_and_verified_capture_version(self):
         from factoryio_agents.simple import SimpleWorkflow
@@ -360,14 +360,32 @@ class SceneLayoutVerificationTests(unittest.TestCase):
     def test_sparse_empty_report_requires_completion_and_keeps_native_failures(self):
         checks,rows=self.evaluate();rows[-1]['status']='satisfied'
         with self.assertRaisesRegex(ContractError,'JSON object'):validate_visual([],checks,self.spec,self.design,[{'id':'top'}])
-        incomplete=validate_visual({'inspection_complete':False,'issues':[]},checks,self.spec,self.design,[{'id':'top'}])
+        incomplete=validate_visual({'inspection_complete':False,'summary':'Inspection incomplete.','issues':[]},checks,self.spec,self.design,[{'id':'top'}])
         self.assertNotEqual(fuse_results(checks,rows,incomplete,registration_passed=True)['status'],'satisfied')
         p=self.plan();p['objects'][1]['position'][0]+=30
         checks,rows=self.evaluate(plan=p);rows[-1]['status']='satisfied'
-        complete=validate_visual({'inspection_complete':True,'issues':[]},checks,self.spec,self.design,[{'id':'top'}])
+        complete=validate_visual({'inspection_complete':True,'summary':'Layout correct.','issues':[]},checks,self.spec,self.design,[{'id':'top'}])
         fused=fuse_results(checks,rows,complete,registration_passed=True)
         self.assertEqual(fused['checks'][1]['status'],'violated')
-        self.assertEqual(complete['raw_output'],{'inspection_complete':True,'issues':[]})
+        self.assertEqual(complete['raw_output'],{'inspection_complete':True,'summary':'Layout correct.','issues':[]})
+
+    def test_explicit_assessment_cannot_be_empty_or_override_reported_issues(self):
+        checks,rows=self.evaluate();rows[-1]['status']='satisfied'
+        good=reply(checks,['top'])
+        for summary in ('','   ',None):
+            raw=deepcopy(good);raw['summary']=summary
+            with self.assertRaisesRegex(ContractError,'summary'):validate_visual(raw,checks,self.spec,self.design,[{'id':'top'}])
+        bad=reply(checks,['top'],'violated');bad['summary']='Layout correct.'
+        v=validate_visual(bad,checks,self.spec,self.design,[{'id':'top'}])
+        self.assertEqual(fuse_results(checks,rows,v,registration_passed=True)['status'],'violated')
+        incomplete=deepcopy(good);incomplete['inspection_complete']=False
+        v=validate_visual(incomplete,checks,self.spec,self.design,[{'id':'top'}])
+        self.assertNotEqual(fuse_results(checks,rows,v,registration_passed=True)['status'],'satisfied')
+
+    def test_explicit_correct_assessment_is_visible_as_model_judgment(self):
+        from factoryio_agents.progress import response_summary
+        lines=response_summary('vision',{'inspection_complete':True,'summary':'Layout correct.','issues':[]},{})
+        self.assertIn('审核说明：布局正确（模型判断，待程序验收）',lines)
 
     def test_sparse_issues_map_original_checks_and_reject_invented_references(self):
         checks,_=self.evaluate();raw=reply(checks,['top'],'unobservable')
@@ -446,7 +464,7 @@ class SceneLayoutVerificationTests(unittest.TestCase):
         def call(role,prompt,payload,images):
             calls.append(payload)
             if len(calls)==1:raise ContractError('vision model response must be object')
-            return {'inspection_complete':True,'issues':[]}
+            return {'inspection_complete':True,'summary':'Layout correct.','issues':[]}
         w=SimpleNamespace(raw_model=client,call=call,trace=Mock())
         checked_call(w,'vision','Inspect.',{},lambda v:v,[])
         self.assertEqual(calls[1]['rejected_output'],'[]');self.assertEqual(len(calls),2)
@@ -484,8 +502,8 @@ class SceneLayoutVerificationTests(unittest.TestCase):
         original=deepcopy(client.config);calls=[]
         def complete(role,prompt,request,images):
             calls.append((prompt,deepcopy(request),list(images),deepcopy(client.config)))
-            client._exchange={'raw_content':'{"inspection_complete":true,"issues":[]}'}
-            return {'inspection_complete':True,'issues':[]}
+            client._exchange={'raw_content':'{"inspection_complete":true,"summary":"Layout correct.","issues":[]}'}
+            return {'inspection_complete':True,'summary':'Layout correct.','issues':[]}
         client.complete=Mock(side_effect=complete)
         w=SimpleWorkflow(self.config,self.root/'probe-result',client=client,tools=Mock())
         result=probe_vision_protocol(w,source)

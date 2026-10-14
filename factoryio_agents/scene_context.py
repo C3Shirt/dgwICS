@@ -7,7 +7,7 @@ from .contracts import canonical_hash
 from .component_kb import knowledge_base
 from .scene_spec import hard_static, DESIGN_SHAPE
 
-PROMPT_VERSION = 'issue4-inspection-issues-v4'
+PROMPT_VERSION = 'issue4-explicit-layout-summary-v5'
 
 
 class PromptContextBuilder:

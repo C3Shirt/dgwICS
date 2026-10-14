@@ -146,7 +146,10 @@ def response_summary(role, value, payload):
     if not isinstance(value,dict): return ['回复不是 JSON 对象，等待合同检查报告']
     if type(value.get('inspection_complete')) is bool:add('检查完成','是' if value['inspection_complete'] else '否')
     add('场景类型',value.get('scenario_type')); add('需求',value.get('requirement'))
-    add('场景目标',value.get('scene_goal')); add('审核说明',value.get('summary'))
+    add('场景目标',value.get('scene_goal'))
+    summary=value.get('summary')
+    if role=='vision' and isinstance(summary,str) and summary.strip().lower()=='layout correct.':summary='布局正确（模型判断，待程序验收）'
+    add('审核说明',summary)
     objects=value.get('objects')
     if isinstance(objects,list):
         add('对象数',len(objects))

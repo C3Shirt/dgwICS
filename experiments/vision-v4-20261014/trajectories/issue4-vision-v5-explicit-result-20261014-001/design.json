@@ -1,0 +1,81 @@
+{
+  "scene_id": "static-straight-conveyor-layout",
+  "scene_goal": "Create a static straight-line conveyor layout with a feeder, conveyor belt, and end remover for visual inspection without starting the PLC.",
+  "control_intent": [],
+  "objects": [
+    {
+      "id": "conveyor-1",
+      "prefab": "BeltConveyor2M",
+      "roles": [
+        "conveyor"
+      ],
+      "function": "Main conveyor belt transporting items from upstream feeder to downstream remover.",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          20,
+          0,
+          15
+        ],
+        "yaw_deg": 0
+      },
+      "settings": []
+    },
+    {
+      "id": "feeder-1",
+      "prefab": "Emitter",
+      "roles": [
+        "feeder"
+      ],
+      "function": "Feeder located above the upstream carrying surface of the conveyor.",
+      "placement": {
+        "kind": "emitter_over_conveyor",
+        "relative_to": "conveyor-1",
+        "along_fraction": 0.25
+      },
+      "settings": []
+    },
+    {
+      "id": "remover-1",
+      "prefab": "Remover",
+      "roles": [
+        "remover"
+      ],
+      "function": "End remover covering the downstream extension path of the conveyor.",
+      "placement": {
+        "kind": "remover_after_conveyor",
+        "relative_to": "conveyor-1",
+        "clearance_grid": 0
+      },
+      "settings": []
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-1",
+      "subject_id": "feeder-1",
+      "predicate": "visual_relation",
+      "target_id": "conveyor-1",
+      "parameters": {
+        "question": "Is the feeder located above the upstream carrying surface of the conveyor?"
+      },
+      "requirement_ids": [
+        "REQ-STATIC-004"
+      ]
+    },
+    {
+      "id": "rel-2",
+      "subject_id": "remover-1",
+      "predicate": "visual_relation",
+      "target_id": "conveyor-1",
+      "parameters": {
+        "question": "Does the remover cover the downstream extension path of the conveyor?"
+      },
+      "requirement_ids": [
+        "REQ-STATIC-005"
+      ]
+    }
+  ],
+  "unresolved": [],
+  "deferred_tasks": []
+}

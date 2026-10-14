@@ -96,8 +96,9 @@ ISSUE_SHAPE = {'check_id':'supplied check ID or null for an unbound concern',
     'reason':'contradiction or missing evidence','repair_intent':'relational correction, or empty string',
     'evidence_image_ids':['attached image IDs'],'requested_view':None}
 ISSUES_CONTRACT = {'inspection_complete':'boolean; true only after all tasks and views have been inspected',
-    'issues':[ISSUE_SHAPE], 'no_anomaly_response':{'inspection_complete':True,'issues':[]}}
-VISUAL_SCHEMA = _object({'inspection_complete':{'type':'boolean'},'issues':{'type':'array','items':_object({
+    'summary':'Required nonempty assessment. If no problem was found, explicitly say Layout correct.',
+    'issues':[ISSUE_SHAPE], 'no_anomaly_response':{'inspection_complete':True,'summary':'Layout correct.','issues':[]}}
+VISUAL_SCHEMA = _object({'inspection_complete':{'type':'boolean'},'summary':{'type':'string','minLength':1},'issues':{'type':'array','items':_object({
     'check_id':{'type':['string','null']},'status':{'type':'string','enum':['violated','unobservable']},
     'suspect_object_ids':_array(),'observation':_text(),'spatial_observation':_text(),'reason':_text(),
     'repair_intent':_text(),'evidence_image_ids':_array(),
@@ -110,8 +111,9 @@ def validate_visual(value, checks, spec, design, images):
     Omitted rows are not independent observations: they mean no anomaly was
     reported in a declared complete inspection. Raw output stays issues-only.
     """
-    require(isinstance(value,dict) and set(value)=={'inspection_complete','issues'},'Return one JSON object with inspection_complete and issues; [] is not a valid report')
+    require(isinstance(value,dict) and set(value)=={'inspection_complete','summary','issues'},'Return one JSON object with inspection_complete, a nonempty summary and issues; [] is not a valid report')
     require(type(value['inspection_complete']) is bool and isinstance(value['issues'],list),'invalid sparse inspection fields')
+    require(isinstance(value['summary'],str) and value['summary'].strip(),'inspection summary must explicitly state the assessment, not be empty')
     objects={o['id'] for o in design['objects']};image_ids={i['id'] for i in images}
     wanted={c['check_id']:c for c in checks['checks'] if c['requirement_ids']}
     findings=[];by_check={};raw=deepcopy(value)
@@ -154,6 +156,6 @@ def validate_visual(value, checks, spec, design, images):
                 'evidence_basis':'complete_inspection_no_reported_issue' if value['inspection_complete'] else 'incomplete_inspection'}
         rows.append(row)
     status='violated' if any(f['status']=='violated' for f in findings) else 'unobservable' if findings or not value['inspection_complete'] else 'satisfied'
-    return {'inspection_complete':value['inspection_complete'],'issues':raw['issues'],'raw_output':raw,'contract_version':2,
-        'global_review':{'status':status,'summary':str(len(raw['issues']))+' anomalies reported; inspection '+('complete.' if value['inspection_complete'] else 'incomplete.'),
+    return {'inspection_complete':value['inspection_complete'],'summary':raw['summary'],'issues':raw['issues'],'raw_output':raw,'contract_version':2,
+        'global_review':{'status':status,'summary':raw['summary'],
                          'image_ids':list(image_ids),'findings':findings},'check_results':rows}

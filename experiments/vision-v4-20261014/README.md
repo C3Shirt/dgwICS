@@ -28,3 +28,7 @@ Machine config snapshots are excluded; secrets, private model hosts and local pa
 The changed prompts were iterated during these runs; execution.json retains each run's own source hashes. The final sources are in this PR. Both failed trials and later changes are retained; no trial is silently replaced.
 
 No PLC execution, material transport acceptance or independent accuracy statistics are claimed. See [validation summary](validation/issue4-v4-validation-summary.json).
+
+## Explicit assessment (Vision v5)
+
+The previous table is the v4 snapshot. A subsequent real CLI run adds a required nonempty summary: [actual request](trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/vision-input-0.json), [actual reply](trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual-review-0.json). It returned `Layout correct.` in one model call (10.737 seconds), and the terminal shows the assessment explicitly. Root output still has inspection_complete and issues; the summary does not override native checks, reported issues or incomplete inspection. All 537 Python tests passed. This one request did not return [], but API-root-cause and broader visual reliability remain unverified. [Incremental manifest](publication-manifest-v5.json) records file hashes; the original v4 manifest/trajectories are unchanged.
