@@ -1,0 +1,4 @@
+{
+  "source": "independent_model_extraction",
+  "coverage_basis": "quoted source-text coverage; semantic fidelity still requires evaluation"
+}

@@ -1,0 +1,576 @@
+{
+  "schema_version": 1,
+  "kind": "agent_candidate",
+  "candidate_id": "21be03d20c6b4c4c8b499a2ba8eb14a5",
+  "run_id": "f9180186118f4acc9f314e7ae3302a32",
+  "role": "vision",
+  "phase": "scene_visual",
+  "scenario_id": null,
+  "lineage_group": "simple-scene",
+  "source_kind": "live_model",
+  "started_at": "2026-10-14T03:37:20.852571+00:00",
+  "status": "response_received",
+  "handoff_id": null,
+  "versions": {},
+  "policy": {},
+  "prompt_sha256": "636e6e55f9cce4896c067ca72b28bbd6ef8fc18afbaec9b13848d8b7a9fc3c43",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You inspect an ACTUALLY LOADED Factory I/O scene using multiple views.\noriginal_requirement and the independent check_plan define the target. Images are\nobservations; generated placements and a designer's self-assessment are not proof.\n\nWork in this order:\n1. Identify actual_objects and relevant regions using image_manifest, view IDs and\n   sourced component guidance. Do not guess when labels or identities are ambiguous.\n2. Review obvious missing/extra objects and visible layout inconsistencies globally.\n3. Evaluate each check's question and expected_relation. Compare visible evidence\n   with the requirement; use other views to resolve occlusion and perspective.\n4. Return satisfied, violated or unobservable for EVERY supplied check. Identify\n   objects and relations, observed versus required layout, and supporting image IDs.\n   For violations, object_ids names objects needing correction; unchanged reference\n   objects remain identifiable from the check. For satisfaction, identify all checked objects.\n   For unobservable checks, explain missing evidence and request a supported view.\n5. Separate visible placement from material dynamics, sensor electrical response,\n   PLC logic and unseen geometry. Static pictures cannot prove runtime behavior.\n\nDo not invent absolute coordinates, unseen dimensions, sensing properties or new\nhard requirements. Object function text is identification context only. Return the\nper-check report and global observations as a JSON object matching the supplied response schema.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"phase\": \"scene_visual\", \"original_requirement\": \"构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。\", \"requirement_spec\": {\"schema_version\": 1, \"original_requirement\": \"构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。\", \"context_fragments\": [{\"source_text\": \"此轮只检查布局与多视角图片，不运行 PLC。\", \"reason\": \"Execution-scope instruction; it constrains the checking process, not the physical scene.\"}, {\"source_text\": \"构建两个独立立柱的静态布置：\", \"reason\": \"Introductory framing that announces the task; the concrete constraints (two Columns, separated) are captured as separate requirements.\"}], \"requirements\": [{\"requirement_id\": \"REQ-COLUMN-001\", \"source_text\": \"使用两个 Column\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 2, \"prefab\": \"Column\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-COLUMN-002\", \"source_text\": \"分开放置，保持可见间隔\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"visual_relation\", \"arguments\": {\"question\": \"Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?\"}, \"required\": true, \"evidence_methods\": [\"visual\"]}, {\"requirement_id\": \"REQ-NO-EQUIP-001\", \"source_text\": \"不要放置输送带、供料器或移除器\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 0, \"capability\": \"conveyor\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-NO-EQUIP-002\", \"source_text\": \"不要放置输送带、供料器或移除器\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 0, \"prefab\": \"Emitter\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}, {\"requirement_id\": \"REQ-NO-EQUIP-003\", \"source_text\": \"不要放置输送带、供料器或移除器\", \"origin\": \"explicit_user\", \"phase\": \"static_scene\", \"subject_role\": null, \"target_role\": null, \"predicate\": \"count\", \"arguments\": {\"equals\": 0, \"prefab\": \"Remover\"}, \"required\": true, \"evidence_methods\": [\"structure\"]}]}, \"actual_objects\": [{\"id\": \"column-1\", \"prefab\": \"Column\", \"roles\": [\"REQ-COLUMN-001\"], \"function\": \"First of two independent metal columns, placed with a visible gap from the second column.\"}, {\"id\": \"column-2\", \"prefab\": \"Column\", \"roles\": [\"REQ-COLUMN-001\"], \"function\": \"Second independent metal column, separated from column-1 by a visible gap.\"}], \"check_plan\": {\"checks\": [{\"check_id\": \"REQ-COLUMN-002-1\", \"requirement_ids\": [\"REQ-COLUMN-002\"], \"operator\": \"visual_relation\", \"object_ids\": [\"column-1\", \"column-2\"], \"relation_ids\": [], \"question\": \"Does the visible layout satisfy: 分开放置，保持可见间隔?\", \"expected_relation\": {\"predicate\": \"visual_relation\", \"parameters\": {\"question\": \"Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?\"}, \"source_text\": [\"分开放置，保持可见间隔\"]}, \"preferred_views\": [\"top\", \"iso_a\", \"iso_b\"]}], \"coverage\": {\"REQ-COLUMN-001\": [\"REQ-COLUMN-001-1\"], \"REQ-COLUMN-002\": [\"REQ-COLUMN-002-1\"], \"REQ-NO-EQUIP-001\": [\"REQ-NO-EQUIP-001-1\"], \"REQ-NO-EQUIP-002\": [\"REQ-NO-EQUIP-002-1\"], \"REQ-NO-EQUIP-003\": [\"REQ-NO-EQUIP-003-1\"]}, \"acceptance_scope\": \"visible static relations only; no runtime/electrical response proof\"}, \"image_manifest\": [{\"id\": \"image-0-top\", \"kind\": \"image\", \"view_id\": \"top\", \"sha256\": \"48a52a6b48763b90b941d7e0eda1921cca28307073f4b016d21fa6006be8a433\", \"scene_sha256\": \"05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723\", \"timestamp\": \"2026-10-14T03:37:17.6423902Z\", \"load_request_id\": \"16f2ceae0973494a884ef9056c0ef12a\", \"capture_request_id\": \"db44d016f1984e379fb87e87903a39d6\"}, {\"id\": \"image-0-iso_a\", \"kind\": \"image\", \"view_id\": \"iso_a\", \"sha256\": \"a3d0b6fe83508db8ef4714bdb3c93233d29e01f0a631a0e844466dc86733958d\", \"scene_sha256\": \"05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723\", \"timestamp\": \"2026-10-14T03:37:19.0568636Z\", \"load_request_id\": \"16f2ceae0973494a884ef9056c0ef12a\", \"capture_request_id\": \"6561bc29024d41f7a47046e26fa424d2\"}, {\"id\": \"image-0-iso_b\", \"kind\": \"image\", \"view_id\": \"iso_b\", \"sha256\": \"431996f6e44321e16c53553b66973ea12dd9d1a1a6d1fa34d91733658487b9cc\", \"scene_sha256\": \"05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723\", \"timestamp\": \"2026-10-14T03:37:20.5617732Z\", \"load_request_id\": \"16f2ceae0973494a884ef9056c0ef12a\", \"capture_request_id\": \"115effdffa76499c828df637db854450\"}], \"supported_views\": [\"top\", \"iso_a\", \"iso_b\"], \"relevant_component_guidance\": {\"knowledge_sha256\": \"d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26\", \"reference_kind\": \"official_component_documentation\", \"requested_prefabs\": [\"Column\"], \"components\": [{\"component_id\": \"parts:operators#column\", \"prefabs\": [\"Column\"], \"official_name\": \"Column\", \"function\": \"Metal structure typically used to hold an electric switchboard.\", \"function_basis\": \"official_text\", \"sources\": [{\"chapter_id\": \"parts:operators#column\", \"url\": \"https://docs.factoryio.com/manual/parts/operators/#column\"}]}], \"missing_prefabs\": []}, \"context_manifest\": {\"prompt_version\": \"issue4-guided-context-v3\", \"kind\": \"visual\", \"sources\": {\"requirements_sha256\": \"eb6c92f398cf09e8f7118f448771461699bc50e01aea0e57c33909e1ccb158b6\", \"native_geometry_sha256\": \"0ccc683e8a9fd6c87f1ffa6f5ce6caece25ff939b7bdbca4faf35e56d1bb7aef\", \"template_sources\": {\"source-04da4aaaacbb3e5e0ade\": \"04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c\", \"source-7b6b0a6b063429d967cf\": \"7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918\", \"source-6862ca46dbe17012078c\": \"6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535\"}, \"knowledge_sha256\": \"d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26\"}, \"object_scope\": [\"column-1\", \"column-2\"], \"field_sources\": {\"requirement_spec\": \"independent source quotes\", \"actual_objects\": \"current manifest identities plus design identification labels\", \"check_plan\": \"independently compiled checks\", \"image_manifest\": \"current load and capture receipts\"}, \"limitations\": [\"Generated roles/functions are identification context, not independent ground truth.\", \"Native data describes this loaded software/version, not proven runtime behavior.\"]}}"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ],
+  "payload": {
+    "phase": "scene_visual",
+    "original_requirement": "构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。",
+    "requirement_spec": {
+      "schema_version": 1,
+      "original_requirement": "构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。",
+      "context_fragments": [
+        {
+          "source_text": "此轮只检查布局与多视角图片，不运行 PLC。",
+          "reason": "Execution-scope instruction; it constrains the checking process, not the physical scene."
+        },
+        {
+          "source_text": "构建两个独立立柱的静态布置：",
+          "reason": "Introductory framing that announces the task; the concrete constraints (two Columns, separated) are captured as separate requirements."
+        }
+      ],
+      "requirements": [
+        {
+          "requirement_id": "REQ-COLUMN-001",
+          "source_text": "使用两个 Column",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 2,
+            "prefab": "Column"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-COLUMN-002",
+          "source_text": "分开放置，保持可见间隔",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "visual_relation",
+          "arguments": {
+            "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+          },
+          "required": true,
+          "evidence_methods": [
+            "visual"
+          ]
+        },
+        {
+          "requirement_id": "REQ-NO-EQUIP-001",
+          "source_text": "不要放置输送带、供料器或移除器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 0,
+            "capability": "conveyor"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-NO-EQUIP-002",
+          "source_text": "不要放置输送带、供料器或移除器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 0,
+            "prefab": "Emitter"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ-NO-EQUIP-003",
+          "source_text": "不要放置输送带、供料器或移除器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 0,
+            "prefab": "Remover"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        }
+      ]
+    },
+    "actual_objects": [
+      {
+        "id": "column-1",
+        "prefab": "Column",
+        "roles": [
+          "REQ-COLUMN-001"
+        ],
+        "function": "First of two independent metal columns, placed with a visible gap from the second column."
+      },
+      {
+        "id": "column-2",
+        "prefab": "Column",
+        "roles": [
+          "REQ-COLUMN-001"
+        ],
+        "function": "Second independent metal column, separated from column-1 by a visible gap."
+      }
+    ],
+    "check_plan": {
+      "checks": [
+        {
+          "check_id": "REQ-COLUMN-002-1",
+          "requirement_ids": [
+            "REQ-COLUMN-002"
+          ],
+          "operator": "visual_relation",
+          "object_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "relation_ids": [],
+          "question": "Does the visible layout satisfy: 分开放置，保持可见间隔?",
+          "expected_relation": {
+            "predicate": "visual_relation",
+            "parameters": {
+              "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+            },
+            "source_text": [
+              "分开放置，保持可见间隔"
+            ]
+          },
+          "preferred_views": [
+            "top",
+            "iso_a",
+            "iso_b"
+          ]
+        }
+      ],
+      "coverage": {
+        "REQ-COLUMN-001": [
+          "REQ-COLUMN-001-1"
+        ],
+        "REQ-COLUMN-002": [
+          "REQ-COLUMN-002-1"
+        ],
+        "REQ-NO-EQUIP-001": [
+          "REQ-NO-EQUIP-001-1"
+        ],
+        "REQ-NO-EQUIP-002": [
+          "REQ-NO-EQUIP-002-1"
+        ],
+        "REQ-NO-EQUIP-003": [
+          "REQ-NO-EQUIP-003-1"
+        ]
+      },
+      "acceptance_scope": "visible static relations only; no runtime/electrical response proof"
+    },
+    "image_manifest": [
+      {
+        "id": "image-0-top",
+        "kind": "image",
+        "view_id": "top",
+        "sha256": "48a52a6b48763b90b941d7e0eda1921cca28307073f4b016d21fa6006be8a433",
+        "scene_sha256": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+        "timestamp": "2026-10-14T03:37:17.6423902Z",
+        "load_request_id": "16f2ceae0973494a884ef9056c0ef12a",
+        "capture_request_id": "db44d016f1984e379fb87e87903a39d6"
+      },
+      {
+        "id": "image-0-iso_a",
+        "kind": "image",
+        "view_id": "iso_a",
+        "sha256": "a3d0b6fe83508db8ef4714bdb3c93233d29e01f0a631a0e844466dc86733958d",
+        "scene_sha256": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+        "timestamp": "2026-10-14T03:37:19.0568636Z",
+        "load_request_id": "16f2ceae0973494a884ef9056c0ef12a",
+        "capture_request_id": "6561bc29024d41f7a47046e26fa424d2"
+      },
+      {
+        "id": "image-0-iso_b",
+        "kind": "image",
+        "view_id": "iso_b",
+        "sha256": "431996f6e44321e16c53553b66973ea12dd9d1a1a6d1fa34d91733658487b9cc",
+        "scene_sha256": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+        "timestamp": "2026-10-14T03:37:20.5617732Z",
+        "load_request_id": "16f2ceae0973494a884ef9056c0ef12a",
+        "capture_request_id": "115effdffa76499c828df637db854450"
+      }
+    ],
+    "supported_views": [
+      "top",
+      "iso_a",
+      "iso_b"
+    ],
+    "relevant_component_guidance": {
+      "knowledge_sha256": "d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26",
+      "reference_kind": "official_component_documentation",
+      "requested_prefabs": [
+        "Column"
+      ],
+      "components": [
+        {
+          "component_id": "parts:operators#column",
+          "prefabs": [
+            "Column"
+          ],
+          "official_name": "Column",
+          "function": "Metal structure typically used to hold an electric switchboard.",
+          "function_basis": "official_text",
+          "sources": [
+            {
+              "chapter_id": "parts:operators#column",
+              "url": "https://docs.factoryio.com/manual/parts/operators/#column"
+            }
+          ]
+        }
+      ],
+      "missing_prefabs": []
+    },
+    "context_manifest": {
+      "prompt_version": "issue4-guided-context-v3",
+      "kind": "visual",
+      "sources": {
+        "requirements_sha256": "eb6c92f398cf09e8f7118f448771461699bc50e01aea0e57c33909e1ccb158b6",
+        "native_geometry_sha256": "0ccc683e8a9fd6c87f1ffa6f5ce6caece25ff939b7bdbca4faf35e56d1bb7aef",
+        "template_sources": {
+          "source-04da4aaaacbb3e5e0ade": "04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c",
+          "source-7b6b0a6b063429d967cf": "7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918",
+          "source-6862ca46dbe17012078c": "6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535"
+        },
+        "knowledge_sha256": "d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26"
+      },
+      "object_scope": [
+        "column-1",
+        "column-2"
+      ],
+      "field_sources": {
+        "requirement_spec": "independent source quotes",
+        "actual_objects": "current manifest identities plus design identification labels",
+        "check_plan": "independently compiled checks",
+        "image_manifest": "current load and capture receipts"
+      },
+      "limitations": [
+        "Generated roles/functions are identification context, not independent ground truth.",
+        "Native data describes this loaded software/version, not proven runtime behavior."
+      ]
+    }
+  },
+  "images": [
+    {
+      "path": "../../../assets/48a52a6b48763b90b941d7e0eda1921cca28307073f4b016d21fa6006be8a433.png",
+      "sha256": "48a52a6b48763b90b941d7e0eda1921cca28307073f4b016d21fa6006be8a433",
+      "mime_type": "image/png",
+      "size_bytes": 5433262
+    },
+    {
+      "path": "../../../assets/a3d0b6fe83508db8ef4714bdb3c93233d29e01f0a631a0e844466dc86733958d.png",
+      "sha256": "a3d0b6fe83508db8ef4714bdb3c93233d29e01f0a631a0e844466dc86733958d",
+      "mime_type": "image/png",
+      "size_bytes": 5461118
+    },
+    {
+      "path": "../../../assets/431996f6e44321e16c53553b66973ea12dd9d1a1a6d1fa34d91733658487b9cc.png",
+      "sha256": "431996f6e44321e16c53553b66973ea12dd9d1a1a6d1fa34d91733658487b9cc",
+      "mime_type": "image/png",
+      "size_bytes": 5421328
+    }
+  ],
+  "input_metrics": {
+    "system_chars": 1524,
+    "payload_chars": 6333,
+    "image_count": 3,
+    "image_bytes": 16315708,
+    "token_estimate_used": false
+  },
+  "input_artifacts": [],
+  "response_text": "{\"global_review\": {\n  \"status\": \"satisfied\",\n  \"summary\": \"The scene contains exactly two Column objects, placed independently with a clear visible gap between them. No conveyors, emitters, or removers are present in any of the provided views.\",\n  \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"],\n  \"findings\": []\n},\n\"check_results\": [\n  {\n    \"object_ids\": [\"column-1\", \"column-2\"],\n    \"image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"],\n    \"observed\": \"Two distinct metal columns are visible in all three views. In the top view, they are separated by a clear horizontal gap. In both isometric views, the columns stand apart with significant empty space between their bases and bodies.\",\n    \"reason\": \"The requirement specifies that the two Columns must be placed separately with a visible gap. All three images confirm this spatial arrangement without overlap or contact.\",\n    \"repair_intent\": \"\",\n    \"check_id\": \"REQ-COLUMN-002-1\",\n    \"relation_ids\": [],\n    \"status\": \"satisfied\",\n    \"requested_view\": null\n  }\n]\n}",
+  "response_sha256": "663d883e6ce39924e20a81cfdb83570a19cdac358377f7f30bde5d368ae9003e",
+  "structured_output": {
+    "global_review": {
+      "status": "satisfied",
+      "summary": "The scene contains exactly two Column objects, placed independently with a clear visible gap between them. No conveyors, emitters, or removers are present in any of the provided views.",
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "findings": []
+    },
+    "check_results": [
+      {
+        "object_ids": [
+          "column-1",
+          "column-2"
+        ],
+        "image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ],
+        "observed": "Two distinct metal columns are visible in all three views. In the top view, they are separated by a clear horizontal gap. In both isometric views, the columns stand apart with significant empty space between their bases and bodies.",
+        "reason": "The requirement specifies that the two Columns must be placed separately with a visible gap. All three images confirm this spatial arrangement without overlap or contact.",
+        "repair_intent": "",
+        "check_id": "REQ-COLUMN-002-1",
+        "relation_ids": [],
+        "status": "satisfied",
+        "requested_view": null
+      }
+    ]
+  },
+  "redaction_count": 0,
+  "quality": {
+    "review_status": "pending",
+    "sft_eligible": false,
+    "dpo_eligible": false,
+    "split": "unassigned"
+  },
+  "finished_at": "2026-10-14T03:37:31.693778+00:00",
+  "latency_seconds": 10.840493,
+  "output_origin": "provider_content",
+  "model_metadata": {
+    "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+    "provider": "AliyunLLM",
+    "request_options": {
+      "max_tokens": 8000,
+      "enable_thinking": false
+    },
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "FactoryIO_vision",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "global_review",
+            "check_results"
+          ],
+          "properties": {
+            "global_review": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "summary",
+                "image_ids",
+                "findings"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "satisfied",
+                    "violated",
+                    "unobservable"
+                  ]
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "image_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "object_ids",
+                      "image_ids",
+                      "observed",
+                      "reason",
+                      "repair_intent",
+                      "status",
+                      "requirement_ids"
+                    ],
+                    "properties": {
+                      "object_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "image_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "observed": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "repair_intent": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "violated",
+                          "unobservable"
+                        ]
+                      },
+                      "requirement_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "check_results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "object_ids",
+                  "image_ids",
+                  "observed",
+                  "reason",
+                  "repair_intent",
+                  "check_id",
+                  "relation_ids",
+                  "status",
+                  "requested_view"
+                ],
+                "properties": {
+                  "object_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "image_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "observed": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "repair_intent": {
+                    "type": "string"
+                  },
+                  "check_id": {
+                    "type": "string"
+                  },
+                  "relation_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "satisfied",
+                      "violated",
+                      "unobservable"
+                    ]
+                  },
+                  "requested_view": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      null,
+                      "top",
+                      "iso_a",
+                      "iso_b"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "requested_model": "qwen3.8-flash",
+    "returned_model": "qwen3.8-flash",
+    "response_id": "chatcmpl-4a0247ac-7270-994c-ac3a-e8e3812e8a87",
+    "http_status": 200,
+    "usage": {
+      "prompt_tokens": 10977,
+      "total_tokens": 11265,
+      "completion_tokens": 288,
+      "prompt_tokens_details": {
+        "cached_tokens": 768,
+        "image_tokens": 7554,
+        "text_tokens": 3423
+      },
+      "completion_tokens_details": {}
+    },
+    "finish_reason": "stop",
+    "streaming_requested": true,
+    "response_mode": "sse",
+    "stream_stats": {
+      "packets": 101,
+      "content_chars": 1052,
+      "done_received": true,
+      "first_packet_seconds": 4.7e-05,
+      "first_content_seconds": 8e-05
+    }
+  },
+  "error": null
+}

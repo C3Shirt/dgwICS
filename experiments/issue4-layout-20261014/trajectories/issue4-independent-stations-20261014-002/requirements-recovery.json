@@ -1,0 +1,6 @@
+{
+  "source_run": "experiments/issue4-layout-20261014/trajectories/issue4-independent-stations-20261014-001",
+  "rejected_sha256": "e0cd8bfa4aca0f748a6069b8f460b4db1a684bf861486c6140db3bfcb75a6301",
+  "reason": "Unknown exact prefab selector: conveyor. Use an exact available_components prefab, or its declared measured capability for a component category. Preserve genuinely unavailable equipment as unsupported.",
+  "action": "Re-extract original text; no design or loaded scene is reused from this invalid contract."
+}

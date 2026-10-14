@@ -1,0 +1,30 @@
+{
+  "ticket_id": "ticket-f96659a1d215b40d",
+  "failed_check_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR-1"
+  ],
+  "requirement_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR"
+  ],
+  "affected_object_ids": [
+    "conveyor1",
+    "emitter1"
+  ],
+  "issue_type": "requirement_relation_violation",
+  "evidence_ids": [
+    "image-0-iso_a",
+    "image-0-top",
+    "load-6fccb0692b01431397b92b96420d29fe"
+  ],
+  "repair_intent": [
+    "The required relation is that the feeder must be positioned *above* the upstream carrying surface. Currently, it is positioned *beside* the conveyor at a lower elevation relative to the belt surface.",
+    "Move the emitter horizontally so its volume aligns with the conveyor belt, and raise its vertical position (Z-axis) so it hovers directly over the belt surface."
+  ],
+  "allowed_operations": [
+    "change",
+    "replace"
+  ],
+  "frozen_object_ids": [
+    "remover1"
+  ]
+}

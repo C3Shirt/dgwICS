@@ -1,0 +1,21 @@
+{
+  "inspection_complete": true,
+  "issues": [
+    {
+      "check_id": "REQ-STATIC-005-1",
+      "status": "violated",
+      "suspect_object_ids": [
+        "remover-1"
+      ],
+      "observation": "In the isometric views (image-0-iso_a and image-0-iso_b), the dashed bounding volume of the remover (labeled '27:remover-1') is positioned entirely past the end of the conveyor belt's carrying surface. There is a visible gap between the edge of the conveyor and the start of the remover's volume.",
+      "spatial_observation": "The conveyor's surface bounds extend to Z=18.25m. The remover's volume bounds start at Z=18.25m. While they are adjacent in the X-axis, the visual evidence in the iso views suggests the functional removal zone does not overlap with the carrying path where items would be transported, potentially failing to capture items as they leave the belt.",
+      "reason": "The requirement states the remover must cover the downstream extension path. By being placed strictly beyond the physical end of the belt without overlapping the exit region, it fails to 'cover' the path effectively for item removal.",
+      "repair_intent": "Move the remover closer to the conveyor along the Z-axis so that its active volume overlaps with the downstream end of the conveyor belt's carrying surface.",
+      "evidence_image_ids": [
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "requested_view": null
+    }
+  ]
+}

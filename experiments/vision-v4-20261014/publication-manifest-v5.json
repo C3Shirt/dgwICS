@@ -1,0 +1,295 @@
+{
+  "source_kind": "live_cli",
+  "status": "scene_verified",
+  "model_calls": 1,
+  "elapsed_seconds": 10.737,
+  "scope": "One actual static inspection; no evidence that all API [] failures or perception errors are solved.",
+  "python_tests": 537,
+  "files": [
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/catalog.json",
+      "source_sha256": "af340f57d0d8630157876380a1c6ad914b49b43ab67724cc81eb6b5c3f4a7d58",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/catalog.json",
+      "published_sha256": "5fd6498b9de5475035a193fe162ddf517990116f3495e865017d86107a76d11d"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/check-plan.json",
+      "source_sha256": "37e3a5d33018c4dd5e79630e64b6499d4407ea75d92eace1675e36ff5bf090c7",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/check-plan.json",
+      "published_sha256": "37e3a5d33018c4dd5e79630e64b6499d4407ea75d92eace1675e36ff5bf090c7"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/deferred-tasks.json",
+      "source_sha256": "20215c5699723dd834a6ef0f8494d400f7b0eca2454761608232989926274ee4",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/deferred-tasks.json",
+      "published_sha256": "20215c5699723dd834a6ef0f8494d400f7b0eca2454761608232989926274ee4"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/design.json",
+      "source_sha256": "ce8bce70c04f87e70753551864ba0b641509018740d9b242213c82442275c343",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/design.json",
+      "published_sha256": "ce8bce70c04f87e70753551864ba0b641509018740d9b242213c82442275c343"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/execution.json",
+      "source_sha256": "5aa650ef33b0b251ab91d307666a4935cd05b691342317ed22f90cc8977e7825",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/execution.json",
+      "published_sha256": "5aa650ef33b0b251ab91d307666a4935cd05b691342317ed22f90cc8977e7825"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/model-events.jsonl",
+      "source_sha256": "a5885ed8aa3aeca18c739626cc8da067492b50fc593fb51da3a1f46d627d408c",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/model-events.jsonl",
+      "published_sha256": "029e2a1e948657f73e657d5581230cd402c8a36f2d82dfe48997a22dcc02d1b3"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/native-prefab-geometry.json",
+      "source_sha256": "105d59b0169b8616b5489b378029d24cf9e5605a5a9cb3502ae0926a7f54bd48",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/native-prefab-geometry.json",
+      "published_sha256": "c37627bbf74224cc60a535d178db9bd993c99c0b2e9732679a7f4b3d05c32395"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/progress.log",
+      "source_sha256": "1a5d027e9f10a53cd7363483470288b6243c52aabc8e31b995e0201b99670485",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/progress.log",
+      "published_sha256": "0fd57c53622be299514cae372b9aa9b29ccf5a79454bdca79f6b325fe22c6c3d"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/requirement-spec.json",
+      "source_sha256": "e26f58f420ed46fa003590729a6fb8966642c718abb6ebbd1b7d20c79310f1fb",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/requirement-spec.json",
+      "published_sha256": "e26f58f420ed46fa003590729a6fb8966642c718abb6ebbd1b7d20c79310f1fb"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/requirement.json",
+      "source_sha256": "406a2fd101dfe5ff027b322830bc10626a4dd81f9dd4b9f2869968a829b10189",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/requirement.json",
+      "published_sha256": "406a2fd101dfe5ff027b322830bc10626a4dd81f9dd4b9f2869968a829b10189"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/result.json",
+      "source_sha256": "186864ae3dcb630434a3bf416a9402c5b7ad232b06899abc922fcf706750bd69",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/result.json",
+      "published_sha256": "0d28579d0f02a4ea8f2febb85cdae10d031b4768cbc8eddaf3a8e3c932232811"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/run.json",
+      "source_sha256": "186864ae3dcb630434a3bf416a9402c5b7ad232b06899abc922fcf706750bd69",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/run.json",
+      "published_sha256": "0d28579d0f02a4ea8f2febb85cdae10d031b4768cbc8eddaf3a8e3c932232811"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/check-plan.json",
+      "source_sha256": "37e3a5d33018c4dd5e79630e64b6499d4407ea75d92eace1675e36ff5bf090c7",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/check-plan.json",
+      "published_sha256": "37e3a5d33018c4dd5e79630e64b6499d4407ea75d92eace1675e36ff5bf090c7"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/design.json",
+      "source_sha256": "ce8bce70c04f87e70753551864ba0b641509018740d9b242213c82442275c343",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/design.json",
+      "published_sha256": "ce8bce70c04f87e70753551864ba0b641509018740d9b242213c82442275c343"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/geometry-validation.json",
+      "source_sha256": "b603b915a528b7d576b5e35a9435be715275dd71ac968a5064b4e2e003aa35fd",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/geometry-validation.json",
+      "published_sha256": "b603b915a528b7d576b5e35a9435be715275dd71ac968a5064b4e2e003aa35fd"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/image-index.json",
+      "source_sha256": "0965b58b04ff0bde5b17be109e7455f6ab37ac2418b4f7bb2978d66d52fb5495",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/image-index.json",
+      "published_sha256": "0965b58b04ff0bde5b17be109e7455f6ab37ac2418b4f7bb2978d66d52fb5495"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/io-contract.json",
+      "source_sha256": "0f606b7c7b8cae3c2675c71404293e931964decdfb26065c9b02bbf1b451f36b",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/io-contract.json",
+      "published_sha256": "0f606b7c7b8cae3c2675c71404293e931964decdfb26065c9b02bbf1b451f36b"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/load-receipt.bridge-response.json",
+      "source_sha256": "753967c94fc9763c22ea1a3777e679b03bb8b909ef7cebc66885f60ed9dde0fd",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/load-receipt.bridge-response.json",
+      "published_sha256": "ae1c5437a658c755feb46e2a9c61cdd53331596c0903b197b522ca5040a2e992"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/load-receipt.json",
+      "source_sha256": "d13b9b762ea64d1ffbd42b13b854c12e840587ca0f9e2371229ecf0cf004f2f6",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/load-receipt.json",
+      "published_sha256": "61214220551b282579afbf05cff6d687b1051b530dd2d2dc817b0fd050d89e61"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/load-request.json",
+      "source_sha256": "96f1c431c0926d8fc8373f9f6e2cf8a8befeec762ea3de180feb2bdb8b2b3171",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/load-request.json",
+      "published_sha256": "46cc59bb7ff4b2cd5f7fa8e6b86dac677588cb5882592316a7dda46c5aa4b611"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/manifest.json",
+      "source_sha256": "0f40b2547841c7d1fa857a597a3f77b712a943b21744ac2e9937216cb01fa250",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/manifest.json",
+      "published_sha256": "57899ceb51aa123a689546275ea0dee5791e0beca0635c78db81c57137a7f665"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/native-checks.json",
+      "source_sha256": "de129a957f528c2bb76d980e67a61fbb82dfb506a129e3a3debc68f697cd9561",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/native-checks.json",
+      "published_sha256": "de129a957f528c2bb76d980e67a61fbb82dfb506a129e3a3debc68f697cd9561"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/prebuild-checks.json",
+      "source_sha256": "751a549ad1488991c8952ba16fb224bd7f473984d1c22f371000729a7d1c88a5",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/prebuild-checks.json",
+      "published_sha256": "751a549ad1488991c8952ba16fb224bd7f473984d1c22f371000729a7d1c88a5"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/repair-progress.json",
+      "source_sha256": "b9c11dc69dc780e8d1f035ab86fecf84ceb2be4176c720ccb69e72f083fa8da5",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/repair-progress.json",
+      "published_sha256": "b9c11dc69dc780e8d1f035ab86fecf84ceb2be4176c720ccb69e72f083fa8da5"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/requirement-spec.json",
+      "source_sha256": "e26f58f420ed46fa003590729a6fb8966642c718abb6ebbd1b7d20c79310f1fb",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/requirement-spec.json",
+      "published_sha256": "e26f58f420ed46fa003590729a6fb8966642c718abb6ebbd1b7d20c79310f1fb"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/scene-feedback.json",
+      "source_sha256": "d0fa64e83dc9d2bdef9fbcdcdd1b2ce87985ca8c0a0c012548f938542228ebfa",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/scene-feedback.json",
+      "published_sha256": "0fb37eebbc602af374052b9afce89f983094871a496eec109d39d73a66b7a90c"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/scene-plan.json",
+      "source_sha256": "817f55dc43e19553d94a0e600ba9f2c992bef57e9cae5eb40fbdcb39358c1986",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/scene-plan.json",
+      "published_sha256": "817f55dc43e19553d94a0e600ba9f2c992bef57e9cae5eb40fbdcb39358c1986"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/scene.factoryio",
+      "source_sha256": "afa30e2663caf778f366f45eef78100612c60ab101ac4af7ea47136500a7c252",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/scene.factoryio",
+      "published_sha256": "afa30e2663caf778f366f45eef78100612c60ab101ac4af7ea47136500a7c252"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/verification.json",
+      "source_sha256": "5fe578f9d767703b0ce91790d4853bd1e7a3e3ac97e76ca16ce5a6be88243d1e",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/verification.json",
+      "published_sha256": "5fe578f9d767703b0ce91790d4853bd1e7a3e3ac97e76ca16ce5a6be88243d1e"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/vision-context-audit-0.json",
+      "source_sha256": "04c519f7cf60f18e5128e693055a7fc9b7120bc936601b45909987423a9010ad",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/vision-context-audit-0.json",
+      "published_sha256": "04c519f7cf60f18e5128e693055a7fc9b7120bc936601b45909987423a9010ad"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/vision-input-0.json",
+      "source_sha256": "978aa01131a684626066fc17c2f9c517af3f2a98120ad50a8c1a7c3e4df12cae",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/vision-input-0.json",
+      "published_sha256": "978aa01131a684626066fc17c2f9c517af3f2a98120ad50a8c1a7c3e4df12cae"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/evidence.json",
+      "source_sha256": "323d2743d7b627e2d2f37d666bd5c38dcf956ed26abb6375394130a2823ea1a9",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/evidence.json",
+      "published_sha256": "c2c7b8eab3f19f2e77d9fa4f8f91dbdf31fd61cfa7ed3700175d6524b8dd6022"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_a.bridge.json",
+      "source_sha256": "2e2642dd81644d0057c53579905be60bf8ddd470a3a9901610418967c00e758e",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_a.bridge.json",
+      "published_sha256": "38b4be723444f2ac690aaf9ff7bfa0dd4095d4e4fba80f7eb55863c2c3e3cd08"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_a.png",
+      "source_sha256": "0305943d1090822a8432acad1dbf4a025b521b3969aa2b6fae67d034ef3697cc",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_a.png",
+      "published_sha256": "0305943d1090822a8432acad1dbf4a025b521b3969aa2b6fae67d034ef3697cc"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_b.bridge.json",
+      "source_sha256": "c79ce334d1978e44e93e1ee95d185cbeba25629f9354282601f45b1d70e155c6",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_b.bridge.json",
+      "published_sha256": "5040057cba3613e3599cc059cb621bb02e4d0fdf3bbc41c737f885522fec8653"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_b.png",
+      "source_sha256": "966e62db59d8e52211c5e2417747c60f94039931b7419a60984122c277a4ca44",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-iso_b.png",
+      "published_sha256": "966e62db59d8e52211c5e2417747c60f94039931b7419a60984122c277a4ca44"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-top.bridge.json",
+      "source_sha256": "6aa2a93fdc7b99d6b3839cd13e494601875629fd70929b159b81247f61138c91",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-top.bridge.json",
+      "published_sha256": "1074cf724e83e0c8dd57242a3e58a1c39bc4c5f9ff68bfda30207d4113926e29"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-top.png",
+      "source_sha256": "51337bfc3ce648e5b644568302d2495d95d17a1435b02f7ddfb3ad6b8da854a8",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual/frame-0000-top.png",
+      "published_sha256": "51337bfc3ce648e5b644568302d2495d95d17a1435b02f7ddfb3ad6b8da854a8"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual-review-0.json",
+      "source_sha256": "a70e553f9355f0e8fb0d7f3414c6cfd26a3670eb02546f953fb3a13badff7b96",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual-review-0.json",
+      "published_sha256": "a70e553f9355f0e8fb0d7f3414c6cfd26a3670eb02546f953fb3a13badff7b96"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual-review-normalized-0.json",
+      "source_sha256": "11156db3959febf2d1e97b9a07c1dd475d8b9b27607fb14f7b14b9c98062c2dd",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-000/visual-review-normalized-0.json",
+      "published_sha256": "11156db3959febf2d1e97b9a07c1dd475d8b9b27607fb14f7b14b9c98062c2dd"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/scene-plan.json",
+      "source_sha256": "817f55dc43e19553d94a0e600ba9f2c992bef57e9cae5eb40fbdcb39358c1986",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/scene-plan.json",
+      "published_sha256": "817f55dc43e19553d94a0e600ba9f2c992bef57e9cae5eb40fbdcb39358c1986"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/trace.jsonl",
+      "source_sha256": "e43b25c537683655314246d2cf1110f1f33f86e1923110269981d3fe81b2c756",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/trace.jsonl",
+      "published_sha256": "59df14a2d333a017c7a802c0bcc8545f6696ad2a450d9478e8f09aa54ab6f074"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/training-data/assets/0305943d1090822a8432acad1dbf4a025b521b3969aa2b6fae67d034ef3697cc.png",
+      "source_sha256": "0305943d1090822a8432acad1dbf4a025b521b3969aa2b6fae67d034ef3697cc",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/training-data/assets/0305943d1090822a8432acad1dbf4a025b521b3969aa2b6fae67d034ef3697cc.png",
+      "published_sha256": "0305943d1090822a8432acad1dbf4a025b521b3969aa2b6fae67d034ef3697cc"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/training-data/assets/51337bfc3ce648e5b644568302d2495d95d17a1435b02f7ddfb3ad6b8da854a8.png",
+      "source_sha256": "51337bfc3ce648e5b644568302d2495d95d17a1435b02f7ddfb3ad6b8da854a8",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/training-data/assets/51337bfc3ce648e5b644568302d2495d95d17a1435b02f7ddfb3ad6b8da854a8.png",
+      "published_sha256": "51337bfc3ce648e5b644568302d2495d95d17a1435b02f7ddfb3ad6b8da854a8"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/training-data/assets/966e62db59d8e52211c5e2417747c60f94039931b7419a60984122c277a4ca44.png",
+      "source_sha256": "966e62db59d8e52211c5e2417747c60f94039931b7419a60984122c277a4ca44",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/training-data/assets/966e62db59d8e52211c5e2417747c60f94039931b7419a60984122c277a4ca44.png",
+      "published_sha256": "966e62db59d8e52211c5e2417747c60f94039931b7419a60984122c277a4ca44"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/training-data/candidates/0f03ad424dcb44e98fab69296d13b719.json",
+      "source_sha256": "4b41605655c7c5680aae7741296520c41565684fa75b86274162b163ee98fbf0",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/training-data/candidates/0f03ad424dcb44e98fab69296d13b719.json",
+      "published_sha256": "3e38622e7e69d868b03ca8b4d55e21bc0007507c1675877e6f7c4c0337baef77"
+    },
+    {
+      "source": "runs/issue4-vision-v5-explicit-result-20261014-001/training-data/events.jsonl",
+      "source_sha256": "20f25e4d6d6645e5778edd1dd5ba78e1302721953d2eb1febbe819b2805202ae",
+      "published": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001/training-data/events.jsonl",
+      "published_sha256": "20f25e4d6d6645e5778edd1dd5ba78e1302721953d2eb1febbe819b2805202ae"
+    }
+  ],
+  "omitted": [
+    "config.snapshot.json"
+  ]
+}

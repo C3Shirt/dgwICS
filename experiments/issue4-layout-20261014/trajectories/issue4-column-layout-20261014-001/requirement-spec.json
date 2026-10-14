@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "original_requirement": "构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。",
+  "context_fragments": [
+    {
+      "source_text": "此轮只检查布局与多视角图片，不运行 PLC。",
+      "reason": "Execution-scope instruction; it constrains the checking process, not the physical scene."
+    },
+    {
+      "source_text": "构建两个独立立柱的静态布置：",
+      "reason": "Introductory framing that announces the task; the concrete constraints (two Columns, separated) are captured as separate requirements."
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "REQ-COLUMN-001",
+      "source_text": "使用两个 Column",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": null,
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "equals": 2,
+        "prefab": "Column"
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-COLUMN-002",
+      "source_text": "分开放置，保持可见间隔",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": null,
+      "target_role": null,
+      "predicate": "visual_relation",
+      "arguments": {
+        "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+      },
+      "required": true,
+      "evidence_methods": [
+        "visual"
+      ]
+    },
+    {
+      "requirement_id": "REQ-NO-EQUIP-001",
+      "source_text": "不要放置输送带、供料器或移除器",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": null,
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "equals": 0,
+        "capability": "conveyor"
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-NO-EQUIP-002",
+      "source_text": "不要放置输送带、供料器或移除器",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": null,
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "equals": 0,
+        "prefab": "Emitter"
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-NO-EQUIP-003",
+      "source_text": "不要放置输送带、供料器或移除器",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": null,
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "equals": 0,
+        "prefab": "Remover"
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    }
+  ]
+}

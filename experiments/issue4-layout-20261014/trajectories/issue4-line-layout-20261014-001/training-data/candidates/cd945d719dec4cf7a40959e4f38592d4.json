@@ -1,0 +1,921 @@
+{
+  "schema_version": 1,
+  "kind": "agent_candidate",
+  "candidate_id": "cd945d719dec4cf7a40959e4f38592d4",
+  "run_id": "ed0add4536884c86b9233694008a2e3c",
+  "role": "scene",
+  "phase": "scene_requirements",
+  "scenario_id": null,
+  "lineage_group": "simple-scene",
+  "source_kind": "live_model",
+  "started_at": "2026-10-14T02:30:38.059702+00:00",
+  "status": "response_received",
+  "handoff_id": null,
+  "versions": {},
+  "policy": {},
+  "prompt_sha256": "e9ce043bdbff02b15996d163bcd3362f7b2d9deacf4bf3c33c97d53e1992d987",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Extract the requirements independently from the original user text.\nQuote exact source fragments and cover every part of the original text.\nSeparate static physical requirements from runtime behavior. Preserve explicit\nquantities, roles and relations. Choose registered predicates when applicable;\nrecord unavailable capabilities honestly instead of replacing the requirement.\nUse visual_relation for qualitative visible constraints that have no exact geometry.\nNever invent a tolerance, sensor property or confirmed engineering constraint.\nAssumptions are optional, never hard requirements. Return the supplied JSON shape.\n"
+    },
+    {
+      "role": "user",
+      "content": "{\"phase\": \"scene_requirements\", \"original_requirement\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。\", \"output_shape\": {\"original_requirement\": \"verbatim input\", \"requirements\": [{\"requirement_id\": \"stable ID\", \"source_text\": \"verbatim source fragment\", \"origin\": \"explicit_user or design_assumption\", \"phase\": \"static_scene or runtime\", \"subject_role\": \"semantic role or null\", \"target_role\": \"semantic role or null\", \"predicate\": \"registered operator, or the unavailable capability name\", \"arguments\": {}, \"required\": true, \"evidence_methods\": [\"structure\", \"native_geometry\", \"visual\"]}]}, \"checker_capabilities\": {\"registered\": {\"arguments\": {}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\"]}, \"forall\": {\"arguments\": {\"operator\": \"string\", \"arguments\": \"object\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"exists\": {\"arguments\": {\"equals\": \"integer\", \"min\": \"integer\", \"max\": \"integer\", \"prefab\": \"string\", \"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"structure\"]}, \"count\": {\"arguments\": {\"equals\": \"integer\", \"min\": \"integer\", \"max\": \"integer\", \"prefab\": \"string\", \"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"structure\"]}, \"has_capability\": {\"arguments\": {\"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\"]}, \"within_bounds\": {\"arguments\": {\"bounds\": \"bounds\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\"]}, \"relative_direction\": {\"arguments\": {\"axis\": \"string\", \"direction\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"aligned\": {\"arguments\": {\"axes\": \"axes\", \"tolerance_metres\": \"nonnegative\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"distance_range\": {\"arguments\": {\"min_metres\": \"nonnegative\", \"max_metres\": \"nonnegative\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"intersects_volume\": {\"arguments\": {}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"ray_intersects_volume\": {\"arguments\": {}, \"capabilities\": [\"sensor\"], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"feeds_into\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"transfers_to\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"receives_from\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"detects_path\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\", \"crossing_required\": \"boolean\", \"max_flow_dot\": \"nonnegative\", \"min_height_metres\": \"number\", \"max_height_metres\": \"number\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"reachable\": {\"arguments\": {\"max_gap_metres\": \"nonnegative\", \"height_tolerance_metres\": \"nonnegative\"}, \"capabilities\": [], \"evidence_methods\": [\"native_geometry\", \"visual\"]}, \"visual_relation\": {\"arguments\": {\"question\": \"string\"}, \"capabilities\": [], \"evidence_methods\": [\"visual\"]}, \"unsupported\": {\"arguments\": {\"capability\": \"string\"}, \"capabilities\": [], \"evidence_methods\": []}}, \"available_components\": [{\"prefab\": \"Aligner3\", \"measured_capabilities\": []}, {\"prefab\": \"BeltConveyor2M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"BeltConveyor4M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"ChuteConveyorLow\", \"measured_capabilities\": []}, {\"prefab\": \"Column\", \"measured_capabilities\": []}, {\"prefab\": \"ConveyorScale\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"DiffusePhotoelectricSensor\", \"measured_capabilities\": [\"sensor\"]}, {\"prefab\": \"DigitalDisplay\", \"measured_capabilities\": []}, {\"prefab\": \"ElectricSwitchboard\", \"measured_capabilities\": []}, {\"prefab\": \"EmergencyStopButton\", \"measured_capabilities\": []}, {\"prefab\": \"Emitter\", \"measured_capabilities\": [\"emitter\"]}, {\"prefab\": \"LightCurtainEmitter\", \"measured_capabilities\": []}, {\"prefab\": \"LightCurtainReceiver\", \"measured_capabilities\": []}, {\"prefab\": \"MetalCorner\", \"measured_capabilities\": []}, {\"prefab\": \"PopUpWheelSorter\", \"measured_capabilities\": []}, {\"prefab\": \"Remover\", \"measured_capabilities\": []}, {\"prefab\": \"ResetPushButton\", \"measured_capabilities\": []}, {\"prefab\": \"RetroreflectiveMirror\", \"measured_capabilities\": []}, {\"prefab\": \"RetroreflectivePhotoelectricSensor\", \"measured_capabilities\": [\"sensor\"]}, {\"prefab\": \"RollerConveyor2M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"RollerConveyor4M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"RollerConveyor6M\", \"measured_capabilities\": [\"conveyor\"]}, {\"prefab\": \"Safeguard\", \"measured_capabilities\": []}, {\"prefab\": \"SafeguardI\", \"measured_capabilities\": []}, {\"prefab\": \"SafeguardL\", \"measured_capabilities\": []}, {\"prefab\": \"Selector\", \"measured_capabilities\": []}, {\"prefab\": \"StackableBox\", \"measured_capabilities\": []}, {\"prefab\": \"StartPushButton\", \"measured_capabilities\": []}, {\"prefab\": \"StopPushButton\", \"measured_capabilities\": []}, {\"prefab\": \"Turntable\", \"measured_capabilities\": []}, {\"prefab\": \"VisualStatusIndicator\", \"measured_capabilities\": []}]}"
+    }
+  ],
+  "payload": {
+    "phase": "scene_requirements",
+    "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+    "output_shape": {
+      "original_requirement": "verbatim input",
+      "requirements": [
+        {
+          "requirement_id": "stable ID",
+          "source_text": "verbatim source fragment",
+          "origin": "explicit_user or design_assumption",
+          "phase": "static_scene or runtime",
+          "subject_role": "semantic role or null",
+          "target_role": "semantic role or null",
+          "predicate": "registered operator, or the unavailable capability name",
+          "arguments": {},
+          "required": true,
+          "evidence_methods": [
+            "structure",
+            "native_geometry",
+            "visual"
+          ]
+        }
+      ]
+    },
+    "checker_capabilities": {
+      "registered": {
+        "arguments": {},
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ]
+      },
+      "forall": {
+        "arguments": {
+          "operator": "string",
+          "arguments": "object"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "exists": {
+        "arguments": {
+          "equals": "integer",
+          "min": "integer",
+          "max": "integer",
+          "prefab": "string",
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "structure"
+        ]
+      },
+      "count": {
+        "arguments": {
+          "equals": "integer",
+          "min": "integer",
+          "max": "integer",
+          "prefab": "string",
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "structure"
+        ]
+      },
+      "has_capability": {
+        "arguments": {
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ]
+      },
+      "within_bounds": {
+        "arguments": {
+          "bounds": "bounds"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ]
+      },
+      "relative_direction": {
+        "arguments": {
+          "axis": "string",
+          "direction": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "aligned": {
+        "arguments": {
+          "axes": "axes",
+          "tolerance_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "distance_range": {
+        "arguments": {
+          "min_metres": "nonnegative",
+          "max_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "intersects_volume": {
+        "arguments": {},
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "ray_intersects_volume": {
+        "arguments": {},
+        "capabilities": [
+          "sensor"
+        ],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "feeds_into": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "transfers_to": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "receives_from": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "detects_path": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "reachable": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "visual_relation": {
+        "arguments": {
+          "question": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "visual"
+        ]
+      },
+      "unsupported": {
+        "arguments": {
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": []
+      }
+    },
+    "available_components": [
+      {
+        "prefab": "Aligner3",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "BeltConveyor2M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "BeltConveyor4M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "ChuteConveyorLow",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Column",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ConveyorScale",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "DiffusePhotoelectricSensor",
+        "measured_capabilities": [
+          "sensor"
+        ]
+      },
+      {
+        "prefab": "DigitalDisplay",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ElectricSwitchboard",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "EmergencyStopButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Emitter",
+        "measured_capabilities": [
+          "emitter"
+        ]
+      },
+      {
+        "prefab": "LightCurtainEmitter",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "LightCurtainReceiver",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "MetalCorner",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "PopUpWheelSorter",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Remover",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ResetPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "RetroreflectiveMirror",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "RetroreflectivePhotoelectricSensor",
+        "measured_capabilities": [
+          "sensor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor2M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor4M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor6M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "Safeguard",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "SafeguardI",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "SafeguardL",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Selector",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StackableBox",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StartPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StopPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Turntable",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "VisualStatusIndicator",
+        "measured_capabilities": []
+      }
+    ]
+  },
+  "images": [],
+  "input_metrics": {
+    "system_chars": 624,
+    "payload_chars": 5757,
+    "image_count": 0,
+    "image_bytes": 0,
+    "token_estimate_used": false
+  },
+  "input_artifacts": [],
+  "response_text": "{\n  \"phase\": \"scene_requirements\",\n  \"original_requirement\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。\",\n  \"output_shape\": {\n    \"original_requirement\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。\",\n    \"requirements\": [\n      {\n        \"requirement_id\": \"REQ_001\",\n        \"source_text\": \"一条输送带\",\n        \"origin\": \"explicit_user\",\n        \"phase\": \"static_scene\",\n        \"subject_role\": null,\n        \"target_role\": null,\n        \"predicate\": \"count\",\n        \"arguments\": {\n          \"equals\": 1,\n          \"capability\": \"conveyor\"\n        },\n        \"required\": true,\n        \"evidence_methods\": [\n          \"structure\"\n        ]\n      },\n      {\n        \"requirement_id\": \"REQ_002\",\n        \"source_text\": \"一个供料器\",\n        \"origin\": \"explicit_user\",\n        \"phase\": \"static_scene\",\n        \"subject_role\": null,\n        \"target_role\": null,\n        \"predicate\": \"count\",\n        \"arguments\": {\n          \"equals\": 1,\n          \"capability\": \"emitter\"\n        },\n        \"required\": true,\n        \"evidence_methods\": [\n          \"structure\"\n        ]\n      },\n      {\n        \"requirement_id\": \"REQ_003\",\n        \"source_text\": \"一个末端移除器\",\n        \"origin\": \"explicit_user\",\n        \"phase\": \"static_scene\",\n        \"subject_role\": null,\n        \"target_role\": null,\n        \"predicate\": \"count\",\n        \"arguments\": {\n          \"equals\": 1,\n          \"prefab\": \"Remover\"\n        },\n        \"required\": true,\n        \"evidence_methods\": [\n          \"structure\"\n        ]\n      },\n      {\n        \"requirement_id\": \"REQ_004\",\n        \"source_text\": \"供料器位于输送带上游承载面上方\",\n        \"origin\": \"explicit_user\",\n        \"phase\": \"static_scene\",\n        \"subject_role\": \"supplier\",\n        \"target_role\": \"conveyor\",\n        \"predicate\": \"visual_relation\",\n        \"arguments\": {\n          \"question\": \"Is the supplier located above the upstream conveyor carrying surface?\"\n        },\n        \"required\": true,\n        \"evidence_methods\": [\n          \"visual\"\n        ]\n      },\n      {\n        \"requirement_id\": \"REQ_005\",\n        \"source_text\": \"移除器覆盖下游延伸路径\",\n        \"origin\": \"explicit_user\",\n        \"phase\": \"static_scene\",\n        \"subject_role\": \"remover\",\n        \"target_role\": \"downstream extension path\",\n        \"predicate\": \"unsupported\",\n        \"arguments\": {\n          \"capability\": \"ray_intersects_volume\"\n        },\n        \"required\": true,\n        \"evidence_methods\": []\n      },\n      {\n        \"requirement_id\": \"REQ_006\",\n        \"source_text\": \"直线输送布局\",\n        \"origin\": \"explicit_user\",\n        \"phase\": \"static_scene\",\n        \"subject_role\": \"conveyor\",\n        \"target_role\": null,\n        \"predicate\": \"unsupported\",\n        \"arguments\": {\n          \"capability\": \"straight_line_layout\"\n        },\n        \"required\": true,\n        \"evidence_methods\": []\n      },\n      {\n        \"requirement_id\": \"REQ_007\",\n        \"source_text\": \"只做布局和图片检查，不启动 PLC\",\n        \"origin\": \"explicit_user\",\n        \"phase\": \"runtime\",\n        \"subject_role\": null,\n        \"target_role\": null,\n        \"predicate\": \"unsupported\",\n        \"arguments\": {\n          \"capability\": \"plc_off\"\n        },\n        \"required\": true,\n        \"evidence_methods\": []\n      }\n    ]\n  },\n  \"checker_capabilities\": {\n    \"registered\": {\n      \"arguments\": {},\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\"\n      ]\n    },\n    \"forall\": {\n      \"arguments\": {\n        \"operator\": \"string\",\n        \"arguments\": \"object\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"exists\": {\n      \"arguments\": {\n        \"equals\": \"integer\",\n        \"min\": \"integer\",\n        \"max\": \"integer\",\n        \"prefab\": \"string\",\n        \"capability\": \"string\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"structure\"\n      ]\n    },\n    \"count\": {\n      \"arguments\": {\n        \"equals\": \"integer\",\n        \"min\": \"integer\",\n        \"max\": \"integer\",\n        \"prefab\": \"string\",\n        \"capability\": \"string\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"structure\"\n      ]\n    },\n    \"has_capability\": {\n      \"arguments\": {\n        \"capability\": \"string\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\"\n      ]\n    },\n    \"within_bounds\": {\n      \"arguments\": {\n        \"bounds\": \"bounds\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\"\n      ]\n    },\n    \"relative_direction\": {\n      \"arguments\": {\n        \"axis\": \"string\",\n        \"direction\": \"string\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"aligned\": {\n      \"arguments\": {\n        \"axes\": \"axes\",\n        \"tolerance_metres\": \"nonnegative\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"distance_range\": {\n      \"arguments\": {\n        \"min_metres\": \"nonnegative\",\n        \"max_metres\": \"nonnegative\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"intersects_volume\": {\n      \"arguments\": {},\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"ray_intersects_volume\": {\n      \"arguments\": {},\n      \"capabilities\": [\n        \"sensor\"\n      ],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"feeds_into\": {\n      \"arguments\": {\n        \"max_gap_metres\": \"nonnegative\",\n        \"height_tolerance_metres\": \"nonnegative\",\n        \"crossing_required\": \"boolean\",\n        \"max_flow_dot\": \"nonnegative\",\n        \"min_height_metres\": \"number\",\n        \"max_height_metres\": \"number\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"transfers_to\": {\n      \"arguments\": {\n        \"max_gap_metres\": \"nonnegative\",\n        \"height_tolerance_metres\": \"nonnegative\",\n        \"crossing_required\": \"boolean\",\n        \"max_flow_dot\": \"nonnegative\",\n        \"min_height_metres\": \"number\",\n        \"max_height_metres\": \"number\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"receives_from\": {\n      \"arguments\": {\n        \"max_gap_metres\": \"nonnegative\",\n        \"height_tolerance_metres\": \"nonnegative\",\n        \"crossing_required\": \"boolean\",\n        \"max_flow_dot\": \"nonnegative\",\n        \"min_height_metres\": \"number\",\n        \"max_height_metres\": \"number\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"detects_path\": {\n      \"arguments\": {\n        \"max_gap_metres\": \"nonnegative\",\n        \"height_tolerance_metres\": \"nonnegative\",\n        \"crossing_required\": \"boolean\",\n        \"max_flow_dot\": \"nonnegative\",\n        \"min_height_metres\": \"number\",\n        \"max_height_metres\": \"number\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"reachable\": {\n      \"arguments\": {\n        \"max_gap_metres\": \"nonnegative\",\n        \"height_tolerance_metres\": \"nonnegative\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"native_geometry\",\n        \"visual\"\n      ]\n    },\n    \"visual_relation\": {\n      \"arguments\": {\n        \"question\": \"string\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": [\n        \"visual\"\n      ]\n    },\n    \"unsupported\": {\n      \"arguments\": {\n        \"capability\": \"string\"\n      },\n      \"capabilities\": [],\n      \"evidence_methods\": []\n    }\n  },\n  \"available_components\": [\n    {\n      \"prefab\": \"Aligner3\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"BeltConveyor2M\",\n      \"measured_capabilities\": [\n        \"conveyor\"\n      ]\n    },\n    {\n      \"prefab\": \"BeltConveyor4M\",\n      \"measured_capabilities\": [\n        \"conveyor\"\n      ]\n    },\n    {\n      \"prefab\": \"ChuteConveyorLow\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"Column\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"ConveyorScale\",\n      \"measured_capabilities\": [\n        \"conveyor\"\n      ]\n    },\n    {\n      \"prefab\": \"DiffusePhotoelectricSensor\",\n      \"measured_capabilities\": [\n        \"sensor\"\n      ]\n    },\n    {\n      \"prefab\": \"DigitalDisplay\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"ElectricSwitchboard\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"EmergencyStopButton\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"Emitter\",\n      \"measured_capabilities\": [\n        \"emitter\"\n      ]\n    },\n    {\n      \"prefab\": \"LightCurtainEmitter\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"LightCurtainReceiver\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"MetalCorner\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"PopUpWheelSorter\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"Remover\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"ResetPushButton\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"RetroreflectiveMirror\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"RetroreflectivePhotoelectricSensor\",\n      \"measured_capabilities\": [\n        \"sensor\"\n      ]\n    },\n    {\n      \"prefab\": \"RollerConveyor2M\",\n      \"measured_capabilities\": [\n        \"conveyor\"\n      ]\n    },\n    {\n      \"prefab\": \"RollerConveyor4M\",\n      \"measured_capabilities\": [\n        \"conveyor\"\n      ]\n    },\n    {\n      \"prefab\": \"RollerConveyor6M\",\n      \"measured_capabilities\": [\n        \"conveyor\"\n      ]\n    },\n    {\n      \"prefab\": \"Safeguard\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"SafeguardI\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"SafeguardL\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"Selector\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"StackableBox\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"StartPushButton\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"StopPushButton\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"Turntable\",\n      \"measured_capabilities\": []\n    },\n    {\n      \"prefab\": \"VisualStatusIndicator\",\n      \"measured_capabilities\": []\n    }\n  ]\n}",
+  "response_sha256": "ad6c85fdceaf4330fc0017d63d955367ad7ace9873fccfd74ff9f7ee5c5d4528",
+  "structured_output": {
+    "phase": "scene_requirements",
+    "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+    "output_shape": {
+      "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+      "requirements": [
+        {
+          "requirement_id": "REQ_001",
+          "source_text": "一条输送带",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 1,
+            "capability": "conveyor"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ_002",
+          "source_text": "一个供料器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 1,
+            "capability": "emitter"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ_003",
+          "source_text": "一个末端移除器",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "count",
+          "arguments": {
+            "equals": 1,
+            "prefab": "Remover"
+          },
+          "required": true,
+          "evidence_methods": [
+            "structure"
+          ]
+        },
+        {
+          "requirement_id": "REQ_004",
+          "source_text": "供料器位于输送带上游承载面上方",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": "supplier",
+          "target_role": "conveyor",
+          "predicate": "visual_relation",
+          "arguments": {
+            "question": "Is the supplier located above the upstream conveyor carrying surface?"
+          },
+          "required": true,
+          "evidence_methods": [
+            "visual"
+          ]
+        },
+        {
+          "requirement_id": "REQ_005",
+          "source_text": "移除器覆盖下游延伸路径",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": "remover",
+          "target_role": "downstream extension path",
+          "predicate": "unsupported",
+          "arguments": {
+            "capability": "ray_intersects_volume"
+          },
+          "required": true,
+          "evidence_methods": []
+        },
+        {
+          "requirement_id": "REQ_006",
+          "source_text": "直线输送布局",
+          "origin": "explicit_user",
+          "phase": "static_scene",
+          "subject_role": "conveyor",
+          "target_role": null,
+          "predicate": "unsupported",
+          "arguments": {
+            "capability": "straight_line_layout"
+          },
+          "required": true,
+          "evidence_methods": []
+        },
+        {
+          "requirement_id": "REQ_007",
+          "source_text": "只做布局和图片检查，不启动 PLC",
+          "origin": "explicit_user",
+          "phase": "runtime",
+          "subject_role": null,
+          "target_role": null,
+          "predicate": "unsupported",
+          "arguments": {
+            "capability": "plc_off"
+          },
+          "required": true,
+          "evidence_methods": []
+        }
+      ]
+    },
+    "checker_capabilities": {
+      "registered": {
+        "arguments": {},
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ]
+      },
+      "forall": {
+        "arguments": {
+          "operator": "string",
+          "arguments": "object"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "exists": {
+        "arguments": {
+          "equals": "integer",
+          "min": "integer",
+          "max": "integer",
+          "prefab": "string",
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "structure"
+        ]
+      },
+      "count": {
+        "arguments": {
+          "equals": "integer",
+          "min": "integer",
+          "max": "integer",
+          "prefab": "string",
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "structure"
+        ]
+      },
+      "has_capability": {
+        "arguments": {
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ]
+      },
+      "within_bounds": {
+        "arguments": {
+          "bounds": "bounds"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry"
+        ]
+      },
+      "relative_direction": {
+        "arguments": {
+          "axis": "string",
+          "direction": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "aligned": {
+        "arguments": {
+          "axes": "axes",
+          "tolerance_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "distance_range": {
+        "arguments": {
+          "min_metres": "nonnegative",
+          "max_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "intersects_volume": {
+        "arguments": {},
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "ray_intersects_volume": {
+        "arguments": {},
+        "capabilities": [
+          "sensor"
+        ],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "feeds_into": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "transfers_to": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "receives_from": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "detects_path": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative",
+          "crossing_required": "boolean",
+          "max_flow_dot": "nonnegative",
+          "min_height_metres": "number",
+          "max_height_metres": "number"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "reachable": {
+        "arguments": {
+          "max_gap_metres": "nonnegative",
+          "height_tolerance_metres": "nonnegative"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "native_geometry",
+          "visual"
+        ]
+      },
+      "visual_relation": {
+        "arguments": {
+          "question": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": [
+          "visual"
+        ]
+      },
+      "unsupported": {
+        "arguments": {
+          "capability": "string"
+        },
+        "capabilities": [],
+        "evidence_methods": []
+      }
+    },
+    "available_components": [
+      {
+        "prefab": "Aligner3",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "BeltConveyor2M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "BeltConveyor4M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "ChuteConveyorLow",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Column",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ConveyorScale",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "DiffusePhotoelectricSensor",
+        "measured_capabilities": [
+          "sensor"
+        ]
+      },
+      {
+        "prefab": "DigitalDisplay",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ElectricSwitchboard",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "EmergencyStopButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Emitter",
+        "measured_capabilities": [
+          "emitter"
+        ]
+      },
+      {
+        "prefab": "LightCurtainEmitter",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "LightCurtainReceiver",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "MetalCorner",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "PopUpWheelSorter",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Remover",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "ResetPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "RetroreflectiveMirror",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "RetroreflectivePhotoelectricSensor",
+        "measured_capabilities": [
+          "sensor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor2M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor4M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "RollerConveyor6M",
+        "measured_capabilities": [
+          "conveyor"
+        ]
+      },
+      {
+        "prefab": "Safeguard",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "SafeguardI",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "SafeguardL",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Selector",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StackableBox",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StartPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "StopPushButton",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "Turntable",
+        "measured_capabilities": []
+      },
+      {
+        "prefab": "VisualStatusIndicator",
+        "measured_capabilities": []
+      }
+    ]
+  },
+  "redaction_count": 0,
+  "quality": {
+    "review_status": "pending",
+    "sft_eligible": false,
+    "dpo_eligible": false,
+    "split": "unassigned"
+  },
+  "finished_at": "2026-10-14T02:30:58.119009+00:00",
+  "latency_seconds": 20.058304,
+  "output_origin": "provider_content",
+  "model_metadata": {
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "provider": "DeepSeek",
+    "request_options": {
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 12000
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "requested_model": "deepseek-v4-pro",
+    "returned_model": "deepseek-v4-pro",
+    "response_id": "8554f592-51ae-4a78-930f-bf16cb05ea4f",
+    "http_status": 200,
+    "usage": {
+      "prompt_tokens": 1811,
+      "completion_tokens": 2886,
+      "total_tokens": 4697,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 1811
+    },
+    "finish_reason": "stop",
+    "streaming_requested": true,
+    "response_mode": "sse",
+    "stream_stats": {
+      "packets": 2889,
+      "content_chars": 10613,
+      "done_received": true,
+      "first_packet_seconds": 0.004881,
+      "first_content_seconds": 0.77667
+    }
+  },
+  "error": null
+}

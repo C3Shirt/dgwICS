@@ -1,0 +1,50 @@
+{
+  "global_review": {
+    "status": "satisfied",
+    "summary": "The scene layout matches the requirements: a single conveyor belt is present, with an emitter positioned above its upstream carrying surface and a remover placed at the downstream extension path.",
+    "image_ids": [
+      "image-0-top",
+      "image-0-iso_a",
+      "image-0-iso_b"
+    ],
+    "findings": []
+  },
+  "check_results": [
+    {
+      "object_ids": [
+        "emitter1",
+        "conveyor1"
+      ],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "observed": "The emitter (green arrow) is positioned directly above the start of the conveyor belt's carrying surface in all views. The white dashed volume aligns perfectly with the upper section of the belt.",
+      "reason": "The visual evidence confirms the emitter is located over the upstream part of the conveyor as required.",
+      "repair_intent": "",
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "relation_ids": [],
+      "status": "satisfied",
+      "requested_view": null
+    },
+    {
+      "object_ids": [
+        "remover1",
+        "conveyor1"
+      ],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "observed": "The remover (orange arrow) is positioned immediately after the end of the conveyor belt. Its white dashed volume covers the area where items would exit the belt, effectively covering the downstream extension path.",
+      "reason": "The placement of the remover corresponds to the requirement that it must cover the downstream extension path beyond the conveyor end.",
+      "repair_intent": "",
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "relation_ids": [],
+      "status": "satisfied",
+      "requested_view": null
+    }
+  ]
+}

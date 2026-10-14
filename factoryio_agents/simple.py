@@ -14,7 +14,7 @@ from .contracts import ContractError, canonical_hash, file_hash, read_json, requ
 from .geometry_tools import center_scene_layout, loaded_geometry, resolve_relative_layout
 from .scene import build_catalog, build_scene, validate_component_settings
 from .runtime import collect_evidence, run_hook, utc_now
-from .simple_prompts import DESIGN_PROMPT, LAYOUT_PROMPT, PATCH_PROMPT
+from .simple_prompts import LEGACY_DESIGN_PROMPT as DESIGN_PROMPT, LEGACY_LAYOUT_PROMPT as LAYOUT_PROMPT, LEGACY_PATCH_PROMPT as PATCH_PROMPT
 from .coordination import component_context
 
 
@@ -216,14 +216,32 @@ class NativeSceneTools:
         self.trace('tool_completed',phase='scene_capture',tool='factoryio_bridge',action='capture_views',image_count=len(images))
         return {**built,'geometry':geometry,'evidence':evidence,'images':images}
 
+    def capture_views(self,rendered,directory,views,attempt):
+        self.trace('tool_requested',phase='scene_capture',tool='factoryio_bridge',action='refresh_supported_views',views=views)
+        evidence=collect_evidence({**self.config['factoryio'],'capture_views':views},directory/('visual-refresh-'+str(attempt)),
+            rendered['evidence']['versions'],rendered['io_contract'],seconds=0)
+        require(evidence.get('reconciliation',{}).get('passed') is True,'tags changed during extra view capture')
+        for row in evidence['records']:row['id']='refresh-'+str(attempt)+'-'+row['id']
+        combined=deepcopy(rendered['evidence']);combined['records']+=evidence['records']
+        images=list(rendered['images'])+[Path(r['path']) for r in evidence['records'] if r['kind']=='image']
+        write_json(directory/'visual/combined-evidence.json',combined)
+        self.trace('tool_completed',phase='scene_capture',tool='factoryio_bridge',action='refresh_supported_views',views=views)
+        return {**rendered,'evidence':combined,'images':images}
+
 
 class SimpleWorkflow:
     def __init__(self,config,output,client=None,tools=None,progress=None,interaction=None,max_repairs=2,inject_fault=None,
-                 with_plc=False,keep_running=False,max_plc_repairs=2,runtime_seconds=30,reset_mode='warm',plc_tools=None,start_from='scene',start_local_services=False,plc_mode='run'):
+                 with_plc=False,keep_running=False,max_plc_repairs=2,runtime_seconds=30,reset_mode='warm',plc_tools=None,start_from='scene',start_local_services=False,plc_mode='run',
+                 scene_verification=None,requirement_spec=None,max_view_retries=1):
         from .llm import ModelClient
         from .training import TrainingRecorder,RecordingClient,Redactor,configured_secret_values
         from .progress import ModelObserver,ObservedClient
         self.config,self.output=deepcopy(config),Path(output).resolve();self.progress,self.interaction=progress,interaction
+        self.scene_verification=scene_verification or config.get('scene_verification') or ('legacy' if with_plc else 'relations')
+        require(self.scene_verification in ('legacy','relations_visual','relations'),'invalid scene verification mode')
+        require(not with_plc or self.scene_verification=='legacy','The new layout path is scene-only; use legacy explicitly for existing PLC continuation.')
+        require(type(max_view_retries) is int and 0<=max_view_retries<=1,'view retries are bounded to 0 or 1')
+        self.requirement_spec,self.max_view_retries=requirement_spec,max_view_retries
         require(type(with_plc) is bool and type(keep_running) is bool and (with_plc or not keep_running),'keep_running needs with_plc')
         require(type(max_plc_repairs) is int and max_plc_repairs>=0,'max_plc_repairs must be a nonnegative integer')
         require(reset_mode in ('warm','cold'),'reset_mode must be warm or cold')
@@ -235,7 +253,8 @@ class SimpleWorkflow:
         require(plc_mode in ('compile','run'),'plc_mode must be compile or run')
         self.plc_mode=plc_mode
         require(type(max_repairs) is int and max_repairs>=0,'max_repairs must be a nonnegative integer');self.max_repairs=max_repairs
-        require(inject_fault in (None,'emitter_gap','sensor_parallel'),'unknown experiment fault');self.inject_fault=inject_fault
+        require(inject_fault in (None,'emitter_gap','sensor_parallel','height_offset','transfer_gap','missing_object'),'unknown experiment fault');self.inject_fault=inject_fault
+        require(self.scene_verification!='legacy' or inject_fault in (None,'emitter_gap','sensor_parallel'),'this fault needs relation validation')
         from .simple_prompts import LAYOUT_SCHEMA
         llm=deepcopy(config.get('llm',{}));llm['schema_roles']=[]
         llm.setdefault('response_schemas',{})['vision']=LAYOUT_SCHEMA
@@ -251,13 +270,16 @@ class SimpleWorkflow:
         if interaction is not None:
             from .interactive import ManualClient,model_info
             self.client=ManualClient(self.client,interaction,info=lambda role,payload:model_info(raw,role,payload))
-        self.tools=tools or NativeSceneTools(config,self.trace,controller_owned=with_plc)
+        native_config=deepcopy(config)
+        if self.scene_verification!='legacy':native_config['factoryio']['capture_views']=['top','iso_a','iso_b']
+        self.tools=tools or NativeSceneTools(native_config,self.trace,controller_owned=with_plc)
         self.state={'schema_version':1,'framework':'simple','status':'created','phase':'scene_design','model_calls':0,
             'scene_revision':0,'plc_executed':False,'live_pipeline_passed':False,'started_at':utc_now()}
         self.state['execution_scope']='scene_and_plc' if with_plc else 'scene_only'
         self.state['started_from']=start_from
         self.state['execution_options']={'with_plc':with_plc,'keep_running':keep_running,'max_plc_repairs':max_plc_repairs,
             'runtime_seconds':runtime_seconds,'reset_mode':reset_mode,'start_local_services':start_local_services,'plc_mode':plc_mode}
+        self.state['execution_options'].update(scene_verification=self.scene_verification,max_view_retries=max_view_retries)
 
     def trace(self,event,**details):
         self.output.mkdir(parents=True,exist_ok=True)
@@ -292,6 +314,9 @@ class SimpleWorkflow:
             catalog=self.tools.catalog(self.output)
             self.state['template_sources']={s['id']:s['sha256'] for s in catalog['sources']}
             self.state['protocol_sha256']=canonical_hash(self.config['protocol'])
+            if self.scene_verification!='legacy':
+                from .scene_layout import run_layout
+                return run_layout(self,requirement,catalog,resume_source)
             if resume_source:
                 source=Path(resume_source).resolve();old=read_json(source/'run.json')
                 require(old.get('framework')=='simple','resume needs a simple-framework run')

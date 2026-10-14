@@ -1,0 +1,7 @@
+{
+  "verdict": "pass",
+  "summary": "0 anomalies reported; inspection complete.",
+  "inspection_complete": true,
+  "issues": [],
+  "verification_file": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-feed-fault-20261014-001/scene-001/verification.json"
+}

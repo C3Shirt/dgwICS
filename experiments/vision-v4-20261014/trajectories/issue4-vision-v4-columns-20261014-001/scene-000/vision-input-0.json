@@ -1,0 +1,515 @@
+{
+  "phase": "scene_visual",
+  "scene_overview": {
+    "goal": "构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。",
+    "process_description": "The independent user request describes this intended industrial arrangement: 构建两个独立立柱的静态布置：使用两个 Column，分开放置，保持可见间隔；不要放置输送带、供料器或移除器。此轮只检查布局与多视角图片，不运行 PLC。 Its explicit equipment and spatial objectives are listed below; no unspecified process stage is assumed. Equipment principles relevant to interpreting this scene: Column equipment: Metal structure typically used to hold an electric switchboard. Required collaboration and spatial objectives: 使用两个 Column 分开放置，保持可见间隔 不要放置输送带、供料器或移除器 This is an intended process and static arrangement, not proven material motion or PLC execution. Inspect functional regions in relation to support surfaces and paths, not merely whether housings appear nearby.",
+    "process_stages": [],
+    "required_equipment": [
+      {
+        "requirement_id": "REQ-COLUMN-001",
+        "role": null,
+        "selection_and_quantity": {
+          "equals": 2,
+          "prefab": "Column"
+        },
+        "source_requirement": "使用两个 Column"
+      },
+      {
+        "requirement_id": "REQ-NO-EQUIP-001",
+        "role": null,
+        "selection_and_quantity": {
+          "equals": 0,
+          "capability": "conveyor"
+        },
+        "source_requirement": "不要放置输送带、供料器或移除器"
+      },
+      {
+        "requirement_id": "REQ-NO-EQUIP-002",
+        "role": null,
+        "selection_and_quantity": {
+          "equals": 0,
+          "prefab": "Emitter"
+        },
+        "source_requirement": "不要放置输送带、供料器或移除器"
+      },
+      {
+        "requirement_id": "REQ-NO-EQUIP-003",
+        "role": null,
+        "selection_and_quantity": {
+          "equals": 0,
+          "prefab": "Remover"
+        },
+        "source_requirement": "不要放置输送带、供料器或移除器"
+      }
+    ],
+    "acceptance_scope": "static_layout_only; runtime requirements are deferred",
+    "background_basis": "independent requirements and sourced device knowledge; narrative adds no mandatory constraints"
+  },
+  "coordinate_system": {
+    "axis_order": [
+      "X",
+      "Y",
+      "Z"
+    ],
+    "vertical_axis": "Y",
+    "horizontal_axes": [
+      "X",
+      "Z"
+    ],
+    "grid_metres": 0.125,
+    "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125"
+  },
+  "objects": [
+    {
+      "id": "column-1",
+      "prefab": "Column",
+      "roles": [
+        "REQ-COLUMN-001"
+      ],
+      "task_role_source": "role bindings from design linked to independent requirements",
+      "function": "Metal structure typically used to hold an electric switchboard.",
+      "function_basis": "official_text",
+      "visual_identity": {
+        "appearance": null,
+        "distinctive_features": [],
+        "sources": [
+          {
+            "chapter_id": "parts:operators#column",
+            "url": "https://docs.factoryio.com/manual/parts/operators/#column"
+          }
+        ],
+        "identity_limit": "Same-prefab objects require labels or multi-view spatial evidence, not appearance alone."
+      },
+      "scene_file_configuration": [],
+      "configuration_source": "settings in confirmed loaded scene file; not independently read runtime configuration",
+      "native_presence": "confirmed",
+      "actual_pose": {
+        "position_grid": [
+          233,
+          8,
+          142
+        ],
+        "yaw_deg": 0.0,
+        "rotation_quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "fine_position": 0.0,
+        "fine_rotation": 0.0,
+        "source": "current native load receipt; actual state under inspection"
+      },
+      "native_spatial_state": {
+        "bounds_world_metres": {
+          "min": [
+            29.0,
+            0.0,
+            17.625
+          ],
+          "max": [
+            29.375,
+            2.0,
+            18.0
+          ]
+        },
+        "component_geometry_world": {},
+        "source": "current native load receipt",
+        "limitation": "Outer bounds and pivots are not proof of an active functional region.",
+        "missing_measurements": [
+          "Separate active functional-region geometry is not provided by this receipt."
+        ]
+      },
+      "expected_relations": [
+        {
+          "check_id": "REQ-COLUMN-001-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "使用两个 Column",
+          "predicate": "count",
+          "parameters": {
+            "equals": 2,
+            "prefab": "Column"
+          }
+        },
+        {
+          "check_id": "REQ-COLUMN-002-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "分开放置，保持可见间隔",
+          "predicate": "visual_relation",
+          "parameters": {
+            "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+          }
+        },
+        {
+          "check_id": "REQ-NO-EQUIP-001-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "不要放置输送带、供料器或移除器",
+          "predicate": "count",
+          "parameters": {
+            "equals": 0,
+            "capability": "conveyor"
+          }
+        },
+        {
+          "check_id": "REQ-NO-EQUIP-002-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "不要放置输送带、供料器或移除器",
+          "predicate": "count",
+          "parameters": {
+            "equals": 0,
+            "prefab": "Emitter"
+          }
+        },
+        {
+          "check_id": "REQ-NO-EQUIP-003-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "不要放置输送带、供料器或移除器",
+          "predicate": "count",
+          "parameters": {
+            "equals": 0,
+            "prefab": "Remover"
+          }
+        }
+      ]
+    },
+    {
+      "id": "column-2",
+      "prefab": "Column",
+      "roles": [
+        "REQ-COLUMN-001"
+      ],
+      "task_role_source": "role bindings from design linked to independent requirements",
+      "function": "Metal structure typically used to hold an electric switchboard.",
+      "function_basis": "official_text",
+      "visual_identity": {
+        "appearance": null,
+        "distinctive_features": [],
+        "sources": [
+          {
+            "chapter_id": "parts:operators#column",
+            "url": "https://docs.factoryio.com/manual/parts/operators/#column"
+          }
+        ],
+        "identity_limit": "Same-prefab objects require labels or multi-view spatial evidence, not appearance alone."
+      },
+      "scene_file_configuration": [],
+      "configuration_source": "settings in confirmed loaded scene file; not independently read runtime configuration",
+      "native_presence": "confirmed",
+      "actual_pose": {
+        "position_grid": [
+          243,
+          8,
+          142
+        ],
+        "yaw_deg": 0.0,
+        "rotation_quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "fine_position": 0.0,
+        "fine_rotation": 0.0,
+        "source": "current native load receipt; actual state under inspection"
+      },
+      "native_spatial_state": {
+        "bounds_world_metres": {
+          "min": [
+            30.25,
+            0.0,
+            17.625
+          ],
+          "max": [
+            30.625,
+            2.0,
+            18.0
+          ]
+        },
+        "component_geometry_world": {},
+        "source": "current native load receipt",
+        "limitation": "Outer bounds and pivots are not proof of an active functional region.",
+        "missing_measurements": [
+          "Separate active functional-region geometry is not provided by this receipt."
+        ]
+      },
+      "expected_relations": [
+        {
+          "check_id": "REQ-COLUMN-001-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "使用两个 Column",
+          "predicate": "count",
+          "parameters": {
+            "equals": 2,
+            "prefab": "Column"
+          }
+        },
+        {
+          "check_id": "REQ-COLUMN-002-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "分开放置，保持可见间隔",
+          "predicate": "visual_relation",
+          "parameters": {
+            "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+          }
+        },
+        {
+          "check_id": "REQ-NO-EQUIP-001-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "不要放置输送带、供料器或移除器",
+          "predicate": "count",
+          "parameters": {
+            "equals": 0,
+            "capability": "conveyor"
+          }
+        },
+        {
+          "check_id": "REQ-NO-EQUIP-002-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "不要放置输送带、供料器或移除器",
+          "predicate": "count",
+          "parameters": {
+            "equals": 0,
+            "prefab": "Emitter"
+          }
+        },
+        {
+          "check_id": "REQ-NO-EQUIP-003-1",
+          "subject_ids": [
+            "column-1",
+            "column-2"
+          ],
+          "reference_ids": [],
+          "description": "不要放置输送带、供料器或移除器",
+          "predicate": "count",
+          "parameters": {
+            "equals": 0,
+            "prefab": "Remover"
+          }
+        }
+      ]
+    }
+  ],
+  "expected_relations": [
+    {
+      "check_id": "REQ-COLUMN-001-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "description": "使用两个 Column",
+      "predicate": "count",
+      "parameters": {
+        "equals": 2,
+        "prefab": "Column"
+      }
+    },
+    {
+      "check_id": "REQ-COLUMN-002-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "description": "分开放置，保持可见间隔",
+      "predicate": "visual_relation",
+      "parameters": {
+        "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+      }
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-001-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "description": "不要放置输送带、供料器或移除器",
+      "predicate": "count",
+      "parameters": {
+        "equals": 0,
+        "capability": "conveyor"
+      }
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-002-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "description": "不要放置输送带、供料器或移除器",
+      "predicate": "count",
+      "parameters": {
+        "equals": 0,
+        "prefab": "Emitter"
+      }
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-003-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "description": "不要放置输送带、供料器或移除器",
+      "predicate": "count",
+      "parameters": {
+        "equals": 0,
+        "prefab": "Remover"
+      }
+    }
+  ],
+  "inspection_tasks": [
+    {
+      "check_id": "REQ-COLUMN-001-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "focus": "Compare visible equipment and functional regions with: 使用两个 Column",
+      "preferred_views": [
+        "top",
+        "iso_a",
+        "iso_b"
+      ]
+    },
+    {
+      "check_id": "REQ-COLUMN-002-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "focus": "Compare visible equipment and functional regions with: 分开放置，保持可见间隔",
+      "preferred_views": [
+        "top",
+        "iso_a",
+        "iso_b"
+      ]
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-001-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "focus": "Compare visible equipment and functional regions with: 不要放置输送带、供料器或移除器",
+      "preferred_views": [
+        "top",
+        "iso_a",
+        "iso_b"
+      ]
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-002-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "focus": "Compare visible equipment and functional regions with: 不要放置输送带、供料器或移除器",
+      "preferred_views": [
+        "top",
+        "iso_a",
+        "iso_b"
+      ]
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-003-1",
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "reference_ids": [],
+      "focus": "Compare visible equipment and functional regions with: 不要放置输送带、供料器或移除器",
+      "preferred_views": [
+        "top",
+        "iso_a",
+        "iso_b"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "image_id": "image-0-top",
+      "view_id": "top"
+    },
+    {
+      "image_id": "image-0-iso_a",
+      "view_id": "iso_a"
+    },
+    {
+      "image_id": "image-0-iso_b",
+      "view_id": "iso_b"
+    }
+  ],
+  "supported_views": [
+    "top",
+    "iso_a",
+    "iso_b"
+  ],
+  "output_contract": {
+    "inspection_complete": "boolean; true only after all tasks and views have been inspected",
+    "issues": [
+      {
+        "check_id": "supplied check ID or null for an unbound concern",
+        "status": "violated|unobservable",
+        "suspect_object_ids": [
+          "affected supplied IDs"
+        ],
+        "observation": "what the screenshots show",
+        "spatial_observation": "auxiliary measurement interpretation, or empty string",
+        "reason": "contradiction or missing evidence",
+        "repair_intent": "relational correction, or empty string",
+        "evidence_image_ids": [
+          "attached image IDs"
+        ],
+        "requested_view": null
+      }
+    ],
+    "no_anomaly_response": {
+      "inspection_complete": true,
+      "issues": []
+    }
+  },
+  "inspection_mode": "geometry_assisted"
+}

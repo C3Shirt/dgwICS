@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "scope": "native_object_registration",
+  "registration_checks_applied": true,
+  "spatial_checks_applied": false,
+  "measurements": [
+    {
+      "key": "3251311c-e618-5bad-b980-360d8a757a68",
+      "prefab": "Column",
+      "position_grid": [
+        233,
+        8,
+        142
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "fine_position": 0.0,
+      "fine_rotation": 0.0,
+      "bounds_world": {
+        "min": [
+          29.0,
+          0.0,
+          17.625
+        ],
+        "max": [
+          29.375,
+          2.0,
+          18.0
+        ]
+      },
+      "component_geometry": {},
+      "native_registered": true,
+      "id": "column-1"
+    },
+    {
+      "key": "02dd59de-4099-5d9e-986c-9fce196381be",
+      "prefab": "Column",
+      "position_grid": [
+        243,
+        8,
+        142
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "fine_position": 0.0,
+      "fine_rotation": 0.0,
+      "bounds_world": {
+        "min": [
+          30.25,
+          0.0,
+          17.625
+        ],
+        "max": [
+          30.625,
+          2.0,
+          18.0
+        ]
+      },
+      "component_geometry": {},
+      "native_registered": true,
+      "id": "column-2"
+    }
+  ],
+  "issues": [],
+  "limitations": [
+    "Native registration checks object presence and occupied cells; task-specific physical layout is reviewed from images."
+  ]
+}

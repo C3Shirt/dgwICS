@@ -1,0 +1,41 @@
+{
+  "framework": "simple",
+  "interface": "cli",
+  "framework_source_storage": "hashes_only",
+  "execution_options": {
+    "with_plc": false,
+    "keep_running": false,
+    "max_plc_repairs": 2,
+    "runtime_seconds": 30,
+    "reset_mode": "warm",
+    "start_local_services": false,
+    "plc_mode": "run",
+    "scene_verification": "relations",
+    "max_view_retries": 1
+  },
+  "started_from": "scene",
+  "source_hashes": {
+    "factoryio_agents\\simple.py": "57531e44c378bc99658ee4930e53e61709ea4be6a2f8cc3401667a0105c63062",
+    "factoryio_agents\\simple_prompts.py": "46dcd4a0e6514e196c11408b91a890200d94c8dabdf23ad3dac74df3b00750cd",
+    "factoryio_agents\\simple_cli.py": "272b2d7b7fc549cc0c70594c4194ccadc4a917ba15d721ea12ee9bd6d4875667",
+    "factoryio_agents\\simple_plc.py": "48f0953d1867680f1d2f4ec3afee66d75390c97b2e32a14ed8e16f5d75d162d8",
+    "factoryio_agents\\simple_runtime.py": "fbe4601fd88a7ea438861d9df9c9805cb1491b187015c22470c24f87bcdea03a",
+    "factoryio_agents\\scene.py": "ab688e4fcff833dcec590c6ef5f3294295dd9a27ecacc70df8e67759a8a05fa8",
+    "factoryio_agents\\geometry_tools.py": "96cb1cc28a3ff86078f0900db4f805ebf6c0358f6408ad06f24a0631264a1c9b",
+    "factoryio_agents\\runtime.py": "8509b411c9ca6da5f7bd7c21ae1139d427f6b0f02d5026dc1e3e4d612c5a134d",
+    "factoryio_agents\\plc.py": "f1cb09bb6ebe8a06bff3891b2c69ca86e9d22dd8d2ac168e2f464f836976e7e4",
+    "factoryio_agents\\plc_scaffold.py": "5b2b92b7a9ea72a0d5532ff0d02c22d868b2d069a1a37301a4fd06bd8f4c621a",
+    "factoryio_agents\\binding_tools.py": "5137b5f227ba61af03e5876f862c120f2c83fa2acf939cc3d7954cec41e2c3e0",
+    "factoryio_agents\\synchronized_runtime.py": "8dfe86a70cf041144fac1f04ccef91d26cd18d1895889f6d7880d346ddd3c600",
+    "factoryio_agents\\codesys_bridge.py": "a03ed4c9bb7ad2e0ce5e7c58d389dbc7cadfdd73a962c584c64f5e3184550610",
+    "tools\\factoryio_bridge\\workflow_hook.py": "8e3bb44d29e0a116c285bfd40c0e0082f64dc50f6fc2b95de27c1957b0dc99ff",
+    "tools\\factoryio_bridge\\AgentBridge.cs": "a667e301c4c2ba03a29e26ae0add960b20086040d2285e3c432be3ecbd6cc5ae",
+    "factoryio_agents\\scene_spec.py": "880d177bb069b9ca84ef7dd7ba1f83422338b5959bc8ca68709a76801b63e1a4",
+    "factoryio_agents\\scene_verifier.py": "5e78739269145919ce51eb3331ec52f2f645091f98d1e6452434a282cc86b197",
+    "factoryio_agents\\scene_visual.py": "fd1644fa4d3a77331e8d56c6f67c5da3472b511fdaae803ad613dd4fafe724a9",
+    "factoryio_agents\\scene_layout.py": "bbaca3d0ad3b853c2febed2bba982e64037fa3928f38a001228533a46bc489c2",
+    "factoryio_agents\\scene_context.py": "6001845db90cd3abe57975330b6f7563ea70f42d230281ca752718ecd613e2e2",
+    "factoryio_agents\\scene_experiments.py": "4370e3347fb034fe1b32a1be5287c4d54285f98916eebd0b0c60abcc092df164",
+    "factoryio_agents\\scene_benchmark.py": "7cce7ac5522b92e10f63913f0c5c552f5703f724f26e42478e4c92f96c542960"
+  }
+}

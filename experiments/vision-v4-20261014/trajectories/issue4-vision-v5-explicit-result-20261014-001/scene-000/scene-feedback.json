@@ -1,0 +1,7 @@
+{
+  "verdict": "pass",
+  "summary": "Layout correct.",
+  "inspection_complete": true,
+  "issues": [],
+  "verification_file": "experiments/vision-v4-20261014/trajectories/issue4-vision-v5-explicit-result-20261014-001\\scene-000\\verification.json"
+}

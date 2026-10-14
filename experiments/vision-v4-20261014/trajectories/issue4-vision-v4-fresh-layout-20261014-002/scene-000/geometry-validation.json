@@ -1,0 +1,138 @@
+{
+  "passed": true,
+  "scope": "native_object_registration",
+  "registration_checks_applied": true,
+  "spatial_checks_applied": false,
+  "measurements": [
+    {
+      "key": "2bf5235a-c170-5f1e-bbff-9c488db0ccc5",
+      "prefab": "BeltConveyor2M",
+      "position_grid": [
+        238,
+        3,
+        138
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "fine_position": 0.0,
+      "fine_rotation": 0.0,
+      "bounds_world": {
+        "min": [
+          29.375,
+          0.0,
+          16.25
+        ],
+        "max": [
+          30.25,
+          1.0,
+          18.25
+        ]
+      },
+      "component_geometry": {
+        "conveyor": {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "default_speed_metres_per_second": 0.6,
+          "surface_bounds": {
+            "min": [
+              29.3753242,
+              0.00173339248,
+              16.2504768
+            ],
+            "max": [
+              30.2496758,
+              0.9992666,
+              18.2495232
+            ]
+          },
+          "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+        }
+      },
+      "native_registered": true,
+      "id": "conveyor-1"
+    },
+    {
+      "key": "3eb2929c-7d61-5ac8-bea4-13a262ddf193",
+      "prefab": "Emitter",
+      "position_grid": [
+        238,
+        9,
+        134
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "fine_position": 0.0,
+      "fine_rotation": 0.0,
+      "bounds_world": {
+        "min": [
+          29.375,
+          1.0,
+          16.25
+        ],
+        "max": [
+          30.25,
+          1.5,
+          17.375
+        ]
+      },
+      "component_geometry": {
+        "emitter": {
+          "origin": [
+            29.8125,
+            1.0625,
+            16.8125
+          ]
+        }
+      },
+      "native_registered": true,
+      "id": "feeder-1"
+    },
+    {
+      "key": "b8123710-a80c-5bf3-a474-2d065a508a5a",
+      "prefab": "Remover",
+      "position_grid": [
+        238,
+        9,
+        150
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "fine_position": 0.0,
+      "fine_rotation": 0.0,
+      "bounds_world": {
+        "min": [
+          29.375,
+          1.0,
+          18.25
+        ],
+        "max": [
+          30.25,
+          1.5,
+          19.375
+        ]
+      },
+      "component_geometry": {},
+      "native_registered": true,
+      "id": "remover-1"
+    }
+  ],
+  "issues": [],
+  "limitations": [
+    "Native registration checks object presence and occupied cells; task-specific physical layout is reviewed from images."
+  ]
+}

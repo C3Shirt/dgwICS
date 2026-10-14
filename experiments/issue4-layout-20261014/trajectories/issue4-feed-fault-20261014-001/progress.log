@@ -1,0 +1,26 @@
+[10:50:28] 工具 / 读取部件几何 · tool_requested
+  工具：factoryio_bridge；操作：read_prefab_geometry
+[10:50:29] 工具 / 读取部件几何 · tool_completed
+  工具：factoryio_bridge；操作：read_prefab_geometry
+[10:50:29] 工具 / scene_design · artifact_reused
+[10:50:29] 工具 / scene_design · experiment_fault_injected
+[10:50:29] 工具 / scene_checks · tool_requested
+  工具：scene_verifier；操作：prebuild_checks
+[10:50:29] 工具 / scene_checks · tool_completed
+  工具：scene_verifier；操作：prebuild_checks
+[10:50:29] 工具 / scene_load · tool_requested
+  工具：factoryio_bridge；操作：load
+[10:50:29] 工具 / scene_load · tool_completed
+  工具：factoryio_bridge；操作：load
+[10:50:29] 工具 / scene_capture · tool_requested
+  工具：factoryio_bridge；操作：capture_views
+[10:50:34] 工具 / scene_capture · tool_completed
+  工具：factoryio_bridge；操作：capture_views
+[10:50:34] Agent3 视觉 / scene_visual · 模型请求 #1 开始
+  本次使用图片：3 张
+[10:50:34] Agent3 视觉 / scene_visual · 服务 AliyunLLM / qwen3.8-flash，流式接收
+[10:50:40] Agent3 视觉 / scene_visual · 服务已响应，正在接收
+[10:50:40] Agent3 视觉 / scene_visual · 模型调用失败
+  原因：vision model response must be object
+[10:50:40] 工具 / scene_visual · needs_attention
+  原因：vision model response must be object

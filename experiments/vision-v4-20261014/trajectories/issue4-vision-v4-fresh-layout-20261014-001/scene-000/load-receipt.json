@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "request_id": "bab473cebb3042cdb5c0d0acb90fde77",
+  "scene_path": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-fresh-layout-20261014-001/scene-000/scene.factoryio",
+  "scene_sha256": "afa30e2663caf778f366f45eef78100612c60ab101ac4af7ea47136500a7c252",
+  "versions": {
+    "scene": "afa30e2663caf778f366f45eef78100612c60ab101ac4af7ea47136500a7c252",
+    "io": "bed296b0a292908411e4ff90d4eda4084c8d3a83b8600905588063ec9205ef8b"
+  },
+  "software_load_confirmed": true,
+  "confirmation_method": "Scene.Load -> deferred ExecuteLoad -> CurrentSceneInfo; settled frames",
+  "confirmed_at": "2026-10-14T08:54:30.6506349Z",
+  "bridge_request_id": "9fc255e2ea0341729048b397e485d402",
+  "bridge_response_path": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-fresh-layout-20261014-001/scene-000/load-receipt.bridge-response.json",
+  "bridge_response_sha256": "5ed1b8fc1e844179dd26cd98021b9ee3d542c9840022a5eac16cec5e7882ad6a",
+  "assembly_sha256": "1fc9429d6ddb2ac6f2285e8ab43f5116a26b03e06dfd33a5f6a1a5345636f2ff",
+  "app_version": "2.5.8",
+  "object_reconciliation": {
+    "passed": true,
+    "issues": [],
+    "expected_count": 3,
+    "actual_count": 3
+  },
+  "native_geometry": {
+    "coordinate_units": "native_world",
+    "objects": [
+      {
+        "key": "2bf5235a-c170-5f1e-bbff-9c488db0ccc5",
+        "prefab": "BeltConveyor2M",
+        "position_grid": [
+          238,
+          3,
+          138
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "fine_position": 0.0,
+        "fine_rotation": 0.0,
+        "bounds_world": {
+          "min": [
+            29.375,
+            0.0,
+            16.25
+          ],
+          "max": [
+            30.25,
+            1.0,
+            18.25
+          ]
+        },
+        "component_geometry": {
+          "conveyor": {
+            "direction": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "default_speed_metres_per_second": 0.6,
+            "surface_bounds": {
+              "min": [
+                29.3753242,
+                0.00173339248,
+                16.2504768
+              ],
+              "max": [
+                30.2496758,
+                0.9992666,
+                18.2495232
+              ]
+            },
+            "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+          }
+        },
+        "native_registered": true
+      },
+      {
+        "key": "3eb2929c-7d61-5ac8-bea4-13a262ddf193",
+        "prefab": "Emitter",
+        "position_grid": [
+          238,
+          9,
+          134
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "fine_position": 0.0,
+        "fine_rotation": 0.0,
+        "bounds_world": {
+          "min": [
+            29.375,
+            1.0,
+            16.25
+          ],
+          "max": [
+            30.25,
+            1.5,
+            17.375
+          ]
+        },
+        "component_geometry": {
+          "emitter": {
+            "origin": [
+              29.8125,
+              1.0625,
+              16.8125
+            ]
+          }
+        },
+        "native_registered": true
+      },
+      {
+        "key": "b8123710-a80c-5bf3-a474-2d065a508a5a",
+        "prefab": "Remover",
+        "position_grid": [
+          238,
+          9,
+          150
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "fine_position": 0.0,
+        "fine_rotation": 0.0,
+        "bounds_world": {
+          "min": [
+            29.375,
+            1.0,
+            18.25
+          ],
+          "max": [
+            30.25,
+            1.5,
+            19.375
+          ]
+        },
+        "component_geometry": {},
+        "native_registered": true
+      }
+    ],
+    "coordinate_system": {
+      "grid_metres": 0.125,
+      "axis_order": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "vertical_axis": "Y",
+      "horizontal_axes": [
+        "X",
+        "Z"
+      ],
+      "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125",
+      "evidence": "Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld"
+    },
+    "world_bounds": {
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        59.625,
+        9.0,
+        35.625
+      ],
+      "grid_dimensions": [
+        477,
+        72,
+        285
+      ],
+      "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+    },
+    "bridge": {
+      "protocol": "factoryio-agent-file-bridge/1",
+      "geometry_version": 2,
+      "bridge_sha256": "3eff062fecc9720a23bc65294d1a61ac8269cf635bdc2acfb8ea2acd1b75e387"
+    }
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "schema_version": 1,
+  "source_run": "experiments/issue4-layout-20261014/trajectories/issue4-feed-fault-20261014-002",
+  "source_scene_dir": "experiments/issue4-layout-20261014/trajectories/issue4-feed-fault-20261014-002\\scene-000",
+  "scene_sha256": "0de1cea16c15955a7b4711b9fa538562fd5a35786659ea02366e65c21bae0867",
+  "variants": {
+    "A_single_view": {
+      "review": {
+        "verdict": "repair",
+        "summary": "The layout shows a straight-line conveyor with an emitter upstream and a remover downstream, but the physical alignment is incorrect. The emitter's dashed volume is positioned on the floor to the left of the conveyor's start, rather than above the belt surface. Similarly, the remover's volume is located to the right of the conveyor end, failing to cover the extension path where items would travel.",
+        "findings": [
+          {
+            "object_ids": [
+              "emitter1"
+            ],
+            "status": "issue",
+            "observed": "The emitter (white box with green arrow) and its dashed emission volume are situated on the ground plane, offset significantly to the left of the conveyor's starting point.",
+            "reason": "Items emitted will fall onto the floor instead of landing on the conveyor's carrying surface, preventing transport.",
+            "suggestion": "Move the emitter so that its dashed volume is centered directly above the upstream end of the conveyor belt.",
+            "image_ids": [
+              "image-0-iso_a"
+            ]
+          },
+          {
+            "object_ids": [
+              "remover1"
+            ],
+            "status": "issue",
+            "observed": "The remover (orange/white box) and its dashed removal volume are positioned on the ground to the right of the conveyor's exit, separated from the belt's path.",
+            "reason": "Items traveling off the conveyor will not intersect the removal volume, causing them to accumulate on the floor instead of being removed.",
+            "suggestion": "Position the remover at the downstream end of the conveyor, ensuring the dashed volume covers the area immediately following the belt's edge.",
+            "image_ids": [
+              "image-0-iso_a"
+            ]
+          }
+        ]
+      },
+      "input_image_ids": [
+        "image-0-iso_a"
+      ],
+      "model_calls": 1
+    },
+    "A_multi_view": {
+      "review": {
+        "verdict": "repair",
+        "summary": "The scene layout has significant spatial errors: the emitter (feeder) is not positioned above the upstream carrying surface of the conveyor, and the remover does not cover the downstream extension path. Instead, both auxiliary components are located off to the sides of the conveyor belt.",
+        "findings": [
+          {
+            "object_ids": [
+              "emitter1"
+            ],
+            "status": "issue",
+            "observed": "In the top-down view (image-0-top), the dashed emission volume of the emitter is clearly separated from the left edge of the conveyor belt. In the iso views (image-0-iso_a, image-0-iso_b), the emitter sits on the floor beside the belt rather than hovering over the receiving surface.",
+            "reason": "The requirement specifies that the feeder must be located above the upstream carrying surface. Currently, emitted items would fall onto the floor next to the conveyor instead of landing on it.",
+            "suggestion": "Move the emitter horizontally so its center aligns with the upstream end of the conveyor belt, and raise it vertically so its emission volume hovers directly above the belt's surface.",
+            "image_ids": [
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ]
+          },
+          {
+            "object_ids": [
+              "remover1"
+            ],
+            "status": "issue",
+            "observed": "In the top-down view (image-0-top), the dashed removal volume of the remover is offset to the right of the conveyor's downstream end. The iso views confirm it is placed on the floor alongside the belt exit rather than at the terminus.",
+            "reason": "The requirement states the remover must cover the downstream extension path. As positioned, items traveling along the belt would bypass the removal zone entirely.",
+            "suggestion": "Translate the remover so that its volume overlaps the end of the conveyor belt and extends downstream along the item travel path.",
+            "image_ids": [
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ]
+          }
+        ]
+      },
+      "input_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "model_calls": 1
+    },
+    "B_dynamic_relations": {
+      "review": {
+        "global_review": {
+          "status": "violated",
+          "summary": "The scene contains the required components (one conveyor, one feeder, and one remover). However, the spatial layout is incorrect. The feeder is placed on the floor to the side of the conveyor's upstream end rather than above the carrying surface. Similarly, the remover is placed on the floor to the side of the downstream end, failing to cover the item path.",
+          "image_ids": [
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ],
+          "findings": [
+            {
+              "object_ids": [
+                "emitter1"
+              ],
+              "image_ids": [
+                "image-0-top",
+                "image-0-iso_a",
+                "image-0-iso_b"
+              ],
+              "observed": "The emitter is located at ground level, separated horizontally from the conveyor structure.",
+              "reason": "The requirement states the feeder must be 'above' the upstream carrying surface to drop items onto it. The current placement prevents this function.",
+              "repair_intent": "Move the emitter so its emission volume intersects with or is directly above the belt surface at the start of the conveyor.",
+              "status": "violated",
+              "requirement_ids": [
+                "REQ-FEEDER-ABOVE-CONVEYOR"
+              ]
+            },
+            {
+              "object_ids": [
+                "remover1"
+              ],
+              "image_ids": [
+                "image-0-top",
+                "image-0-iso_a",
+                "image-0-iso_b"
+              ],
+              "observed": "The remover is located at ground level, positioned to the side of the conveyor's end.",
+              "reason": "The requirement states the remover must 'cover' the downstream extension path. Being off to the side means items traveling along the belt will not intersect the removal volume.",
+              "repair_intent": "Move the remover so its volume overlaps the trajectory of items leaving the conveyor end.",
+              "status": "violated",
+              "requirement_ids": [
+                "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+              ]
+            }
+          ]
+        },
+        "check_results": [
+          {
+            "object_ids": [
+              "emitter1",
+              "conveyor1"
+            ],
+            "image_ids": [
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ],
+            "observed": "In the top view (image-0-top), the dashed box of the emitter is clearly separate from the dark rectangle of the conveyor belt. In the iso views, the emitter sits on the floor next to the conveyor legs.",
+            "reason": "The feeder is not positioned above the conveyor; it is beside it on the floor.",
+            "repair_intent": "Reposition the emitter to be physically above the belt's upstream end.",
+            "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+            "relation_ids": [],
+            "status": "violated",
+            "requested_view": null
+          },
+          {
+            "object_ids": [
+              "remover1",
+              "conveyor1"
+            ],
+            "image_ids": [
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ],
+            "observed": "The remover is located on the floor adjacent to the conveyor's downstream end. It does not align with the direction of the belt.",
+            "reason": "The remover fails to cover the downstream path because it is offset laterally from the belt's trajectory.",
+            "repair_intent": "Align the remover with the centerline of the conveyor at the discharge point.",
+            "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+            "relation_ids": [],
+            "status": "violated",
+            "requested_view": null
+          }
+        ]
+      },
+      "input_image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "model_calls": 1
+    },
+    "C_geometry_fusion": {
+      "review": {
+        "status": "violated",
+        "checks": [
+          {
+            "check_id": "REQ-COUNT-CONVEYOR-1",
+            "status": "satisfied",
+            "checker": "native_geometry",
+            "object_ids": [
+              "conveyor1"
+            ],
+            "observed": {
+              "count": 1
+            },
+            "expected": {
+              "equals": 1,
+              "capability": "conveyor"
+            },
+            "evidence_ids": [
+              "load-6fccb0692b01431397b92b96420d29fe"
+            ],
+            "reason": "Object-role count compared with independent requirement.",
+            "missing_capability": null
+          },
+          {
+            "check_id": "REQ-COUNT-FEEDER-1",
+            "status": "satisfied",
+            "checker": "native_geometry",
+            "object_ids": [
+              "emitter1"
+            ],
+            "observed": {
+              "count": 1
+            },
+            "expected": {
+              "equals": 1,
+              "prefab": "Emitter"
+            },
+            "evidence_ids": [
+              "load-6fccb0692b01431397b92b96420d29fe"
+            ],
+            "reason": "Object-role count compared with independent requirement.",
+            "missing_capability": null
+          },
+          {
+            "check_id": "REQ-COUNT-REMOVER-1",
+            "status": "satisfied",
+            "checker": "native_geometry",
+            "object_ids": [
+              "remover1"
+            ],
+            "observed": {
+              "count": 1
+            },
+            "expected": {
+              "equals": 1,
+              "prefab": "Remover"
+            },
+            "evidence_ids": [
+              "load-6fccb0692b01431397b92b96420d29fe"
+            ],
+            "reason": "Object-role count compared with independent requirement.",
+            "missing_capability": null
+          },
+          {
+            "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+            "status": "violated",
+            "checker": "geometry_and_visual",
+            "object_ids": [
+              "emitter1",
+              "conveyor1"
+            ],
+            "observed": null,
+            "expected": {
+              "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+            },
+            "evidence_ids": [
+              "load-6fccb0692b01431397b92b96420d29fe",
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ],
+            "reason": "The feeder is not positioned above the conveyor; it is beside it on the floor.",
+            "missing_capability": null
+          },
+          {
+            "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+            "status": "violated",
+            "checker": "geometry_and_visual",
+            "object_ids": [
+              "remover1",
+              "conveyor1"
+            ],
+            "observed": null,
+            "expected": {
+              "question": "Does the remover cover the downstream extension path of the conveyor?"
+            },
+            "evidence_ids": [
+              "load-6fccb0692b01431397b92b96420d29fe",
+              "image-0-top",
+              "image-0-iso_a",
+              "image-0-iso_b"
+            ],
+            "reason": "The remover fails to cover the downstream path because it is offset laterally from the belt's trajectory.",
+            "missing_capability": null
+          },
+          {
+            "check_id": "G-registration",
+            "status": "satisfied",
+            "checker": "native_geometry",
+            "object_ids": [
+              "conveyor1",
+              "emitter1",
+              "remover1"
+            ],
+            "observed": {
+              "failed_object_ids": []
+            },
+            "expected": {},
+            "evidence_ids": [
+              "load-6fccb0692b01431397b92b96420d29fe"
+            ],
+            "reason": "Actual voxel object registration.",
+            "missing_capability": null
+          }
+        ],
+        "coverage": {
+          "REQ-COUNT-CONVEYOR": [
+            "REQ-COUNT-CONVEYOR-1"
+          ],
+          "REQ-COUNT-FEEDER": [
+            "REQ-COUNT-FEEDER-1"
+          ],
+          "REQ-COUNT-REMOVER": [
+            "REQ-COUNT-REMOVER-1"
+          ],
+          "REQ-FEEDER-ABOVE-CONVEYOR": [
+            "REQ-FEEDER-ABOVE-CONVEYOR-1"
+          ],
+          "REQ-REMOVER-COVERS-DOWNSTREAM-PATH": [
+            "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1"
+          ]
+        },
+        "registration_passed": true,
+        "static_requirements_covered": false,
+        "scope": "finite static scene evidence; no PLC or actual material transport acceptance",
+        "global_review": {
+          "status": "violated",
+          "summary": "The scene contains the required components (one conveyor, one feeder, and one remover). However, the spatial layout is incorrect. The feeder is placed on the floor to the side of the conveyor's upstream end rather than above the carrying surface. Similarly, the remover is placed on the floor to the side of the downstream end, failing to cover the item path.",
+          "image_ids": [
+            "image-0-top",
+            "image-0-iso_a",
+            "image-0-iso_b"
+          ],
+          "findings": [
+            {
+              "object_ids": [
+                "emitter1"
+              ],
+              "image_ids": [
+                "image-0-top",
+                "image-0-iso_a",
+                "image-0-iso_b"
+              ],
+              "observed": "The emitter is located at ground level, separated horizontally from the conveyor structure.",
+              "reason": "The requirement states the feeder must be 'above' the upstream carrying surface to drop items onto it. The current placement prevents this function.",
+              "repair_intent": "Move the emitter so its emission volume intersects with or is directly above the belt surface at the start of the conveyor.",
+              "status": "violated",
+              "requirement_ids": [
+                "REQ-FEEDER-ABOVE-CONVEYOR"
+              ]
+            },
+            {
+              "object_ids": [
+                "remover1"
+              ],
+              "image_ids": [
+                "image-0-top",
+                "image-0-iso_a",
+                "image-0-iso_b"
+              ],
+              "observed": "The remover is located at ground level, positioned to the side of the conveyor's end.",
+              "reason": "The requirement states the remover must 'cover' the downstream extension path. Being off to the side means items traveling along the belt will not intersect the removal volume.",
+              "repair_intent": "Move the remover so its volume overlaps the trajectory of items leaving the conveyor end.",
+              "status": "violated",
+              "requirement_ids": [
+                "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+              ]
+            }
+          ]
+        }
+      },
+      "model_calls": 0,
+      "observation_source": "reuse B exactly, isolating geometry fusion from model randomness"
+    }
+  },
+  "ground_truth_status": "pending independent review",
+  "accuracy_metrics": null,
+  "limitations": [
+    "No detection/false-positive rates without reviewed ground truth.",
+    "This comparison replays captured evidence; it does not reload or repair a scene."
+  ],
+  "source_hashes": {
+    "scene-000\\requirement-spec.json": "66a61e30e7667a95ca40ea6765f5fe36bcd1769e07028d565ece274da13fccdc",
+    "scene-000\\design.json": "112ed2741212e7e54cc3b89adfb3871f4dcb83e4d2be61b2053e3b7f96c5065d",
+    "scene-000\\scene-plan.json": "41f8f81af0302911d78f6b7dddd574e9c855e3ca5c719986959f70d20d510482",
+    "scene-000\\visual\\evidence.json": "ca300d58d51ea44f8d74e7b493f2d2bae0fc20dd46e56b610a07be55ff144e0d"
+  }
+}

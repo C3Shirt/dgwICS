@@ -1,0 +1,48 @@
+{
+  "scene_id": "static_inspection_line",
+  "base_source_id": "source-6862ca46dbe17012078c",
+  "objects": [
+    {
+      "id": "conveyor1",
+      "template_id": "source-6862ca46dbe17012078c/object/24",
+      "position": [
+        238,
+        3,
+        140
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "conveyor1 0"
+      }
+    },
+    {
+      "id": "emitter1",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/18",
+      "position": [
+        253,
+        9,
+        124
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "emitter1 0"
+      }
+    },
+    {
+      "id": "remover1",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/19",
+      "position": [
+        238,
+        9,
+        160
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "remover1 0"
+      }
+    }
+  ]
+}

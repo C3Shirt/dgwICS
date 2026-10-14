@@ -33,7 +33,7 @@ class SimpleFrameworkTests(unittest.TestCase):
                 'component_geometry_local':{'conveyor':{'direction':[0,0,1],'surface_bounds':{'min':[-.5,-.3,-3],'max':[.5,.3,3]}}}},
             'Emitter':{'bounds_local_metres':{'min':[-.4,-.2,-.5],'max':[.4,.3,.5]},
                 'component_geometry_local':{'emitter':{'origin':[0,-.125,0]}}}}}
-        self.config={'llm':{},'protocol':{'name':'modbus_tcp','factoryio_role':'client','plc_role':'server','host':'127.0.0.1','port':502,'unit_id':1},
+        self.config={'scene_verification':'legacy','llm':{},'protocol':{'name':'modbus_tcp','factoryio_role':'client','plc_role':'server','host':'127.0.0.1','port':502,'unit_id':1},
             'scene_sources':[str(self.source)],'factoryio':{},'training':{'enabled':True}}
 
     def module(self):

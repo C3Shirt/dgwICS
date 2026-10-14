@@ -1,0 +1,404 @@
+{
+  "status": "violated",
+  "checks": [
+    {
+      "check_id": "REQ-COUNT-CONVEYOR-1",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "conveyor1"
+      ],
+      "observed": {
+        "count": 1
+      },
+      "expected": {
+        "equals": 1,
+        "capability": "conveyor"
+      },
+      "evidence_ids": [
+        "load-679d2ef01720477db6e0f9412b050563"
+      ],
+      "reason": "Object-role count compared with independent requirement.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-COUNT-CONVEYOR-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1,
+          "capability": "conveyor"
+        },
+        "evidence_ids": [
+          "load-679d2ef01720477db6e0f9412b050563"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-COUNT-CONVEYOR-1",
+        "status": "satisfied",
+        "object_ids": [
+          "conveyor1"
+        ],
+        "relation_ids": [],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-iso_b",
+          "image-0-top"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "REQ-COUNT-FEEDER-1",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "emitter1"
+      ],
+      "observed": {
+        "count": 1
+      },
+      "expected": {
+        "equals": 1,
+        "prefab": "Emitter"
+      },
+      "evidence_ids": [
+        "load-679d2ef01720477db6e0f9412b050563"
+      ],
+      "reason": "Object-role count compared with independent requirement.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-COUNT-FEEDER-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "emitter1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1,
+          "prefab": "Emitter"
+        },
+        "evidence_ids": [
+          "load-679d2ef01720477db6e0f9412b050563"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-COUNT-FEEDER-1",
+        "status": "satisfied",
+        "object_ids": [
+          "emitter1"
+        ],
+        "relation_ids": [],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-iso_b",
+          "image-0-top"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "REQ-COUNT-REMOVER-1",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "remover1"
+      ],
+      "observed": {
+        "count": 1
+      },
+      "expected": {
+        "equals": 1,
+        "prefab": "Remover"
+      },
+      "evidence_ids": [
+        "load-679d2ef01720477db6e0f9412b050563"
+      ],
+      "reason": "Object-role count compared with independent requirement.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-COUNT-REMOVER-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "remover1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1,
+          "prefab": "Remover"
+        },
+        "evidence_ids": [
+          "load-679d2ef01720477db6e0f9412b050563"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-COUNT-REMOVER-1",
+        "status": "satisfied",
+        "object_ids": [
+          "remover1"
+        ],
+        "relation_ids": [],
+        "image_ids": [
+          "image-0-iso_a",
+          "image-0-iso_b",
+          "image-0-top"
+        ],
+        "observed": "No anomaly reported.",
+        "reason": "Implicit absence of reported anomaly, not a per-check model observation.",
+        "repair_intent": "",
+        "requested_view": null,
+        "spatial_observation": "",
+        "evidence_basis": "complete_inspection_no_reported_issue"
+      }
+    },
+    {
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "status": "violated",
+      "checker": "visual",
+      "object_ids": [
+        "emitter1"
+      ],
+      "observed": null,
+      "expected": {
+        "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+      },
+      "evidence_ids": [
+        "load-679d2ef01720477db6e0f9412b050563",
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "reason": "The requirement states the feeder must be located above the upstream carrying surface, but it is currently placed on the floor beside the conveyor path.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+        "status": "unknown",
+        "checker": "native_geometry",
+        "object_ids": [
+          "emitter1",
+          "conveyor1"
+        ],
+        "observed": null,
+        "expected": {
+          "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+        },
+        "evidence_ids": [
+          "load-679d2ef01720477db6e0f9412b050563"
+        ],
+        "reason": "This requested relation requires visual evidence.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+        "status": "violated",
+        "object_ids": [
+          "emitter1"
+        ],
+        "relation_ids": [
+          "rel1"
+        ],
+        "image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ],
+        "observed": "The feeder's dashed emission volume is positioned entirely to the side of the conveyor belt. It does not intersect with or sit above the carrying surface where items would land.",
+        "reason": "The requirement states the feeder must be located above the upstream carrying surface, but it is currently placed on the floor beside the conveyor path.",
+        "repair_intent": "Move the feeder horizontally so its emission volume is directly centered over the upstream end of the conveyor belt.",
+        "requested_view": null,
+        "spatial_observation": "The conveyor spans from X=29.375 to 30.25 and Z=15.5 to 19.5. The feeder's bounds are at X=31.25 to 32.125, placing it approximately 1 meter laterally away from the conveyor's edge.",
+        "evidence_basis": "reported_visual_issue"
+      }
+    },
+    {
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "status": "violated",
+      "checker": "visual",
+      "object_ids": [
+        "remover1"
+      ],
+      "observed": null,
+      "expected": {
+        "question": "Does the remover cover the downstream extension path of the conveyor?"
+      },
+      "evidence_ids": [
+        "load-679d2ef01720477db6e0f9412b050563",
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "reason": "The requirement specifies that the remover must cover the downstream extension path; currently, it is displaced laterally and would miss items traveling in a straight line off the belt.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+        "status": "unknown",
+        "checker": "native_geometry",
+        "object_ids": [
+          "remover1",
+          "conveyor1"
+        ],
+        "observed": null,
+        "expected": {
+          "question": "Does the remover cover the downstream extension path of the conveyor?"
+        },
+        "evidence_ids": [
+          "load-679d2ef01720477db6e0f9412b050563"
+        ],
+        "reason": "This requested relation requires visual evidence.",
+        "missing_capability": null
+      },
+      "visual_result": {
+        "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+        "status": "violated",
+        "object_ids": [
+          "remover1"
+        ],
+        "relation_ids": [
+          "rel2"
+        ],
+        "image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ],
+        "observed": "The remover's volume is offset to the left of the conveyor's downstream exit point (relative to the flow direction). It does not cover the straight extension path of the belt.",
+        "reason": "The requirement specifies that the remover must cover the downstream extension path; currently, it is displaced laterally and would miss items traveling in a straight line off the belt.",
+        "repair_intent": "Align the remover's volume with the central axis of the conveyor's downstream extension.",
+        "requested_view": null,
+        "spatial_observation": "The conveyor ends at Z=19.5. While the remover starts at this Z-depth, its X-position is shifted to [29.375, 30.25] while the emitter and the general alignment suggest a deviation from the center line or an incorrect lateral placement relative to the intended 'straight' transport layout.",
+        "evidence_basis": "reported_visual_issue"
+      }
+    },
+    {
+      "check_id": "G-registration",
+      "status": "satisfied",
+      "checker": "native_geometry",
+      "object_ids": [
+        "conveyor1",
+        "emitter1",
+        "remover1"
+      ],
+      "observed": {
+        "failed_object_ids": []
+      },
+      "expected": {},
+      "evidence_ids": [
+        "load-679d2ef01720477db6e0f9412b050563"
+      ],
+      "reason": "Actual voxel object registration.",
+      "missing_capability": null,
+      "native_result": {
+        "check_id": "G-registration",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor1",
+          "emitter1",
+          "remover1"
+        ],
+        "observed": {
+          "failed_object_ids": []
+        },
+        "expected": {},
+        "evidence_ids": [
+          "load-679d2ef01720477db6e0f9412b050563"
+        ],
+        "reason": "Actual voxel object registration.",
+        "missing_capability": null
+      },
+      "visual_result": null
+    }
+  ],
+  "coverage": {
+    "REQ-COUNT-CONVEYOR": [
+      "REQ-COUNT-CONVEYOR-1"
+    ],
+    "REQ-COUNT-FEEDER": [
+      "REQ-COUNT-FEEDER-1"
+    ],
+    "REQ-COUNT-REMOVER": [
+      "REQ-COUNT-REMOVER-1"
+    ],
+    "REQ-FEEDER-ABOVE-CONVEYOR": [
+      "REQ-FEEDER-ABOVE-CONVEYOR-1"
+    ],
+    "REQ-REMOVER-COVERS-DOWNSTREAM-PATH": [
+      "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1"
+    ]
+  },
+  "registration_passed": true,
+  "static_requirements_covered": false,
+  "scope": "finite static scene evidence; no PLC or actual material transport acceptance",
+  "global_review": {
+    "status": "violated",
+    "summary": "2 anomalies reported; inspection complete.",
+    "image_ids": [
+      "image-0-iso_a",
+      "image-0-iso_b",
+      "image-0-top"
+    ],
+    "findings": [
+      {
+        "status": "violated",
+        "object_ids": [
+          "emitter1"
+        ],
+        "requirement_ids": [
+          "REQ-FEEDER-ABOVE-CONVEYOR"
+        ],
+        "observed": "The feeder's dashed emission volume is positioned entirely to the side of the conveyor belt. It does not intersect with or sit above the carrying surface where items would land.",
+        "reason": "The requirement states the feeder must be located above the upstream carrying surface, but it is currently placed on the floor beside the conveyor path.",
+        "repair_intent": "Move the feeder horizontally so its emission volume is directly centered over the upstream end of the conveyor belt.",
+        "image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ]
+      },
+      {
+        "status": "violated",
+        "object_ids": [
+          "remover1"
+        ],
+        "requirement_ids": [
+          "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+        ],
+        "observed": "The remover's volume is offset to the left of the conveyor's downstream exit point (relative to the flow direction). It does not cover the straight extension path of the belt.",
+        "reason": "The requirement specifies that the remover must cover the downstream extension path; currently, it is displaced laterally and would miss items traveling in a straight line off the belt.",
+        "repair_intent": "Align the remover's volume with the central axis of the conveyor's downstream extension.",
+        "image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ]
+      }
+    ]
+  }
+}

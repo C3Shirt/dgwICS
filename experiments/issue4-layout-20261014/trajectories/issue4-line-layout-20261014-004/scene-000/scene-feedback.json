@@ -1,0 +1,197 @@
+{
+  "verdict": "pass",
+  "summary": "The scene contains the required components: one belt conveyor, one emitter (feeder), and one remover. The layout shows a linear arrangement where the feeder is positioned at one end of the conveyor and the remover at the other.",
+  "findings": [],
+  "check_results": [
+    {
+      "object_ids": [
+        "emitter1",
+        "conveyor1"
+      ],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a"
+      ],
+      "observed": "In the top-down view, the emitter's dashed volume overlaps the upstream end of the conveyor belt. In the isometric views, the emitter is physically located above this section of the belt.",
+      "reason": "The visual evidence confirms that the feeder (emitter) is correctly positioned above the upstream carrying surface of the conveyor as requested.",
+      "repair_intent": "",
+      "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+      "relation_ids": [],
+      "status": "satisfied",
+      "requested_view": null
+    },
+    {
+      "object_ids": [
+        "remover1",
+        "conveyor1"
+      ],
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "observed": "In all views, the remover's dashed volume is placed immediately after the downstream end of the conveyor belt. The white arrow on the conveyor indicates flow towards this area.",
+      "reason": "The placement aligns with the requirement for the remover to cover the downstream extension path of the conveyor.",
+      "repair_intent": "",
+      "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+      "relation_ids": [],
+      "status": "satisfied",
+      "requested_view": null
+    }
+  ],
+  "verification": {
+    "status": "satisfied",
+    "checks": [
+      {
+        "check_id": "REQ-COUNT-CONVEYOR-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1,
+          "capability": "conveyor"
+        },
+        "evidence_ids": [
+          "load-ac5b2864686542729cab03975dc7f27f"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "REQ-COUNT-FEEDER-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "emitter1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1,
+          "prefab": "Emitter"
+        },
+        "evidence_ids": [
+          "load-ac5b2864686542729cab03975dc7f27f"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "REQ-COUNT-REMOVER-1",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "remover1"
+        ],
+        "observed": {
+          "count": 1
+        },
+        "expected": {
+          "equals": 1,
+          "prefab": "Remover"
+        },
+        "evidence_ids": [
+          "load-ac5b2864686542729cab03975dc7f27f"
+        ],
+        "reason": "Object-role count compared with independent requirement.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+        "status": "satisfied",
+        "checker": "geometry_and_visual",
+        "object_ids": [
+          "emitter1",
+          "conveyor1"
+        ],
+        "observed": null,
+        "expected": {
+          "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+        },
+        "evidence_ids": [
+          "load-ac5b2864686542729cab03975dc7f27f",
+          "image-0-top",
+          "image-0-iso_a"
+        ],
+        "reason": "The visual evidence confirms that the feeder (emitter) is correctly positioned above the upstream carrying surface of the conveyor as requested.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+        "status": "satisfied",
+        "checker": "geometry_and_visual",
+        "object_ids": [
+          "remover1",
+          "conveyor1"
+        ],
+        "observed": null,
+        "expected": {
+          "question": "Does the remover cover the downstream extension path of the conveyor?"
+        },
+        "evidence_ids": [
+          "load-ac5b2864686542729cab03975dc7f27f",
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ],
+        "reason": "The placement aligns with the requirement for the remover to cover the downstream extension path of the conveyor.",
+        "missing_capability": null
+      },
+      {
+        "check_id": "G-registration",
+        "status": "satisfied",
+        "checker": "native_geometry",
+        "object_ids": [
+          "conveyor1",
+          "emitter1",
+          "remover1"
+        ],
+        "observed": {
+          "failed_object_ids": []
+        },
+        "expected": {},
+        "evidence_ids": [
+          "load-ac5b2864686542729cab03975dc7f27f"
+        ],
+        "reason": "Actual voxel object registration.",
+        "missing_capability": null
+      }
+    ],
+    "coverage": {
+      "REQ-COUNT-CONVEYOR": [
+        "REQ-COUNT-CONVEYOR-1"
+      ],
+      "REQ-COUNT-FEEDER": [
+        "REQ-COUNT-FEEDER-1"
+      ],
+      "REQ-COUNT-REMOVER": [
+        "REQ-COUNT-REMOVER-1"
+      ],
+      "REQ-FEEDER-ABOVE-CONVEYOR": [
+        "REQ-FEEDER-ABOVE-CONVEYOR-1"
+      ],
+      "REQ-REMOVER-COVERS-DOWNSTREAM-PATH": [
+        "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1"
+      ]
+    },
+    "registration_passed": true,
+    "static_requirements_covered": true,
+    "scope": "finite static scene evidence; no PLC or actual material transport acceptance",
+    "global_review": {
+      "status": "satisfied",
+      "summary": "The scene contains the required components: one belt conveyor, one emitter (feeder), and one remover. The layout shows a linear arrangement where the feeder is positioned at one end of the conveyor and the remover at the other.",
+      "image_ids": [
+        "image-0-top",
+        "image-0-iso_a",
+        "image-0-iso_b"
+      ],
+      "findings": []
+    }
+  }
+}

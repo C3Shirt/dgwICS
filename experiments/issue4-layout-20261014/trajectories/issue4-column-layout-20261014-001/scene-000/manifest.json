@@ -1,0 +1,2035 @@
+{
+  "schema_version": 1,
+  "scene_id": "two-columns-static",
+  "scene_path": "experiments/issue4-layout-20261014/trajectories/issue4-column-layout-20261014-001/scene-000/scene.factoryio",
+  "scene_sha256": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+  "base_source_id": "source-04da4aaaacbb3e5e0ade",
+  "objects": [
+    {
+      "id": "column-1",
+      "key": "3251311c-e618-5bad-b980-360d8a757a68",
+      "prefab": "Column",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/21",
+      "source_id": "source-04da4aaaacbb3e5e0ade",
+      "position": [
+        233.0,
+        8.0,
+        142.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "group_key": "00000000-0000-0000-0000-000000000000",
+      "configuration": {
+        "object_attributes": {
+          "Locked": "False",
+          "GroupKey": "00000000-0000-0000-0000-000000000000"
+        },
+        "nodes": [
+          {
+            "element": "ComponentIO",
+            "attributes": {
+              "Index": "-1",
+              "CurrentOperatingMode": "0"
+            },
+            "text": null,
+            "children": []
+          }
+        ]
+      },
+      "tags": []
+    },
+    {
+      "id": "column-2",
+      "key": "02dd59de-4099-5d9e-986c-9fce196381be",
+      "prefab": "Column",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/21",
+      "source_id": "source-04da4aaaacbb3e5e0ade",
+      "position": [
+        243.0,
+        8.0,
+        142.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "group_key": "00000000-0000-0000-0000-000000000000",
+      "configuration": {
+        "object_attributes": {
+          "Locked": "False",
+          "GroupKey": "00000000-0000-0000-0000-000000000000"
+        },
+        "nodes": [
+          {
+            "element": "ComponentIO",
+            "attributes": {
+              "Index": "-1",
+              "CurrentOperatingMode": "0"
+            },
+            "text": null,
+            "children": []
+          }
+        ]
+      },
+      "tags": []
+    }
+  ],
+  "native_address_reallocation": [],
+  "mapping_allocation": {
+    "policy": "automatic_native_contiguous",
+    "mappings": [
+      {
+        "channel": "BitInput0",
+        "system_tag": "RunInputKey"
+      }
+    ],
+    "device_binding_verified": false
+  },
+  "process_constraint_application": null,
+  "source_hashes": {
+    "source-04da4aaaacbb3e5e0ade": "04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c",
+    "source-7b6b0a6b063429d967cf": "7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918",
+    "source-6862ca46dbe17012078c": "6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535"
+  },
+  "screenshot_removed": false,
+  "source_thumbnail_removed": true,
+  "thumbnail_placeholder": true,
+  "generated_rendering_available": false,
+  "removed_driver_mappings": [
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput12",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput14",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitInput15",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput8",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "Advantech4750",
+      "channel": "BitOutput9",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "AllenBradleyLogix5000",
+      "channel": "IntOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "AllenBradleyMicro800",
+      "channel": "IntOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "AllenBradleyMicroLogix",
+      "channel": "IntOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "AllenBradleySLC5",
+      "channel": "IntOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "Automgen",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "MHJ",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "ModbusTCPClient",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "ModbusTCPServer",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "SiemensLOGOTCP",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "SiemensS7300S7400TCP",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "SiemensS71200S71500TCP",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput0",
+      "old_tag_key": "51422566-6f6a-4d0c-b83b-ed6dd4d766f5"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput1",
+      "old_tag_key": "f82d9936-d94f-40ee-95f5-b7be64528501"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput2",
+      "old_tag_key": "b55c082e-57e2-41d8-8045-9903ed90241b"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput3",
+      "old_tag_key": "657b21b6-d525-478a-b2f0-692d68c4c1b6"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput4",
+      "old_tag_key": "a97be8e8-66d0-4ae6-a241-5b9f2569f9ca"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput5",
+      "old_tag_key": "60642b06-c6b0-4ae8-95f5-2c192e1048da"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput6",
+      "old_tag_key": "2ecc011d-c0c1-4843-a84a-5bb77dfd273d"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput7",
+      "old_tag_key": "da2ecadc-cbf8-48ab-9428-90288d645128"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput8",
+      "old_tag_key": "71d290c0-ca2b-4183-968e-109267714773"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput9",
+      "old_tag_key": "742afde0-e87c-4dd1-987f-fee1e3a4c9ba"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput10",
+      "old_tag_key": "2a447da6-0e35-47b6-8f20-60513a3d9c66"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput11",
+      "old_tag_key": "e87a7613-f3a9-4a61-93cc-0692c785fe01"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput12",
+      "old_tag_key": "f6bbd860-18e8-4793-9657-3db18479e287"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput13",
+      "old_tag_key": "229316c9-907b-4b92-9940-efc1ccf1101a"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput14",
+      "old_tag_key": "735bb045-bfec-4760-8998-63a21b77b41f"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitInput15",
+      "old_tag_key": "b262e22c-f596-4b77-b156-942ad987f910"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput0",
+      "old_tag_key": "bde247b6-b372-41dd-89c1-4ecf0afdaa31"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput1",
+      "old_tag_key": "eaaca338-9416-45e8-ae20-f1cf7d088e15"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput2",
+      "old_tag_key": "77b2c956-688f-42e5-9203-8fc34eebc9be"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput3",
+      "old_tag_key": "eca04fcb-b7cc-4c90-be79-f68fa92d6fc6"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput4",
+      "old_tag_key": "0da5756d-6641-4115-9c04-a7bca2d7e0a2"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput5",
+      "old_tag_key": "612ac4d5-8bf3-4df9-bd20-b95341d639cc"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput6",
+      "old_tag_key": "0152c1ba-5c47-461f-bd20-3f965d4d2717"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput7",
+      "old_tag_key": "1af85889-98fb-407a-a4b3-c3a176212458"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput8",
+      "old_tag_key": "18f8225b-ccbc-48c1-8495-b12a6660cf3e"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput9",
+      "old_tag_key": "7ca1c5c2-67ee-4cb3-b75a-22be20e4ccdb"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput10",
+      "old_tag_key": "882a8353-984f-40b8-9928-606e6e44cd81"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput11",
+      "old_tag_key": "c4c3cbec-d8b2-4823-8908-7e8f2c30a2f0"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "BitOutput12",
+      "old_tag_key": "bb5f5f1e-7fd7-4afc-986f-d1f2bb6d275f"
+    },
+    {
+      "driver": "SiemensS7PLCSIM",
+      "channel": "NumericOutput0",
+      "old_tag_key": "e593b3d9-0b8f-40eb-aadf-563d3041ab0b"
+    }
+  ],
+  "ambiguous_inherited_mappings": [],
+  "replaced_system_mappings": [
+    {
+      "channel": "BitInput16",
+      "tag_key": "16a73c5d-7d36-4bb2-a82b-5045b762a984"
+    }
+  ],
+  "software_load_confirmed": false,
+  "coordinate_units": "native_scene_grid"
+}

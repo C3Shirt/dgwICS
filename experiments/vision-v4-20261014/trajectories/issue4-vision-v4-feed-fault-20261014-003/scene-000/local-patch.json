@@ -1,0 +1,36 @@
+{
+  "reason": "Supply feeder above upstream conveyor surface and remover after downstream path per requirements. The supported placement kinds already map the intended relationships, so minimally change emitter1 and remover1 to the equivalent conveyor-relative placements. These are not coordinate guesses; they are native conveyor-relative interfaces.",
+  "changes": [
+    {
+      "object_id": "emitter1",
+      "placement": {
+        "kind": "emitter_over_conveyor",
+        "relative_to": "conveyor1",
+        "along_fraction": 0.0
+      }
+    },
+    {
+      "object_id": "remover1",
+      "placement": {
+        "kind": "remover_after_conveyor",
+        "relative_to": "conveyor1",
+        "clearance_grid": 0
+      }
+    }
+  ],
+  "add_objects": [],
+  "remove_object_ids": [],
+  "relation_updates": [],
+  "remove_relation_ids": [],
+  "relation_impacts": [
+    {
+      "relation_id": "rel1",
+      "expected_effect": "emitter1 will be placed above the upstream carrying surface of conveyor1, satisfying the above relation."
+    },
+    {
+      "relation_id": "rel2",
+      "expected_effect": "remover1 will be placed after the downstream end of conveyor1, covering the downstream extension path."
+    }
+  ],
+  "unresolved": []
+}

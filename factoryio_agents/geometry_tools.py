@@ -255,6 +255,83 @@ def ray_crosses_footprint(origin,direction,range_,bounds):
     return lower<=upper
 
 
+def ray_intersects_bounds(origin, direction, range_, bounds):
+    """Finite 3-D slab intersection; unlike footprint checks, preserves height."""
+    lower, upper = 0.0, range_
+    for axis in range(3):
+        if abs(direction[axis]) < 1e-8:
+            if not bounds['min'][axis] <= origin[axis] <= bounds['max'][axis]: return False
+        else:
+            a = (bounds['min'][axis] - origin[axis]) / direction[axis]
+            b = (bounds['max'][axis] - origin[axis]) / direction[axis]
+            lower, upper = max(lower, min(a, b)), min(upper, max(a, b))
+    return lower <= upper
+
+
+def relation_geometry(predicate, subject, target, parameters):
+    """Necessary geometry for one requested relation, with no global topology rule.
+
+    Explicit tolerances come from RequirementSpec, never from a SceneDesign relation.
+    Missing tolerances retain unknown. These checks do not prove material dynamics.
+    """
+    eps = 1e-7
+    def answer(status, reason, observed=None, missing=None):
+        return {'status': status, 'reason': reason, 'observed': observed, 'missing_capability': missing}
+    carrier = target['component_geometry']['conveyor']
+    bounds = carrier.get('surface_bounds')
+    if not bounds: return answer('unsupported', 'Carrying-surface measurement missing.', missing='conveyor.surface_bounds')
+    direction = carrier['direction']; axis = max((0, 2), key=lambda i: abs(direction[i])); side = 2 if axis == 0 else 0
+    if abs(direction[axis]) < .999 or abs(direction[1]) > eps:
+        return answer('unsupported', 'This relation operator currently measures horizontal cardinal carriers.', missing='noncardinal_transport_relation')
+    surface = bounds['max'][1]
+    if predicate == 'feeds_into':
+        origin = subject['component_geometry']['emitter']['origin']
+        inside = all(bounds['min'][i] - eps <= origin[i] <= bounds['max'][i] + eps for i in (0, 2))
+        passed = inside and origin[1] >= surface - eps
+        return answer('satisfied' if passed else 'violated', 'Emission origin above the requested carrier footprint; actual landing remains a runtime test.',
+                      {'origin_world': origin, 'surface_height': surface, 'xz_inside': inside})
+    if predicate == 'detects_path':
+        ray = subject['component_geometry']['sensor']
+        reaches = ray_crosses_footprint(ray['origin'], ray['direction'], ray['range_metres'], bounds)
+        height = ray['origin'][1] - surface; dot = abs(sum(a * b for a, b in zip(direction, ray['direction'])))
+        crossing = not parameters.get('crossing_required', False) or dot <= parameters.get('max_flow_dot', eps)
+        height_ok = parameters.get('min_height_metres', 0) - eps <= height <= parameters.get('max_height_metres', math.inf) + eps
+        return answer('satisfied' if reaches and crossing and height_ok else 'violated',
+            'Finite beam reaches the requested XZ path and any explicitly required orientation/height. Workpiece detection is not proven.',
+            {'xz_reachable': reaches, 'height_above_surface_metres': height, 'flow_dot': dot})
+    if predicate == 'receives_from':
+        volume = subject.get('component_geometry', {}).get('receiver', {}).get('active_volume_bounds')
+        if not volume:
+            return answer('unsupported', 'Separate active receiving-volume measurement is unavailable; outer object bounds are not equivalent.', missing='receiver.active_volume_bounds')
+        positive = direction[axis] > 0
+        arrival = [(lo + hi) / 2 for lo, hi in zip(bounds['min'], bounds['max'])]
+        arrival[axis] = bounds['max'][axis] if positive else bounds['min'][axis]; arrival[1] = surface
+        # The volume must reach the continuation of this carrier's actual exit ray.
+        reaches = ray_crosses_footprint(arrival, direction, parameters.get('max_gap_metres', math.inf), volume)
+        clearance = volume['min'][1]-surface
+        height_ok = parameters.get('min_height_metres', -math.inf)-eps <= clearance <= parameters.get('max_height_metres', math.inf)+eps
+        return answer('satisfied' if reaches and height_ok else 'violated',
+            'Receiving volume intersects the downstream XZ continuation and any explicit height limits. Adjacency/visible height still require image review; removal remains untested.',
+            {'arrival_world': arrival, 'receiving_lower_clearance_metres': clearance})
+    upstream = subject['component_geometry']['conveyor']; a = upstream.get('surface_bounds')
+    if not a: return answer('unsupported', 'Upstream carrying-surface measurement missing.', missing='conveyor.surface_bounds')
+    flow = upstream['direction']; flow_axis = max((0, 2), key=lambda i: abs(flow[i]))
+    if abs(flow[flow_axis]) < .999 or abs(flow[1]) > eps or flow_axis != axis:
+        return answer('unsupported', 'Noncollinear transfer geometry has no measured operator yet.', missing='noncollinear_transfer')
+    gap = bounds['min'][axis] - a['max'][axis] if flow[axis] > 0 else a['min'][axis] - bounds['max'][axis]
+    overlap = min(a['max'][side], bounds['max'][side]) - max(a['min'][side], bounds['min'][side])
+    height = abs(a['max'][1] - surface)
+    observed = {'gap_metres': gap, 'side_overlap_metres': overlap, 'surface_height_difference_metres': height}
+    if overlap <= eps or gap < -eps:
+        return answer('violated', 'The selected straight transfer is laterally detached or geometrically interpenetrating.', observed)
+    if gap > eps and 'max_gap_metres' not in parameters:
+        return answer('unknown', 'A positive transfer gap needs a confirmed allowed clearance.', observed, 'transfer_clearance')
+    if height > eps and 'height_tolerance_metres' not in parameters:
+        return answer('unknown', 'A carrying-surface height difference needs confirmed tolerance.', observed, 'transfer_height_tolerance')
+    passed = gap <= parameters.get('max_gap_metres', 0) + eps and height <= parameters.get('height_tolerance_metres', 0) + eps
+    return answer('satisfied' if passed else 'violated', 'Straight carrying-surface relation compared with confirmed parameters; transport dynamics remain untested.', observed)
+
+
 def connection_checks(objects):
     conveyors=[o for o in objects if 'conveyor' in o.get('component_geometry',{})]
     emitters=[o for o in objects if 'emitter' in o.get('component_geometry',{})]

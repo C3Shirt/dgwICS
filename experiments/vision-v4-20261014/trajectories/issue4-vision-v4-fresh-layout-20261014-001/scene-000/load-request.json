@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "request_id": "bab473cebb3042cdb5c0d0acb90fde77",
+  "scene_path": "experiments/vision-v4-20261014/trajectories/issue4-vision-v4-fresh-layout-20261014-001/scene-000/scene.factoryio",
+  "scene_sha256": "afa30e2663caf778f366f45eef78100612c60ab101ac4af7ea47136500a7c252",
+  "versions": {
+    "scene": "afa30e2663caf778f366f45eef78100612c60ab101ac4af7ea47136500a7c252",
+    "io": "bed296b0a292908411e4ff90d4eda4084c8d3a83b8600905588063ec9205ef8b"
+  }
+}

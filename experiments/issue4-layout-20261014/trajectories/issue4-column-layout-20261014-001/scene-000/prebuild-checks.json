@@ -1,0 +1,120 @@
+[
+  {
+    "check_id": "REQ-COLUMN-001-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "column-1",
+      "column-2"
+    ],
+    "observed": {
+      "count": 2
+    },
+    "expected": {
+      "equals": 2,
+      "prefab": "Column"
+    },
+    "evidence_ids": [
+      "layout-b1d54facdeb4c0a088f1397657a18b0f2823ecc05480343b8e36ff0a7c903c24"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-COLUMN-002-1",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "column-1",
+      "column-2"
+    ],
+    "observed": null,
+    "expected": {
+      "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+    },
+    "evidence_ids": [
+      "layout-b1d54facdeb4c0a088f1397657a18b0f2823ecc05480343b8e36ff0a7c903c24"
+    ],
+    "reason": "This requested relation requires visual evidence.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-NO-EQUIP-001-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "column-1",
+      "column-2"
+    ],
+    "observed": {
+      "count": 0
+    },
+    "expected": {
+      "equals": 0,
+      "capability": "conveyor"
+    },
+    "evidence_ids": [
+      "layout-b1d54facdeb4c0a088f1397657a18b0f2823ecc05480343b8e36ff0a7c903c24"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-NO-EQUIP-002-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "column-1",
+      "column-2"
+    ],
+    "observed": {
+      "count": 0
+    },
+    "expected": {
+      "equals": 0,
+      "prefab": "Emitter"
+    },
+    "evidence_ids": [
+      "layout-b1d54facdeb4c0a088f1397657a18b0f2823ecc05480343b8e36ff0a7c903c24"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-NO-EQUIP-003-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "column-1",
+      "column-2"
+    ],
+    "observed": {
+      "count": 0
+    },
+    "expected": {
+      "equals": 0,
+      "prefab": "Remover"
+    },
+    "evidence_ids": [
+      "layout-b1d54facdeb4c0a088f1397657a18b0f2823ecc05480343b8e36ff0a7c903c24"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "G-registration",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "column-1",
+      "column-2"
+    ],
+    "observed": null,
+    "expected": {},
+    "evidence_ids": [
+      "layout-b1d54facdeb4c0a088f1397657a18b0f2823ecc05480343b8e36ff0a7c903c24"
+    ],
+    "reason": "Registration requires actual software loading.",
+    "missing_capability": null
+  }
+]

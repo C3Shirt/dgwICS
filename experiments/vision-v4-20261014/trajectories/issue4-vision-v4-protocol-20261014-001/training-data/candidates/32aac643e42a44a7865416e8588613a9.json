@@ -1,0 +1,728 @@
+{
+  "schema_version": 1,
+  "kind": "agent_candidate",
+  "candidate_id": "32aac643e42a44a7865416e8588613a9",
+  "run_id": "718f261bc75a43fcad08be437f488f59",
+  "role": "vision",
+  "phase": "scene_visual",
+  "scenario_id": null,
+  "lineage_group": "simple-scene",
+  "source_kind": "protocol_probe",
+  "started_at": "2026-10-14T08:51:27.127073+00:00",
+  "status": "response_received",
+  "handoff_id": null,
+  "versions": {},
+  "policy": {},
+  "prompt_sha256": "63c77df6d3d1cec70a82921da8d5fb0bbf40070b32947bb33c773e40fb781a48",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You inspect the physical layout of an actually loaded Factory I/O scene.\nUnderstand the intended industrial task before judging the screenshots. The independent\nscene_overview and expected_relations define the target; object poses describe the\ncurrent layout under inspection, not proof that placement is correct.\n\nFactory I/O axes are [X,Y,Z]: Y is vertical and X/Z are horizontal. Use the supplied\ncoordinate_system for grid/metre conversion; never assume a fixed scale or world flow\ndirection. Distinguish the object pivot and visible housing from an outer bounding box\nand from functional regions: carrying surface, emission origin, sensing ray or active\nremoval volume. An outer box alone does not prove functional coverage.\n\nWork in this order:\n1. Read the industrial goal, coherent process description, required equipment and\n   independent spatial objectives. Intended collaboration is not observed execution.\n2. Identify each task's subject and references using its instance profile, sourced\n   appearance/markers and multiple screenshots. Same-prefab objects cannot be matched\n   by appearance alone. Report ambiguity rather than guessing an ID. Do not invent\n   official features when the knowledge profile explicitly has missing information.\n3. Describe what is actually visible before evaluating the expected relation. Check\n   relevant functional regions, alignment, direction and relative height across views.\n4. Use actual_pose and selected native_spatial_state only as auxiliary identification\n   and interpretation. Keep screenshot observations separate from measurement-based\n   explanations; Python performs independent geometric verification. If a functional\n   volume is not measured or not visible, explain the gap rather than using a pivot\n   or outer bounds as an equivalent region.\n5. Inspect EVERY supplied inspection task and review obvious missing/extra equipment\n   and visible inconsistencies globally. REPORT ONLY ANOMALIES: violated requirements\n   and unobservable checks. Omit satisfied checks and normally identified objects.\n6. Name suspected misplaced objects separately from reference anchors. References\n   are read-only by default. Give relational repair intent, not guessed XYZ patches.\n   Do not add industrial constraints absent from the independent task.\n\nReturn exactly one JSON object: inspection_complete (boolean) and issues (array).\nSet inspection_complete=true only after reviewing all tasks and attached views.\nWhen no anomaly is found, return {\"inspection_complete\":true,\"issues\":[]}.\nNever return [] or null as the whole response. Each issue has:\n- check_id: the supplied task ID; null only for an extra concern outside the tasks.\n- status: violated or unobservable; never emit satisfied rows.\n- suspect_object_ids: supplied IDs needing correction or unclear identification;\n  do not include unchanged references merely because they participate in a relation.\n- observation: visible evidence, using ordinary relational language.\n- spatial_observation: a separate interpretation of supplied measurements, or \"\".\n- reason: why the observation contradicts the requirement or cannot be established.\n- repair_intent: smallest justified relational correction, or \"\" if not justified.\n- evidence_image_ids: exact attached image IDs supporting the observation.\n- requested_view: null or a supplied supported view when further evidence is useful.\nAn unobservable issue must explain missing evidence. An unbound concern cannot become\na new mandatory constraint. Static screenshots cannot establish PLC operation, actual\nmaterial transport, sensor electrical response or runtime control correctness.\n"
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"phase\": \"scene_visual\", \"scene_overview\": {\"goal\": \"构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。\", \"process_description\": \"The independent user request describes this intended industrial arrangement: 构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。 Its explicit equipment and spatial objectives are listed below; no unspecified process stage is assumed. Equipment principles relevant to interpreting this scene: BeltConveyor4M equipment: Transport light-load cargo using a belt conveyor. Emitter equipment: Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted. Remover equipment: Remove configured items from the scene when they intersect the remover volume and removal is enabled. Required collaboration and spatial objectives: 一条输送带 一个供料器 一个末端移除器 供料器位于输送带上游承载面上方 移除器覆盖下游延伸路径 This is an intended process and static arrangement, not proven material motion or PLC execution. Inspect functional regions in relation to support surfaces and paths, not merely whether housings appear nearby.\", \"process_stages\": [], \"required_equipment\": [{\"requirement_id\": \"REQ-COUNT-CONVEYOR\", \"role\": \"conveyor\", \"selection_and_quantity\": {\"equals\": 1, \"capability\": \"conveyor\"}, \"source_requirement\": \"一条输送带\"}, {\"requirement_id\": \"REQ-COUNT-FEEDER\", \"role\": \"feeder\", \"selection_and_quantity\": {\"equals\": 1, \"prefab\": \"Emitter\"}, \"source_requirement\": \"一个供料器\"}, {\"requirement_id\": \"REQ-COUNT-REMOVER\", \"role\": \"remover\", \"selection_and_quantity\": {\"equals\": 1, \"prefab\": \"Remover\"}, \"source_requirement\": \"一个末端移除器\"}], \"acceptance_scope\": \"static_layout_only; runtime requirements are deferred\", \"background_basis\": \"independent requirements and sourced device knowledge; narrative adds no mandatory constraints\"}, \"coordinate_system\": {\"axis_order\": [\"X\", \"Y\", \"Z\"], \"vertical_axis\": \"Y\", \"horizontal_axes\": [\"X\", \"Z\"], \"grid_metres\": 0.125, \"pivot_world_formula\": \"(position_grid + [0.5,0.5,0.5]) * 0.125\"}, \"objects\": [{\"id\": \"conveyor1\", \"prefab\": \"BeltConveyor4M\", \"roles\": [\"conveyor\", \"conveyor_upstream\", \"conveyor_downstream\"], \"task_role_source\": \"role bindings from design linked to independent requirements\", \"function\": \"Transport light-load cargo using a belt conveyor.\", \"function_basis\": \"curated_summary_of_official_text\", \"visual_identity\": {\"appearance\": null, \"distinctive_features\": [{\"text\": \"The white arrow indicates the conveying flow direction.\", \"basis\": \"official_text\", \"source_url\": \"https://docs.factoryio.com/getting-started/creating-a-scene/\"}], \"sources\": [{\"chapter_id\": \"parts:light-load#belt-conveyors\", \"url\": \"https://docs.factoryio.com/manual/parts/light-load/#belt-conveyors\"}], \"identity_limit\": \"Same-prefab objects require labels or multi-view spatial evidence, not appearance alone.\"}, \"scene_file_configuration\": [], \"configuration_source\": \"settings in confirmed loaded scene file; not independently read runtime configuration\", \"native_presence\": \"confirmed\", \"actual_pose\": {\"position_grid\": [238, 3, 140], \"yaw_deg\": 0.0, \"rotation_quaternion\": [0.0, 0.0, 0.0, 1.0], \"fine_position\": 0.0, \"fine_rotation\": 0.0, \"source\": \"current native load receipt; actual state under inspection\"}, \"native_spatial_state\": {\"bounds_world_metres\": {\"min\": [29.375, 0.0, 15.5], \"max\": [30.25, 1.0, 19.5]}, \"component_geometry_world\": {\"conveyor\": {\"direction\": [0.0, 0.0, 1.0], \"default_speed_metres_per_second\": 0.6, \"surface_bounds\": {\"min\": [29.3753242, 0.00145938993, 15.5003462], \"max\": [30.2496758, 0.9989927, 19.4998589]}, \"evidence\": \"BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)\"}}, \"source\": \"current native load receipt\", \"limitation\": \"Outer bounds and pivots are not proof of an active functional region.\"}, \"expected_relations\": [{\"check_id\": \"REQ-COUNT-CONVEYOR-1\", \"subject_ids\": [\"conveyor1\"], \"reference_ids\": [], \"description\": \"一条输送带\", \"predicate\": \"count\", \"parameters\": {\"equals\": 1, \"capability\": \"conveyor\"}}, {\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"subject_ids\": [\"emitter1\"], \"reference_ids\": [\"conveyor1\"], \"description\": \"供料器位于输送带上游承载面上方\", \"predicate\": \"visual_relation\", \"parameters\": {\"question\": \"Is the feeder positioned above the upstream carrying surface of the conveyor?\"}}, {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"subject_ids\": [\"remover1\"], \"reference_ids\": [\"conveyor1\"], \"description\": \"移除器覆盖下游延伸路径\", \"predicate\": \"visual_relation\", \"parameters\": {\"question\": \"Does the remover cover the downstream extension path of the conveyor?\"}}]}, {\"id\": \"emitter1\", \"prefab\": \"Emitter\", \"roles\": [\"feeder\"], \"task_role_source\": \"role bindings from design linked to independent requirements\", \"function\": \"Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted.\", \"function_basis\": \"curated_summary_of_official_text\", \"visual_identity\": {\"appearance\": {\"text\": \"Official illustration shows a white dashed volume and a downward arrow.\", \"basis\": \"official_image_observation\"}, \"distinctive_features\": [{\"text\": \"The dashed volume depicts the region associated with emission; compare it with the intended receiving support surface.\", \"basis\": \"text_and_image_interpretation\"}], \"sources\": [{\"chapter_id\": \"parts:emitter#emitter\", \"url\": \"https://docs.factoryio.com/manual/parts/emitter/#emitter\"}], \"identity_limit\": \"Same-prefab objects require labels or multi-view spatial evidence, not appearance alone.\"}, \"scene_file_configuration\": [], \"configuration_source\": \"settings in confirmed loaded scene file; not independently read runtime configuration\", \"native_presence\": \"confirmed\", \"actual_pose\": {\"position_grid\": [253, 9, 124], \"yaw_deg\": 0.0, \"rotation_quaternion\": [0.0, 0.0, 0.0, 1.0], \"fine_position\": 0.0, \"fine_rotation\": 0.0, \"source\": \"current native load receipt; actual state under inspection\"}, \"native_spatial_state\": {\"bounds_world_metres\": {\"min\": [31.25, 1.0, 15.0], \"max\": [32.125, 1.5, 16.125]}, \"component_geometry_world\": {\"emitter\": {\"origin\": [31.6875, 1.0625, 15.5625]}}, \"source\": \"current native load receipt\", \"limitation\": \"Outer bounds and pivots are not proof of an active functional region.\"}, \"expected_relations\": [{\"check_id\": \"REQ-COUNT-FEEDER-1\", \"subject_ids\": [\"emitter1\"], \"reference_ids\": [], \"description\": \"一个供料器\", \"predicate\": \"count\", \"parameters\": {\"equals\": 1, \"prefab\": \"Emitter\"}}, {\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"subject_ids\": [\"emitter1\"], \"reference_ids\": [\"conveyor1\"], \"description\": \"供料器位于输送带上游承载面上方\", \"predicate\": \"visual_relation\", \"parameters\": {\"question\": \"Is the feeder positioned above the upstream carrying surface of the conveyor?\"}}]}, {\"id\": \"remover1\", \"prefab\": \"Remover\", \"roles\": [\"remover\"], \"task_role_source\": \"role bindings from design linked to independent requirements\", \"function\": \"Remove configured items from the scene when they intersect the remover volume and removal is enabled.\", \"function_basis\": \"curated_summary_of_official_text\", \"visual_identity\": {\"appearance\": {\"text\": \"Official illustration shows a white dashed volume and an upward arrow.\", \"basis\": \"official_image_observation\"}, \"distinctive_features\": [{\"text\": \"The dashed volume depicts the removal region; compare its overlap with the intended item arrival path.\", \"basis\": \"text_and_image_interpretation\"}], \"sources\": [{\"chapter_id\": \"parts:remover#remover\", \"url\": \"https://docs.factoryio.com/manual/parts/remover/#remover\"}], \"identity_limit\": \"Same-prefab objects require labels or multi-view spatial evidence, not appearance alone.\"}, \"scene_file_configuration\": [], \"configuration_source\": \"settings in confirmed loaded scene file; not independently read runtime configuration\", \"native_presence\": \"confirmed\", \"actual_pose\": {\"position_grid\": [238, 9, 160], \"yaw_deg\": 0.0, \"rotation_quaternion\": [0.0, 0.0, 0.0, 1.0], \"fine_position\": 0.0, \"fine_rotation\": 0.0, \"source\": \"current native load receipt; actual state under inspection\"}, \"native_spatial_state\": {\"bounds_world_metres\": {\"min\": [29.375, 1.0, 19.5], \"max\": [30.25, 1.5, 20.625]}, \"component_geometry_world\": {}, \"source\": \"current native load receipt\", \"limitation\": \"Outer bounds and pivots are not proof of an active functional region.\", \"missing_measurements\": [\"Separate active functional-region geometry is not provided by this receipt.\"]}, \"expected_relations\": [{\"check_id\": \"REQ-COUNT-REMOVER-1\", \"subject_ids\": [\"remover1\"], \"reference_ids\": [], \"description\": \"一个末端移除器\", \"predicate\": \"count\", \"parameters\": {\"equals\": 1, \"prefab\": \"Remover\"}}, {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"subject_ids\": [\"remover1\"], \"reference_ids\": [\"conveyor1\"], \"description\": \"移除器覆盖下游延伸路径\", \"predicate\": \"visual_relation\", \"parameters\": {\"question\": \"Does the remover cover the downstream extension path of the conveyor?\"}}]}], \"expected_relations\": [{\"check_id\": \"REQ-COUNT-CONVEYOR-1\", \"subject_ids\": [\"conveyor1\"], \"reference_ids\": [], \"description\": \"一条输送带\", \"predicate\": \"count\", \"parameters\": {\"equals\": 1, \"capability\": \"conveyor\"}}, {\"check_id\": \"REQ-COUNT-FEEDER-1\", \"subject_ids\": [\"emitter1\"], \"reference_ids\": [], \"description\": \"一个供料器\", \"predicate\": \"count\", \"parameters\": {\"equals\": 1, \"prefab\": \"Emitter\"}}, {\"check_id\": \"REQ-COUNT-REMOVER-1\", \"subject_ids\": [\"remover1\"], \"reference_ids\": [], \"description\": \"一个末端移除器\", \"predicate\": \"count\", \"parameters\": {\"equals\": 1, \"prefab\": \"Remover\"}}, {\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"subject_ids\": [\"emitter1\"], \"reference_ids\": [\"conveyor1\"], \"description\": \"供料器位于输送带上游承载面上方\", \"predicate\": \"visual_relation\", \"parameters\": {\"question\": \"Is the feeder positioned above the upstream carrying surface of the conveyor?\"}}, {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"subject_ids\": [\"remover1\"], \"reference_ids\": [\"conveyor1\"], \"description\": \"移除器覆盖下游延伸路径\", \"predicate\": \"visual_relation\", \"parameters\": {\"question\": \"Does the remover cover the downstream extension path of the conveyor?\"}}], \"inspection_tasks\": [{\"check_id\": \"REQ-COUNT-CONVEYOR-1\", \"subject_ids\": [\"conveyor1\"], \"reference_ids\": [], \"focus\": \"Compare visible equipment and functional regions with: 一条输送带\", \"preferred_views\": [\"top\", \"iso_a\", \"iso_b\"]}, {\"check_id\": \"REQ-COUNT-FEEDER-1\", \"subject_ids\": [\"emitter1\"], \"reference_ids\": [], \"focus\": \"Compare visible equipment and functional regions with: 一个供料器\", \"preferred_views\": [\"top\", \"iso_a\", \"iso_b\"]}, {\"check_id\": \"REQ-COUNT-REMOVER-1\", \"subject_ids\": [\"remover1\"], \"reference_ids\": [], \"focus\": \"Compare visible equipment and functional regions with: 一个末端移除器\", \"preferred_views\": [\"top\", \"iso_a\", \"iso_b\"]}, {\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"subject_ids\": [\"emitter1\"], \"reference_ids\": [\"conveyor1\"], \"focus\": \"Compare visible equipment and functional regions with: 供料器位于输送带上游承载面上方\", \"preferred_views\": [\"top\", \"iso_a\", \"iso_b\"]}, {\"check_id\": \"REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1\", \"subject_ids\": [\"remover1\"], \"reference_ids\": [\"conveyor1\"], \"focus\": \"Compare visible equipment and functional regions with: 移除器覆盖下游延伸路径\", \"preferred_views\": [\"top\", \"iso_a\", \"iso_b\"]}], \"images\": [{\"image_id\": \"image-0-top\", \"view_id\": \"top\"}, {\"image_id\": \"image-0-iso_a\", \"view_id\": \"iso_a\"}, {\"image_id\": \"image-0-iso_b\", \"view_id\": \"iso_b\"}], \"supported_views\": [\"top\", \"iso_a\", \"iso_b\"], \"output_contract\": {\"inspection_complete\": \"boolean; true only after all tasks and views have been inspected\", \"issues\": [{\"check_id\": \"supplied check ID or null for an unbound concern\", \"status\": \"violated|unobservable\", \"suspect_object_ids\": [\"affected supplied IDs\"], \"observation\": \"what the screenshots show\", \"spatial_observation\": \"auxiliary measurement interpretation, or empty string\", \"reason\": \"contradiction or missing evidence\", \"repair_intent\": \"relational correction, or empty string\", \"evidence_image_ids\": [\"attached image IDs\"], \"requested_view\": null}], \"no_anomaly_response\": {\"inspection_complete\": true, \"issues\": []}}, \"inspection_mode\": \"geometry_assisted\"}"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ],
+  "payload": {
+    "phase": "scene_visual",
+    "scene_overview": {
+      "goal": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+      "process_description": "The independent user request describes this intended industrial arrangement: 构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。 Its explicit equipment and spatial objectives are listed below; no unspecified process stage is assumed. Equipment principles relevant to interpreting this scene: BeltConveyor4M equipment: Transport light-load cargo using a belt conveyor. Emitter equipment: Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted. Remover equipment: Remove configured items from the scene when they intersect the remover volume and removal is enabled. Required collaboration and spatial objectives: 一条输送带 一个供料器 一个末端移除器 供料器位于输送带上游承载面上方 移除器覆盖下游延伸路径 This is an intended process and static arrangement, not proven material motion or PLC execution. Inspect functional regions in relation to support surfaces and paths, not merely whether housings appear nearby.",
+      "process_stages": [],
+      "required_equipment": [
+        {
+          "requirement_id": "REQ-COUNT-CONVEYOR",
+          "role": "conveyor",
+          "selection_and_quantity": {
+            "equals": 1,
+            "capability": "conveyor"
+          },
+          "source_requirement": "一条输送带"
+        },
+        {
+          "requirement_id": "REQ-COUNT-FEEDER",
+          "role": "feeder",
+          "selection_and_quantity": {
+            "equals": 1,
+            "prefab": "Emitter"
+          },
+          "source_requirement": "一个供料器"
+        },
+        {
+          "requirement_id": "REQ-COUNT-REMOVER",
+          "role": "remover",
+          "selection_and_quantity": {
+            "equals": 1,
+            "prefab": "Remover"
+          },
+          "source_requirement": "一个末端移除器"
+        }
+      ],
+      "acceptance_scope": "static_layout_only; runtime requirements are deferred",
+      "background_basis": "independent requirements and sourced device knowledge; narrative adds no mandatory constraints"
+    },
+    "coordinate_system": {
+      "axis_order": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "vertical_axis": "Y",
+      "horizontal_axes": [
+        "X",
+        "Z"
+      ],
+      "grid_metres": 0.125,
+      "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125"
+    },
+    "objects": [
+      {
+        "id": "conveyor1",
+        "prefab": "BeltConveyor4M",
+        "roles": [
+          "conveyor",
+          "conveyor_upstream",
+          "conveyor_downstream"
+        ],
+        "task_role_source": "role bindings from design linked to independent requirements",
+        "function": "Transport light-load cargo using a belt conveyor.",
+        "function_basis": "curated_summary_of_official_text",
+        "visual_identity": {
+          "appearance": null,
+          "distinctive_features": [
+            {
+              "text": "The white arrow indicates the conveying flow direction.",
+              "basis": "official_text",
+              "source_url": "https://docs.factoryio.com/getting-started/creating-a-scene/"
+            }
+          ],
+          "sources": [
+            {
+              "chapter_id": "parts:light-load#belt-conveyors",
+              "url": "https://docs.factoryio.com/manual/parts/light-load/#belt-conveyors"
+            }
+          ],
+          "identity_limit": "Same-prefab objects require labels or multi-view spatial evidence, not appearance alone."
+        },
+        "scene_file_configuration": [],
+        "configuration_source": "settings in confirmed loaded scene file; not independently read runtime configuration",
+        "native_presence": "confirmed",
+        "actual_pose": {
+          "position_grid": [
+            238,
+            3,
+            140
+          ],
+          "yaw_deg": 0.0,
+          "rotation_quaternion": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "source": "current native load receipt; actual state under inspection"
+        },
+        "native_spatial_state": {
+          "bounds_world_metres": {
+            "min": [
+              29.375,
+              0.0,
+              15.5
+            ],
+            "max": [
+              30.25,
+              1.0,
+              19.5
+            ]
+          },
+          "component_geometry_world": {
+            "conveyor": {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "default_speed_metres_per_second": 0.6,
+              "surface_bounds": {
+                "min": [
+                  29.3753242,
+                  0.00145938993,
+                  15.5003462
+                ],
+                "max": [
+                  30.2496758,
+                  0.9989927,
+                  19.4998589
+                ]
+              },
+              "evidence": "BeltConveyor.beltRenderer; BtLinearConveyorBelt.InternalTick(transform.forward * speed)"
+            }
+          },
+          "source": "current native load receipt",
+          "limitation": "Outer bounds and pivots are not proof of an active functional region."
+        },
+        "expected_relations": [
+          {
+            "check_id": "REQ-COUNT-CONVEYOR-1",
+            "subject_ids": [
+              "conveyor1"
+            ],
+            "reference_ids": [],
+            "description": "一条输送带",
+            "predicate": "count",
+            "parameters": {
+              "equals": 1,
+              "capability": "conveyor"
+            }
+          },
+          {
+            "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+            "subject_ids": [
+              "emitter1"
+            ],
+            "reference_ids": [
+              "conveyor1"
+            ],
+            "description": "供料器位于输送带上游承载面上方",
+            "predicate": "visual_relation",
+            "parameters": {
+              "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+            }
+          },
+          {
+            "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+            "subject_ids": [
+              "remover1"
+            ],
+            "reference_ids": [
+              "conveyor1"
+            ],
+            "description": "移除器覆盖下游延伸路径",
+            "predicate": "visual_relation",
+            "parameters": {
+              "question": "Does the remover cover the downstream extension path of the conveyor?"
+            }
+          }
+        ]
+      },
+      {
+        "id": "emitter1",
+        "prefab": "Emitter",
+        "roles": [
+          "feeder"
+        ],
+        "task_role_source": "role bindings from design linked to independent requirements",
+        "function": "Create configured items inside an emission volume. While an item remains in that volume, no additional item is emitted.",
+        "function_basis": "curated_summary_of_official_text",
+        "visual_identity": {
+          "appearance": {
+            "text": "Official illustration shows a white dashed volume and a downward arrow.",
+            "basis": "official_image_observation"
+          },
+          "distinctive_features": [
+            {
+              "text": "The dashed volume depicts the region associated with emission; compare it with the intended receiving support surface.",
+              "basis": "text_and_image_interpretation"
+            }
+          ],
+          "sources": [
+            {
+              "chapter_id": "parts:emitter#emitter",
+              "url": "https://docs.factoryio.com/manual/parts/emitter/#emitter"
+            }
+          ],
+          "identity_limit": "Same-prefab objects require labels or multi-view spatial evidence, not appearance alone."
+        },
+        "scene_file_configuration": [],
+        "configuration_source": "settings in confirmed loaded scene file; not independently read runtime configuration",
+        "native_presence": "confirmed",
+        "actual_pose": {
+          "position_grid": [
+            253,
+            9,
+            124
+          ],
+          "yaw_deg": 0.0,
+          "rotation_quaternion": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "source": "current native load receipt; actual state under inspection"
+        },
+        "native_spatial_state": {
+          "bounds_world_metres": {
+            "min": [
+              31.25,
+              1.0,
+              15.0
+            ],
+            "max": [
+              32.125,
+              1.5,
+              16.125
+            ]
+          },
+          "component_geometry_world": {
+            "emitter": {
+              "origin": [
+                31.6875,
+                1.0625,
+                15.5625
+              ]
+            }
+          },
+          "source": "current native load receipt",
+          "limitation": "Outer bounds and pivots are not proof of an active functional region."
+        },
+        "expected_relations": [
+          {
+            "check_id": "REQ-COUNT-FEEDER-1",
+            "subject_ids": [
+              "emitter1"
+            ],
+            "reference_ids": [],
+            "description": "一个供料器",
+            "predicate": "count",
+            "parameters": {
+              "equals": 1,
+              "prefab": "Emitter"
+            }
+          },
+          {
+            "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+            "subject_ids": [
+              "emitter1"
+            ],
+            "reference_ids": [
+              "conveyor1"
+            ],
+            "description": "供料器位于输送带上游承载面上方",
+            "predicate": "visual_relation",
+            "parameters": {
+              "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+            }
+          }
+        ]
+      },
+      {
+        "id": "remover1",
+        "prefab": "Remover",
+        "roles": [
+          "remover"
+        ],
+        "task_role_source": "role bindings from design linked to independent requirements",
+        "function": "Remove configured items from the scene when they intersect the remover volume and removal is enabled.",
+        "function_basis": "curated_summary_of_official_text",
+        "visual_identity": {
+          "appearance": {
+            "text": "Official illustration shows a white dashed volume and an upward arrow.",
+            "basis": "official_image_observation"
+          },
+          "distinctive_features": [
+            {
+              "text": "The dashed volume depicts the removal region; compare its overlap with the intended item arrival path.",
+              "basis": "text_and_image_interpretation"
+            }
+          ],
+          "sources": [
+            {
+              "chapter_id": "parts:remover#remover",
+              "url": "https://docs.factoryio.com/manual/parts/remover/#remover"
+            }
+          ],
+          "identity_limit": "Same-prefab objects require labels or multi-view spatial evidence, not appearance alone."
+        },
+        "scene_file_configuration": [],
+        "configuration_source": "settings in confirmed loaded scene file; not independently read runtime configuration",
+        "native_presence": "confirmed",
+        "actual_pose": {
+          "position_grid": [
+            238,
+            9,
+            160
+          ],
+          "yaw_deg": 0.0,
+          "rotation_quaternion": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "fine_position": 0.0,
+          "fine_rotation": 0.0,
+          "source": "current native load receipt; actual state under inspection"
+        },
+        "native_spatial_state": {
+          "bounds_world_metres": {
+            "min": [
+              29.375,
+              1.0,
+              19.5
+            ],
+            "max": [
+              30.25,
+              1.5,
+              20.625
+            ]
+          },
+          "component_geometry_world": {},
+          "source": "current native load receipt",
+          "limitation": "Outer bounds and pivots are not proof of an active functional region.",
+          "missing_measurements": [
+            "Separate active functional-region geometry is not provided by this receipt."
+          ]
+        },
+        "expected_relations": [
+          {
+            "check_id": "REQ-COUNT-REMOVER-1",
+            "subject_ids": [
+              "remover1"
+            ],
+            "reference_ids": [],
+            "description": "一个末端移除器",
+            "predicate": "count",
+            "parameters": {
+              "equals": 1,
+              "prefab": "Remover"
+            }
+          },
+          {
+            "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+            "subject_ids": [
+              "remover1"
+            ],
+            "reference_ids": [
+              "conveyor1"
+            ],
+            "description": "移除器覆盖下游延伸路径",
+            "predicate": "visual_relation",
+            "parameters": {
+              "question": "Does the remover cover the downstream extension path of the conveyor?"
+            }
+          }
+        ]
+      }
+    ],
+    "expected_relations": [
+      {
+        "check_id": "REQ-COUNT-CONVEYOR-1",
+        "subject_ids": [
+          "conveyor1"
+        ],
+        "reference_ids": [],
+        "description": "一条输送带",
+        "predicate": "count",
+        "parameters": {
+          "equals": 1,
+          "capability": "conveyor"
+        }
+      },
+      {
+        "check_id": "REQ-COUNT-FEEDER-1",
+        "subject_ids": [
+          "emitter1"
+        ],
+        "reference_ids": [],
+        "description": "一个供料器",
+        "predicate": "count",
+        "parameters": {
+          "equals": 1,
+          "prefab": "Emitter"
+        }
+      },
+      {
+        "check_id": "REQ-COUNT-REMOVER-1",
+        "subject_ids": [
+          "remover1"
+        ],
+        "reference_ids": [],
+        "description": "一个末端移除器",
+        "predicate": "count",
+        "parameters": {
+          "equals": 1,
+          "prefab": "Remover"
+        }
+      },
+      {
+        "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+        "subject_ids": [
+          "emitter1"
+        ],
+        "reference_ids": [
+          "conveyor1"
+        ],
+        "description": "供料器位于输送带上游承载面上方",
+        "predicate": "visual_relation",
+        "parameters": {
+          "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+        }
+      },
+      {
+        "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+        "subject_ids": [
+          "remover1"
+        ],
+        "reference_ids": [
+          "conveyor1"
+        ],
+        "description": "移除器覆盖下游延伸路径",
+        "predicate": "visual_relation",
+        "parameters": {
+          "question": "Does the remover cover the downstream extension path of the conveyor?"
+        }
+      }
+    ],
+    "inspection_tasks": [
+      {
+        "check_id": "REQ-COUNT-CONVEYOR-1",
+        "subject_ids": [
+          "conveyor1"
+        ],
+        "reference_ids": [],
+        "focus": "Compare visible equipment and functional regions with: 一条输送带",
+        "preferred_views": [
+          "top",
+          "iso_a",
+          "iso_b"
+        ]
+      },
+      {
+        "check_id": "REQ-COUNT-FEEDER-1",
+        "subject_ids": [
+          "emitter1"
+        ],
+        "reference_ids": [],
+        "focus": "Compare visible equipment and functional regions with: 一个供料器",
+        "preferred_views": [
+          "top",
+          "iso_a",
+          "iso_b"
+        ]
+      },
+      {
+        "check_id": "REQ-COUNT-REMOVER-1",
+        "subject_ids": [
+          "remover1"
+        ],
+        "reference_ids": [],
+        "focus": "Compare visible equipment and functional regions with: 一个末端移除器",
+        "preferred_views": [
+          "top",
+          "iso_a",
+          "iso_b"
+        ]
+      },
+      {
+        "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+        "subject_ids": [
+          "emitter1"
+        ],
+        "reference_ids": [
+          "conveyor1"
+        ],
+        "focus": "Compare visible equipment and functional regions with: 供料器位于输送带上游承载面上方",
+        "preferred_views": [
+          "top",
+          "iso_a",
+          "iso_b"
+        ]
+      },
+      {
+        "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+        "subject_ids": [
+          "remover1"
+        ],
+        "reference_ids": [
+          "conveyor1"
+        ],
+        "focus": "Compare visible equipment and functional regions with: 移除器覆盖下游延伸路径",
+        "preferred_views": [
+          "top",
+          "iso_a",
+          "iso_b"
+        ]
+      }
+    ],
+    "images": [
+      {
+        "image_id": "image-0-top",
+        "view_id": "top"
+      },
+      {
+        "image_id": "image-0-iso_a",
+        "view_id": "iso_a"
+      },
+      {
+        "image_id": "image-0-iso_b",
+        "view_id": "iso_b"
+      }
+    ],
+    "supported_views": [
+      "top",
+      "iso_a",
+      "iso_b"
+    ],
+    "output_contract": {
+      "inspection_complete": "boolean; true only after all tasks and views have been inspected",
+      "issues": [
+        {
+          "check_id": "supplied check ID or null for an unbound concern",
+          "status": "violated|unobservable",
+          "suspect_object_ids": [
+            "affected supplied IDs"
+          ],
+          "observation": "what the screenshots show",
+          "spatial_observation": "auxiliary measurement interpretation, or empty string",
+          "reason": "contradiction or missing evidence",
+          "repair_intent": "relational correction, or empty string",
+          "evidence_image_ids": [
+            "attached image IDs"
+          ],
+          "requested_view": null
+        }
+      ],
+      "no_anomaly_response": {
+        "inspection_complete": true,
+        "issues": []
+      }
+    },
+    "inspection_mode": "geometry_assisted"
+  },
+  "images": [
+    {
+      "path": "assets/55a6d6e6fc87b6eb48c8684985852a96bc271a11dceaa971fd41d987b6801e65.png",
+      "sha256": "55a6d6e6fc87b6eb48c8684985852a96bc271a11dceaa971fd41d987b6801e65",
+      "mime_type": "image/png",
+      "size_bytes": 5822085
+    },
+    {
+      "path": "assets/7f5f001a39fea7c2ba943a3eed4fbddd2b5b471cd3a466ccb21b85caa391f036.png",
+      "sha256": "7f5f001a39fea7c2ba943a3eed4fbddd2b5b471cd3a466ccb21b85caa391f036",
+      "mime_type": "image/png",
+      "size_bytes": 5565480
+    },
+    {
+      "path": "assets/c5b3d823fa266bc4420f9018ae153387aaa0f0634f162ab5571aa60389db47ac.png",
+      "sha256": "c5b3d823fa266bc4420f9018ae153387aaa0f0634f162ab5571aa60389db47ac",
+      "mime_type": "image/png",
+      "size_bytes": 5566351
+    }
+  ],
+  "input_metrics": {
+    "system_chars": 3643,
+    "payload_chars": 12030,
+    "image_count": 3,
+    "image_bytes": 16953916,
+    "token_estimate_used": false
+  },
+  "input_artifacts": [],
+  "response_text": "{\"inspection_complete\": true, \"issues\": [{\"check_id\": \"REQ-FEEDER-ABOVE-CONVEYOR-1\", \"status\": \"violated\", \"suspect_object_ids\": [\"emitter1\"], \"observation\": \"The feeder (identified by the green arrow and dashed volume) is positioned on the ground to the side of the conveyor belt. It is not located above the carrying surface of the conveyor.\", \"spatial_observation\": \"The emitter's bounding box minimum Y coordinate is 1.0m, while the conveyor surface maximum Y coordinate is approximately 1.0m. The X/Z coordinates show lateral separation rather than vertical overlap.\", \"reason\": \"The requirement specifies the feeder must be 'above' the upstream carrying surface. Currently, it is placed adjacent to the conveyor on the floor level, failing to meet the spatial condition for feeding items onto the belt.\", \"repair_intent\": \"Move the emitter horizontally so its emission volume aligns with the upstream end of the conveyor belt surface, and ensure it is elevated sufficiently to drop items onto the belt.\", \"evidence_image_ids\": [\"image-0-top\", \"image-0-iso_a\", \"image-0-iso_b\"], \"requested_view\": null}]}",
+  "response_sha256": "fc83e095f12bcfa464374a73c776398c4dd03e8dbd3737b323545b7782491ad0",
+  "structured_output": {
+    "inspection_complete": true,
+    "issues": [
+      {
+        "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+        "status": "violated",
+        "suspect_object_ids": [
+          "emitter1"
+        ],
+        "observation": "The feeder (identified by the green arrow and dashed volume) is positioned on the ground to the side of the conveyor belt. It is not located above the carrying surface of the conveyor.",
+        "spatial_observation": "The emitter's bounding box minimum Y coordinate is 1.0m, while the conveyor surface maximum Y coordinate is approximately 1.0m. The X/Z coordinates show lateral separation rather than vertical overlap.",
+        "reason": "The requirement specifies the feeder must be 'above' the upstream carrying surface. Currently, it is placed adjacent to the conveyor on the floor level, failing to meet the spatial condition for feeding items onto the belt.",
+        "repair_intent": "Move the emitter horizontally so its emission volume aligns with the upstream end of the conveyor belt surface, and ensure it is elevated sufficiently to drop items onto the belt.",
+        "evidence_image_ids": [
+          "image-0-top",
+          "image-0-iso_a",
+          "image-0-iso_b"
+        ],
+        "requested_view": null
+      }
+    ]
+  },
+  "redaction_count": 0,
+  "quality": {
+    "review_status": "pending",
+    "sft_eligible": false,
+    "dpo_eligible": false,
+    "split": "unassigned"
+  },
+  "finished_at": "2026-10-14T08:51:33.949415+00:00",
+  "latency_seconds": 6.820276,
+  "output_origin": "provider_content",
+  "model_metadata": {
+    "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+    "provider": "AliyunLLM",
+    "request_options": {
+      "max_tokens": 8000,
+      "enable_thinking": false
+    },
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "FactoryIO_vision",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "required": [
+            "inspection_complete",
+            "issues"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "inspection_complete": {
+              "type": "boolean"
+            },
+            "issues": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "requested_model": "qwen3.8-flash",
+    "returned_model": "qwen3.8-flash",
+    "response_id": "chatcmpl-7c583805-9649-94d8-a69b-1c2de58025a1",
+    "http_status": 200,
+    "usage": {
+      "prompt_tokens": 11791,
+      "total_tokens": 12049,
+      "completion_tokens": 258,
+      "prompt_tokens_details": {
+        "cached_tokens": 11776,
+        "image_tokens": 7554,
+        "text_tokens": 4237
+      },
+      "completion_tokens_details": {}
+    },
+    "finish_reason": "stop",
+    "streaming_requested": false,
+    "response_mode": "json"
+  },
+  "error": null
+}

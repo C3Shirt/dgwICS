@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "requirements_sha256": "eb6c92f398cf09e8f7118f448771461699bc50e01aea0e57c33909e1ccb158b6",
+  "checks": [
+    {
+      "check_id": "REQ-COLUMN-001-1",
+      "requirement_ids": [
+        "REQ-COLUMN-001"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 2,
+        "prefab": "Column"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-COLUMN-002-1",
+      "requirement_ids": [
+        "REQ-COLUMN-002"
+      ],
+      "operator": "visual_relation",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "question": "Are the two Columns visibly separated with a clear gap between them, not touching or overlapping?"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "visual"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-001-1",
+      "requirement_ids": [
+        "REQ-NO-EQUIP-001"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 0,
+        "capability": "conveyor"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-002-1",
+      "requirement_ids": [
+        "REQ-NO-EQUIP-002"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 0,
+        "prefab": "Emitter"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-NO-EQUIP-003-1",
+      "requirement_ids": [
+        "REQ-NO-EQUIP-003"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 0,
+        "prefab": "Remover"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "G-registration",
+      "requirement_ids": [],
+      "operator": "registered",
+      "object_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "subject_ids": [
+        "column-1",
+        "column-2"
+      ],
+      "target_ids": [],
+      "relation_ids": [],
+      "arguments": {},
+      "evidence_methods": [
+        "native_geometry"
+      ],
+      "applicability": "software_prerequisite"
+    }
+  ],
+  "coverage": {
+    "REQ-COLUMN-001": [
+      "REQ-COLUMN-001-1"
+    ],
+    "REQ-COLUMN-002": [
+      "REQ-COLUMN-002-1"
+    ],
+    "REQ-NO-EQUIP-001": [
+      "REQ-NO-EQUIP-001-1"
+    ],
+    "REQ-NO-EQUIP-002": [
+      "REQ-NO-EQUIP-002-1"
+    ],
+    "REQ-NO-EQUIP-003": [
+      "REQ-NO-EQUIP-003-1"
+    ]
+  },
+  "deferred_requirement_ids": []
+}

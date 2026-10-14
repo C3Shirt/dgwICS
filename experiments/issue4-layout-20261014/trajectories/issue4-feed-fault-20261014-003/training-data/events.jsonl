@@ -1,0 +1,2 @@
+{"schema_version": 1, "run_id": "26b727d1b15d4531a607822ccbd29425", "event": "candidate_recorded", "candidate_id": "f392c218793f4af99239fe8e8dc986ec", "timestamp": "2026-10-14T03:45:54.588800+00:00", "details": {"candidate_id": "f392c218793f4af99239fe8e8dc986ec", "status": "call_error"}}
+{"schema_version": 1, "run_id": "26b727d1b15d4531a607822ccbd29425", "event": "candidate_recorded", "candidate_id": "b525e150812e45c4b15edcf7790cbef2", "timestamp": "2026-10-14T03:46:00.301120+00:00", "details": {"candidate_id": "b525e150812e45c4b15edcf7790cbef2", "status": "call_error"}}

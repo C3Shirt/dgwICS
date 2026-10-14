@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "request_id": "16f2ceae0973494a884ef9056c0ef12a",
+  "scene_path": "experiments/issue4-layout-20261014/trajectories/issue4-column-layout-20261014-001/scene-000/scene.factoryio",
+  "scene_sha256": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+  "versions": {
+    "scene": "05f1e296ab00022aeaa665dbf5d1b6f857cd619a95ab589c36efde34a08e3723",
+    "io": "992e35747b38e2cae1373f9914045a69222be02d40ac4c69276e7a54ac1ef65e"
+  },
+  "software_load_confirmed": true,
+  "confirmation_method": "Scene.Load -> deferred ExecuteLoad -> CurrentSceneInfo; settled frames",
+  "confirmed_at": "2026-10-14T03:37:16.2047079Z",
+  "bridge_request_id": "0a01e2e01ddc475390726c57878a1960",
+  "bridge_response_path": "experiments/issue4-layout-20261014/trajectories/issue4-column-layout-20261014-001/scene-000/load-receipt.bridge-response.json",
+  "bridge_response_sha256": "663020ada3dd1f213db6fc8f031b8ecb6fd987e8300ee4005b3df52871dc82d3",
+  "assembly_sha256": "1fc9429d6ddb2ac6f2285e8ab43f5116a26b03e06dfd33a5f6a1a5345636f2ff",
+  "app_version": "2.5.8",
+  "object_reconciliation": {
+    "passed": true,
+    "issues": [],
+    "expected_count": 2,
+    "actual_count": 2
+  },
+  "native_geometry": {
+    "coordinate_units": "native_world",
+    "objects": [
+      {
+        "key": "3251311c-e618-5bad-b980-360d8a757a68",
+        "prefab": "Column",
+        "position_grid": [
+          233,
+          8,
+          142
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "fine_position": 0.0,
+        "fine_rotation": 0.0,
+        "bounds_world": {
+          "min": [
+            29.0,
+            0.0,
+            17.625
+          ],
+          "max": [
+            29.375,
+            2.0,
+            18.0
+          ]
+        },
+        "component_geometry": {},
+        "native_registered": true
+      },
+      {
+        "key": "02dd59de-4099-5d9e-986c-9fce196381be",
+        "prefab": "Column",
+        "position_grid": [
+          243,
+          8,
+          142
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "fine_position": 0.0,
+        "fine_rotation": 0.0,
+        "bounds_world": {
+          "min": [
+            30.25,
+            0.0,
+            17.625
+          ],
+          "max": [
+            30.625,
+            2.0,
+            18.0
+          ]
+        },
+        "component_geometry": {},
+        "native_registered": true
+      }
+    ],
+    "coordinate_system": {
+      "grid_metres": 0.125,
+      "axis_order": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "vertical_axis": "Y",
+      "horizontal_axes": [
+        "X",
+        "Z"
+      ],
+      "pivot_world_formula": "(position_grid + [0.5,0.5,0.5]) * 0.125",
+      "evidence": "Voxel.GetVoxelCenter; VoxelObject.UpdateBoundsAndOutOfWorld"
+    },
+    "world_bounds": {
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        59.625,
+        9.0,
+        35.625
+      ],
+      "grid_dimensions": [
+        477,
+        72,
+        285
+      ],
+      "evidence": "VoxelWorld.Dimensions; VoxelWorld.Encompasses; Voxel.GetVoxelCenter"
+    },
+    "bridge": {
+      "protocol": "factoryio-agent-file-bridge/1",
+      "geometry_version": 2,
+      "bridge_sha256": "3eff062fecc9720a23bc65294d1a61ac8269cf635bdc2acfb8ea2acd1b75e387"
+    }
+  }
+}

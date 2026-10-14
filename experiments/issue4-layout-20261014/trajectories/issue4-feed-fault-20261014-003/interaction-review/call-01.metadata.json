@@ -1,0 +1,236 @@
+{
+  "source_candidate": "experiments/issue4-layout-20261014/trajectories/issue4-feed-fault-20261014-003/training-data/candidates/f392c218793f4af99239fe8e8dc986ec.json",
+  "model_metadata": {
+    "endpoint": "https://model-service-host.invalid/compatible-mode/v1/chat/completions",
+    "provider": "AliyunLLM",
+    "request_options": {
+      "max_tokens": 8000,
+      "enable_thinking": false
+    },
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "FactoryIO_vision",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "global_review",
+            "check_results"
+          ],
+          "properties": {
+            "global_review": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "summary",
+                "image_ids",
+                "findings"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "satisfied",
+                    "violated",
+                    "unobservable"
+                  ]
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "image_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "object_ids",
+                      "image_ids",
+                      "observed",
+                      "reason",
+                      "repair_intent",
+                      "status",
+                      "requirement_ids"
+                    ],
+                    "properties": {
+                      "object_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "image_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "observed": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "repair_intent": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "violated",
+                          "unobservable"
+                        ]
+                      },
+                      "requirement_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "check_results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "object_ids",
+                  "image_ids",
+                  "observed",
+                  "reason",
+                  "repair_intent",
+                  "check_id",
+                  "relation_ids",
+                  "status",
+                  "requested_view"
+                ],
+                "properties": {
+                  "object_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "image_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "observed": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "repair_intent": {
+                    "type": "string"
+                  },
+                  "check_id": {
+                    "type": "string"
+                  },
+                  "relation_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "satisfied",
+                      "violated",
+                      "unobservable"
+                    ]
+                  },
+                  "requested_view": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      null,
+                      "top",
+                      "iso_a",
+                      "iso_b"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "requested_model": "qwen3.8-flash",
+    "returned_model": "qwen3.8-flash",
+    "response_id": "chatcmpl-4d25e3ba-9fd5-9a0a-9723-84fc4e56f85e",
+    "http_status": 200,
+    "usage": {
+      "prompt_tokens": 11635,
+      "total_tokens": 11637,
+      "completion_tokens": 2,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 7554,
+        "text_tokens": 4081
+      },
+      "completion_tokens_details": {}
+    },
+    "finish_reason": "stop",
+    "streaming_requested": true,
+    "response_mode": "sse",
+    "stream_stats": {
+      "packets": 4,
+      "content_chars": 2,
+      "done_received": true,
+      "first_packet_seconds": 5.6e-05,
+      "first_content_seconds": 9.6e-05
+    }
+  },
+  "images": [
+    {
+      "path": "../../../assets/39cec2922e508d6d9d3c777a0a68f39acfef7fb83459c8ea4722c1f4bbc97d30.png",
+      "sha256": "39cec2922e508d6d9d3c777a0a68f39acfef7fb83459c8ea4722c1f4bbc97d30",
+      "mime_type": "image/png",
+      "size_bytes": 5820900
+    },
+    {
+      "path": "../../../assets/91e63627be9dba02590ee20c57cdb9300b7f12df73bdbe565542b891e024dd69.png",
+      "sha256": "91e63627be9dba02590ee20c57cdb9300b7f12df73bdbe565542b891e024dd69",
+      "mime_type": "image/png",
+      "size_bytes": 5561434
+    },
+    {
+      "path": "../../../assets/f74ff08b1f51e57918f39b45fec129c34f88fa861c1d5a7a45e87ea224a00298.png",
+      "sha256": "f74ff08b1f51e57918f39b45fec129c34f88fa861c1d5a7a45e87ea224a00298",
+      "mime_type": "image/png",
+      "size_bytes": 5564295
+    }
+  ],
+  "input_metrics": {
+    "system_chars": 1524,
+    "payload_chars": 9040,
+    "image_count": 3,
+    "image_bytes": 16946629,
+    "token_estimate_used": false
+  },
+  "status": "call_error",
+  "error": {
+    "type": "ContractError",
+    "message": "vision model response must be object"
+  }
+}

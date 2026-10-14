@@ -1,0 +1,35 @@
+{
+  "ticket_id": "ticket-cdf0eb17b3c8fdc1",
+  "failed_check_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR-1",
+    "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1"
+  ],
+  "requirement_ids": [
+    "REQ-FEEDER-ABOVE-CONVEYOR",
+    "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+  ],
+  "affected_object_ids": [
+    "emitter1",
+    "remover1"
+  ],
+  "issue_type": "requirement_relation_violation",
+  "evidence_ids": [
+    "image-0-iso_a",
+    "image-0-iso_b",
+    "image-0-top",
+    "load-c0366719845747439c9b849313f122be"
+  ],
+  "repair_intent": [
+    "The requirement states the feeder must be located above the upstream carrying surface; current placement results in items being emitted off the side of the belt.",
+    "The requirement specifies that the remover must cover the downstream extension path; the current layout leaves the path uncovered.",
+    "Move the emitter along the Z-axis so its center aligns with the conveyor's centerline (Z=17.5) to ensure it is vertically above the belt.",
+    "Reposition the remover to be centered on the conveyor's longitudinal axis (Z=17.5) at the downstream end."
+  ],
+  "allowed_operations": [
+    "change",
+    "replace"
+  ],
+  "frozen_object_ids": [
+    "conveyor1"
+  ]
+}

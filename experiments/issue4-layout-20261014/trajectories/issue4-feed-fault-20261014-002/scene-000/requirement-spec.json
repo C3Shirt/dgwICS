@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "original_requirement": "构建一个用于静态检查的直线输送布局：一条输送带、一个供料器和一个末端移除器。供料器位于输送带上游承载面上方，移除器覆盖下游延伸路径。只做布局和图片检查，不启动 PLC。",
+  "context_fragments": [
+    {
+      "source_text": "构建一个用于静态检查的直线输送布局",
+      "reason": "Indicates the purpose is static checking, not runtime behavior."
+    },
+    {
+      "source_text": "和",
+      "reason": "Conjunction connecting the list of required components; no physical constraint."
+    },
+    {
+      "source_text": "只做布局和图片检查，不启动 PLC。",
+      "reason": "Explicitly limits the scope to layout and image inspection, excluding PLC activation."
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "REQ-COUNT-CONVEYOR",
+      "source_text": "一条输送带",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "conveyor",
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "equals": 1,
+        "capability": "conveyor"
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-COUNT-FEEDER",
+      "source_text": "一个供料器",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "feeder",
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "equals": 1,
+        "prefab": "Emitter"
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-COUNT-REMOVER",
+      "source_text": "一个末端移除器",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "remover",
+      "target_role": null,
+      "predicate": "count",
+      "arguments": {
+        "equals": 1,
+        "prefab": "Remover"
+      },
+      "required": true,
+      "evidence_methods": [
+        "structure"
+      ]
+    },
+    {
+      "requirement_id": "REQ-FEEDER-ABOVE-CONVEYOR",
+      "source_text": "供料器位于输送带上游承载面上方",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "feeder",
+      "target_role": "conveyor_upstream",
+      "predicate": "visual_relation",
+      "arguments": {
+        "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+      },
+      "required": true,
+      "evidence_methods": [
+        "visual"
+      ]
+    },
+    {
+      "requirement_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH",
+      "source_text": "移除器覆盖下游延伸路径",
+      "origin": "explicit_user",
+      "phase": "static_scene",
+      "subject_role": "remover",
+      "target_role": "conveyor_downstream",
+      "predicate": "visual_relation",
+      "arguments": {
+        "question": "Does the remover cover the downstream extension path of the conveyor?"
+      },
+      "required": true,
+      "evidence_methods": [
+        "visual"
+      ]
+    }
+  ]
+}

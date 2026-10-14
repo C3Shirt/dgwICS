@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "requirements_sha256": "c66dc2101331b01d567a90b64b96f5fbaea585cf3647fc14561bc3c462bcf979",
+  "checks": [
+    {
+      "check_id": "REQ-001-1",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "operator": "count",
+      "object_ids": [
+        "conveyor_a",
+        "conveyor_b"
+      ],
+      "subject_ids": [
+        "conveyor_a",
+        "conveyor_b"
+      ],
+      "target_ids": [],
+      "arguments": {
+        "equals": 2,
+        "capability": "conveyor"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-002-1",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "operator": "visual_relation",
+      "object_ids": [
+        "conveyor_a",
+        "conveyor_b"
+      ],
+      "subject_ids": [
+        "conveyor_a"
+      ],
+      "target_ids": [
+        "conveyor_b"
+      ],
+      "arguments": {
+        "question": "Are the two conveyor belts physically separate and not connected as a single conveying line?"
+      },
+      "relation_ids": [
+        "rel_conveyors_separate"
+      ],
+      "evidence_methods": [
+        "visual"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-003-1",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "operator": "count",
+      "object_ids": [],
+      "subject_ids": [],
+      "target_ids": [],
+      "arguments": {
+        "equals": 0,
+        "capability": "emitter"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "REQ-004-1",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "operator": "count",
+      "object_ids": [],
+      "subject_ids": [],
+      "target_ids": [],
+      "arguments": {
+        "equals": 0,
+        "prefab": "Remover"
+      },
+      "relation_ids": [],
+      "evidence_methods": [
+        "structure"
+      ],
+      "applicability": "required_static"
+    },
+    {
+      "check_id": "G-registration",
+      "requirement_ids": [],
+      "operator": "registered",
+      "object_ids": [
+        "conveyor_a",
+        "conveyor_b"
+      ],
+      "subject_ids": [
+        "conveyor_a",
+        "conveyor_b"
+      ],
+      "target_ids": [],
+      "relation_ids": [],
+      "arguments": {},
+      "evidence_methods": [
+        "native_geometry"
+      ],
+      "applicability": "software_prerequisite"
+    }
+  ],
+  "coverage": {
+    "REQ-001": [
+      "REQ-001-1"
+    ],
+    "REQ-002": [
+      "REQ-002-1"
+    ],
+    "REQ-003": [
+      "REQ-003-1"
+    ],
+    "REQ-004": [
+      "REQ-004-1"
+    ]
+  },
+  "deferred_requirement_ids": []
+}

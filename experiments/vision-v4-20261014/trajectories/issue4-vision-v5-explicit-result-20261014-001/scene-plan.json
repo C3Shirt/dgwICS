@@ -1,0 +1,48 @@
+{
+  "scene_id": "static-straight-conveyor-layout",
+  "base_source_id": "source-6862ca46dbe17012078c",
+  "objects": [
+    {
+      "id": "conveyor-1",
+      "template_id": "source-6862ca46dbe17012078c/object/2",
+      "position": [
+        238,
+        3,
+        138
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "conveyor-1 0"
+      }
+    },
+    {
+      "id": "feeder-1",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/18",
+      "position": [
+        238,
+        9,
+        134
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "feeder-1 0"
+      }
+    },
+    {
+      "id": "remover-1",
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/19",
+      "position": [
+        238,
+        9,
+        150
+      ],
+      "yaw_deg": 0,
+      "settings": [],
+      "tag_names": {
+        "0": "remover-1 0"
+      }
+    }
+  ]
+}

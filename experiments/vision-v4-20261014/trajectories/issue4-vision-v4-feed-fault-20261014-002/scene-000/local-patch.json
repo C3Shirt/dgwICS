@@ -1,0 +1,24 @@
+{
+  "reason": "Move the emitter from lateral adjacency to directly above the upstream end of the conveyor using the supported emitter_over_conveyor placement with along_fraction=0.0. This preserves the conveyor and remover (frozen), changes only allowed object emitter1, and aligns emission vertically above the start of the carrying surface.",
+  "changes": [
+    {
+      "object_id": "emitter1",
+      "placement": {
+        "kind": "emitter_over_conveyor",
+        "relative_to": "conveyor1",
+        "along_fraction": 0.0
+      }
+    }
+  ],
+  "add_objects": [],
+  "remove_object_ids": [],
+  "relation_updates": [],
+  "remove_relation_ids": [],
+  "relation_impacts": [
+    {
+      "relation_id": "rel1",
+      "expected_effect": "After the emitter is repositioned above the upstream end of the conveyor, the relation 'emitter1 above conveyor1' with region 'upstream carrying surface' should hold, satisfying REQ-FEEDER-ABOVE-CONVEYOR."
+    }
+  ],
+  "unresolved": []
+}

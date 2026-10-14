@@ -1,0 +1,65 @@
+{
+  "context_manifest": {
+    "prompt_version": "issue4-inspection-issues-v4",
+    "kind": "visual",
+    "sources": {
+      "requirements_sha256": "40849ba3aa0a81fa62c8c3d9c825f7cb0f8bb60444af4616fb728465e195ad00",
+      "native_geometry_sha256": "0ccc683e8a9fd6c87f1ffa6f5ce6caece25ff939b7bdbca4faf35e56d1bb7aef",
+      "template_sources": {
+        "source-04da4aaaacbb3e5e0ade": "04da4aaaacbb3e5e0adedba912df75dbaab6aaa157a25e80aac48268d22de59c",
+        "source-7b6b0a6b063429d967cf": "7b6b0a6b063429d967cf7fe53af31a25e0eff977250f09f9e22ac41f94815918",
+        "source-6862ca46dbe17012078c": "6862ca46dbe17012078c7169d9068497c0c7eff10b999a4880f34af4622bc535"
+      },
+      "knowledge_sha256": "d736c0ae33df1fe5f69040337a14acbd0dbd2a979fb6973a020ddb8eb0bf2d26"
+    },
+    "object_scope": [
+      "conveyor1",
+      "emitter1",
+      "remover1"
+    ],
+    "field_sources": {
+      "scene_overview": "independent requirements and official functions",
+      "objects": "native identity/pose, declared roles, sourced knowledge",
+      "expected_relations": "compiled original constraints",
+      "images": "validated actual image attachments"
+    },
+    "limitations": [
+      "Generated roles/functions are identification context, not independent ground truth.",
+      "Native data describes this loaded software/version, not proven runtime behavior."
+    ]
+  },
+  "image_manifest": [
+    {
+      "id": "image-0-top",
+      "kind": "image",
+      "view_id": "top",
+      "sha256": "3454dea9b3f442e290ede316b97336a92d67e51f47e8a6b731d35157ce066342",
+      "scene_sha256": "0de1cea16c15955a7b4711b9fa538562fd5a35786659ea02366e65c21bae0867",
+      "timestamp": "2026-10-14T08:52:27.5447855Z",
+      "load_request_id": "d5f32ec323684671b5f6e1bd29f30e05",
+      "capture_request_id": "0a1dc4571f124b83b4cf972e80653b02"
+    },
+    {
+      "id": "image-0-iso_a",
+      "kind": "image",
+      "view_id": "iso_a",
+      "sha256": "c701f0d28f498a40954a7d65e443ceede26db21d4900ae9ace1c355bd1b7aee2",
+      "scene_sha256": "0de1cea16c15955a7b4711b9fa538562fd5a35786659ea02366e65c21bae0867",
+      "timestamp": "2026-10-14T08:52:29.0427925Z",
+      "load_request_id": "d5f32ec323684671b5f6e1bd29f30e05",
+      "capture_request_id": "4a4be33db2024c12aaea00f3fb89c282"
+    },
+    {
+      "id": "image-0-iso_b",
+      "kind": "image",
+      "view_id": "iso_b",
+      "sha256": "cfa223d501981b90ab6843f084236d36d4fa3f23636ab31ad0f487d7f3559bb5",
+      "scene_sha256": "0de1cea16c15955a7b4711b9fa538562fd5a35786659ea02366e65c21bae0867",
+      "timestamp": "2026-10-14T08:52:30.4423989Z",
+      "load_request_id": "d5f32ec323684671b5f6e1bd29f30e05",
+      "capture_request_id": "92ba7116fb554481ac2c87e26afe6665"
+    }
+  ],
+  "load_request_id": "d5f32ec323684671b5f6e1bd29f30e05",
+  "requirements_sha256": "40849ba3aa0a81fa62c8c3d9c825f7cb0f8bb60444af4616fb728465e195ad00"
+}

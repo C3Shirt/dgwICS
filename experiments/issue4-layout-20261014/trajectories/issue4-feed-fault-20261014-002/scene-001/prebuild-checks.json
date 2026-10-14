@@ -1,0 +1,115 @@
+[
+  {
+    "check_id": "REQ-COUNT-CONVEYOR-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "conveyor1"
+    ],
+    "observed": {
+      "count": 1
+    },
+    "expected": {
+      "equals": 1,
+      "capability": "conveyor"
+    },
+    "evidence_ids": [
+      "layout-1d932711ef9d8127e978fb92906707714da0187e03cfcf428a499b8d3a220ea2"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-COUNT-FEEDER-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "emitter1"
+    ],
+    "observed": {
+      "count": 1
+    },
+    "expected": {
+      "equals": 1,
+      "prefab": "Emitter"
+    },
+    "evidence_ids": [
+      "layout-1d932711ef9d8127e978fb92906707714da0187e03cfcf428a499b8d3a220ea2"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-COUNT-REMOVER-1",
+    "status": "satisfied",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "remover1"
+    ],
+    "observed": {
+      "count": 1
+    },
+    "expected": {
+      "equals": 1,
+      "prefab": "Remover"
+    },
+    "evidence_ids": [
+      "layout-1d932711ef9d8127e978fb92906707714da0187e03cfcf428a499b8d3a220ea2"
+    ],
+    "reason": "Object-role count compared with independent requirement.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-FEEDER-ABOVE-CONVEYOR-1",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "emitter1",
+      "conveyor1"
+    ],
+    "observed": null,
+    "expected": {
+      "question": "Is the feeder positioned above the upstream carrying surface of the conveyor?"
+    },
+    "evidence_ids": [
+      "layout-1d932711ef9d8127e978fb92906707714da0187e03cfcf428a499b8d3a220ea2"
+    ],
+    "reason": "This requested relation requires visual evidence.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "REQ-REMOVER-COVERS-DOWNSTREAM-PATH-1",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "remover1",
+      "conveyor1"
+    ],
+    "observed": null,
+    "expected": {
+      "question": "Does the remover cover the downstream extension path of the conveyor?"
+    },
+    "evidence_ids": [
+      "layout-1d932711ef9d8127e978fb92906707714da0187e03cfcf428a499b8d3a220ea2"
+    ],
+    "reason": "This requested relation requires visual evidence.",
+    "missing_capability": null
+  },
+  {
+    "check_id": "G-registration",
+    "status": "unknown",
+    "checker": "projected_geometry",
+    "object_ids": [
+      "conveyor1",
+      "emitter1",
+      "remover1"
+    ],
+    "observed": null,
+    "expected": {},
+    "evidence_ids": [
+      "layout-1d932711ef9d8127e978fb92906707714da0187e03cfcf428a499b8d3a220ea2"
+    ],
+    "reason": "Registration requires actual software loading.",
+    "missing_capability": null
+  }
+]

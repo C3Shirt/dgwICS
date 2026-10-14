@@ -1,0 +1,94 @@
+{
+  "scene_id": "static_inspection_line",
+  "scene_goal": "Construct a linear conveyor layout for static visual inspection: one belt conveyor, one emitter above its upstream carrying surface, and one remover covering the downstream extension path. No PLC control is intended.",
+  "control_intent": [],
+  "objects": [
+    {
+      "id": "conveyor1",
+      "prefab": "BeltConveyor4M",
+      "roles": [
+        "conveyor",
+        "conveyor_upstream",
+        "conveyor_downstream"
+      ],
+      "function": "Main belt conveyor that transports items from upstream to downstream, serving as the reference for both upstream and downstream spatial constraints.",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          238,
+          3,
+          140
+        ],
+        "yaw_deg": 0
+      },
+      "settings": [],
+      "template_id": "source-6862ca46dbe17012078c/object/24"
+    },
+    {
+      "id": "emitter1",
+      "prefab": "Emitter",
+      "roles": [
+        "feeder"
+      ],
+      "function": "Feeder that emits items onto the upstream carrying surface of the conveyor.",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          238,
+          9,
+          124
+        ],
+        "yaw_deg": 0
+      },
+      "settings": [],
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/18"
+    },
+    {
+      "id": "remover1",
+      "prefab": "Remover",
+      "roles": [
+        "remover"
+      ],
+      "function": "Remover that covers the downstream extension path beyond the conveyor end.",
+      "placement": {
+        "kind": "absolute",
+        "position": [
+          238,
+          9,
+          160
+        ],
+        "yaw_deg": 0
+      },
+      "settings": [],
+      "template_id": "source-04da4aaaacbb3e5e0ade/object/19"
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel1",
+      "subject_id": "emitter1",
+      "predicate": "above",
+      "target_id": "conveyor1",
+      "parameters": {
+        "region": "upstream carrying surface"
+      },
+      "requirement_ids": [
+        "REQ-FEEDER-ABOVE-CONVEYOR"
+      ]
+    },
+    {
+      "id": "rel2",
+      "subject_id": "remover1",
+      "predicate": "covers",
+      "target_id": "conveyor1",
+      "parameters": {
+        "region": "downstream extension path"
+      },
+      "requirement_ids": [
+        "REQ-REMOVER-COVERS-DOWNSTREAM-PATH"
+      ]
+    }
+  ],
+  "unresolved": [],
+  "deferred_tasks": []
+}

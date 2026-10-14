@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "scene_sha256": "0de1cea16c15955a7b4711b9fa538562fd5a35786659ea02366e65c21bae0867",
+  "driver": "ModbusTCPClient",
+  "tags": [
+    {
+      "index": 0,
+      "key": "0e2d55e1-c2e5-54bf-ace9-29c6901d834f",
+      "name": "conveyor1 0",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": "7",
+      "forced": {
+        "enabled": false,
+        "value": "False"
+      },
+      "use_forced_value": false,
+      "forced_value": "False",
+      "open_circuit": false,
+      "short_circuit": false,
+      "id": "conveyor1/tag/0",
+      "object_id": "conveyor1"
+    },
+    {
+      "index": 0,
+      "key": "01bad5ca-134f-5b51-8a74-3f3a47691ea7",
+      "name": "emitter1 0",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": "26",
+      "forced": {
+        "enabled": true,
+        "value": "True"
+      },
+      "use_forced_value": true,
+      "forced_value": "True",
+      "open_circuit": false,
+      "short_circuit": false,
+      "id": "emitter1/tag/0",
+      "object_id": "emitter1"
+    },
+    {
+      "index": 0,
+      "key": "b2d003f4-eda2-50d1-9b88-7e4fde031e40",
+      "name": "remover1 0",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": "27",
+      "forced": {
+        "enabled": true,
+        "value": "True"
+      },
+      "use_forced_value": true,
+      "forced_value": "True",
+      "open_circuit": false,
+      "short_circuit": false,
+      "id": "remover1/tag/0",
+      "object_id": "remover1"
+    },
+    {
+      "id": "system/RunInput",
+      "key": "3276f3a7-f85b-425f-9cd1-d9107ab7113f",
+      "name": "RunInput",
+      "type": "BinaryInput",
+      "kind": "input",
+      "data_type": "bool",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "RunInputKey"
+    },
+    {
+      "id": "system/PauseInput",
+      "key": "37ecf53e-8541-4f7b-b5d8-0ec574308bc7",
+      "name": "PauseInput",
+      "type": "BinaryInput",
+      "kind": "input",
+      "data_type": "bool",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "PauseInputKey"
+    },
+    {
+      "id": "system/ResetInput",
+      "key": "12d66936-6f23-4979-90ee-cb151204d00a",
+      "name": "ResetInput",
+      "type": "BinaryInput",
+      "kind": "input",
+      "data_type": "bool",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "ResetInputKey"
+    },
+    {
+      "id": "system/TimeScaleInput",
+      "key": "71a6351a-a293-43bf-b7f1-b9bb1d648480",
+      "name": "TimeScaleInput",
+      "type": "AnalogueInput",
+      "kind": "input",
+      "data_type": "float",
+      "direction": "Input",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "TimeScaleInputKey"
+    },
+    {
+      "id": "system/RunOutput",
+      "key": "7754fab1-ed21-4fca-9ab9-45e844cd4766",
+      "name": "RunOutput",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "RunOutputKey"
+    },
+    {
+      "id": "system/PauseOutput",
+      "key": "41b90af6-25d1-4fa8-aaec-724f79701be1",
+      "name": "PauseOutput",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "PauseOutputKey"
+    },
+    {
+      "id": "system/ResetOutput",
+      "key": "01936c60-0201-4d54-aad2-0734eb391d35",
+      "name": "ResetOutput",
+      "type": "BinaryOutput",
+      "kind": "output",
+      "data_type": "bool",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "ResetOutputKey"
+    },
+    {
+      "id": "system/CameraIndexOutput",
+      "key": "f0855715-c7e4-48b3-8174-0fc06299798c",
+      "name": "CameraIndexOutput",
+      "type": "IntOutput",
+      "kind": "output",
+      "data_type": "int",
+      "direction": "Output",
+      "address": null,
+      "index": null,
+      "object_id": null,
+      "system_field": "CameraIndexOutputKey"
+    }
+  ],
+  "mappings": [
+    {
+      "channel": "BitInput0",
+      "tag_key": "3276f3a7-f85b-425f-9cd1-d9107ab7113f",
+      "tag_id": "system/RunInput",
+      "kind": "input",
+      "data_type": "bool",
+      "type": "BinaryInput",
+      "channel_family": "Bit",
+      "direction": "Input",
+      "channel_index": 0,
+      "offset": 0
+    },
+    {
+      "channel": "BitOutput0",
+      "tag_key": "0e2d55e1-c2e5-54bf-ace9-29c6901d834f",
+      "tag_id": "conveyor1/tag/0",
+      "kind": "output",
+      "data_type": "bool",
+      "type": "BinaryOutput",
+      "channel_family": "Bit",
+      "direction": "Output",
+      "channel_index": 0,
+      "offset": 0
+    },
+    {
+      "channel": "BitOutput1",
+      "tag_key": "01bad5ca-134f-5b51-8a74-3f3a47691ea7",
+      "tag_id": "emitter1/tag/0",
+      "kind": "output",
+      "data_type": "bool",
+      "type": "BinaryOutput",
+      "channel_family": "Bit",
+      "direction": "Output",
+      "channel_index": 1,
+      "offset": 0
+    },
+    {
+      "channel": "BitOutput2",
+      "tag_key": "b2d003f4-eda2-50d1-9b88-7e4fde031e40",
+      "tag_id": "remover1/tag/0",
+      "kind": "output",
+      "data_type": "bool",
+      "type": "BinaryOutput",
+      "channel_family": "Bit",
+      "direction": "Output",
+      "channel_index": 2,
+      "offset": 0
+    }
+  ],
+  "unmapped_tag_keys": [
+    "37ecf53e-8541-4f7b-b5d8-0ec574308bc7",
+    "12d66936-6f23-4979-90ee-cb151204d00a",
+    "71a6351a-a293-43bf-b7f1-b9bb1d648480",
+    "7754fab1-ed21-4fca-9ab9-45e844cd4766",
+    "41b90af6-25d1-4fa8-aaec-724f79701be1",
+    "01936c60-0201-4d54-aad2-0734eb391d35",
+    "f0855715-c7e4-48b3-8174-0fc06299798c"
+  ],
+  "driver_properties": {
+    "ReadCoils": "False",
+    "ReadHoldingRegisters": "False",
+    "ScaleFactor": "100"
+  },
+  "channel_counts": {
+    "BitInputCount": 1,
+    "BitOutputCount": 3,
+    "FloatInputCount": 0,
+    "FloatOutputCount": 0,
+    "IntInputCount": 0,
+    "IntOutputCount": 0,
+    "NumericInputCount": 0,
+    "NumericOutputCount": 0
+  },
+  "channel_offsets": {
+    "BitInputOffset": 0,
+    "BitOutputOffset": 0,
+    "FloatInputOffset": 0,
+    "FloatOutputOffset": 0,
+    "IntInputOffset": 0,
+    "IntOutputOffset": 0,
+    "NumericInputOffset": 0,
+    "NumericOutputOffset": 0
+  },
+  "transport_confirmed": false,
+  "software_load_confirmed": false,
+  "supported_limits": {
+    "Bit_channel_count": 256,
+    "Numeric_channel_count": 64,
+    "documented_count_source": "https://docs.factoryio.com/manual/drivers/modbus-client/",
+    "Float_and_Int_channel_count": 64,
+    "Float_and_Int_limit_basis": "conservative_implementation_policy",
+    "offset_and_slot_address_max": 65535,
+    "address_limit_basis": "implementation_policy",
+    "scalar_integer_max": 2147483647,
+    "scalar_integer_limit_basis": "implementation_policy",
+    "register_width_confirmed": false
+  },
+  "address_interpretation": "channel_index and configured offset; tag Address is separate"
+}

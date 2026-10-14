@@ -85,7 +85,8 @@ class Dashboard:
             except (ValueError,OSError): continue
         for record in sorted(records,key=lambda r:r.get('started_at','')):
             sid=record['candidate_id']; images=[]
-            image_ids=[r['id'] for r in record.get('payload',{}).get('evidence',{}).get('records',[]) if r.get('kind')=='image']
+            payload=record.get('payload',{})
+            image_ids=[r['id'] for r in payload.get('image_manifest',payload.get('evidence',{}).get('records',[])) if r.get('kind')=='image']
             for n,asset in enumerate(record.get('images',[])):
                 path=(root/'training-data'/asset['path']).resolve()
                 if not path.is_relative_to(root/'training-data') or not path.is_file(): continue
